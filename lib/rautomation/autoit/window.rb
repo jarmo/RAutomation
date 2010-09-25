@@ -60,6 +60,14 @@ module RAutomation
         @@autoit.WinGetState(@locator) & 2 == 2
       end
 
+      def maximize
+        @@autoit.WinSetState(@locator, "", @@autoit.SW_MAXIMIZE) == 1
+      end
+
+      def minimize
+        @@autoit.WinSetState(@locator, "", @@autoit.SW_MINIMIZE) == 1
+      end
+
       def close
         @@autoit.WinClose(@locator)
         @@autoit.WinKill(@locator)

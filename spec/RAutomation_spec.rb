@@ -53,12 +53,25 @@ describe RAutomation::Window do
   end
 
   it "#activate" do
-    RAutomation::Window.new(/rautomation testing page/i).activate.should == true
+    RAutomation::Window.new(/rautomation testing page/i).activate.should be_true
+    RAutomation::Window.new("non-existing-window").activate.should be_false
   end
 
   it "#text" do
     RAutomation::Window.new(/file download/i).text.should include("Do you want to open or save this file?")
     lambda {RAutomation::Window.new("non-existing-window").text}.
+            should raise_exception(RAutomation::UnknownWindowException)
+  end
+
+  it "#maximize" do
+    RAutomation::Window.new(/rautomation testing page/i).maximize.should be_true
+    lambda {RAutomation::Window.new("non-existing-window").maximize}.
+            should raise_exception(RAutomation::UnknownWindowException)
+  end
+
+  it "#minimize" do
+    RAutomation::Window.new(/rautomation testing page/i).minimize.should be_true
+    lambda {RAutomation::Window.new("non-existing-window").minimize}.
             should raise_exception(RAutomation::UnknownWindowException)
   end
 

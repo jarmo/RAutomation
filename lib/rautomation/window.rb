@@ -1,7 +1,10 @@
 module RAutomation
-  class UnknownWindowException < RuntimeError; end
-  class UnknownButtonException < RuntimeError; end
-  class UnknownTextFieldException < RuntimeError; end
+  class UnknownWindowException < RuntimeError
+  end
+  class UnknownButtonException < RuntimeError
+  end
+  class UnknownTextFieldException < RuntimeError
+  end
 
   class Window
     class << self
@@ -41,6 +44,8 @@ module RAutomation
       @window.exists?
     end
 
+    alias_method :exist?, :exists?
+
     def visible?
       assert_exists
       activate && @window.visible?
@@ -50,7 +55,15 @@ module RAutomation
       exists? && visible?
     end
 
-    alias_method :exist?, :exists?
+    def maximize
+      assert_exists
+      @window.maximize
+    end
+
+    def minimize
+      assert_exists
+      @window.minimize
+    end
 
     def close
       return unless @window.exists?
