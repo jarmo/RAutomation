@@ -23,6 +23,10 @@ module RAutomation
         end
       end
 
+      def value
+        Window.autoit.ControlGetText(@window.locator, "", @name)
+      end
+
       def exists?
         not Window.autoit.ControlGetHandle(@window.locator, "", @name).empty?
       end

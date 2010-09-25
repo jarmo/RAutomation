@@ -1,5 +1,7 @@
 module RAutomation
   class UnknownWindowException < RuntimeError; end
+  class UnknownButtonException < RuntimeError; end
+  class UnknownTextFieldException < RuntimeError; end
 
   class Window
     class << self
@@ -48,17 +50,19 @@ module RAutomation
     end
 
     def button(name)
+      assert_exists
       Button.new(@window, name)
     end
 
     def text_field(name)
+      assert_exists
       TextField.new(@window, name)
     end
 
     private
 
     def assert_exists
-      raise UnknownWindowException.new("Window with locator '#{@window.locator}' doesn't exist!") unless @window.exists?
+      raise UnknownWindowException.new("Window with locator '#{@window.locator}' doesn't exist!") unless exists?
     end
   end
 end

@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe RAutomation::Window do
-
   before :all do
     @ie = IO.popen('"c:\\program files\\internet explorer\\iexplore.exe" http://dl.dropbox.com/u/2731643/RAutomation/test.html').pid
     sleep 5

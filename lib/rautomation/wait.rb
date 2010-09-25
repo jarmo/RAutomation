@@ -1,5 +1,7 @@
 module RAutomation
   module WaitHelper
+    extend self
+    
     class TimeoutError < StandardError
     end
 
