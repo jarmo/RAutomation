@@ -11,7 +11,7 @@ module RAutomation
         def load_autoit
           @@autoit = WIN32OLE.new('AutoItX3.Control')
         rescue WIN32OLERuntimeError
-          dll = File.dirname(__FILE__) + "/../../../ext/AutoItX3.dll"
+          dll = File.dirname(__FILE__) + "/../../../ext/AutoItX/AutoItX3.dll"
           system("regsvr32.exe /s #{dll.gsub('/', '\\')}")
           @@autoit = WIN32OLE.new('AutoItX3.Control')
         end
