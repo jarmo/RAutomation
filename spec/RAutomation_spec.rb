@@ -1,11 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe RAutomation::Window do
-  before :all do
-    @ie = IO.popen('"c:\\program files\\internet explorer\\iexplore.exe" http://dl.dropbox.com/u/2731643/RAutomation/test.html').pid
-    RAutomation::WaitHelper.wait_until(10) {RAutomation::Window.new(/file download/i).present?}
-  end
-
   it "Window.implementation" do
     RAutomation::Window.implementation.should == RAutomation::AutoIt::Window
   end
@@ -83,9 +78,5 @@ describe RAutomation::Window do
 
     lambda {RAutomation::Window.new("non-existing-window").close}.
             should_not raise_exception
-  end
-
-  after :all do
-    Process.kill(9, @ie) rescue nil
   end
 end

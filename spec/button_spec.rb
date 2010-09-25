@@ -1,11 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe RAutomation::Button do
-  before :all do
-    @ie = IO.popen('"c:\\program files\\internet explorer\\iexplore.exe" http://dl.dropbox.com/u/2731643/RAutomation/test.html').pid
-    RAutomation::WaitHelper.wait_until(10) {RAutomation::Window.new(/file download/i).present?}
-  end
-
   it "#button" do
     RAutomation::Window.new(/file download/i).button("&Save").should exist
     lambda {RAutomation::Window.new("non-existing-window").button("&Save")}.
@@ -34,9 +29,5 @@ describe RAutomation::Button do
 
     lambda{window.button("non-existent-button").click}.
             should raise_exception(RAutomation::UnknownButtonException)
-  end
-
-  after :all do
-    Process.kill(9, @ie) rescue nil
   end
 end
