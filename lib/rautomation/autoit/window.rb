@@ -32,6 +32,14 @@ module RAutomation
                 end
       end
 
+      def hwnd
+        @@autoit.WinGetHandle(@locator).hex
+      end
+
+      def title
+        @@autoit.WinGetTitle(@locator)
+      end
+
       # makes window active
       # * returns true if activation was successful and false otherwise
       def activate

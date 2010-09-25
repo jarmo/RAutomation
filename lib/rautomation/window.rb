@@ -1,4 +1,6 @@
 module RAutomation
+  class UnknownWindowException < RuntimeError; end
+
   class Window
     class << self
       def implementation=(impl)
@@ -14,15 +16,23 @@ module RAutomation
       @window = @@impl.new(window_locator)
     end
 
+    def hwnd
+      assert_exists
+      @window.hwnd
+    end
+
     def title
+      assert_exists
       @window.title
     end
 
     def activate
+      assert_exists
       @window.activate
     end
 
     def text
+      assert_exists
       @window.text
     end
 
@@ -30,7 +40,10 @@ module RAutomation
       @window.exists?
     end
 
+    alias_method :exist?, :exists?
+
     def close
+      return unless @window.exists?
       @window.close
     end
 
@@ -40,6 +53,12 @@ module RAutomation
 
     def text_field(name)
       TextField.new(@window, name)
+    end
+
+    private
+
+    def assert_exists
+      raise UnknownWindowException.new("Window with locator '#{@window.locator}' doesn't exist!") unless @window.exists?
     end
   end
 end
