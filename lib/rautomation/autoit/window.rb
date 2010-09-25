@@ -56,6 +56,10 @@ module RAutomation
         @@autoit.WinExists(@locator) == 1
       end
 
+      def visible?
+        @@autoit.WinGetState(@locator) & 2 == 2
+      end
+
       def close
         @@autoit.WinClose(@locator)
         @@autoit.WinKill(@locator)

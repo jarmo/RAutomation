@@ -29,7 +29,6 @@ module RAutomation
     end
 
     def activate
-      assert_exists
       @window.activate
     end
 
@@ -40,6 +39,15 @@ module RAutomation
 
     def exists?
       @window.exists?
+    end
+
+    def visible?
+      assert_exists
+      activate && @window.visible?
+    end
+
+    def present?
+      exists? && visible?
     end
 
     alias_method :exist?, :exists?

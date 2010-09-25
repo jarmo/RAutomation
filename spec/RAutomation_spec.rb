@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe RAutomation::Window do
   before :all do
     @ie = IO.popen('"c:\\program files\\internet explorer\\iexplore.exe" http://dl.dropbox.com/u/2731643/RAutomation/test.html').pid
-    sleep 5
+    RAutomation::WaitHelper.wait_until(10) {RAutomation::Window.new(/file download/i).present?}
   end
 
   it "Window.implementation" do
@@ -29,6 +29,17 @@ describe RAutomation::Window do
     RAutomation::Window.new("non-existing-window").should_not exist
   end
 
+  it "#visible?" do
+    RAutomation::Window.new(/rautomation testing page/i).should be_visible
+    lambda{RAutomation::Window.new("non-existing-window").visible?}.
+            should raise_exception(RAutomation::UnknownWindowException)
+  end
+
+  it "#present?" do
+    RAutomation::Window.new(/rautomation testing page/i).should be_present
+    RAutomation::Window.new("non-existing-window").should_not be_present
+  end
+
   it "#hwnd" do
     RAutomation::Window.new(/rautomation testing page/i).hwnd.should be_a(Fixnum)
     lambda {RAutomation::Window.new("non-existing-window").hwnd}.
@@ -43,8 +54,6 @@ describe RAutomation::Window do
 
   it "#activate" do
     RAutomation::Window.new(/rautomation testing page/i).activate.should == true
-    lambda {RAutomation::Window.new("non-existing-window").activate}.
-            should raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#text" do
