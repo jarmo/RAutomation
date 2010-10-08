@@ -18,7 +18,7 @@ module RAutomation
     end
 
     def initialize(window_locator)
-      @window = @@impl.new(window_locator)
+      @window = self.class.implementation.new(window_locator)
     end
 
     def hwnd

@@ -81,7 +81,7 @@ module RAutomation
         TextField.new(self, name)
       end
 
-      def method_missing name, *args #:nodoc:
+      def method_missing(name, *args) #:nodoc:
         @@autoit.respond_to?(name) ? @@autoit.send(name, *args) : super
       end
     end
