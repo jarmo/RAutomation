@@ -13,7 +13,8 @@ module RAutomation
       # value got changed
       def set(text)
         wait_until do
-          @window.activate &&
+          @window.activate
+          @window.active? &&
                   Window.autoit.ControlFocus(@window.locator, "", @name) == 1 &&
                   Window.autoit.ControlSetText(@window.locator, "", @name, text) == 1 &&
                   value == text

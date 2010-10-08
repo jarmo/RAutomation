@@ -18,7 +18,7 @@ module RAutomation
     end
 
     def initialize(window_locator)
-      @window = self.class.implementation.new(window_locator)
+      @window = @@impl.new(window_locator)
     end
 
     def hwnd
@@ -35,6 +35,10 @@ module RAutomation
       @window.activate
     end
 
+    def active?
+      @window.active?
+    end
+
     def text
       assert_exists
       @window.text
@@ -48,7 +52,8 @@ module RAutomation
 
     def visible?
       assert_exists
-      activate && @window.visible?
+      activate
+      active? && @window.visible?
     end
 
     def present?
@@ -63,6 +68,11 @@ module RAutomation
     def minimize
       assert_exists
       @window.minimize
+    end
+
+    def send_keys(keys)
+      assert_exists
+      @window.send_keys(keys)
     end
 
     def close

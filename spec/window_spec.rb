@@ -47,9 +47,13 @@ describe RAutomation::Window do
             should raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "#activate" do
-    RAutomation::Window.new(/rautomation testing page/i).activate.should be_true
-    RAutomation::Window.new("non-existing-window").activate.should be_false
+  it "#activate & #active?" do
+    window = RAutomation::Window.new(/rautomation testing page/i)
+    window.activate
+    window.should be_active
+    non_existing_window = RAutomation::Window.new("non-existing-window")
+    non_existing_window.activate
+    non_existing_window.should_not be_active
   end
 
   it "#text" do
@@ -67,6 +71,16 @@ describe RAutomation::Window do
   it "#minimize" do
     RAutomation::Window.new(/rautomation testing page/i).minimize.should be_true
     lambda {RAutomation::Window.new("non-existing-window").minimize}.
+            should raise_exception(RAutomation::UnknownWindowException)
+  end
+
+  it "#send_keys" do
+    download_window = RAutomation::Window.new(/file download/i)
+    download_window.send_keys("!s") # ALT+s == save
+    save_window = RAutomation::Window.new("Save As")
+    RAutomation::WaitHelper.wait_until(10) {save_window.present?}
+
+    lambda {RAutomation::Window.new("non-existing-window").send_keys("123")}.
             should raise_exception(RAutomation::UnknownWindowException)
   end
 

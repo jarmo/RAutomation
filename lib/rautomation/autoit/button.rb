@@ -14,7 +14,8 @@ module RAutomation
       def click
         clicked = false
         wait_until do
-          @window.activate &&
+          @window.activate
+          @window.active? &&
                   Window.autoit.ControlFocus(@window.locator, "", @name) == 1 &&
                   Window.autoit.ControlClick(@window.locator, "", @name) == 1 &&
                   clicked = true # is clicked at least once

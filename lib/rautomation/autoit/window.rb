@@ -41,11 +41,13 @@ module RAutomation
       end
 
       # makes window active
-      # * returns true if activation was successful and false otherwise
       def activate
-        @@autoit.WinWait(@locator, "", 1) == 1 &&
-                @@autoit.WinActivate(@locator) != 0 &&
-                @@autoit.WinActive(@locator) != 0
+        @@autoit.WinWait(@locator, "", 1)
+        @@autoit.WinActivate(@locator)
+      end
+
+      def active?
+        @@autoit.WinActive(@locator) == 1
       end
 
       def text
@@ -66,6 +68,14 @@ module RAutomation
 
       def minimize
         @@autoit.WinSetState(@locator, "", @@autoit.SW_MINIMIZE) == 1
+      end
+
+      def send_keys(keys)
+        wait_until do
+          activate
+          active?
+        end
+        @@autoit.Send(keys)
       end
 
       def close
