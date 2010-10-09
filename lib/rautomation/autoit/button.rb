@@ -16,8 +16,8 @@ module RAutomation
         wait_until do
           @window.activate
           @window.active? &&
-                  Window.autoit.ControlFocus(@window.locator, "", @name) == 1 &&
-                  Window.autoit.ControlClick(@window.locator, "", @name) == 1 &&
+                  Window.autoit.ControlFocus(@window.locator_hwnd, "", @name) == 1 &&
+                  Window.autoit.ControlClick(@window.locator_hwnd, "", @name) == 1 &&
                   clicked = true # is clicked at least once
 
           clicked && !exists?
@@ -25,11 +25,11 @@ module RAutomation
       end
 
       def value
-        Window.autoit.ControlGetText(@window.locator, "", @name)
+        Window.autoit.ControlGetText(@window.locator_hwnd, "", @name)
       end
 
       def exists?
-        not Window.autoit.ControlGetHandle(@window.locator, "", @name).empty?
+        not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @name).empty?
       end
     end
   end

@@ -19,12 +19,5 @@ module RAutomation
 
       raise TimeoutError, "timed out after #{timeout} seconds"
     end
-
-    def wait_until?(timeout = 60, &block)
-      wait_until(timeout, &block)
-      true
-    rescue TimeoutError
-      false
-    end
   end
 end

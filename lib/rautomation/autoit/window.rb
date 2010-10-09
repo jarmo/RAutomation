@@ -21,53 +21,52 @@ module RAutomation
       attr_reader :locator
 
       def initialize(window_locator)
-        @locator =
-                case window_locator
-                  when Regexp
-                    "[REGEXPTITLE:#{window_locator}]"
-                  when Fixnum
-                    "[HANDLE:#{window_locator.to_s(16).rjust(8, "0")}]"
-                  else
-                    window_locator
-                end
+        @locator = case window_locator
+          when Regexp
+            "[REGEXPTITLE:#{window_locator}]"
+          when Fixnum
+            "[HANDLE:#{window_locator.to_s(16)}]"
+          else
+            window_locator
+        end
       end
 
       def hwnd
-        @@autoit.WinGetHandle(@locator).hex
+        @hwnd ||= (handle = @@autoit.WinGetHandle(@locator).hex) != 0 ? handle : nil
       end
 
       def title
-        @@autoit.WinGetTitle(@locator)
+        @@autoit.WinGetTitle(locator_hwnd)
       end
 
       # makes window active
       def activate
-        @@autoit.WinWait(@locator, "", 1)
-        @@autoit.WinActivate(@locator)
+        @@autoit.WinWait(locator_hwnd, "", 1)
+        @@autoit.WinActivate(locator_hwnd)
       end
 
       def active?
-        @@autoit.WinActive(@locator) == 1
+        @@autoit.WinActive(locator_hwnd) == 1
       end
 
       def text
-        @@autoit.WinGetText(@locator)
+        @@autoit.WinGetText(locator_hwnd)
       end
 
       def exists?
-        @@autoit.WinExists(@locator) == 1
+        @@autoit.WinExists(locator_hwnd) == 1
       end
 
       def visible?
-        @@autoit.WinGetState(@locator) & 2 == 2
+        @@autoit.WinGetState(locator_hwnd) & 2 == 2
       end
 
       def maximize
-        @@autoit.WinSetState(@locator, "", @@autoit.SW_MAXIMIZE) == 1
+        @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MAXIMIZE) == 1
       end
 
       def minimize
-        @@autoit.WinSetState(@locator, "", @@autoit.SW_MINIMIZE) == 1
+        @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MINIMIZE) == 1
       end
 
       def send_keys(keys)
@@ -79,8 +78,8 @@ module RAutomation
       end
 
       def close
-        @@autoit.WinClose(@locator)
-        @@autoit.WinKill(@locator)
+        @@autoit.WinClose(locator_hwnd)
+        @@autoit.WinKill(locator_hwnd)
       end
 
       def button(name)
@@ -93,6 +92,10 @@ module RAutomation
 
       def method_missing(name, *args) #:nodoc:
         @@autoit.respond_to?(name) ? @@autoit.send(name, *args) : super
+      end
+
+      def locator_hwnd #:nodoc:
+        "[HANDLE:#{hwnd.to_i.to_s(16)}]"
       end
     end
   end
