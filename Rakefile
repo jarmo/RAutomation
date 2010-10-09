@@ -10,8 +10,8 @@ begin
     gem.email = "jarmo.p@gmail.com"
     gem.homepage = "http://github.com/jarmo/RAutomation"
     gem.authors = ["Jarmo Pertman"]
-    gem.add_development_dependency "rspec", ">= 1.2.9"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.add_dependency "require_all"
+    gem.add_development_dependency "rspec", ">= 1.3.0"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

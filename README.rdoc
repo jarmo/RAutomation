@@ -1,6 +1,60 @@
 = RAutomation
 
-Description goes here.
+* Web: http://www.github.com/jarmo/RAutomation
+* Author: Jarmo Pertman (mailto:jarmo.p[at]gmail.com)
+
+== DESCRIPTION
+
+RAutomation tries to be a small and easy to use library for helping out to automate windows and their controls
+for automated testing.
+
+RAutomation aims to provide:
+* Easy to use and user-friendly API (inspired by Watir http://www.watir.com).
+* Cross-compatibility
+* Easy extensibility - have some application, which uses some specialized technology, but isn't supported by RAutomation?
+  You can get dirty and create new implementation for RAutomation, due to the used _Strategy Pattern_!
+
+== USAGE
+
+    require "rautomation"
+
+    window = RAutomation::Window.new(:title => /part of the title/i)
+    window.exists? # => true
+
+    window.title # => "blah blah part Of the title blah"
+    window.text # => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies..."
+
+    window.text_field(:class_name => "Edit1").set "hello, world!"
+    button = window.button(:text => "&Save")
+    button.exists? # => true
+    button.click
+
+See more examples in spec directory!
+
+== INSTALL
+
+=== Windows
+
+ 1. gem install rautomation
+ 2. create some script and run it
+
+You might need administrative privileges if running for the first time and you haven't installed AutoIt before!
+
+=== Linux
+
+Feel yourself at home on Linux and know how to automate windows and their controls? I would be happy if you'd contact me
+about that matter - or even better, send me a pull request!
+
+=== OS X
+
+Feel yourself at home on OS X and know how to automate windows and their controls? I would be happy if you'd contact me
+about that matter - or even better, send me a pull request!
+
+=== Others
+
+Feel yourself at home on some operating system not listed in here and know how to automate windows and their controls?
+Does Ruby also work on that operating system? I would be happy if you'd contact me
+about that matter - or even better, send me a pull request!
 
 == Note on Patches/Pull Requests
  
