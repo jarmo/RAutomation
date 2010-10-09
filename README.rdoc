@@ -35,8 +35,8 @@ See more examples in spec directory!
 
 === Windows
 
- 1. gem install rautomation
- 2. create some script and run it
+1. gem install rautomation
+2. create some script and run it
 
 You might need administrative privileges if running for the first time and you haven't installed AutoIt before!
 

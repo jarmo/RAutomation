@@ -1,10 +1,10 @@
 module RAutomation
   class Button
     # This constructor is meant to be accessed only through RAutomation::Window#button method.
-    def initialize(window, locator) #:nodoc:
+    def initialize(window, locators) #:nodoc:
       @window = window
-      @locator = locator
-      @button = @window.button(@locator)
+      @locators = locators
+      @button = @window.button(@locators)
     end
 
     # Performs a click on the Button.
@@ -33,7 +33,7 @@ module RAutomation
     private
 
     def assert_exists
-      raise UnknownButtonException.new("Button '#{@locator}' doesn't exist on window '#{@window.locator}'!") unless exists?
+      raise UnknownButtonException.new("Button '#{@locators}' doesn't exist on window '#{@window.locators}'!") unless exists?
     end
   end
 end

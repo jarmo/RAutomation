@@ -2,6 +2,7 @@ module RAutomation
   module AutoIt
     class Window
       include WaitHelper
+      include Locators
 
       class << self
         def autoit #:nodoc:
@@ -18,15 +19,22 @@ module RAutomation
       end
 
       load_autoit
-      attr_reader :locator
+      attr_reader :locators
 
+      # Special-cased locators
+      LOCATORS = {[:title, String] => :title,
+                  [:title, Regexp] => :regexptitle,
+                  :hwnd => :handle}
+      
       # Possible locators are _:title_, _:text_, _:hwnd_ and _:class_.
-      def initialize(window_locators)
-        extract_locators(window_locators)
+      def initialize(locators)
+        @hwnd = locators[:hwnd]
+        @locator_text = locators.delete(:text)
+        extract(locators)
       end
 
       def hwnd #:nodoc:
-        @hwnd ||= @@autoit.WinList(@locator, @locator_text).pop.compact.
+        @hwnd ||= @@autoit.WinList(@locators, @locator_text).pop.compact.
                 find {|handle| self.class.new(:hwnd => handle.hex).visible?}.hex rescue nil
       end
 
@@ -94,22 +102,6 @@ module RAutomation
       # Used internally.
       def locator_hwnd #:nodoc:
         "[HANDLE:#{hwnd.to_i.to_s(16)}]"
-      end
-
-      private
-
-      LOCATORS = {[:title, String] => :title,
-                  [:title, Regexp] => :regexptitle,
-                  :hwnd => :handle}
-
-      def extract_locators(locators)
-        @hwnd = locators[:hwnd]
-        @locator_text = locators.delete(:text)
-        @locator = "[#{locators.map do |locator, value|
-          locator_key = LOCATORS[locator] || LOCATORS[[locator, value.class]]
-          value = value.to_s(16) if locator == :hwnd
-          "#{(locator_key || locator)}:#{value}"
-        end.join(";")}]"
       end
     end
   end

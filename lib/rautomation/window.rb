@@ -19,7 +19,7 @@ module RAutomation
       end
     end
 
-    # Creates a new Window object using the +locator+ Hash parameter.
+    # Creates a new Window object using the +locators+ Hash parameter.
     #
     # Possible parameters can depend of the used platform and implementation, but
     # following examples will use _:title_, _:class_ and _:hwnd_.
@@ -41,8 +41,8 @@ module RAutomation
     # Object creation doesn't check for window's existence.
     #
     # Only visible windows will be searched for initially.
-    def initialize(locator)
-      @window = @@impl.new(locator)
+    def initialize(locators)
+      @window = @@impl.new(locators)
     end
 
     # Returns handle of the Window.
@@ -130,28 +130,28 @@ module RAutomation
       @window.close
     end
 
-    # Returns the Button object by the _locator_ on the Window.
+    # Returns the Button object by the _locators_ on the Window.
     # Refer to specific implementation's documentation for possible parameters.
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
-    def button(locator)
+    def button(locators)
       assert_exists
-      Button.new(@window, locator)
+      Button.new(@window, locators)
     end
 
-    # Returns the TextField object by the _locator_ on the Window.
+    # Returns the TextField object by the _locators_ on the Window.
     # Refer to specific implementation's documentation for possible parameters.
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
-    def text_field(locator)
+    def text_field(locators)
       assert_exists
-      TextField.new(@window, locator)
+      TextField.new(@window, locators)
     end
 
     private
 
     def assert_exists
-      raise UnknownWindowException.new("Window with locator '#{@window.locator}' doesn't exist!") unless exists?
+      raise UnknownWindowException.new("Window with locator '#{@window.locators}' doesn't exist!") unless exists?
     end
   end
 end

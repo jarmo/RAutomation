@@ -1,10 +1,10 @@
 module RAutomation
   class TextField
     # This constructor is meant to be accessed only through RAutomation::Window#text_field method.
-    def initialize(window, locator) #:nodoc:
+    def initialize(window, locators) #:nodoc:
       @window = window
-      @locator = locator
-      @text_field = @window.text_field(@locator)
+      @locators = locators
+      @text_field = @window.text_field(@locators)
     end
 
     # Sets TextField's text to +text+.
@@ -41,7 +41,7 @@ module RAutomation
     private
 
     def assert_exists
-      raise UnknownTextFieldException.new("Text field '#{@locator}' doesn't exist on window '#{@window.locator}'!") unless exists?
+      raise UnknownTextFieldException.new("Text field '#{@locators}' doesn't exist on window '#{@window.locators}'!") unless exists?
     end
   end
 end

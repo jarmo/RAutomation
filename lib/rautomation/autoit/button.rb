@@ -2,11 +2,15 @@ module RAutomation
   module AutoIt
     class Button
       include WaitHelper
+      include Locators
+
+      # Special-cased locators
+      LOCATORS = {:class_name => :classnn}
 
       # Possible locators are _:text_, _:id_, _:class_, _:class_name_ and _:instance_.
-      def initialize(window, locator)
+      def initialize(window, locators)
         @window = window
-        @locator = locator
+        extract(locators)
       end
 
       def click #:nodoc:
@@ -14,8 +18,8 @@ module RAutomation
         wait_until do
           @window.activate
           @window.active? &&
-                  Window.autoit.ControlFocus(@window.locator_hwnd, "", @locator) == 1 &&
-                  Window.autoit.ControlClick(@window.locator_hwnd, "", @locator) == 1 &&
+                  Window.autoit.ControlFocus(@window.locator_hwnd, "", @locators) == 1 &&
+                  Window.autoit.ControlClick(@window.locator_hwnd, "", @locators) == 1 &&
                   clicked = true # is clicked at least once
 
           clicked && !exists?
@@ -23,11 +27,11 @@ module RAutomation
       end
 
       def value #:nodoc:
-        Window.autoit.ControlGetText(@window.locator_hwnd, "", @locator)
+        Window.autoit.ControlGetText(@window.locator_hwnd, "", @locators)
       end
 
       def exists? #:nodoc:
-        not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @locator).empty?
+        not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @locators).empty?
       end
     end
   end
