@@ -3,33 +3,31 @@ module RAutomation
     class Button
       include WaitHelper
 
-      def initialize(window, button_name)
+      # Possible locators are _:text_, _:id_, _:class_, _:class_name_ and _:instance_.
+      def initialize(window, locator)
         @window = window
-        @name = button_name
+        @locator = locator
       end
 
-      # clicks specified button on window with specified title,
-      # activates window automatically and makes sure that the click
-      # was successful
-      def click
+      def click #:nodoc:
         clicked = false
         wait_until do
           @window.activate
           @window.active? &&
-                  Window.autoit.ControlFocus(@window.locator_hwnd, "", @name) == 1 &&
-                  Window.autoit.ControlClick(@window.locator_hwnd, "", @name) == 1 &&
+                  Window.autoit.ControlFocus(@window.locator_hwnd, "", @locator) == 1 &&
+                  Window.autoit.ControlClick(@window.locator_hwnd, "", @locator) == 1 &&
                   clicked = true # is clicked at least once
 
           clicked && !exists?
         end
       end
 
-      def value
-        Window.autoit.ControlGetText(@window.locator_hwnd, "", @name)
+      def value #:nodoc:
+        Window.autoit.ControlGetText(@window.locator_hwnd, "", @locator)
       end
 
-      def exists?
-        not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @name).empty?
+      def exists? #:nodoc:
+        not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @locator).empty?
       end
     end
   end

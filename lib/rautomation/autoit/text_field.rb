@@ -3,34 +3,32 @@ module RAutomation
     class TextField
       include WaitHelper
 
-      def initialize(window, field_name)
+      # Possible locators are _:id_, _:class_, _:class_name_ and _:instance_.
+      def initialize(window, locator)
         @window = window
-        @name = field_name
+        @locator = locator
       end
 
-      # sets specified field's value on window with specified title,
-      # activates window automatically and makes sure that the field's
-      # value got changed
-      def set(text)
+      def set(text) #:nodoc:
         wait_until do
           @window.activate
           @window.active? &&
-                  Window.autoit.ControlFocus(@window.locator_hwnd, "", @name) == 1 &&
-                  Window.autoit.ControlSetText(@window.locator_hwnd, "", @name, text) == 1 &&
+                  Window.autoit.ControlFocus(@window.locator_hwnd, "", @locator) == 1 &&
+                  Window.autoit.ControlSetText(@window.locator_hwnd, "", @locator, text) == 1 &&
                   value == text
         end
       end
 
-      def clear
+      def clear #:nodoc:
         set ""
       end
 
-      def value
-        Window.autoit.ControlGetText(@window.locator_hwnd, "", @name)
+      def value #:nodoc:
+        Window.autoit.ControlGetText(@window.locator_hwnd, "", @locator)
       end
 
-      def exists?
-        not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @name).empty?
+      def exists? #:nodoc:
+        not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @locator).empty?
       end
     end
   end
