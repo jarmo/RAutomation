@@ -20,19 +20,13 @@ module RAutomation
       load_autoit
       attr_reader :locator
 
-      def initialize(window_locator)
-        @locator = case window_locator
-          when Regexp
-            "[REGEXPTITLE:#{window_locator}]"
-          when Fixnum
-            "[HANDLE:#{window_locator.to_s(16)}]"
-          else
-            window_locator
-        end
+      def initialize(window_locators)
+        extract_locators(window_locators)
       end
 
       def hwnd
-        @hwnd ||= (handle = @@autoit.WinGetHandle(@locator).hex) != 0 ? handle : nil
+        @hwnd ||= @@autoit.WinList(@locator, @locator_text).pop.compact.
+                find {|handle| self.class.new(:hwnd => handle.hex).visible?}.hex rescue nil
       end
 
       def title
@@ -96,6 +90,22 @@ module RAutomation
 
       def locator_hwnd #:nodoc:
         "[HANDLE:#{hwnd.to_i.to_s(16)}]"
+      end
+
+      private
+
+      LOCATORS = {[:title, String] => :title,
+                  [:title, Regexp] => :regexptitle,
+                  :hwnd => :handle}
+
+      def extract_locators(locators)
+        @hwnd = locators[:hwnd]
+        @locator_text = locators.delete(:text)
+        @locator = "[#{locators.map do |locator, value|
+          locator_key = LOCATORS[locator] || LOCATORS[[locator, value.class]]
+          value = value.to_s(16) if locator == :hwnd
+          "#{(locator_key || locator)}:#{value}"
+        end.join(";")}]"
       end
     end
   end

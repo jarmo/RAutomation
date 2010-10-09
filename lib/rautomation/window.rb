@@ -52,8 +52,7 @@ module RAutomation
 
     def visible?
       assert_exists
-      activate
-      active? && @window.visible?
+      @window.visible?
     end
 
     def present?
