@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe RAutomation::Window do
   it "RAutomation::Window.implementation" do
-    RAutomation::Window.implementation.should == RAutomation::AutoIt::Window
+    RAutomation::Window.new(:title => "title").implementation.should == RAutomation::AutoIt::Window
   end
 
   it "Window#new by full title" do

@@ -7,22 +7,13 @@ module RAutomation
   end
 
   class Window
-    class << self
-      # Sets implementation class, which is used for all interaction with the windows.
-      def implementation=(impl)
-        @@impl = impl
-      end
 
-      # Returns the implementation class, which is used for all interaction with the windows.
-      def implementation
-        @@impl
-      end
-    end
+    attr_reader :implementation
 
-    # Creates a new Window object using the +locators+ Hash parameter.
+    # Creates a new Window object using the _locators_ Hash parameter.
     #
-    # Possible parameters can depend of the used platform and implementation, but
-    # following examples will use _:title_, _:class_ and _:hwnd_.
+    # Possible Window _locators_ may depend of the used platform and implementation, but
+    # following examples will use :title, :class and :hwnd.
     #
     # Use window with _some title_ being part of it's title:
     #   RAutomation::Window.new(:title => "some title")
@@ -38,11 +29,17 @@ module RAutomation
     #
     # Refer to all possible locators in each implementation's documentation.
     #
-    # Object creation doesn't check for window's existence.
+    # _locators_ may also include a key called :implementation to change default implementation,
+    # which is dependent of the platform, to automate windows and their controls.
     #
-    # Only visible windows will be searched for initially.
+    # It is also possible to change default implementation by using environment variable:
+    # <em>RAUTOMATION_IMPLEMENTATION</em>
+    #
+    # * Object creation doesn't check for window's existence.
+    # * Window to be searched for has to be visible!
     def initialize(locators)
-      @window = @@impl.new(locators)
+      @implementation = locators[:implementation] || ENV["RAUTOMATION_IMPLEMENTATION"] || default_implementation
+      @window = @implementation.new(locators)
     end
 
     # Returns handle of the Window.
@@ -149,6 +146,16 @@ module RAutomation
     end
 
     private
+
+    def default_implementation
+      case RUBY_PLATFORM
+        when /mswin|msys|mingw32/
+          require_rel "autoit.rb"
+          AutoIt::Window
+        else
+          raise "unsupported platform for RAutomation: #{RUBY_PLATFORM}"
+      end
+    end
 
     def assert_exists
       raise UnknownWindowException.new("Window with locator '#{@window.locators}' doesn't exist!") unless exists?

@@ -26,7 +26,7 @@ module RAutomation
                   [:title, Regexp] => :regexptitle,
                   :hwnd => :handle}
       
-      # Possible locators are _:title_, _:text_, _:hwnd_ and _:class_.
+      # Possible locators are :title, :text, :hwnd and :class.
       def initialize(locators)
         @hwnd = locators[:hwnd]
         @locator_text = locators.delete(:text)
