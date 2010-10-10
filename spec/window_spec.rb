@@ -63,20 +63,34 @@ describe RAutomation::Window do
             should raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "#minimize" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).minimize.should be_true
-    lambda {RAutomation::Window.new(:title => "non-existing-window").minimize}.
-            should raise_exception(RAutomation::UnknownWindowException)
-  end
-
   it "#maximize" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).maximize.should be_true
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).maximize
     lambda {RAutomation::Window.new(:title => "non-existing-window").maximize}.
             should raise_exception(RAutomation::UnknownWindowException)
   end
 
+  it "#minimize && #minimized?" do
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
+    window.should_not be_minimized
+    window.minimize
+    window.should be_minimized
+
+    lambda {RAutomation::Window.new(:title => "non-existing-window").minimize}.
+            should raise_exception(RAutomation::UnknownWindowException)
+    lambda {RAutomation::Window.new(:title => "non-existing-window").minimized?}.
+            should raise_exception(RAutomation::UnknownWindowException)
+  end
+
+  it "#restore" do
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).restore
+    lambda {RAutomation::Window.new(:title => "non-existing-window").restore}.
+            should raise_exception(RAutomation::UnknownWindowException)
+  end
+
   it "#send_keys"do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).send_keys(SpecHelper::DATA[:window2_send_keys])
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    window.minimize # #send_keys should work even if window is minimized
+    window.send_keys(SpecHelper::DATA[:window2_send_keys])
     save_window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
     RAutomation::WaitHelper.wait_until(15) {save_window.present?}
 

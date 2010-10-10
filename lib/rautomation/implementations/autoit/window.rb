@@ -68,11 +68,22 @@ module RAutomation
         end
 
         def maximize #:nodoc:
-          @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MAXIMIZE) == 1
+          @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MAXIMIZE)
+          sleep 1
         end
 
         def minimize #:nodoc:
-          @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MINIMIZE) == 1
+          @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MINIMIZE)
+          sleep 1
+        end
+
+        def minimized?
+          @@autoit.WinGetState(locator_hwnd) & 16 == 16
+        end
+
+        def restore
+          @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_RESTORE)
+          sleep 1
         end
 
         # Activates the Window and sends keys to it.
@@ -80,6 +91,7 @@ module RAutomation
         # Refer to AutoIt documentation for keys syntax.
         def send_keys(keys)
           wait_until do
+            restore if minimized?
             activate
             active?
           end

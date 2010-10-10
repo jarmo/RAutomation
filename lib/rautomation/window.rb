@@ -85,7 +85,7 @@ module RAutomation
     alias_method :exist?, :exists?
 
     # Returns true if the Window is visible, false otherwise.
-    # Window is also visible, if it is behind other windows.
+    # Window is also visible, if it is behind other windows or minimized.
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def visible?
@@ -112,6 +112,22 @@ module RAutomation
     def minimize
       assert_exists
       @window.minimize
+    end
+
+    # Returns true if the Window is minimized, false otherwise.
+    #
+    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    def minimized?
+      assert_exists
+      @window.minimized?
+    end
+
+    # Restores the Window.
+    #
+    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    def restore
+      assert_exists
+      @window.restore
     end
 
     # Sends keys to the Window. Refer to specific implementation's documentation for possible values.
