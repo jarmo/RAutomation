@@ -78,7 +78,7 @@ describe RAutomation::Window do
   it "#send_keys"do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).send_keys(SpecHelper::DATA[:window2_send_keys])
     save_window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    RAutomation::WaitHelper.wait_until(10) {save_window.present?}
+    RAutomation::WaitHelper.wait_until(15) {save_window.present?}
 
     lambda {RAutomation::Window.new(:title => "non-existing-window").send_keys("123")}.
             should raise_exception(RAutomation::UnknownWindowException)

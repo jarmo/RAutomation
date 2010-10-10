@@ -14,7 +14,7 @@ module RAutomation
       until ::Time.now > end_time
         result = yield(self)
         return result if result
-        sleep 0.1
+        sleep 0.5
       end
 
       raise TimeoutError, "timed out after #{timeout} seconds"
