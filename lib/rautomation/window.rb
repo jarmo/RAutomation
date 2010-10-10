@@ -146,6 +146,11 @@ module RAutomation
       TextField.new(@window, locators)
     end
 
+    # Allow to execute implementation's methods not part of the public API
+    def method_missing(name, *args)
+      @window.respond_to?(name) ? @window.send(name, *args) : super
+    end
+
     private
 
     def assert_exists

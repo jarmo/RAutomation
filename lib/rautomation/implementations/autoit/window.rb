@@ -104,7 +104,8 @@ module RAutomation
         end
 
         # Used internally.
-        def locator_hwnd #:nodoc:
+        # @private
+        def locator_hwnd
           "[HANDLE:#{hwnd.to_i.to_s(16)}]"
         end
       end
