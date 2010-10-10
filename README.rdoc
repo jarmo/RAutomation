@@ -10,9 +10,9 @@ for automated testing.
 
 RAutomation aims to provide:
 * Easy to use and user-friendly API (inspired by Watir http://www.watir.com).
-* Cross-compatibility
+* Cross-platform compatibility
 * Easy extensibility - have some application, which uses some specialized technology, but isn't supported by RAutomation?
-  You can get dirty and create new implementation for RAutomation, due to the used _Strategy Pattern_!
+  You can get dirty and create new implementation for RAutomation, due to the used <em>Strategy Pattern</em>!
 
 == USAGE
 
