@@ -1,6 +1,6 @@
 require "require_all"
 require_rel "rautomation/wait_helper"
-require_rel "rautomation/implementation_helper"
+require_rel "rautomation/implementations/helper"
 require_rel "rautomation/window"
 require_rel "rautomation/button"
 require_rel "rautomation/text_field"

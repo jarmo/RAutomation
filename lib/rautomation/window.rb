@@ -7,7 +7,7 @@ module RAutomation
   end
 
   class Window
-    include ImplementationHelper
+    include Implementations::Helper
 
     attr_reader :implementation
 

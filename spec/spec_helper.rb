@@ -5,7 +5,7 @@ require 'spec/autorun'
 
 module SpecHelper
   DATA = {
-          "RAutomation::AutoIt::Window" => {
+          "RAutomation::Implementations::AutoIt::Window" => {
                   # binary, which will be ran in before :all to open windows to test
                   :bin => '"c:\\program files\\internet explorer\\iexplore.exe" http://dl.dropbox.com/u/2731643/RAutomation/test.html',
                   # window title 1, has to be String
@@ -19,7 +19,7 @@ module SpecHelper
                   :window3_text_field_class_name => "Edit1"
 
           }
-  }[ENV["RAUTOMATION_IMPLEMENTATION"] || RAutomation::ImplementationHelper.default_implementation.to_s]
+  }[ENV["RAUTOMATION_IMPLEMENTATION"] || RAutomation::Implementations::Helper.default_implementation.to_s]
 end
 
 Spec::Runner.configure do |config|
