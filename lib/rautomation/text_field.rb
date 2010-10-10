@@ -41,7 +41,7 @@ module RAutomation
     private
 
     def assert_exists
-      raise UnknownTextFieldException.new("Text field '#{@locators}' doesn't exist on window '#{@window.locators}'!") unless exists?
+      raise UnknownTextFieldException.new("Text field '#{@locators.inspect}' doesn't exist on window '#{@window.locators.inspect}'!") unless exists?
     end
   end
 end

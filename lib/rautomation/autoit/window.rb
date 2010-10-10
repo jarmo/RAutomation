@@ -19,13 +19,15 @@ module RAutomation
       end
 
       load_autoit
+      @@autoit.AutoItSetOption("WinWaitDelay", 350)
+      
       attr_reader :locators
 
       # Special-cased locators
       LOCATORS = {[:title, String] => :title,
                   [:title, Regexp] => :regexptitle,
                   :hwnd => :handle}
-      
+
       # Possible locators are :title, :text, :hwnd and :class.
       def initialize(locators)
         @hwnd = locators[:hwnd]
@@ -45,6 +47,7 @@ module RAutomation
       def activate #:nodoc:
         @@autoit.WinWait(locator_hwnd, "", 1)
         @@autoit.WinActivate(locator_hwnd)
+        sleep 1
       end
 
       def active? #:nodoc:

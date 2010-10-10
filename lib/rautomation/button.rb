@@ -33,7 +33,7 @@ module RAutomation
     private
 
     def assert_exists
-      raise UnknownButtonException.new("Button '#{@locators}' doesn't exist on window '#{@window.locators}'!") unless exists?
+      raise UnknownButtonException.new("Button '#{@locators.inspect}' doesn't exist on window '#{@window.locators.inspect}'!") unless exists?
     end
   end
 end
