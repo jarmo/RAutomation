@@ -22,16 +22,14 @@ describe RAutomation::Button do
   end
 
   it "#click" do
-    button = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).
-            button(:text => SpecHelper::DATA[:window2_button_text])
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    lambda{window.button(:text => "non-existent-button").click}.
+            should raise_exception(RAutomation::UnknownButtonException)
+
+    button = window.button(:text => SpecHelper::DATA[:window2_button_text])
     button.should exist
     button.click
     button.should_not exist
-
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    RAutomation::WaitHelper.wait_until(15) {window.present?}
-
-    lambda{window.button(:text => "non-existent-button").click}.
-            should raise_exception(RAutomation::UnknownButtonException)
+    window.should_not exist
   end
 end

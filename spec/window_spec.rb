@@ -6,18 +6,18 @@ describe RAutomation::Window do
   end
 
   it "Window#new by full title" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should exist
-  end
-
-  it "Window#new by regexp title" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).should exist
   end
 
+  it "Window#new by regexp title" do
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should exist
+  end
+
   it "Window#new by hwnd" do
-    hwnd = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).hwnd
+    hwnd = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).hwnd
     window = RAutomation::Window.new(:hwnd => hwnd)
     window.should exist
-    window.title.should == SpecHelper::DATA[:window1_title]
+    window.title.should == SpecHelper::DATA[:window2_title]
   end
 
   it "#exists?" do
@@ -43,7 +43,7 @@ describe RAutomation::Window do
   end
 
   it "#title" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).title.should == SpecHelper::DATA[:window1_title]
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).title.should == SpecHelper::DATA[:window2_title]
     lambda {RAutomation::Window.new(:title => "non-existing-window").title}.
             should raise_exception(RAutomation::UnknownWindowException)
   end
@@ -91,8 +91,7 @@ describe RAutomation::Window do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
     window.minimize # #send_keys should work even if window is minimized
     window.send_keys(SpecHelper::DATA[:window2_send_keys])
-    save_window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    RAutomation::WaitHelper.wait_until(15) {save_window.present?}
+    RAutomation::WaitHelper.wait_until(15) {not window.exists?}
 
     lambda {RAutomation::Window.new(:title => "non-existing-window").send_keys("123")}.
             should raise_exception(RAutomation::UnknownWindowException)

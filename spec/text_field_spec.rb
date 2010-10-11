@@ -1,31 +1,24 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe RAutomation::TextField do
-  before :all do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).
-            button(:text => SpecHelper::DATA[:window2_button_text]).click
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    RAutomation::WaitHelper.wait_until(15) {window.present?}
-  end
-
   it "#text_field" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title]).
-            text_field(:class_name => SpecHelper::DATA[:window3_text_field_class_name]).should exist
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).
+            text_field(:class_name => SpecHelper::DATA[:window2_text_field_class_name]).should exist
     lambda {RAutomation::Window.new(:title => "non-existent-window").
-            text_field(:class_name => SpecHelper::DATA[:window3_text_field_class_name])}.
+            text_field(:class_name => SpecHelper::DATA[:window2_text_field_class_name])}.
             should raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#set" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    window.text_field(:class_name => SpecHelper::DATA[:window3_text_field_class_name]).set "hello!"
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    window.text_field(:class_name => SpecHelper::DATA[:window2_text_field_class_name]).set "hello!"
     lambda {window.text_field(:class_name => "non-existing-field").set "hello!"}.
             should raise_exception(RAutomation::UnknownTextFieldException)
   end
 
   it "#clear"do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    field = window.text_field(:class_name => SpecHelper::DATA[:window3_text_field_class_name])
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    field = window.text_field(:class_name => SpecHelper::DATA[:window2_text_field_class_name])
     field.set "hello!"
     field.value.should == "hello!"
     field.clear
@@ -36,8 +29,8 @@ describe RAutomation::TextField do
   end
 
   it "#value" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    field = window.text_field(:class_name => SpecHelper::DATA[:window3_text_field_class_name])
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    field = window.text_field(:class_name => SpecHelper::DATA[:window2_text_field_class_name])
     field.set "hello!"
     field.value.should == "hello!"
 
@@ -46,8 +39,8 @@ describe RAutomation::TextField do
   end
 
   it "#exists?" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window3_title])
-    field = window.text_field(:class_name => SpecHelper::DATA[:window3_text_field_class_name])
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    field = window.text_field(:class_name => SpecHelper::DATA[:window2_text_field_class_name])
     field.should exist
     window.text_field(:class_name => "non-existent-field").should_not exist
   end
