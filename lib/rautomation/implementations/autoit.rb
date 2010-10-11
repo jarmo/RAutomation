@@ -1,2 +1,5 @@
 require "win32ole"
-require_rel "autoit/"
+require File.dirname(__FILE__) + "/autoit/locators"
+require File.dirname(__FILE__) + "/autoit/window"
+require File.dirname(__FILE__) + "/autoit/button"
+require File.dirname(__FILE__) + "/autoit/text_field"

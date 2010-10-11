@@ -1,5 +1,7 @@
 module RAutomation
   module Implementations
+    autoload :AutoIt, File.dirname(__FILE__) + "/autoit.rb"
+
     module Helper
       extend self
 
@@ -7,7 +9,6 @@ module RAutomation
       def default_implementation
         case RUBY_PLATFORM
           when /mswin|msys|mingw32/
-            require_rel "autoit.rb"
             Implementations::AutoIt::Window
           else
             raise "unsupported platform for RAutomation: #{RUBY_PLATFORM}"
