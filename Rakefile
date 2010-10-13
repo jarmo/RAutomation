@@ -4,7 +4,7 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "RAutomation"
+    gem.name = "rautomation"
     gem.summary = %Q{Automate windows and their controls through user-friendly API with Ruby}
     gem.description = %Q{RAutomation tries to be a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
