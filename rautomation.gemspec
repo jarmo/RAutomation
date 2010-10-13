@@ -43,6 +43,7 @@ RAutomation aims to provide:
      "lib/rautomation/text_field.rb",
      "lib/rautomation/wait_helper.rb",
      "lib/rautomation/window.rb",
+     "rautomation.gemspec",
      "spec/button_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
