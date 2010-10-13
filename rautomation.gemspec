@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jarmo Pertman"]
-  s.date = %q{2010-10-13}
+  s.date = %q{2010-10-14}
   s.description = %q{RAutomation tries to be a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
 

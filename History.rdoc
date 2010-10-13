@@ -1,0 +1,8 @@
+=== Version 0.0.2 / 2010-10-14
+
+ * using :value locator for buttons instead of :text
+ * searching only visible windows with some text on them
+
+=== Version 0.0.1 / 2010-10-13
+
+ * Initial release
