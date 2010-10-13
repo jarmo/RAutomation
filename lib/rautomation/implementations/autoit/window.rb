@@ -36,9 +36,12 @@ module RAutomation
           extract(locators)
         end
 
+        # Returns handle of the found window.
+        # Searches only for visible windows with having some text at all.
         def hwnd #:nodoc:
           @hwnd ||= @@autoit.WinList(@locators, @locator_text).pop.compact.
-                  find {|handle| self.class.new(:hwnd => handle.hex).visible?}.hex rescue nil
+                  find {|handle| w = self.class.new(:hwnd => handle.hex); w.visible? && !w.text.empty?}.
+                  hex rescue nil
         end
 
         def title #:nodoc:
