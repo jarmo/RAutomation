@@ -40,11 +40,10 @@ Spec::Runner.configure do |config|
   config.before(:all) do
     @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
     @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
-    RAutomation::Window.wait_timeout = 0.1
-    window1 = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    RAutomation::WaitHelper.wait_until(15) {window1.present?}
-    window2 = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
-    RAutomation::WaitHelper.wait_until(15) {window2.present?}
+  end
+
+  config.before(:each) do
+    RAutomation::Window.wait_timeout = 60
   end
 
   config.after(:all) do

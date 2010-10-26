@@ -59,7 +59,7 @@ module RAutomation
     #
     # This handle will be used internally for all operations.
     def hwnd
-      assert_exists
+      wait_until_exists
       @window.hwnd
     end
 
@@ -67,7 +67,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def title
-      assert_exists
+      wait_until_exists
       @window.title
     end
 
@@ -85,7 +85,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def text
-      assert_exists
+      wait_until_exists
       @window.text
     end
 
@@ -101,7 +101,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def visible?
-      assert_exists
+      wait_until_exists
       @window.visible?
     end
 
@@ -114,7 +114,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def maximize
-      assert_exists
+      wait_until_exists
       @window.maximize
     end
 
@@ -122,7 +122,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def minimize
-      assert_exists
+      wait_until_exists
       @window.minimize
     end
 
@@ -130,7 +130,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def minimized?
-      assert_exists
+      wait_until_exists
       @window.minimized?
     end
 
@@ -138,7 +138,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def restore
-      assert_exists
+      wait_until_exists
       @window.restore
     end
 
@@ -146,7 +146,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def send_keys(keys)
-      assert_exists
+      wait_until_exists
       @window.send_keys(keys)
     end
 
@@ -161,7 +161,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def button(locators)
-      assert_exists
+      wait_until_exists
       Button.new(@window, locators)
     end
 
@@ -170,7 +170,7 @@ module RAutomation
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def text_field(locators)
-      assert_exists
+      wait_until_exists
       TextField.new(@window, locators)
     end
 
@@ -181,8 +181,11 @@ module RAutomation
 
     private
 
-    def assert_exists
+    def wait_until_exists
+      WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
+    rescue WaitHelper::TimeoutError
       raise UnknownWindowException.new("Window with locator #{@window.locators.inspect} doesn't exist!") unless exists?
     end
+
   end
 end
