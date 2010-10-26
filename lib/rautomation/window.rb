@@ -44,6 +44,7 @@ module RAutomation
     end
 
     class << self
+      # Timeout for waiting until object exists. If the timeout exceeds then an Exception is thrown.
       @@wait_timeout = 60
 
       def wait_timeout=(timeout)

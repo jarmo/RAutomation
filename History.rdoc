@@ -1,3 +1,8 @@
+=== Version 0.0.4 / 2010-10-27
+
+ * most Window, Button and TextField methods wait until the object exists.
+     Use RAutomation::Window.wait_timeout= to set timeout before failing. Default is 60 seconds.
+
 === Version 0.0.3 / 2010-10-15
 
  * RAutomation didn't load AutoIt correctly if it wasn't installed before
