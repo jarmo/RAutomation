@@ -11,7 +11,7 @@ module RAutomation
     #
     # Raises an UnknownButtonException if the Button itself doesn't exist.
     def click
-      assert_exists
+      wait_until_exists
       @button.click
     end
 
@@ -19,7 +19,7 @@ module RAutomation
     #
     # Raises an UnknownButtonException if the Button itself doesn't exist.
     def value
-      assert_exists
+      wait_until_exists
       @button.value
     end
 
@@ -32,8 +32,10 @@ module RAutomation
 
     private
 
-    def assert_exists
-      raise UnknownButtonException.new("Button '#{@locators.inspect}' doesn't exist on window '#{@window.locators.inspect}'!") unless exists?
+    def wait_until_exists
+      WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
+    rescue WaitHelper::TimeoutError
+      raise UnknownButtonException.new("Button #{@locators.inspect} doesn't exist on window #{@window.locators.inspect}!")
     end
   end
 end

@@ -11,7 +11,7 @@ module RAutomation
                 :value => :text
         }
 
-        # Possible locators are :value, :id, :class, :class_name and :instance.
+        # Possible locators are :text, :value, :id, :class, :class_name and :instance.
         def initialize(window, locators)
           @window = window
           extract(locators)

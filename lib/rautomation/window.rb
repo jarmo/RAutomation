@@ -43,6 +43,18 @@ module RAutomation
       @window = @implementation.new(locators)
     end
 
+    class << self
+      @@wait_timeout = 60
+
+      def wait_timeout=(timeout)
+        @@wait_timeout = timeout
+      end
+
+      def wait_timeout
+        @@wait_timeout
+      end
+    end
+
     # Returns handle of the Window.
     #
     # This handle will be used internally for all operations.
@@ -170,7 +182,7 @@ module RAutomation
     private
 
     def assert_exists
-      raise UnknownWindowException.new("Window with locator '#{@window.locators.inspect}' doesn't exist!") unless exists?
+      raise UnknownWindowException.new("Window with locator #{@window.locators.inspect} doesn't exist!") unless exists?
     end
   end
 end

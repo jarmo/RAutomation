@@ -11,7 +11,7 @@ module RAutomation
     #
     # Raises an UnknownTextFieldException if the TextField itself doesn't exist.
     def set(text)
-      assert_exists
+      wait_until_exists
       @text_field.set(text)
     end
 
@@ -19,7 +19,7 @@ module RAutomation
     #
     # Raises an UnknownTextFieldException if the TextField itself doesn't exist.
     def clear
-      assert_exists
+      wait_until_exists
       @text_field.clear
     end
 
@@ -27,7 +27,7 @@ module RAutomation
     #
     # Raises an UnknownTextFieldException if the TextField itself doesn't exist.
     def value
-      assert_exists
+      wait_until_exists
       @text_field.value
     end
 
@@ -40,8 +40,10 @@ module RAutomation
 
     private
 
-    def assert_exists
-      raise UnknownTextFieldException.new("Text field '#{@locators.inspect}' doesn't exist on window '#{@window.locators.inspect}'!") unless exists?
+    def wait_until_exists
+      WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
+    rescue WaitHelper::TimeoutError
+      raise UnknownTextFieldException.new("Text field #{@locators.inspect} doesn't exist on window #{@window.locators.inspect}!") unless exists?
     end
   end
 end
