@@ -40,7 +40,7 @@ module RAutomation
     # * Window to be searched for has to be visible!
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] || default_adapter
-      @window = @adapter.new(locators)
+      @window = Adapter.const_get(normalize(@adapter)).const_get(:Window).new(locators)
     end
 
     class << self
@@ -186,6 +186,10 @@ module RAutomation
       WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
     rescue WaitHelper::TimeoutError
       raise UnknownWindowException.new("Window with locator #{@window.locators.inspect} doesn't exist!") unless exists?
+    end
+
+    def normalize adapter
+      adapter.to_s.split("_").map {|word| word.capitalize}.join
     end
 
   end

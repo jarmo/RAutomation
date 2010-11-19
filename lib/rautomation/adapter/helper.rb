@@ -9,7 +9,7 @@ module RAutomation
       def default_adapter
         case RUBY_PLATFORM
           when /mswin|msys|mingw32/
-            Adapter::Autoit::Window
+            :autoit
           else
             raise "unsupported platform for RAutomation: #{RUBY_PLATFORM}"
         end

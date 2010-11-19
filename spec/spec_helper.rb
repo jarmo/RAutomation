@@ -14,7 +14,7 @@ module SpecHelper
   # 2) Browser window, which opens up a test.html where JavaScript prompt with a Button and a TextField objects will be shown.
   DATA = {
           # This adapter needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
-          "RAutomation::Adapter::Autoit::Window" => {
+          :autoit => {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
                   :window1 => "mspaint",
@@ -33,7 +33,7 @@ module SpecHelper
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class_name => "Edit1"
           }
-  }[ENV["RAUTOMATION_ADAPTER"] || RAutomation::Adapter::Helper.default_adapter.to_s]
+  }[ENV["RAUTOMATION_ADAPTER"] || RAutomation::Adapter::Helper.default_adapter]
 end
 
 Spec::Runner.configure do |config|
