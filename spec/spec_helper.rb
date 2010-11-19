@@ -33,7 +33,7 @@ module SpecHelper
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class_name => "Edit1"
           }
-  }[ENV["RAUTOMATION_ADAPTER"] || RAutomation::Adapter::Helper.default_adapter]
+  }[ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter]
 end
 
 Spec::Runner.configure do |config|

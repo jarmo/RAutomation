@@ -1,6 +1,7 @@
 module RAutomation
   module Adapter
     autoload :Autoit, File.dirname(__FILE__) + "/autoit.rb"
+    autoload :Ffi, File.dirname(__FILE__) + "/ffi.rb"
 
     module Helper
       extend self

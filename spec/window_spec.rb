@@ -10,7 +10,7 @@ describe RAutomation::Window do
   end
 
   it "RAutomation::Window.adapter" do
-    RAutomation::Window.new(:title => "random").adapter.should == (ENV["RAUTOMATION_ADAPTER"] || RAutomation::Adapter::Helper.default_adapter)
+    RAutomation::Window.new(:title => "random").adapter.should == (ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter)
   end
 
   it "Window#new by full title" do

@@ -39,7 +39,7 @@ module RAutomation
     # * Object creation doesn't check for window's existence.
     # * Window to be searched for has to be visible!
     def initialize(locators)
-      @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] || default_adapter
+      @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
       @window = Adapter.const_get(normalize(@adapter)).const_get(:Window).new(locators)
     end
 
