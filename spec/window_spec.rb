@@ -9,8 +9,8 @@ describe RAutomation::Window do
     RAutomation::WaitHelper.wait_until {window.present?}
   end
 
-  it "RAutomation::Window.implementation" do
-    RAutomation::Window.new(:title => "random").implementation.should == (ENV["RAUTOMATION_IMPLEMENTATION"] || RAutomation::Implementations::Helper.default_implementation)
+  it "RAutomation::Window.adapter" do
+    RAutomation::Window.new(:title => "random").adapter.should == (ENV["RAUTOMATION_ADAPTER"] || RAutomation::Adapter::Helper.default_adapter)
   end
 
   it "Window#new by full title" do

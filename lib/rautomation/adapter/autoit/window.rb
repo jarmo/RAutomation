@@ -1,6 +1,6 @@
 module RAutomation
-  module Implementations
-    module AutoIt
+  module Adapter
+    module Autoit
       class Window
         include WaitHelper
         include Locators

@@ -13,7 +13,7 @@ RAutomation aims to provide:
 * Easy to use and user-friendly API (inspired by Watir http://www.watir.com).
 * Cross-platform compatibility
 * Easy extensibility - have some application, which uses some specialized technology, but isn't supported by RAutomation?
-  You can get dirty and create new implementation for RAutomation, due to the applied Strategy Pattern!}
+  You can get dirty and create a new adapter for RAutomation!}
     gem.email = "jarmo.p@gmail.com"
     gem.homepage = "http://github.com/jarmo/RAutomation"
     gem.authors = ["Jarmo Pertman"]

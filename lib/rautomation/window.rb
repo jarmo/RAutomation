@@ -7,13 +7,13 @@ module RAutomation
   end
 
   class Window
-    include Implementations::Helper
+    include Adapter::Helper
 
-    attr_reader :implementation
+    attr_reader :adapter
 
     # Creates a new Window object using the _locators_ Hash parameter.
     #
-    # Possible Window _locators_ may depend of the used platform and implementation, but
+    # Possible Window _locators_ may depend of the used platform and adapter, but
     # following examples will use :title, :class and :hwnd.
     #
     # Use window with _some title_ being part of it's title:
@@ -28,19 +28,19 @@ module RAutomation
     # It is possible to use multiple locators together where every locator will be matched (AND-ed) to the window:
     #   RAutomation::Window.new(:title => "some title", :class => "IEFrame")
     #
-    # Refer to all possible locators in each implementation's documentation.
+    # Refer to all possible locators in each adapter's documentation.
     #
-    # _locators_ may also include a key called :implementation to change default implementation,
+    # _locators_ may also include a key called :adapter to change default adapter,
     # which is dependent of the platform, to automate windows and their controls.
     #
-    # It is also possible to change default implementation by using environment variable:
-    # <em>RAUTOMATION_IMPLEMENTATION</em>
+    # It is also possible to change default adapter by using environment variable:
+    # <em>RAUTOMATION_ADAPTER</em>
     #
     # * Object creation doesn't check for window's existence.
     # * Window to be searched for has to be visible!
     def initialize(locators)
-      @implementation = locators.delete(:implementation) || ENV["RAUTOMATION_IMPLEMENTATION"] || default_implementation
-      @window = @implementation.new(locators)
+      @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] || default_adapter
+      @window = @adapter.new(locators)
     end
 
     class << self
@@ -143,7 +143,7 @@ module RAutomation
       @window.restore
     end
 
-    # Sends keys to the Window. Refer to specific implementation's documentation for possible values.
+    # Sends keys to the Window. Refer to specific adapter's documentation for possible values.
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def send_keys(keys)
@@ -158,7 +158,7 @@ module RAutomation
     end
 
     # Returns the Button object by the _locators_ on the Window.
-    # Refer to specific implementation's documentation for possible parameters.
+    # Refer to specific adapter's documentation for possible parameters.
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def button(locators)
@@ -167,7 +167,7 @@ module RAutomation
     end
 
     # Returns the TextField object by the _locators_ on the Window.
-    # Refer to specific implementation's documentation for possible parameters.
+    # Refer to specific adapter's documentation for possible parameters.
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
     def text_field(locators)
@@ -175,7 +175,7 @@ module RAutomation
       TextField.new(@window, locators)
     end
 
-    # Allow to execute implementation's methods not part of the public API
+    # Allow to execute adapter's methods not part of the public API
     def method_missing(name, *args)
       @window.respond_to?(name) ? @window.send(name, *args) : super
     end

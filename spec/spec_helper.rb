@@ -4,17 +4,17 @@ require 'spec'
 require 'spec/autorun'
 
 module SpecHelper
-  # Since implementations are different then the windows to be tested
+  # Since adapters are different then the windows to be tested
   # might be different also.
   #
-  # This constant allows to create input data for specs which could differ between the implementations.
+  # This constant allows to create input data for specs which could differ between the adapters.
   #
   # There has to be 2 windows:
   # 1) Some random window, which is maximizable, minimizable, close'able and etc.
   # 2) Browser window, which opens up a test.html where JavaScript prompt with a Button and a TextField objects will be shown.
   DATA = {
-          # This implementation needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
-          "RAutomation::Implementations::AutoIt::Window" => {
+          # This adapter needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
+          "RAutomation::Adapter::Autoit::Window" => {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
                   :window1 => "mspaint",
@@ -33,7 +33,7 @@ module SpecHelper
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class_name => "Edit1"
           }
-  }[ENV["RAUTOMATION_IMPLEMENTATION"] || RAutomation::Implementations::Helper.default_implementation.to_s]
+  }[ENV["RAUTOMATION_ADAPTER"] || RAutomation::Adapter::Helper.default_adapter.to_s]
 end
 
 Spec::Runner.configure do |config|

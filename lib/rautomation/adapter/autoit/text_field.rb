@@ -1,33 +1,31 @@
 module RAutomation
-  module Implementations
-    module AutoIt
-      class Button
+  module Adapter
+    module Autoit
+      class TextField
         include WaitHelper
         include Locators
 
         # Special-cased locators
-        LOCATORS = {
-                :class_name => :classnn,
-                :value => :text
-        }
+        LOCATORS = {:class_name => :classnn}
 
-        # Possible locators are :text, :value, :id, :class, :class_name and :instance.
+        # Possible locators are :id, :class, :class_name and :instance.
         def initialize(window, locators)
           @window = window
           extract(locators)
         end
 
-        def click #:nodoc:
-          clicked = false
+        def set(text) #:nodoc:
           wait_until do
             @window.activate
             @window.active? &&
                     Window.autoit.ControlFocus(@window.locator_hwnd, "", @locators) == 1 &&
-                    Window.autoit.ControlClick(@window.locator_hwnd, "", @locators) == 1 &&
-                    clicked = true # is clicked at least once
-
-            clicked && !exists?
+                    Window.autoit.ControlSetText(@window.locator_hwnd, "", @locators, text) == 1 &&
+                    value == text
           end
+        end
+
+        def clear #:nodoc:
+          set ""
         end
 
         def value #:nodoc:
