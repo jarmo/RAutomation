@@ -17,7 +17,7 @@ module RAutomation
           @hwnd ||= begin
             found_hwnd = nil
             window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |hwnd, _|
-              if !Functions._window_visible(hwnd) || Functions.window_text(hwnd).empty?
+              if !Functions.window_visible(hwnd) || Functions.window_text(hwnd).empty?
                 true
               else
                 properties = window_properties(hwnd)
@@ -38,7 +38,7 @@ module RAutomation
               end
             end
 
-            Functions._enum_windows(window_callback, nil)
+            Functions.enum_windows(window_callback, nil)
             found_hwnd
           end
         end
@@ -62,26 +62,26 @@ module RAutomation
         end
 
         def exists? #:nodoc:
-          result = hwnd && Functions._window_exists(hwnd)
+          result = hwnd && Functions.window_exists(hwnd)
           !!result
         end
 
         def visible? #:nodoc:
-          #@@autoit.WinGetState(locator_hwnd) & 2 == 2
+          Functions.window_visible(hwnd)
         end
 
         def maximize #:nodoc:
-          #@@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MAXIMIZE)
-          #sleep 1
+          Functions.show_window(hwnd, Constants::SW_MAXIMIZE)
+          sleep 1
         end
 
         def minimize #:nodoc:
-          #@@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_MINIMIZE)
-          #sleep 1
+          Functions.show_window(hwnd, Constants::SW_MINIMIZE)
+          sleep 1
         end
 
         def minimized?
-          #@@autoit.WinGetState(locator_hwnd) & 16 == 16
+          Functions.minimized(hwnd)
         end
 
         def restore
@@ -121,11 +121,10 @@ module RAutomation
         private
 
         def window_properties(hwnd)
-          properties = {}
-          @locators.each_key do |locator|
-            properties[locator] = Functions.send("window_#{locator}", hwnd)
+          @locators.inject({}) do |properties, locator|
+            properties[locator[0]] = Functions.send("window_#{locator[0]}", hwnd)
+            properties
           end
-          properties
         end
       end
     end
