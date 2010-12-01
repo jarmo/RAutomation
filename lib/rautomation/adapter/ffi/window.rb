@@ -14,33 +14,7 @@ module RAutomation
         # Returns handle of the found window.
         # Searches only for visible windows with having some text at all.
         def hwnd #:nodoc:
-          @hwnd ||= begin
-            found_hwnd = nil
-            window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |hwnd, _|
-              if !Functions.window_visible(hwnd) || Functions.window_text(hwnd).empty?
-                true
-              else
-                properties = window_properties(hwnd)
-                locators_match = @locators.all? do |locator, value|
-                  if value.is_a?(Regexp)
-                    properties[locator] =~ value
-                  else
-                    properties[locator] == value
-                  end
-                end
-
-                if locators_match
-                  found_hwnd = hwnd
-                  false
-                else
-                  true
-                end
-              end
-            end
-
-            Functions.enum_windows(window_callback, nil)
-            found_hwnd
-          end
+          @hwnd ||= Functions.window_hwnd(@locators)
         end
 
         def title #:nodoc:
@@ -103,16 +77,6 @@ module RAutomation
 
         def close #:nodoc:
           Functions.close_window(hwnd)
-          closed = Functions.send_message_timeout(hwnd, Constants::WM_CLOSE,
-                                                  0, nil, Constants::SMTO_ABORTIFHUNG, 1000, nil)
-          # force it to close
-          unless closed
-            pid = FFI::MemoryPointer.new :int
-            Functions.window_thread_process_id(hwnd, pid)
-            process_hwnd = Functions.open_process(Constants::PROCESS_ALL_ACCESS, false, pid.read_int)
-            Functions.terminate_process(process_hwnd, 0)
-            Functions.close_handle(process_hwnd)
-          end
         end
 
         def button(locator) #:nodoc:
@@ -125,15 +89,6 @@ module RAutomation
 
         def method_missing(name, *args) #:nodoc:
           #@@autoit.respond_to?(name) ? @@autoit.send(name, *args) : super
-        end
-
-        private
-
-        def window_properties(hwnd)
-          @locators.inject({}) do |properties, locator|
-            properties[locator[0]] = Functions.send("window_#{locator[0]}", hwnd)
-            properties
-          end
         end
       end
     end

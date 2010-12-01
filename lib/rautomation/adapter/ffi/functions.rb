@@ -14,7 +14,7 @@ module RAutomation
                         [:enum_callback, :pointer], :long
         attach_function :enum_child_windows, :EnumChildWindows,
                         [:long, :enum_callback, :pointer], :long
-        attach_function :close_window, :CloseWindow,
+        attach_function :_close_window, :CloseWindow,
                         [:long], :bool
         attach_function :minimized, :IsIconic,
                         [:long], :bool
@@ -42,7 +42,7 @@ module RAutomation
                         [:long, :uint], :bool
         attach_function :close_handle, :CloseHandle,
                         [:long], :bool
-        
+
         class << self
           def window_title(hwnd)
             title_length = self.window_title_length(hwnd) + 1
@@ -62,6 +62,58 @@ module RAutomation
             self.enum_child_windows(hwnd, window_callback, nil)
             found_text
           end
+
+          def window_hwnd(locators)
+            found_hwnd = nil
+            window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |hwnd, _|
+              if !self.window_visible(hwnd) || self.window_text(hwnd).empty?
+                true
+              else
+                properties = window_properties(hwnd, locators)
+                locators_match = locators.all? do |locator, value|
+                  if value.is_a?(Regexp)
+                    properties[locator] =~ value
+                  else
+                    properties[locator] == value
+                  end
+                end
+
+                if locators_match
+                  found_hwnd = hwnd
+                  false
+                else
+                  true
+                end
+              end
+            end
+
+            self.enum_windows(window_callback, nil)
+            found_hwnd
+          end
+
+          def close_window(hwnd)
+            self._close_window(hwnd)
+            closed = self.send_message_timeout(hwnd, Constants::WM_CLOSE,
+                                               0, nil, Constants::SMTO_ABORTIFHUNG, 1000, nil)
+            # force it to close
+            unless closed
+              pid = FFI::MemoryPointer.new :int
+              self.window_thread_process_id(hwnd, pid)
+              process_hwnd = self.open_process(Constants::PROCESS_ALL_ACCESS, false, pid.read_int)
+              self.terminate_process(process_hwnd, 0)
+              self.close_handle(process_hwnd)
+            end
+          end
+
+          private
+
+          def window_properties(hwnd, locators)
+            locators.inject({}) do |properties, locator|
+              properties[locator[0]] = self.send("window_#{locator[0]}", hwnd)
+              properties
+            end
+          end
+
         end
       end
     end
