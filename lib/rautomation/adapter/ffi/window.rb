@@ -3,6 +3,8 @@ module RAutomation
     module Ffi
       class Window
 
+        attr_reader :locators
+
         # Possible locators are :title, :text, :hwnd and :class.
         def initialize(locators)
           @hwnd = locators.delete(:hwnd)
@@ -14,7 +16,7 @@ module RAutomation
         def hwnd #:nodoc:
           @hwnd ||= begin
             found_hwnd = nil
-            window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |hwnd, param|
+            window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |hwnd, _|
               if !Functions._window_visible(hwnd) || Functions.window_text(hwnd).empty?
                 true
               else
@@ -56,11 +58,12 @@ module RAutomation
         end
 
         def text #:nodoc:
-          #@@autoit.WinGetText(locator_hwnd)
+          Functions.window_text(hwnd)
         end
 
         def exists? #:nodoc:
-          #@@autoit.WinExists(locator_hwnd) == 1
+          result = hwnd && Functions._window_exists(hwnd)
+          !!result
         end
 
         def visible? #:nodoc:
