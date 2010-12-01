@@ -35,7 +35,6 @@ module RAutomation
           def window_text(hwnd)
             found_text = ""
             window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |child_hwnd, _|
-              debugger
               text_length = self._send_message(child_hwnd, Constants::WM_GETTEXTLENGTH, 0, nil) + 1
               text = FFI::MemoryPointer.new :char, text_length
               self._send_message(child_hwnd, Constants::WM_GETTEXT, text_length, text)
