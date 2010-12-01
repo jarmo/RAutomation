@@ -4,15 +4,18 @@ module RAutomation
       module Functions
         extend FFI::Library
 
-        ffi_lib 'user32'
+        ffi_lib 'user32', 'kernel32'
         ffi_convention :stdcall
 
         callback :enum_callback, [:long, :pointer], :bool
 
+        # user32
         attach_function :enum_windows, :EnumWindows,
                         [:enum_callback, :pointer], :long
         attach_function :enum_child_windows, :EnumChildWindows,
                         [:long, :enum_callback, :pointer], :long
+        attach_function :close_window, :CloseWindow,
+                        [:long], :bool
         attach_function :minimized, :IsIconic,
                         [:long], :bool
         attach_function :_window_title, :GetWindowTextA,
@@ -27,7 +30,19 @@ module RAutomation
                         [:long, :int], :bool
         attach_function :send_message, :SendMessageA,
                         [:long, :uint, :uint, :pointer], :long
+        attach_function :send_message_timeout, :SendMessageTimeoutA,
+                        [:long, :uint, :uint, :pointer, :uint, :uint, :pointer], :bool
+        attach_function :window_thread_process_id, :GetWindowThreadProcessId,
+                        [:long, :pointer], :long
 
+        # kernel32
+        attach_function :open_process, :OpenProcess,
+                        [:int, :bool, :int], :long
+        attach_function :terminate_process, :TerminateProcess,
+                        [:long, :uint], :bool
+        attach_function :close_handle, :CloseHandle,
+                        [:long], :bool
+        
         class << self
           def window_title(hwnd)
             title_length = self.window_title_length(hwnd) + 1

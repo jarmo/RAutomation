@@ -85,8 +85,8 @@ module RAutomation
         end
 
         def restore
-          #@@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_RESTORE)
-          #sleep 1
+          Functions.show_window(hwnd, Constants::SW_RESTORE)
+          sleep 1
         end
 
         # Activates the Window and sends keys to it.
@@ -102,8 +102,17 @@ module RAutomation
         end
 
         def close #:nodoc:
-          #@@autoit.WinClose(locator_hwnd)
-          #@@autoit.WinKill(locator_hwnd)
+          Functions.close_window(hwnd)
+          closed = Functions.send_message_timeout(hwnd, Constants::WM_CLOSE,
+                                                  0, nil, Constants::SMTO_ABORTIFHUNG, 1000, nil)
+          # force it to close
+          unless closed
+            pid = FFI::MemoryPointer.new :int
+            Functions.window_thread_process_id(hwnd, pid)
+            process_hwnd = Functions.open_process(Constants::PROCESS_ALL_ACCESS, false, pid.read_int)
+            Functions.terminate_process(process_hwnd, 0)
+            Functions.close_handle(process_hwnd)
+          end
         end
 
         def button(locator) #:nodoc:
