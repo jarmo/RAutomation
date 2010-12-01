@@ -22,13 +22,13 @@ module RAutomation
         end
 
         def activate #:nodoc:
-          #@@autoit.WinWait(locator_hwnd, "", 1)
-          #@@autoit.WinActivate(locator_hwnd)
-          #sleep 1
+          restore if minimized?
+          Functions.activate_window(hwnd)
+          sleep 1
         end
 
         def active? #:nodoc:
-          #@@autoit.WinActive(locator_hwnd) == 1
+          Functions.foreground_window == hwnd
         end
 
         def text #:nodoc:
