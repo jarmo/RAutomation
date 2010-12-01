@@ -80,11 +80,11 @@ module RAutomation
           sleep 1
         end
 
-        def minimized?
+        def minimized? #:nodoc:
           @@autoit.WinGetState(locator_hwnd) & 16 == 16
         end
 
-        def restore
+        def restore #:nodoc:
           @@autoit.WinSetState(locator_hwnd, "", @@autoit.SW_RESTORE)
           sleep 1
         end
@@ -94,7 +94,6 @@ module RAutomation
         # Refer to AutoIt documentation for keys syntax.
         def send_keys(keys)
           wait_until do
-            restore if minimized?
             activate
             active?
           end
