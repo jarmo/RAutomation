@@ -70,6 +70,7 @@ module RAutomation
               text = FFI::MemoryPointer.new :char, text_length
               self.send_message(child_hwnd, Constants::WM_GETTEXT, text_length, text)
               found_text << text.read_string
+              true
             end
             self.enum_child_windows(hwnd, window_callback, nil)
             found_text
