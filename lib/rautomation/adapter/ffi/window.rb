@@ -23,14 +23,14 @@ module RAutomation
         end
 
         def activate #:nodoc:
-          return if Functions.foreground_window == hwnd
+          return if !exists? || active?
           restore if minimized?
           Functions.activate_window(hwnd)
           sleep 1
         end
 
         def active? #:nodoc:
-          Functions.foreground_window == hwnd
+          exists? && Functions.foreground_window == hwnd
         end
 
         def text #:nodoc:
