@@ -97,7 +97,7 @@ module RAutomation
             activate
             active?
           end
-          @@autoit.Send(keys.shift)
+          @@autoit.Send(keys)
         end
 
         def close #:nodoc:
