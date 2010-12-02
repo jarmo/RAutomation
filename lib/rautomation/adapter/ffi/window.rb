@@ -2,6 +2,7 @@ module RAutomation
   module Adapter
     module Ffi
       class Window
+        include WaitHelper
 
         attr_reader :locators
 
@@ -22,6 +23,7 @@ module RAutomation
         end
 
         def activate #:nodoc:
+          return if Functions.foreground_window == hwnd
           restore if minimized?
           Functions.activate_window(hwnd)
           sleep 1
@@ -54,25 +56,28 @@ module RAutomation
           sleep 1
         end
 
-        def minimized?
+        def minimized? #:nodoc:
           Functions.minimized(hwnd)
         end
 
-        def restore
+        def restore #:nodoc:
           Functions.show_window(hwnd, Constants::SW_RESTORE)
           sleep 1
         end
 
         # Activates the Window and sends keys to it.
         #
-        # Refer to AutoIt documentation for keys syntax.
-        def send_keys(keys)
-          #wait_until do
-          #  restore if minimized?
-          #  activate
-          #  active?
-          #end
-          #@@autoit.Send(keys)
+        # Refer to MSDN documentation at http://msdn.microsoft.com/en-us/library/dd375731(v=VS.85).aspx
+        # for keycodes.
+        def send_keys(*keys)
+          keys.each do |key|
+            wait_until do
+              activate
+              active?
+            end
+            Functions.send_key(key, 0, 0, nil)
+            Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
+          end
         end
 
         def close #:nodoc:

@@ -44,6 +44,8 @@ module RAutomation
                         [:long], :long
         attach_function :foreground_window, :GetForegroundWindow,
                         [], :long
+        attach_function :send_key, :keybd_event,
+                        [:uchar, :uchar, :int, :pointer], :void
 
         # kernel32
         attach_function :open_process, :OpenProcess,
