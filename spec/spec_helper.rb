@@ -1,7 +1,6 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rautomation'
-require 'spec'
-require 'spec/autorun'
+require 'rspec'
 
 module SpecHelper
   # Since adapters are different then the windows to be tested
@@ -32,11 +31,32 @@ module SpecHelper
                   :window2_button_text => "OK",
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class_name => "Edit1"
+          },
+          # This adapter needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
+          :ffi => {
+                  # Path to some binary, which opens up a window, what can be
+                  # minimized, maximized, activated, closed and etc.
+                  :window1 => "mspaint",
+                  # Window 1 title, has to be a Regexp.
+                  :window1_title => /untitled - paint/i,
+                  # Path to some browser's binary.
+                  :window2 => '"c:\\program files\\internet explorer\\iexplore.exe"',
+                  # Window 2 title, has to be a String.
+                  :window2_title => "Explorer User Prompt",
+                  # Window 2 should have this text on it.
+                  :window2_text => "Where do you want to go today?",
+                  # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
+                  # VK_RETURN
+                  :window2_send_keys => 0xD,
+                  # Window 2 should have a button with the following text.
+                  :window2_button_text => "OK",
+                  # Window 2 should have a text field with the specified class name.
+                  :window2_text_field_class_name => "Edit1"
           }
   }[ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter]
 end
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.before(:all) do
     @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
     @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
