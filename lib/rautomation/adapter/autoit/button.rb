@@ -7,11 +7,11 @@ module RAutomation
 
         # Special-cased locators
         LOCATORS = {
-                :class_name => :classnn,
+                :index => :instance,
                 :value => :text
         }
 
-        # Possible locators are :text, :value, :id, :class, :class_name and :instance.
+        # Possible locators are :value, :id, :class and :index.
         def initialize(window, locators)
           @window = window
           extract(locators)

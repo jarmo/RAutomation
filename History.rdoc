@@ -1,3 +1,11 @@
+=== Version 0.1.0 / 2010-xx-xx
+
+* changes for AutoIt adapter:
+  - added 0-based :index locator for window locators to search for windows with the same criteria.
+  - renamed text_field and button locator :instance to :index instead.
+  - :class_name locator is not allowed anymore. Use :class and :index together instead.
+  - use :value for button locator instead of :text
+
 === Version 0.0.4 / 2010-10-27
 
  * most Window, Button and TextField methods wait until the object exists.

@@ -27,6 +27,7 @@ module RAutomation
         # Special-cased locators
         LOCATORS = {[:title, String] => :title,
                     [:title, Regexp] => :regexptitle,
+                    :index => :instance,
                     :hwnd => :handle}
 
         # Possible locators are :title, :text, :hwnd and :class.
