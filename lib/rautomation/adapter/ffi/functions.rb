@@ -52,7 +52,7 @@ module RAutomation
                         [:uchar, :uchar, :int, :pointer], :void
         attach_function :control_id, :GetDlgCtrlID,
                         [:long], :int
-        attach_function :control_focus, :SetFocus,
+        attach_function :_set_control_focus, :SetFocus,
                         [:long], :long
 
         # kernel32
@@ -114,13 +114,11 @@ module RAutomation
             set_foreground_window(hwnd)
             set_active_window(hwnd)
             bring_window_to_top(hwnd)
-            foreground_thread = window_thread_process_id(foreground_window, nil)
-            other_thread = window_thread_process_id(hwnd, nil)
-            attach_thread_input(foreground_thread, other_thread, true) unless other_thread == foreground_thread
-            set_foreground_window(hwnd)
-            set_active_window(hwnd)
-            bring_window_to_top(hwnd)
-            attach_thread_input(foreground_thread, other_thread, false) unless other_thread == foreground_thread
+            within_foreground_thread(hwnd) do
+              set_foreground_window(hwnd)
+              set_active_window(hwnd)
+              bring_window_to_top(hwnd)
+            end
           end
 
           def control_hwnd(window_hwnd, locators)
@@ -137,11 +135,26 @@ module RAutomation
             post_message(control_hwnd, Constants::BM_CLICK, 0, nil)
           end
 
+          def set_control_focus(control_hwnd)
+            within_foreground_thread control_hwnd do
+              _set_control_focus(control_hwnd)
+            end
+          end
+
           def set_control_text(control_hwnd, text)
             send_message(control_hwnd, Constants::WM_SETTEXT, 0, text)
           end
 
           private
+
+          def within_foreground_thread(hwnd)
+            foreground_thread = window_thread_process_id(foreground_window, nil)
+            other_thread = window_thread_process_id(hwnd, nil)
+            attach_thread_input(foreground_thread, other_thread, true) unless other_thread == foreground_thread
+            yield
+          ensure
+            attach_thread_input(foreground_thread, other_thread, false) unless other_thread == foreground_thread
+          end
 
           def window_properties(hwnd, locators)
             element_properties(:window, hwnd, locators)

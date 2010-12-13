@@ -17,7 +17,7 @@ module RAutomation
             hwnd = Functions.control_hwnd(@window.hwnd, @locators)
             @window.activate
             @window.active? &&
-                    Functions.control_focus(hwnd) &&
+                    Functions.set_control_focus(hwnd) &&
                     Functions.control_click(hwnd) &&
                     clicked = true # is clicked at least once
             clicked && !exists?

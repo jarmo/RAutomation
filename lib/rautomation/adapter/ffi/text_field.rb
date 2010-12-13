@@ -16,7 +16,7 @@ module RAutomation
             hwnd = Functions.control_hwnd(@window.hwnd, @locators)
             @window.activate
             @window.active? &&
-                    Functions.control_focus(hwnd) &&
+                    Functions.set_control_focus(hwnd) &&
                     Functions.set_control_text(hwnd, text) &&
                     value == text
           end
