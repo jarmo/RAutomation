@@ -80,29 +80,22 @@ module RAutomation
 
           def window_hwnd(locators)
             found_hwnd = nil
+            found_index = -1
             window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |hwnd, _|
-              if !self.window_visible(hwnd) || self.window_text(hwnd).empty?
-                true
-              else
-                properties = window_properties(hwnd, locators)
-                locators_match = locators.all? do |locator, value|
-                  if value.is_a?(Regexp)
-                    properties[locator] =~ value
-                  else
-                    properties[locator] == value
-                  end
-                end
+              if window_visible(hwnd) && !window_text(hwnd).empty? &&
+                      locators_match?(hwnd, locators)
+                found_index += 1
 
-                if locators_match
-                  found_hwnd = hwnd
-                  false
+                if locators[:index]
+                  found_hwnd = hwnd if locators[:index] == found_index
                 else
-                  true
+                  found_hwnd = hwnd
                 end
               end
+              !found_hwnd
             end
 
-            self.enum_windows(window_callback, nil)
+            enum_windows(window_callback, nil)
             found_hwnd
           end
 
@@ -143,8 +136,21 @@ module RAutomation
 
           def window_properties(hwnd, locators)
             locators.inject({}) do |properties, locator|
-              properties[locator[0]] = self.send("window_#{locator[0]}", hwnd)
+              properties[locator[0]] = self.send("window_#{locator[0]}", hwnd) unless locator[0] == :index
               properties
+            end
+          end
+
+          def locators_match?(hwnd, locators)
+            properties = window_properties(hwnd, locators)
+            locators.all? do |locator, value|
+              if locator == :index
+                true
+              elsif value.is_a?(Regexp)
+                properties[locator] =~ value
+              else
+                properties[locator] == value
+              end
             end
           end
 
