@@ -94,6 +94,8 @@ module RAutomation
             class_name.read_string
           end
 
+          alias_method :control_class, :window_class
+
           def close_window(hwnd)
             _close_window(hwnd)
             closed = send_message_timeout(hwnd, Constants::WM_CLOSE,
@@ -127,7 +129,7 @@ module RAutomation
             end
           end
 
-          def control_text(control_hwnd)
+          def control_value(control_hwnd)
             text_for(control_hwnd)
           end
 

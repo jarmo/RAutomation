@@ -3,13 +3,14 @@ module RAutomation
     module Ffi
       class Window
         include WaitHelper
+        include Locators
 
         attr_reader :locators
 
         # Possible locators are :title, :text, :hwnd and :class.
         def initialize(locators)
           @hwnd = locators.delete(:hwnd)
-          @locators = locators
+          extract(locators)
         end
 
         # Returns handle of the found window.

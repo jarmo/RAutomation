@@ -3,11 +3,12 @@ module RAutomation
     module Ffi
       class Button
         include WaitHelper
+        include Locators
 
         # Possible locators are :value, :id, :class and :index.
         def initialize(window, locators)
           @window = window
-          @locators = locators
+          extract(locators)
         end
 
         def click #:nodoc:
@@ -23,7 +24,7 @@ module RAutomation
         end
 
         def value #:nodoc:
-          Functions.control_text(hwnd)
+          Functions.control_value(hwnd)
         end
 
         def exists? #:nodoc:
