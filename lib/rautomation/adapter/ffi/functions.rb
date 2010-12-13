@@ -59,22 +59,22 @@ module RAutomation
 
         class << self
           def window_title(hwnd)
-            title_length = self.window_title_length(hwnd) + 1
+            title_length = window_title_length(hwnd) + 1
             title = FFI::MemoryPointer.new :char, title_length
-            self._window_title(hwnd, title, title_length)
+            _window_title(hwnd, title, title_length)
             title.read_string
           end
 
           def window_text(hwnd)
             found_text = ""
             window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |child_hwnd, _|
-              text_length = self.send_message(child_hwnd, Constants::WM_GETTEXTLENGTH, 0, nil) + 1
+              text_length = send_message(child_hwnd, Constants::WM_GETTEXTLENGTH, 0, nil) + 1
               text = FFI::MemoryPointer.new :char, text_length
-              self.send_message(child_hwnd, Constants::WM_GETTEXT, text_length, text)
+              send_message(child_hwnd, Constants::WM_GETTEXT, text_length, text)
               found_text << text.read_string
               true
             end
-            self.enum_child_windows(hwnd, window_callback, nil)
+            enum_child_windows(hwnd, window_callback, nil)
             found_text
           end
 
@@ -101,35 +101,35 @@ module RAutomation
 
           def window_class(hwnd)
             class_name = FFI::MemoryPointer.new :char, 512
-            self._window_class(hwnd, class_name, 512)
+            _window_class(hwnd, class_name, 512)
             class_name.read_string
           end
 
           def close_window(hwnd)
-            self._close_window(hwnd)
-            closed = self.send_message_timeout(hwnd, Constants::WM_CLOSE,
+            _close_window(hwnd)
+            closed = send_message_timeout(hwnd, Constants::WM_CLOSE,
                                                0, nil, Constants::SMTO_ABORTIFHUNG, 1000, nil)
             # force it to close
             unless closed
               pid = FFI::MemoryPointer.new :int
-              self.window_thread_process_id(hwnd, pid)
-              process_hwnd = self.open_process(Constants::PROCESS_ALL_ACCESS, false, pid.read_int)
-              self.terminate_process(process_hwnd, 0)
-              self.close_handle(process_hwnd)
+              window_thread_process_id(hwnd, pid)
+              process_hwnd = open_process(Constants::PROCESS_ALL_ACCESS, false, pid.read_int)
+              terminate_process(process_hwnd, 0)
+              close_handle(process_hwnd)
             end
           end
 
           def activate_window(hwnd)
-            self.set_foreground_window(hwnd)
-            self.set_active_window(hwnd)
-            self.bring_window_to_top(hwnd)
-            foreground_thread = self.window_thread_process_id(self.foreground_window, nil)
-            other_thread = self.window_thread_process_id(hwnd, nil)
-            self.attach_thread_input(foreground_thread, other_thread, true) unless other_thread == foreground_thread
-            self.set_foreground_window(hwnd)
-            self.set_active_window(hwnd)
-            self.bring_window_to_top(hwnd)
-            self.attach_thread_input(foreground_thread, other_thread, false) unless other_thread == foreground_thread
+            set_foreground_window(hwnd)
+            set_active_window(hwnd)
+            bring_window_to_top(hwnd)
+            foreground_thread = window_thread_process_id(foreground_window, nil)
+            other_thread = window_thread_process_id(hwnd, nil)
+            attach_thread_input(foreground_thread, other_thread, true) unless other_thread == foreground_thread
+            set_foreground_window(hwnd)
+            set_active_window(hwnd)
+            bring_window_to_top(hwnd)
+            attach_thread_input(foreground_thread, other_thread, false) unless other_thread == foreground_thread
           end
 
           private
