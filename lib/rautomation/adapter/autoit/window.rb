@@ -25,10 +25,11 @@ module RAutomation
         attr_reader :locators
 
         # Special-cased locators
-        LOCATORS = {[:title, String] => :title,
-                    [:title, Regexp] => :regexptitle,
-                    :index => :instance,
-                    :hwnd => :handle}
+        LOCATORS = {
+                [:title, Regexp] => :regexptitle,
+                :index => :instance,
+                :hwnd => :handle
+        }
 
         # Possible locators are :title, :text, :hwnd, :class and :index.
         def initialize(locators)

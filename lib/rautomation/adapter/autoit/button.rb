@@ -7,6 +7,7 @@ module RAutomation
 
         # Special-cased locators
         LOCATORS = {
+                [:class, Regexp] => :regexpclass,
                 :index => :instance,
                 :value => :text
         }

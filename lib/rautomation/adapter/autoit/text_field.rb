@@ -6,7 +6,10 @@ module RAutomation
         include Locators
 
         # Special-cased locators
-        LOCATORS = {:index => :instance}
+        LOCATORS = {
+                [:class, Regexp] => :regexpclass,
+                :index => :instance
+        }
 
         # Possible locators are :id, :class and :index.
         def initialize(window, locators)
