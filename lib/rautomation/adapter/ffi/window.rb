@@ -94,7 +94,7 @@ module RAutomation
         end
 
         def method_missing(name, *args) #:nodoc:
-          #@@autoit.respond_to?(name) ? @@autoit.send(name, *args) : super
+          Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
       end
     end

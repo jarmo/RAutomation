@@ -102,6 +102,11 @@ describe RAutomation::Window do
             should raise_exception(RAutomation::UnknownWindowException)
   end
 
+  it "#method_missing" do
+    win = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    SpecHelper::DATA[:title_proc].call(win).should == SpecHelper::DATA[:window2_title]
+  end
+
   it "#send_keys"do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
     window.minimize # #send_keys should work even if window is minimized

@@ -177,7 +177,7 @@ module RAutomation
 
     # Allow to execute adapter's methods not part of the public API
     def method_missing(name, *args)
-      @window.respond_to?(name) ? @window.send(name, *args) : super
+      @window.send(name, *args)
     end
 
     private
