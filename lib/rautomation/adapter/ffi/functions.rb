@@ -24,6 +24,8 @@ module RAutomation
                         [:long], :int
         attach_function :window_exists, :IsWindow,
                         [:long], :bool
+        attach_function :_window_class, :GetClassNameA,
+                        [:long, :pointer, :int], :int
         attach_function :window_visible, :IsWindowVisible,
                         [:long], :bool
         attach_function :show_window, :ShowWindow,
@@ -102,6 +104,12 @@ module RAutomation
 
             self.enum_windows(window_callback, nil)
             found_hwnd
+          end
+
+          def window_class(hwnd)
+            class_name = FFI::MemoryPointer.new :char, 512
+            self._window_class(hwnd, class_name, 512)
+            class_name.read_string
           end
 
           def close_window(hwnd)
