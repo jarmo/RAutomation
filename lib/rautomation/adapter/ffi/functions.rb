@@ -137,6 +137,10 @@ module RAutomation
             post_message(control_hwnd, Constants::BM_CLICK, 0, nil)
           end
 
+          def set_control_text(control_hwnd, text)
+            send_message(control_hwnd, Constants::WM_SETTEXT, 0, text)
+          end
+
           private
 
           def window_properties(hwnd, locators)

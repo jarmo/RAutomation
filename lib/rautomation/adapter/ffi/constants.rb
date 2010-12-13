@@ -3,6 +3,7 @@ module RAutomation
     module Ffi
       module Constants
         WM_GETTEXT = 0xD
+        WM_SETTEXT = 0xC
         WM_GETTEXTLENGTH = 0xE
         WM_CLOSE = 0x10
 
