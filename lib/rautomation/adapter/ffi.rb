@@ -1,3 +1,4 @@
+gem "ffi", "~>0"
 require "ffi"
 require File.dirname(__FILE__) + "/ffi/constants"
 require File.dirname(__FILE__) + "/ffi/functions"
