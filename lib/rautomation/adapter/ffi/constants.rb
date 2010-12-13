@@ -16,6 +16,8 @@ module RAutomation
         SYNCHRONIZE = 0x100000
         PROCESS_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE | 0xFFF
 
+        BM_CLICK = 0xF5
+
         # keybd_event constants
         # http://msdn.microsoft.com/en-us/library/ms646304(VS.85).aspx
         #
