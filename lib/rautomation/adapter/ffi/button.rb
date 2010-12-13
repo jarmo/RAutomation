@@ -14,6 +14,7 @@ module RAutomation
         def click #:nodoc:
           clicked = false
           wait_until do
+            hwnd = Functions.control_hwnd(@window.hwnd, @locators)
             @window.activate
             @window.active? &&
                     Functions.control_focus(hwnd) &&
@@ -24,18 +25,13 @@ module RAutomation
         end
 
         def value #:nodoc:
-          Functions.control_value(hwnd)
+          Functions.control_value(Functions.control_hwnd(@window.hwnd, @locators))
         end
 
         def exists? #:nodoc:
-          !!hwnd
+          !!Functions.control_hwnd(@window.hwnd, @locators)
         end
 
-        private
-
-        def hwnd
-          Functions.control_hwnd(@window.hwnd, @locators)
-        end
       end
     end
   end
