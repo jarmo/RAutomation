@@ -30,7 +30,7 @@ module RAutomation
                     :index => :instance,
                     :hwnd => :handle}
 
-        # Possible locators are :title, :text, :hwnd and :class.
+        # Possible locators are :title, :text, :hwnd, :class and :index.
         def initialize(locators)
           @hwnd = locators[:hwnd]
           @locator_text = locators.delete(:text)
