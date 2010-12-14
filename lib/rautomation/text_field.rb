@@ -43,7 +43,7 @@ module RAutomation
     def wait_until_exists
       WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
     rescue WaitHelper::TimeoutError
-      raise UnknownTextFieldException.new("Text field #{@locators.inspect} doesn't exist on window #{@window.locators.inspect}!") unless exists?
+      raise UnknownTextFieldException, "Text field #{@locators.inspect} doesn't exist on window #{@window.locators.inspect}!" unless exists?
     end
   end
 end

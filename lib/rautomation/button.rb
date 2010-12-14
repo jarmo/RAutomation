@@ -35,7 +35,7 @@ module RAutomation
     def wait_until_exists
       WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
     rescue WaitHelper::TimeoutError
-      raise UnknownButtonException.new("Button #{@locators.inspect} doesn't exist on window #{@window.locators.inspect}!")
+      raise UnknownButtonException, "Button #{@locators.inspect} doesn't exist on window #{@window.locators.inspect}!"
     end
   end
 end
