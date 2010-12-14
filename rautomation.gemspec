@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rautomation}
-  s.version = "0.0.4"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jarmo Pertman"]
-  s.date = %q{2010-10-27}
+  s.date = %q{2010-12-14}
   s.description = %q{RAutomation tries to be a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
 
@@ -17,7 +17,7 @@ RAutomation aims to provide:
 * Easy to use and user-friendly API (inspired by Watir http://www.watir.com).
 * Cross-platform compatibility
 * Easy extensibility - have some application, which uses some specialized technology, but isn't supported by RAutomation?
-  You can get dirty and create new implementation for RAutomation, due to the applied Strategy Pattern!}
+  You can get dirty and create a new adapter for RAutomation!}
   s.email = %q{jarmo.p@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -26,6 +26,7 @@ RAutomation aims to provide:
   s.files = [
     ".document",
      ".gitignore",
+     ".rspec",
      "History.rdoc",
      "LICENSE",
      "README.rdoc",
@@ -34,19 +35,25 @@ RAutomation aims to provide:
      "ext/AutoItX/AutoItX.chm",
      "ext/AutoItX/AutoItX3.dll",
      "lib/rautomation.rb",
+     "lib/rautomation/adapter/autoit.rb",
+     "lib/rautomation/adapter/autoit/button.rb",
+     "lib/rautomation/adapter/autoit/locators.rb",
+     "lib/rautomation/adapter/autoit/text_field.rb",
+     "lib/rautomation/adapter/autoit/window.rb",
+     "lib/rautomation/adapter/ffi.rb",
+     "lib/rautomation/adapter/ffi/button.rb",
+     "lib/rautomation/adapter/ffi/constants.rb",
+     "lib/rautomation/adapter/ffi/functions.rb",
+     "lib/rautomation/adapter/ffi/locators.rb",
+     "lib/rautomation/adapter/ffi/text_field.rb",
+     "lib/rautomation/adapter/ffi/window.rb",
+     "lib/rautomation/adapter/helper.rb",
      "lib/rautomation/button.rb",
-     "lib/rautomation/implementations/autoit.rb",
-     "lib/rautomation/implementations/autoit/button.rb",
-     "lib/rautomation/implementations/autoit/locators.rb",
-     "lib/rautomation/implementations/autoit/text_field.rb",
-     "lib/rautomation/implementations/autoit/window.rb",
-     "lib/rautomation/implementations/helper.rb",
      "lib/rautomation/text_field.rb",
      "lib/rautomation/wait_helper.rb",
      "lib/rautomation/window.rb",
      "rautomation.gemspec",
      "spec/button_spec.rb",
-     "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/test.html",
      "spec/text_field_spec.rb",
@@ -69,12 +76,12 @@ RAutomation aims to provide:
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.3"])
     else
-      s.add_dependency(%q<rspec>, [">= 1.3.0"])
+      s.add_dependency(%q<rspec>, ["~> 2.3"])
     end
   else
-    s.add_dependency(%q<rspec>, [">= 1.3.0"])
+    s.add_dependency(%q<rspec>, ["~> 2.3"])
   end
 end
 
