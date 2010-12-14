@@ -1,5 +1,5 @@
 begin
-  gem "ffi", "~>0"
+  gem "ffi", "0.6.3"
 rescue Gem::LoadError
   raise Gem::LoadError, "Unable to load FFI gem. Install it with:\n\tgem install ffi -v 0.6.3"
 end
