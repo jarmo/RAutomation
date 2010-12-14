@@ -1,4 +1,4 @@
-=== Version 0.1.0 / 2010-xx-xx
+=== Version 0.1.0 / 2010-12-14
 
 * added new default adapter for Windows: FFI
 * changes for AutoIt adapter:
