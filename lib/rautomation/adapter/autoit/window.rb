@@ -46,6 +46,10 @@ module RAutomation
                   hex rescue nil
         end
 
+        def pid #:nodoc:
+          @@autoit.WinGetProcess(hwnd)
+        end
+
         def title #:nodoc:
           @@autoit.WinGetTitle(locator_hwnd)
         end

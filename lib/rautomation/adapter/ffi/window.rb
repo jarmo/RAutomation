@@ -7,9 +7,8 @@ module RAutomation
 
         attr_reader :locators
 
-        # Possible locators are :title, :text, :hwnd and :class.
+        # Possible locators are :title, :text, :hwnd, :pid, :class and :index.
         def initialize(locators)
-          @hwnd = locators.delete(:hwnd)
           extract(locators)
         end
 
@@ -17,6 +16,10 @@ module RAutomation
         # Searches only for visible windows with having some text at all.
         def hwnd #:nodoc:
           @hwnd ||= Functions.window_hwnd(@locators)
+        end
+
+        def pid #:nodoc:
+          Functions.window_pid(hwnd)
         end
 
         def title #:nodoc:
@@ -96,6 +99,7 @@ module RAutomation
         def method_missing(name, *args) #:nodoc:
           Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
+
       end
     end
   end

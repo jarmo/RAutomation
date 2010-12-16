@@ -88,6 +88,12 @@ module RAutomation
             end
           end
 
+          def window_pid(hwnd)
+            pid = FFI::MemoryPointer.new :int
+            window_thread_process_id(hwnd, pid)
+            pid.read_int
+          end
+
           def window_class(hwnd)
             class_name = FFI::MemoryPointer.new :char, 512
             _window_class(hwnd, class_name, 512)
@@ -102,9 +108,7 @@ module RAutomation
                                           0, nil, Constants::SMTO_ABORTIFHUNG, 1000, nil)
             # force it to close
             unless closed
-              pid = FFI::MemoryPointer.new :int
-              window_thread_process_id(hwnd, pid)
-              process_hwnd = open_process(Constants::PROCESS_ALL_ACCESS, false, pid.read_int)
+              process_hwnd = open_process(Constants::PROCESS_ALL_ACCESS, false, window_pid(hwnd))
               terminate_process(process_hwnd, 0)
               close_handle(process_hwnd)
             end

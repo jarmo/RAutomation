@@ -64,6 +64,12 @@ module RAutomation
       @window.hwnd
     end
 
+    # Returns process identifier (PID) of the Window.
+    def pid
+      wait_until_exists
+      @window.pid
+    end
+
     # Returns title of the Window.
     #
     # Raises an UnknownWindowException if the Window itself doesn't exist.
