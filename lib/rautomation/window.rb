@@ -9,179 +9,181 @@ module RAutomation
   class Window
     include Adapter::Helper
 
+    # Currently used {Adapter}.
     attr_reader :adapter
 
-    # Creates a new Window object using the _locators_ Hash parameter.
+    # Creates the window object.
     #
-    # Possible Window _locators_ may depend of the used platform and adapter, but
+    # Possible window _locators_ may depend of the used platform and adapter, but
     # following examples will use :title, :class and :hwnd.
     #
-    # Use window with _some title_ being part of it's title:
+    # @example Use window with some title:
     #   RAutomation::Window.new(:title => "some title")
     #
-    # Use window with Regexp title:
+    # @example Use window with Regexp title:
     #   RAutomation::Window.new(:title => /some title/i)
     #
-    # Use window with handle _123456_:
+    # @example Use window with handle (hwnd):
     #   RAutomation::Window.new(:hwnd => 123456)
     #
-    # It is possible to use multiple locators together where every locator will be matched (AND-ed) to the window:
+    # @example Use multiple locators, every locator will be matched (AND-ed) to the window:
     #   RAutomation::Window.new(:title => "some title", :class => "IEFrame")
     #
-    # Refer to all possible locators in each adapter's documentation.
+    # @note Refer to all possible _locators_ in each {Adapter} documentation.
     #
     # _locators_ may also include a key called :adapter to change default adapter,
     # which is dependent of the platform, to automate windows and their controls.
     #
-    # It is also possible to change default adapter by using environment variable:
-    # <em>RAUTOMATION_ADAPTER</em>
+    # It is also possible to change the default adapter by using environment variable called
+    # __RAUTOMATION_ADAPTER__
     #
-    # * Object creation doesn't check for window's existence.
-    # * Window to be searched for has to be visible!
+    # @note This constructor doesn't ensure window's existance.
+    # @note Window to be searched for has to be visible.
+    # @param [Hash] locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
       @window = Adapter.const_get(normalize(@adapter)).const_get(:Window).new(locators)
     end
 
     class << self
-      # Timeout for waiting until object exists. If the timeout exceeds then an Exception is thrown.
+      # Timeout for waiting until object exists. If the timeout exceeds then an {WaitHelper::TimeoutError} is raised.
       @@wait_timeout = 60
 
+      # Change the timeout to wait before {WaitHelper::TimeoutError} is raised.
+      # @param [Fixnum] timeout in seconds.
       def wait_timeout=(timeout)
         @@wait_timeout = timeout
       end
 
+      # Retrieve current timeout in seconds to wait before {WaitHelper::TimeoutError} is raised.
+      # @return [Fixnum] timeout in seconds
       def wait_timeout
         @@wait_timeout
       end
     end
 
-    # Returns handle of the Window.
-    #
-    # This handle will be used internally for all operations.
+    # @return [Fixnum] handle of the window which is used internally for other methods.
     def hwnd
       wait_until_exists
       @window.hwnd
     end
 
-    # Returns process identifier (PID) of the Window.
+    # @return [Fixnum] process identifier (PID) of the window.
     def pid
       wait_until_exists
       @window.pid
     end
 
-    # Returns title of the Window.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # @return [String] title of the window.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def title
       wait_until_exists
       @window.title
     end
 
-    # Activates the Window, e.g. brings to the top.
+    # Activates the Window, e.g. brings it to the top of other windows.
     def activate
       @window.activate
     end
 
-    # Returns true if the Window is active, false otherwise.
+    # Checks if the window is active, e.g. on the top of other windows.
+    # @return [Boolean] true if the window is active, false otherwise.
     def active?
       @window.active?
     end
 
     # Returns visible text of the Window.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # @return [String] visible text of the window.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def text
       wait_until_exists
       @window.text
     end
 
-    # Returns true if the Window exists, false otherwise.
+    # Checks if the window exists (does have to be visible).
+    # @return [Boolean] true if the window exists, false otherwise.
     def exists?
       @window.exists?
     end
 
     alias_method :exist?, :exists?
 
-    # Returns true if the Window is visible, false otherwise.
-    # Window is also visible, if it is behind other windows or minimized.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Checks if window is visible.
+    # @note Window is also visible, if it is behind other windows or minimized.
+    # @return [Boolean] true if window is visible, false otherwise.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def visible?
       wait_until_exists
       @window.visible?
     end
 
-    # Returns true if the Window exists and is visible, false otherwise.
+    # Checks if the window exists and is visible.
+    # @return [Boolean] true if window exists and is visible, false otherwise
     def present?
       exists? && visible?
     end
 
-    # Maximizes the Window.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Maximizes the window.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def maximize
       wait_until_exists
       @window.maximize
     end
 
-    # Minimizes the Window.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Minimizes the window.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def minimize
       wait_until_exists
       @window.minimize
     end
 
-    # Returns true if the Window is minimized, false otherwise.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Checks if window is minimized.
+    # @return [Boolean] true if window is minimized, false otherwise.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def minimized?
       wait_until_exists
       @window.minimized?
     end
 
-    # Restores the Window.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Restores the window size and position.
+    # @note If the window is minimized, makes it visible again.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def restore
       wait_until_exists
       @window.restore
     end
 
-    # Sends keys to the Window. Refer to specific adapter's documentation for possible values.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Sends keyboard keys to the window. Refer to specific {Adapter} documentation for all possible values.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def send_keys(*keys)
       wait_until_exists
       @window.send_keys(*keys)
     end
 
-    # Closes the Window if it exists.
+    # Closes the window if it exists.
     def close
       return unless @window.exists?
       @window.close
     end
 
-    # Returns the Button object by the _locators_ on the Window.
-    # Refer to specific adapter's documentation for possible parameters.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Retrieves {Button} on the window.
+    # @note Refer to specific {Adapter} documentation for possible _locator_ parameters.
+    # @param [Hash] locators for the {Button}.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def button(locators)
       wait_until_exists
       Button.new(@window, locators)
     end
 
-    # Returns the TextField object by the _locators_ on the Window.
-    # Refer to specific adapter's documentation for possible parameters.
-    #
-    # Raises an UnknownWindowException if the Window itself doesn't exist.
+    # Retrieves {TextField} on the window.
+    # @note Refer to specific {Adapter} documentation for possible _locators_ parameters.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def text_field(locators)
       wait_until_exists
       TextField.new(@window, locators)
     end
 
-    # Allow to execute adapter's methods not part of the public API
+    # Allows to execute specific {Adapter} methods not part of the public API.
     def method_missing(name, *args)
       @window.send(name, *args)
     end

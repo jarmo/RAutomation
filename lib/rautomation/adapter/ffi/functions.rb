@@ -1,6 +1,7 @@
 module RAutomation
   module Adapter
     module Ffi
+      # @private
       module Functions
         extend FFI::Library
 

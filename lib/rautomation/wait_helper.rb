@@ -1,13 +1,13 @@
 module RAutomation
+  # Waiting with timeout
   module WaitHelper
     extend self
     
     class TimeoutError < StandardError
     end
 
-    #
+    # @private
     # Wait until the block evaluates to true or times out.
-    #
     def wait_until(timeout = 60, &block)
       end_time = ::Time.now + timeout
 

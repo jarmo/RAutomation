@@ -1,6 +1,7 @@
 module RAutomation
   module Adapter
     module Ffi
+      # @private
       module Constants
         WM_GETTEXT = 0xD
         WM_SETTEXT = 0xC
@@ -20,10 +21,6 @@ module RAutomation
         BM_CLICK = 0xF5
 
         # keybd_event constants
-        # http://msdn.microsoft.com/en-us/library/ms646304(VS.85).aspx
-        #
-        # keycodes themselves are at:
-        # http://msdn.microsoft.com/en-us/library/dd375731(v=VS.85).aspx
         KEYEVENTF_EXTENDEDKEY = 0x1
         KEYEVENTF_KEYUP = 0x2
       end

@@ -1,11 +1,12 @@
 module RAutomation
   module Adapter
     module Ffi
+      # @private
       module Locators
 
         private
 
-        def extract(locators) #:nodoc:
+        def extract(locators)
           # windows locators
           @hwnd = locators[:hwnd].to_i if locators[:hwnd]
           locators[:pid] = locators[:pid].to_i if locators[:pid]

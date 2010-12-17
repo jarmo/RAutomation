@@ -7,6 +7,7 @@ module RAutomation
       extend self
 
       # @private
+      # Retrieves default {Adapter} for the current platform.
       def default_adapter
         case RUBY_PLATFORM
           when /mswin|msys|mingw32/

@@ -5,74 +5,100 @@ module RAutomation
         include WaitHelper
         include Locators
 
+        # Locators of the window.
         attr_reader :locators
 
         # Possible locators are :title, :text, :hwnd, :pid, :class and :index.
+
+        # Creates the window object.
+        # @note this method is not meant to be accessed directly, but only through {RAutomation::Window#initialize}!
+        # @param [Hash] locators for searching the window.
+        # @option locators [String, Regexp] :title Title of the window
+        # @option locators [String, Regexp] :text Visible text of the window
+        # @option locators [String, Regexp] :class Internal class name of the window
+        # @option locators [String, Fixnum] :hwnd Window handle in decimal format
+        # @option locators [String, Fixnum] :pid Window process ID (PID)
+        # @option locators [String, Fixnum] :index 0-based index to specify n-th window if all other criteria match
+        #   all other criteria match
+        # @see RAutomation::Window#initialize
         def initialize(locators)
           extract(locators)
         end
 
-        # Returns handle of the found window.
-        # Searches only for visible windows with having some text at all.
-        def hwnd #:nodoc:
+        # Retrieves handle of the window.
+        # @note Searches only for visible windows with having some text at all.
+        # @see RAutomation::Window#hwnd
+        def hwnd
           @hwnd ||= Functions.window_hwnd(@locators)
         end
 
-        def pid #:nodoc:
+        # @see RAutomation::Window#pid
+        def pid
           Functions.window_pid(hwnd)
         end
 
-        def title #:nodoc:
+        # @see RAutomation::Window#title
+        def title
           Functions.window_title(hwnd)
         end
 
-        def activate #:nodoc:
+        # @see RAutomation::Window#activate
+        def activate
           return if !exists? || active?
           restore if minimized?
           Functions.activate_window(hwnd)
           sleep 1
         end
 
-        def active? #:nodoc:
+        # @see RAutomation::Window#active?
+        def active?
           exists? && Functions.foreground_window == hwnd
         end
 
-        def text #:nodoc:
+        # @see RAutomation::Window#text
+        def text
           Functions.window_text(hwnd)
         end
 
-        def exists? #:nodoc:
+        # @see RAutomation::Window#exists?
+        def exists?
           result = hwnd && Functions.window_exists(hwnd)
           !!result
         end
 
-        def visible? #:nodoc:
+        # @see RAutomation::Window#visible?
+        def visible?
           Functions.window_visible(hwnd)
         end
 
-        def maximize #:nodoc:
+        # @see RAutomation::Window#maximize
+        def maximize
           Functions.show_window(hwnd, Constants::SW_MAXIMIZE)
           sleep 1
         end
 
-        def minimize #:nodoc:
+        # @see RAutomation::Window#minimize
+        def minimize
           Functions.show_window(hwnd, Constants::SW_MINIMIZE)
           sleep 1
         end
 
-        def minimized? #:nodoc:
+        # @see RAutomation::Window#minimized?
+        def minimized?
           Functions.minimized(hwnd)
         end
 
-        def restore #:nodoc:
+        # @see RAutomation::Window#restore
+        def restore
           Functions.show_window(hwnd, Constants::SW_RESTORE)
           sleep 1
         end
 
-        # Activates the Window and sends keys to it.
+        # Activates the window and sends keys to it.
         #
         # Refer to MSDN documentation at http://msdn.microsoft.com/en-us/library/dd375731(v=VS.85).aspx
-        # for keycodes.
+        # for the keycodes.
+        # @see RAutomation::Window#send_keys
         def send_keys(*keys)
           keys.each do |key|
             wait_until do
@@ -84,19 +110,26 @@ module RAutomation
           end
         end
 
-        def close #:nodoc:
+        # @see RAutomation::Window#close
+        def close
           Functions.close_window(hwnd)
         end
 
-        def button(locator) #:nodoc:
+        # @see Button#initialize
+        # @see RAutomation::Window#button
+        def button(locator)
           Button.new(self, locator)
         end
 
-        def text_field(locator) #:nodoc:
+        # @see TextField#initialize
+        # @see RAutomation::Window#text_field
+        def text_field(locator)
           TextField.new(self, locator)
         end
 
-        def method_missing(name, *args) #:nodoc:
+        # Redirects all method calls not part of the public API to the {Functions} directly.
+        # @see RAutomation::Window#method_missing
+        def method_missing(name, *args)
           Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
 

@@ -1,37 +1,38 @@
 module RAutomation
   class TextField
-    # This constructor is meant to be accessed only through RAutomation::Window#text_field method.
+    # @private
+    # This constructor is meant to be accessed only through {Window#text_field} method.
     def initialize(window, locators) #:nodoc:
       @window = window
       @locators = locators
       @text_field = @window.text_field(@locators)
     end
 
-    # Sets TextField's text to +text+.
-    #
-    # Raises an UnknownTextFieldException if the TextField itself doesn't exist.
+    # Sets text of the text field.
+    # @param [String] text of the field to set.
+    # @raise [UnknownTextFieldException] if the text field doesn't exist.
     def set(text)
       wait_until_exists
       @text_field.set(text)
     end
 
-    # Clears TextField's text.
-    #
-    # Raises an UnknownTextFieldException if the TextField itself doesn't exist.
+    # Clears text field's text.
+    # @raise [UnknownTextFieldException] if the text field doesn't exist.
     def clear
       wait_until_exists
       @text_field.clear
     end
 
-    # Returns TextField's text.
-    #
-    # Raises an UnknownTextFieldException if the TextField itself doesn't exist.
+    # Returns text field's current value (text).
+    # @return [String] the value (text) of the text field.
+    # @raise [UnknownTextFieldException] if the text field doesn't exist.
     def value
       wait_until_exists
       @text_field.value
     end
 
-    # Returns true if TextField exists, false otherwise.
+    # Checks if the text field exists.
+    # @return [Boolean] true if text field exists, false otherwise.
     def exists?
       @text_field.exists?
     end

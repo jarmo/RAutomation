@@ -1,3 +1,7 @@
+=== Version 0.1.1 / 2010-12-17
+
+* added Window#pid method
+
 === Version 0.1.0 / 2010-12-14
 
 * added new default adapter for Windows: FFI
