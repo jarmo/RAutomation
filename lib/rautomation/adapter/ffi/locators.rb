@@ -7,7 +7,7 @@ module RAutomation
 
         def extract(locators) #:nodoc:
           # windows locators
-          @hwnd = locators.to_i if locators[:hwnd]
+          @hwnd = locators[:hwnd].to_i if locators[:hwnd]
           locators[:pid] = locators[:pid].to_i if locators[:pid]
           locators[:index] = locators[:index].to_i if locators[:index]
 
