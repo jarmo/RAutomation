@@ -74,6 +74,7 @@ about that matter - or even better, follow the instructions at "How to create a 
 5. Add spec data for your adapter into spec/spec_helper DATA constant.
 6. Use environment variable __RAUTOMATION_ADAPTER__ to point to that adapter.
 7. Start coding and spec-ing.
+8. Make me a pull request.
 
 Don't forget to fix the documentation for that adapter also!
 
