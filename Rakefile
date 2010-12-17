@@ -6,14 +6,14 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "rautomation"
     gem.summary = %Q{Automate windows and their controls through user-friendly API with Ruby}
-    gem.description = %Q{RAutomation tries to be a small and easy to use library for helping out to automate windows and their controls
+    gem.description = %Q{RAutomation is a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
 
-RAutomation aims to provide:
-* Easy to use and user-friendly API (inspired by Watir http://www.watir.com).
+RAutomation provides:
+* Easy to use and user-friendly API (inspired by Watir http://www.watir.com)
 * Cross-platform compatibility
-* Easy extensibility - have some application, which uses some specialized technology, but isn't supported by RAutomation?
-  You can get dirty and create a new adapter for RAutomation!}
+* Easy extensibility - with small scripting effort it's possible to add support for not yet
+  supported platforms or technologies}
     gem.email = "jarmo.p@gmail.com"
     gem.homepage = "http://github.com/jarmo/RAutomation"
     gem.authors = ["Jarmo Pertman"]
