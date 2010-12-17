@@ -31,6 +31,7 @@ module SpecHelper
                   :window2_button_text => "OK",
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class => "Edit",
+                  # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.WinGetTitle("[TITLE:Explorer User Prompt]")}
           },
           # This adapter needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
@@ -53,6 +54,7 @@ module SpecHelper
                   :window2_button_text => "OK",
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class => "Edit",
+                  # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.window_title(win.hwnd)}
           }
   }[ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter]
