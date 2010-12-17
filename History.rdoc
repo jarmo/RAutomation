@@ -1,3 +1,7 @@
+=== Version 0.2.1 / 2010-12-17
+
+* added yard options for documentation
+
 === Version 0.2.0 / 2010-12-17
 
 * added Window#pid method
