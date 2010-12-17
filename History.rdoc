@@ -1,4 +1,4 @@
-=== Version 0.1.1 / 2010-12-17
+=== Version 0.2.0 / 2010-12-17
 
 * added Window#pid method
 
