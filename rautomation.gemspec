@@ -5,19 +5,19 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rautomation}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jarmo Pertman"]
-  s.date = %q{2010-12-14}
-  s.description = %q{RAutomation tries to be a small and easy to use library for helping out to automate windows and their controls
+  s.date = %q{2010-12-17}
+  s.description = %q{RAutomation is a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
 
-RAutomation aims to provide:
-* Easy to use and user-friendly API (inspired by Watir http://www.watir.com).
+RAutomation provides:
+* Easy to use and user-friendly API (inspired by Watir http://www.watir.com)
 * Cross-platform compatibility
-* Easy extensibility - have some application, which uses some specialized technology, but isn't supported by RAutomation?
-  You can get dirty and create a new adapter for RAutomation!}
+* Easy extensibility - with small scripting effort it's possible to add support for not yet
+  supported platforms or technologies}
   s.email = %q{jarmo.p@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
