@@ -3,6 +3,13 @@ require 'rautomation'
 require 'rspec'
 
 module SpecHelper
+  # @private
+  def adapter
+    ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter
+  end
+
+  module_function :adapter
+
   # Since adapters are different then the windows to be tested
   # might be different also.
   #
@@ -57,7 +64,7 @@ module SpecHelper
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.window_title(win.hwnd)}
           }
-  }[ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter]
+  }[adapter]
 end
 
 RSpec.configure do |config|
