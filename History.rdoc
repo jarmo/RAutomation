@@ -1,3 +1,7 @@
+=== Version 0.3.0 / 2010-12-18
+
+* added Ffi adapter specific method Window#child which searches for child windows and popups
+
 === Version 0.2.1 / 2010-12-17
 
 * added yard options for documentation

@@ -70,11 +70,12 @@ about that matter - or even better, follow the instructions at "How to create a 
 1. Fork the project.
 2. Create entry point file to lib/rautomation/adapter which should load all adapter specific files.
 3. Add `autoload` statement into lib/rautomation/adapter/helper.rb for that file.
-4. Copy button.rb, text_field.rb and window.rb from some of the existing adapter's directory.
-5. Add spec data for your adapter into spec/spec_helper DATA constant.
-6. Use environment variable __RAUTOMATION_ADAPTER__ to point to that adapter.
-7. Start coding and spec-ing until as much of possible of the public API is satisfied.
-8. Make me a pull request.
+4. Create a directory for your adapter's specific code into lib/rautomation/adapter
+5. Copy button.rb, text_field.rb and window.rb from some of the existing adapter's directory.
+6. Add spec data for your adapter into spec/spec_helper DATA constant.
+7. Use environment variable __RAUTOMATION_ADAPTER__ to point to that adapter.
+8. Start coding and spec-ing until as much of possible of the public API is satisfied.
+9. Make me a pull request.
 
 Don't forget to fix the documentation for that adapter also!
 
