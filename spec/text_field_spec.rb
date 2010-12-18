@@ -6,9 +6,9 @@ describe RAutomation::TextField do
             text_field(:class => SpecHelper::DATA[:window2_text_field_class]).should exist
 
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existent-window").
+    expect {RAutomation::Window.new(:title => "non-existent-window").
             text_field(:class => SpecHelper::DATA[:window2_text_field_class])}.
-            should raise_exception(RAutomation::UnknownWindowException)
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#set" do
@@ -16,8 +16,8 @@ describe RAutomation::TextField do
     window.text_field(:class => SpecHelper::DATA[:window2_text_field_class]).set "hello!"
 
     RAutomation::Window.wait_timeout = 0.1
-    lambda {window.text_field(:class => "non-existing-field").set "hello!"}.
-            should raise_exception(RAutomation::UnknownTextFieldException)
+    expect {window.text_field(:class => "non-existing-field").set "hello!"}.
+            to raise_exception(RAutomation::UnknownTextFieldException)
   end
 
   it "#clear"do
@@ -29,8 +29,8 @@ describe RAutomation::TextField do
     field.value.should be_empty
 
     RAutomation::Window.wait_timeout = 0.1
-    lambda {window.text_field(:class => "non-existent-field").clear}.
-            should raise_exception(RAutomation::UnknownTextFieldException)
+    expect {window.text_field(:class => "non-existent-field").clear}.
+            to raise_exception(RAutomation::UnknownTextFieldException)
   end
 
   it "#value" do
@@ -40,8 +40,8 @@ describe RAutomation::TextField do
     field.value.should == "hello!"
 
     RAutomation::Window.wait_timeout = 0.1
-    lambda {window.text_field(:class => "non-existent-field").value}.
-            should raise_exception(RAutomation::UnknownTextFieldException)
+    expect {window.text_field(:class => "non-existent-field").value}.
+            to raise_exception(RAutomation::UnknownTextFieldException)
   end
 
   it "#exists?" do

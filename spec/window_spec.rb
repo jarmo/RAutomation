@@ -36,8 +36,8 @@ describe RAutomation::Window do
   it "#visible?"do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should be_visible
     RAutomation::Window.wait_timeout = 0.1
-    lambda{RAutomation::Window.new(:title => "non-existing-window").visible?}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").visible?}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#present?"do
@@ -48,15 +48,15 @@ describe RAutomation::Window do
   it "#hwnd" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).hwnd.should be_a(Fixnum)
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existing-window").hwnd}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").hwnd}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#title" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).title.should == SpecHelper::DATA[:window2_title]
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existing-window").title}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").title}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#activate & #active?" do
@@ -71,35 +71,44 @@ describe RAutomation::Window do
   it "#text" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).text.should include(SpecHelper::DATA[:window2_text])
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existing-window").text}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").text}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#maximize" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).maximize
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existing-window").maximize}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").maximize}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "#minimize && #minimized?" do
+  it "#minimize & #minimized?" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     window.should_not be_minimized
     window.minimize
     window.should be_minimized
 
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existing-window").minimize}.
-            should raise_exception(RAutomation::UnknownWindowException)
-    lambda {RAutomation::Window.new(:title => "non-existing-window").minimized?}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").minimize}.
+            to raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").minimized?}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#restore" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).restore
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existing-window").restore}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").restore}.
+            to raise_exception(RAutomation::UnknownWindowException)
+  end
+
+  it "#child", :if => SpecHelper.adapter == :ffi do
+    window = RAutomation::Window.new(:title => /Windows Internet Explorer/i)
+    window.should exist
+    child = window.child(:title => SpecHelper::DATA[:window2_title])
+    child.should exist
+    child.title.should == SpecHelper::DATA[:window2_title]
+    child.text.should include(SpecHelper::DATA[:window2_text])
   end
 
   it "#method_missing" do
@@ -114,8 +123,8 @@ describe RAutomation::Window do
     RAutomation::WaitHelper.wait_until(15) {not window.exists?}
 
     RAutomation::Window.wait_timeout = 0.1
-    lambda {RAutomation::Window.new(:title => "non-existing-window").send_keys("123")}.
-            should raise_exception(RAutomation::UnknownWindowException)
+    expect {RAutomation::Window.new(:title => "non-existing-window").send_keys("123")}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#close" do
@@ -124,7 +133,7 @@ describe RAutomation::Window do
     window.close
     window.should_not exist
 
-    lambda {RAutomation::Window.new(:title => "non-existing-window").close}.
-            should_not raise_exception
+    expect {RAutomation::Window.new(:title => "non-existing-window").close}.
+            to_not raise_exception
   end
 end
