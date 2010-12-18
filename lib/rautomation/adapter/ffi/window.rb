@@ -133,6 +133,14 @@ module RAutomation
           Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
 
+        # Creates the child window object.
+        # @note This is an Ffi adapter specific method, not part of the public API
+        # @param (see Window#initialize)
+        # @return [RAutomation::Window] child window, popup or regular window.
+        def child(locators)
+          RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
+        end
+        
       end
     end
   end

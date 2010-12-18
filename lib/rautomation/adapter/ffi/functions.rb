@@ -55,6 +55,8 @@ module RAutomation
                         [:long], :int
         attach_function :_set_control_focus, :SetFocus,
                         [:long], :long
+        attach_function :get_window, :GetWindow,
+                        [:long, :uint], :long
 
         # kernel32
         attach_function :open_process, :OpenProcess,
@@ -72,6 +74,8 @@ module RAutomation
             title.read_string
           end
 
+          alias_method :control_title, :window_title
+
           def window_text(hwnd)
             found_text = ""
             window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |child_hwnd, _|
@@ -82,11 +86,27 @@ module RAutomation
             found_text
           end
 
+          alias_method :control_text, :window_text
+
           def window_hwnd(locators)
             find_hwnd(locators) do |hwnd|
               window_visible(hwnd) && !window_text(hwnd).empty? &&
                       locators_match?(locators, window_properties(hwnd, locators))
             end
+          end
+
+          def child_window_locators(parent_hwnd, locators)
+            child_hwnd = locators[:hwnd] || child_hwnd(parent_hwnd, locators)
+            if child_hwnd
+              locators.merge!(:hwnd => child_hwnd)
+            else
+              popup_hwnd = get_window(parent_hwnd, Constants::GW_ENABLEDPOPUP)
+              if popup_hwnd != parent_hwnd
+                popup_properties = window_properties(popup_hwnd, locators)
+                locators.merge!(:hwnd => popup_hwnd) if locators_match?(locators, popup_properties)
+              end
+            end
+            locators
           end
 
           def window_pid(hwnd)
@@ -131,6 +151,8 @@ module RAutomation
               locators_match?(locators, control_properties(hwnd, locators))
             end
           end
+
+          alias_method :child_hwnd, :control_hwnd
 
           def control_value(control_hwnd)
             text_for(control_hwnd)

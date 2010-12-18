@@ -23,6 +23,9 @@ module RAutomation
         # keybd_event constants
         KEYEVENTF_EXTENDEDKEY = 0x1
         KEYEVENTF_KEYUP = 0x2
+
+        # GetWindow constants
+        GW_ENABLEDPOPUP = 6
       end
     end
   end
