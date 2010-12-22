@@ -37,8 +37,8 @@ module RAutomation
     # It is also possible to change the default adapter by using environment variable called
     # __RAUTOMATION_ADAPTER__
     #
-    # @note This constructor doesn't ensure window's existance.
-    # @note Window to be searched for has to be visible.
+    # @note This constructor doesn't check for window's existance.
+    # @note Only visible Windows are supported.
     # @param [Hash] locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter

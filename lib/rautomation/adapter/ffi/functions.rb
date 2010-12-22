@@ -90,8 +90,7 @@ module RAutomation
 
           def window_hwnd(locators)
             find_hwnd(locators) do |hwnd|
-              window_visible(hwnd) && !window_text(hwnd).empty? &&
-                      locators_match?(locators, window_properties(hwnd, locators))
+              window_visible(hwnd) && locators_match?(locators, window_properties(hwnd, locators))
             end
           end
 

@@ -26,7 +26,7 @@ module RAutomation
         end
 
         # Retrieves handle of the window.
-        # @note Searches only for visible windows with having some text at all.
+        # @note Searches only for visible windows.
         # @see RAutomation::Window#hwnd
         def hwnd
           @hwnd ||= Functions.window_hwnd(@locators)

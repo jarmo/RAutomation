@@ -103,7 +103,7 @@ describe RAutomation::Window do
   end
 
   it "#child", :if => SpecHelper.adapter == :ffi do
-    window = RAutomation::Window.new(:title => /Windows Internet Explorer/i)
+    window = RAutomation::Window.new(:title => /Internet Explorer$/i)
     window.should exist
     child = window.child(:title => SpecHelper::DATA[:window2_title])
     child.should exist
