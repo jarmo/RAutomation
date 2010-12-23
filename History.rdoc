@@ -1,3 +1,9 @@
+=== Version 0.4.0 / 2010-12-23
+
+* allow to search windows without text (like empty Notepad window for example).
+* added possibility to use block for #click to specify successful clicking condition.
+* renamed :ffi adapter to :win_ffi because FFI may be used on other platforms too.
+
 === Version 0.3.0 / 2010-12-18
 
 * added Ffi adapter specific method Window#child which searches for child windows and popups
