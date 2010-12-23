@@ -29,7 +29,8 @@ module RAutomation
                     Functions.set_control_focus(hwnd) &&
                     Functions.control_click(hwnd) &&
                     clicked = true # is clicked at least once
-            clicked && !exists?
+
+            block_given? ? yield : clicked && !exists?
           end
         end
 

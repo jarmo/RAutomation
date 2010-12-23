@@ -191,7 +191,7 @@ module RAutomation
     private
 
     def wait_until_exists
-      WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
+      WaitHelper.wait_until {exists?}
     rescue WaitHelper::TimeoutError
       raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist!" unless exists?
     end

@@ -27,7 +27,7 @@ module RAutomation
           extract(locators)
         end
 
-        # @see RAutomation::Button#click 
+        # @see RAutomation::Button#click
         def click
           clicked = false
           wait_until do
@@ -37,7 +37,7 @@ module RAutomation
                     Window.autoit.ControlClick(@window.locator_hwnd, "", @locators) == 1 &&
                     clicked = true # is clicked at least once
 
-            clicked && !exists?
+            block_given? ? yield : clicked && !exists?
           end
         end
 
