@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rautomation}
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jarmo Pertman"]
-  s.date = %q{2010-12-18}
+  s.date = %q{2010-12-23}
   s.description = %q{RAutomation is a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
 
@@ -35,25 +35,26 @@ RAutomation provides:
      "VERSION",
      "ext/AutoItX/AutoItX.chm",
      "ext/AutoItX/AutoItX3.dll",
-     "lib/rautomation.rb",
+     "lib/RAutomation.rb",
      "lib/rautomation/adapter/autoit.rb",
      "lib/rautomation/adapter/autoit/button.rb",
      "lib/rautomation/adapter/autoit/locators.rb",
      "lib/rautomation/adapter/autoit/text_field.rb",
      "lib/rautomation/adapter/autoit/window.rb",
-     "lib/rautomation/adapter/ffi.rb",
-     "lib/rautomation/adapter/ffi/button.rb",
-     "lib/rautomation/adapter/ffi/constants.rb",
-     "lib/rautomation/adapter/ffi/functions.rb",
-     "lib/rautomation/adapter/ffi/locators.rb",
-     "lib/rautomation/adapter/ffi/text_field.rb",
-     "lib/rautomation/adapter/ffi/window.rb",
      "lib/rautomation/adapter/helper.rb",
+     "lib/rautomation/adapter/win_ffi.rb",
+     "lib/rautomation/adapter/win_ffi/button.rb",
+     "lib/rautomation/adapter/win_ffi/constants.rb",
+     "lib/rautomation/adapter/win_ffi/functions.rb",
+     "lib/rautomation/adapter/win_ffi/locators.rb",
+     "lib/rautomation/adapter/win_ffi/text_field.rb",
+     "lib/rautomation/adapter/win_ffi/window.rb",
      "lib/rautomation/button.rb",
      "lib/rautomation/text_field.rb",
      "lib/rautomation/wait_helper.rb",
      "lib/rautomation/window.rb",
      "rautomation.gemspec",
+     "spec/adapter/win_ffi/window_spec.rb",
      "spec/button_spec.rb",
      "spec/spec_helper.rb",
      "spec/test.html",
@@ -66,7 +67,8 @@ RAutomation provides:
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Automate windows and their controls through user-friendly API with Ruby}
   s.test_files = [
-    "spec/button_spec.rb",
+    "spec/adapter/win_ffi/window_spec.rb",
+     "spec/button_spec.rb",
      "spec/spec_helper.rb",
      "spec/text_field_spec.rb",
      "spec/window_spec.rb"
