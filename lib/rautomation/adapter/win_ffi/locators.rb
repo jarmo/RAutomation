@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module Ffi
+    module WinFfi
       # @private
       module Locators
 

@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module Ffi
+    module WinFfi
       class Button
         include WaitHelper
         include Locators

@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module Ffi
+    module WinFfi
       class Window
         include WaitHelper
         include Locators
@@ -134,7 +134,7 @@ module RAutomation
         end
 
         # Creates the child window object.
-        # @note This is an Ffi adapter specific method, not part of the public API
+        # @note This is an WinFfi adapter specific method, not part of the public API
         # @example
         #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
         #     child(:title => /some popup/)
