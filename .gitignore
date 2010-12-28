@@ -23,3 +23,6 @@ pkg
 
 .yardoc/
 doc/
+
+ext/src/WindowsForms/WindowsForms/bin/*
+ext/src/WindowsForms/WindowsForms/obj/*
