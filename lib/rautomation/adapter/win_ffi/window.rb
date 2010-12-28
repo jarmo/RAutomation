@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module Ffi
+    module WinFfi
       class Window
         include WaitHelper
         include Locators
@@ -26,7 +26,7 @@ module RAutomation
         end
 
         # Retrieves handle of the window.
-        # @note Searches only for visible windows with having some text at all.
+        # @note Searches only for visible windows.
         # @see RAutomation::Window#hwnd
         def hwnd
           @hwnd ||= Functions.window_hwnd(@locators)
@@ -134,7 +134,10 @@ module RAutomation
         end
 
         # Creates the child window object.
-        # @note This is an Ffi adapter specific method, not part of the public API
+        # @note This is an WinFfi adapter specific method, not part of the public API
+        # @example
+        #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
+        #     child(:title => /some popup/)
         # @param (see Window#initialize)
         # @return [RAutomation::Window] child window, popup or regular window.
         def child(locators)

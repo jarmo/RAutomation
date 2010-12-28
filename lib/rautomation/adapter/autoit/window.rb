@@ -51,11 +51,11 @@ module RAutomation
         end
 
         # Retrieves handle of the window.
-        # @note Searches only for visible windows with having some text at all.
+        # @note Searches only for visible windows.
         # @see RAutomation::Window#hwnd
         def hwnd
           @hwnd ||= @@autoit.WinList(@locators, @locator_text).pop.compact.
-                  find {|handle| w = self.class.new(:hwnd => handle.hex); w.visible? && !w.text.empty?}.
+                  find {|handle| self.class.new(:hwnd => handle.hex).visible?}.
                   hex rescue nil
         end
 

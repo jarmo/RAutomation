@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 
 describe RAutomation::Window do
   before :all do
@@ -100,15 +100,6 @@ describe RAutomation::Window do
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").restore}.
             to raise_exception(RAutomation::UnknownWindowException)
-  end
-
-  it "#child", :if => SpecHelper.adapter == :ffi do
-    window = RAutomation::Window.new(:title => /Windows Internet Explorer/i)
-    window.should exist
-    child = window.child(:title => SpecHelper::DATA[:window2_title])
-    child.should exist
-    child.title.should == SpecHelper::DATA[:window2_title]
-    child.text.should include(SpecHelper::DATA[:window2_text])
   end
 
   it "#method_missing" do

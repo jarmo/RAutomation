@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module Ffi
+    module WinFfi
       # @private
       module Functions
         extend FFI::Library
@@ -90,9 +90,22 @@ module RAutomation
 
           def window_hwnd(locators)
             find_hwnd(locators) do |hwnd|
-              window_visible(hwnd) && !window_text(hwnd).empty? &&
-                      locators_match?(locators, window_properties(hwnd, locators))
+              window_visible(hwnd) && locators_match?(locators, window_properties(hwnd, locators))
             end
+          end
+
+          def child_window_locators(parent_hwnd, locators)
+            child_hwnd = locators[:hwnd] || child_hwnd(parent_hwnd, locators)
+            if child_hwnd
+              locators.merge!(:hwnd => child_hwnd)
+            else
+              popup_hwnd = get_window(parent_hwnd, Constants::GW_ENABLEDPOPUP)
+              if popup_hwnd != parent_hwnd
+                popup_properties = window_properties(popup_hwnd, locators)
+                locators.merge!(:hwnd => popup_hwnd) if locators_match?(locators, popup_properties)
+              end
+            end
+            locators
           end
 
           def child_window_locators(parent_hwnd, locators)

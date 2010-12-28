@@ -37,8 +37,8 @@ module RAutomation
     # It is also possible to change the default adapter by using environment variable called
     # __RAUTOMATION_ADAPTER__
     #
-    # @note This constructor doesn't ensure window's existance.
-    # @note Window to be searched for has to be visible.
+    # @note This constructor doesn't check for window's existance.
+    # @note Only visible Windows are supported.
     # @param [Hash] locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
@@ -191,7 +191,7 @@ module RAutomation
     private
 
     def wait_until_exists
-      WaitHelper.wait_until(RAutomation::Window.wait_timeout) {exists?}
+      WaitHelper.wait_until {exists?}
     rescue WaitHelper::TimeoutError
       raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist!" unless exists?
     end

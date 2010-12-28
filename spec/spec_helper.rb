@@ -42,7 +42,7 @@ module SpecHelper
                   :title_proc => lambda {|win| win.WinGetTitle("[TITLE:Explorer User Prompt]")}
           },
           # This adapter needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
-          :ffi => {
+          :win_ffi => {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
                   :window1 => "mspaint",

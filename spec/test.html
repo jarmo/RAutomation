@@ -3,7 +3,9 @@
     <title>RAutomation testing page</title>
     <script type="text/javascript">
         function showPrompt() {
-            prompt("Where do you want to go today?");
+          if (prompt("Where do you want to go today?")) {
+            showPrompt();
+          }
         }
     </script>
 </head>
