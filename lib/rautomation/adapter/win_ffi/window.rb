@@ -105,7 +105,9 @@ module RAutomation
               activate
               active?
             end
+            Functions.send_key(0x12, 0, 0, nil)
             Functions.send_key(key, 0, 0, nil)
+            Functions.send_key(0x12, 0, Constants::KEYEVENTF_KEYUP, nil)
             Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
           end
         end
