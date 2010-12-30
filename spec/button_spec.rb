@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe RAutomation::Button do
   it "#button" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).
-            button(:value => SpecHelper::DATA[:window2_button_text]).should exist
+    RAutomation::Window.new(:title => "MainFormWindow").
+            button(:value => "&About").should exist
 
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").button(:value => "Something")}.
@@ -11,46 +11,49 @@ describe RAutomation::Button do
   end
 
   it "#value" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).
-            button(:value => SpecHelper::DATA[:window2_button_text]).value.should == SpecHelper::DATA[:window2_button_text]
+    RAutomation::Window.new(:title =>  "MainFormWindow").
+            button(:value => "&About").value.should == "&About"
 
     RAutomation::Window.wait_timeout = 0.1
-    expect {RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).button(:value => "non-existent-button").value}.
+    expect {RAutomation::Window.new(:title => "MainFormWindow").button(:value => "non-existent-button").value}.
             to raise_exception(RAutomation::UnknownButtonException)
   end
 
   it "#exists?" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
-    window.button(:value => SpecHelper::DATA[:window2_button_text]).should exist
+    window = RAutomation::Window.new(:title => "MainFormWindow")
+    window.button(:value => "&About").should exist
     window.button(:value => "non-existent-button").should_not exist
   end
 
-  it "#click" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+  it "clicking non-existing button raises exception" do
+    window = RAutomation::Window.new(:title => "MainFormWindow")
     RAutomation::Window.wait_timeout = 0.1
     expect {window.button(:value => "non-existent-button").click}.
             to raise_exception(RAutomation::UnknownButtonException)
+  end
 
-    RAutomation::Window.wait_timeout = 60
-    button = window.button(:value => SpecHelper::DATA[:window2_button_text])
+  it "#click" do
+    window = RAutomation::Window.new(:title => "MainFormWindow")
+
+    button = window.button(:value => "&About")
     button.should exist
     button.click
-    button.should_not exist
-    window.should_not exist
+
+    aboutWindow = RAutomation::Window.new(:title => /About/i)
+    aboutWindow.should exist
   end
 
   it "#click with a block for defining successful click" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    window = RAutomation::Window.new(:title => "MainFormWindow")
     RAutomation::Window.wait_timeout = 5
-    button = window.button(:value => SpecHelper::DATA[:window2_button_text])
+    button = window.button(:value => "not-there")
     expect {button.click {false}}.
-            to raise_exception(RAutomation::WaitHelper::TimeoutError)
+            to raise_exception(RAutomation::UnknownButtonException)
     button.should_not exist
-    window.should_not exist
 
     RAutomation::Window.wait_timeout = 10
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
-    button = window.button(:value => SpecHelper::DATA[:window2_button_text])
+    window = RAutomation::Window.new(:title => "MainFormWindow")
+    button = window.button(:value => "Close")
     button.should exist
     button.click {|button| !button.exists? && !window.exists?}
     button.should_not exist
