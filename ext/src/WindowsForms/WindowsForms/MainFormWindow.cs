@@ -26,5 +26,10 @@ namespace WindowsForms
             AboutBox aboutBox = new AboutBox();
             aboutBox.Show();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
