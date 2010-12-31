@@ -123,6 +123,10 @@ module RAutomation
           Button.new(self, locator)
         end
 
+        def checkbox(locator)
+          Checkbox.new(self, locator)
+        end
+
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
         def text_field(locator)

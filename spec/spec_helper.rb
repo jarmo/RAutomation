@@ -44,7 +44,7 @@ module SpecHelper
           :win_ffi => {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
-                  :window1 => "ext\\bin\\WindowsForms.exe",
+                  :window1 => "ext\\WindowsForms\\bin\\WindowsForms.exe",
                   # Window 1 title, has to be a Regexp.
                   :window1_title => /FormWindow/i,
                   :window1_full_title => 'MainFormWindow',

@@ -111,11 +111,10 @@ describe RAutomation::Window do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     window.minimize # #send_keys should work even if window is minimized
     window.send_keys(SpecHelper::DATA[:window1_send_keys])
-    aboutBox = RAutomation::Window.new(:title => /About/i)
-    aboutBox.should be_present
+    about_box = RAutomation::Window.new(:title => /About/i)
+    about_box.should be_present
 
-    aboutBox.send_keys(0x0D)
-
+    about_box.send_keys(0x0D)
 
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").send_keys("123")}.

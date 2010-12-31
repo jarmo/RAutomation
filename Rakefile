@@ -16,7 +16,7 @@ RAutomation provides:
   supported platforms or technologies}
     gem.email = "jarmo.p@gmail.com"
     gem.homepage = "http://github.com/jarmo/RAutomation"
-    gem.authors = ["Jarmo Pertman", "Stephan Schwab"]
+    gem.authors = ["Jarmo Pertman"]
     gem.add_development_dependency "rspec", "~>2.3"
   end
   Jeweler::GemcutterTasks.new

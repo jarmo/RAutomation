@@ -31,5 +31,13 @@ namespace WindowsForms
         {
             this.Close();
         }
+
+        private void checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox.Checked == true)
+                checkBoxLabel.Text = "checkBox is on";
+            else
+                checkBoxLabel.Text = "checkBox is off";
+        }
     }
 }

@@ -49,7 +49,11 @@ describe RAutomation::Button do
     button = window.button(:value => "not-there")
     expect {button.click {false}}.
             to raise_exception(RAutomation::UnknownButtonException)
+# changed to UnknownButtonException due to:    
+# expected RAutomation::WaitHelper::TimeoutError, got #<RAutomation::UnknownButtonException: Button {:value=>"not-there"} doesn't exist on window {:title=>"MainFormWindow"}!>
+
     button.should_not exist
+#    window.should_not exist
 
     RAutomation::Window.wait_timeout = 10
     window = RAutomation::Window.new(:title => "MainFormWindow")
