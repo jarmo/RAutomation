@@ -39,5 +39,34 @@ namespace WindowsForms
             else
                 checkBoxLabel.Text = "checkBox is off";
         }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            radioButtonLabel.Text = "Option 1 selected";
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            radioButtonLabel.Text = "Option 2 selected";
+        }
+
+        private void radioButtonReset_Click(object sender, EventArgs e)
+        {
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButtonLabel.Text = "No option selected";
+        }
+
+        private void FruitsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fruitsLabel.Text = FruitsComboBox.Text;
+        }
+
+        private void nextFormButton_Click(object sender, EventArgs e)
+        {
+            DataEntryForm form = new DataEntryForm();
+            form.Show();
+        }
+
     }
 }
