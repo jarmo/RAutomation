@@ -4,6 +4,9 @@ module RAutomation
       class Button
         include WaitHelper
         include Locators
+        
+        # Default locators used for searching buttons.
+        DEFAULT_LOCATORS = {:class => "Button"}
 
         # @private
         # Special-cased locators
@@ -33,8 +36,8 @@ module RAutomation
           wait_until do
             @window.activate
             @window.active? &&
-                    Window.autoit.ControlFocus(@window.locator_hwnd, "", @locators) == 1 &&
-                    Window.autoit.ControlClick(@window.locator_hwnd, "", @locators) == 1 &&
+                    Window.autoit.ControlFocus(@window.locator_hwnd, "", @autoit_locators) == 1 &&
+                    Window.autoit.ControlClick(@window.locator_hwnd, "", @autoit_locators) == 1 &&
                     clicked = true # is clicked at least once
 
             block_given? ? yield : clicked && !exists?
@@ -43,12 +46,12 @@ module RAutomation
 
         # @see RAutomation::Button#value
         def value
-          Window.autoit.ControlGetText(@window.locator_hwnd, "", @locators)
+          Window.autoit.ControlGetText(@window.locator_hwnd, "", @autoit_locators)
         end
 
         # @see RAutomation::Button#exists?
         def exists?
-          not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @locators).empty?
+          not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @autoit_locators).empty?
         end
       end
     end

@@ -1,14 +1,6 @@
 require "spec_helper"
 
 describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
-  before :all do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    RAutomation::WaitHelper.wait_until {window.present?}
-
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
-    RAutomation::WaitHelper.wait_until {window.present?}
-  end
-
   it "#child" do
     window = RAutomation::Window.new(:title => /Internet Explorer$/i)
     window.should exist

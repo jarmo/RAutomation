@@ -38,6 +38,8 @@ module SpecHelper
                   :window2_button_text => "OK",
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class => "Edit",
+                  # Window 2 text field should have a default value.
+                  :window2_text_field_value => "undefined",
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.WinGetTitle("[TITLE:Explorer User Prompt]")}
           },
@@ -61,6 +63,8 @@ module SpecHelper
                   :window2_button_text => "OK",
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class => "Edit",
+                  # Window 2 text field should have a default value.
+                  :window2_text_field_value => "undefined",
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.window_title(win.hwnd)}
           }
@@ -71,6 +75,8 @@ RSpec.configure do |config|
   config.before(:all) do
     @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
     @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
+    RAutomation::WaitHelper.wait_until {RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).present?}
+    RAutomation::WaitHelper.wait_until {RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).present?}
   end
 
   config.before(:each) do
