@@ -37,10 +37,7 @@ describe RAutomation::Button do
 
     button = window.button(:value => "&About")
     button.should exist
-    button.click
-
-    aboutWindow = RAutomation::Window.new(:title => /About/i)
-    aboutWindow.should exist
+    button.click { |button| RAutomation::Window.new(:title => /About/i).exists? }
   end
 
   it "#click with a block for defining successful click" do

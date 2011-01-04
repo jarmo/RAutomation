@@ -19,8 +19,8 @@ module RAutomation
         PROCESS_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE | 0xFFF
 
         BM_CLICK = 0xF5
-        BM_GETSTATE = 0x00F2
-        BST_CHECKED = 0x0001
+        BM_GETSTATE = 0xF2
+        BST_CHECKED = 0x1
 
         # keybd_event constants
         KEYEVENTF_EXTENDEDKEY = 0x1
