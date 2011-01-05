@@ -6,7 +6,7 @@ module RAutomation
         include Locators
 
         # Default locators used for searching text fields.
-        DEFAULT_LOCATORS = {:class => "Edit"}
+        DEFAULT_LOCATORS = {:class => /edit/i}
 
         # Creates the text field object.
         # @note this method is not meant to be accessed directly, but only through {RAutomation::Window#text_field}!

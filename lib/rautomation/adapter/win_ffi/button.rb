@@ -6,7 +6,7 @@ module RAutomation
         include Locators
 
         # Default locators used for searching buttons.
-        DEFAULT_LOCATORS = {:class => "Button"}
+        DEFAULT_LOCATORS = {:class => /button/i}
 
         # Creates the button object.
         # @note this method is not meant to be accessed directly, but only through {RAutomation::Window#button}!
