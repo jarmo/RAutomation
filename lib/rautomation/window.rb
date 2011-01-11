@@ -84,12 +84,14 @@ module RAutomation
     end
 
     # @return [Fixnum] handle of the window which is used internally for other methods.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def hwnd
       wait_until_exists
       @window.hwnd
     end
 
     # @return [Fixnum] process identifier (PID) of the window.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def pid
       wait_until_exists
       @window.pid
