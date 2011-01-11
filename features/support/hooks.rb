@@ -4,6 +4,8 @@ Before do
   if @sample_app_pid == 0
     fail "Could not start #{SAMPLE_APP_EXE}"
   end
+
+  sleep 10
 end
 
 After do

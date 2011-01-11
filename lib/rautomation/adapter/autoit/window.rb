@@ -30,9 +30,9 @@ module RAutomation
         # @private
         # Special-cased locators
         LOCATORS = {
-                [:title, Regexp] => :regexptitle,
-                :index => :instance,
-                :hwnd => :handle
+          [:title, Regexp] => :regexptitle,
+          :index => :instance,
+          :hwnd => :handle
         }
 
         # Creates the window object.
@@ -46,6 +46,9 @@ module RAutomation
         # @see RAutomation::Window#initialize
         def initialize(locators)
           @hwnd = locators[:hwnd]
+          if locators[:index] && locators.size == 1
+            @locator_index = locators.delete(:index)
+          end
           @locator_text = locators.delete(:text)
           extract(locators)
         end
@@ -54,9 +57,17 @@ module RAutomation
         # @note Searches only for visible windows.
         # @see RAutomation::Window#hwnd
         def hwnd
-          @hwnd ||= @@autoit.WinList(@locators, @locator_text).pop.compact.
-                  find {|handle| self.class.new(:hwnd => handle.hex).visible?}.
-                  hex rescue nil
+          @hwnd ||= begin
+                      locators = @autoit_locators
+                      if @locator_index
+                        # @todo Come up with some better solution for this case
+                        locators = "[regexptitle:]" # match all, needed for the case when only :index is used
+                      end
+                      handles = @@autoit.WinList(locators, @locator_text).pop.compact.
+                        find_all {|handle| self.class.new(:hwnd => handle.hex).visible?}
+                      handle = handles[@locator_index || 0]
+                      handle ? handle.hex : nil
+                    end
         end
 
         # @see RAutomation::Window#pid

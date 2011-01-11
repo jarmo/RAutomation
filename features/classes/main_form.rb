@@ -22,4 +22,8 @@ class MainForm
     @window.text_field(:class => /STATIC/i, :index => 3).value
   end
 
+  def checkbox_ticked?
+    @window.checkbox(:value => "checkBox").checked?
+  end
+
 end

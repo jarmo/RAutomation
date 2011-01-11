@@ -44,6 +44,7 @@
             this.FruitsComboBox = new System.Windows.Forms.ComboBox();
             this.nextFormButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +71,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 67);
+            this.button1.Location = new System.Drawing.Point(12, 96);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 23);
             this.button1.TabIndex = 2;
@@ -216,11 +217,22 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Assorted UI Elements";
             // 
+            // buttonButton
+            // 
+            this.buttonButton.Location = new System.Drawing.Point(12, 67);
+            this.buttonButton.Name = "buttonButton";
+            this.buttonButton.Size = new System.Drawing.Size(95, 23);
+            this.buttonButton.TabIndex = 10;
+            this.buttonButton.Text = "Simple Elements";
+            this.buttonButton.UseVisualStyleBackColor = true;
+            this.buttonButton.Click += new System.EventHandler(this.buttonButton_Click);
+            // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 474);
+            this.Controls.Add(this.buttonButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.nextFormButton);
             this.Controls.Add(this.groupBox2);
@@ -260,6 +272,7 @@
         private System.Windows.Forms.Label fruitsLabel;
         private System.Windows.Forms.Button nextFormButton;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonButton;
     }
 }
 

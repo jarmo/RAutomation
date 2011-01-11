@@ -8,7 +8,13 @@ module SpecHelper
     ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter
   end
 
+  def navigate_to_simple_elements
+    main_window = RAutomation::Window.new(:title => "MainFormWindow")
+    main_window.button(:title => "Simple Elements").click { RAutomation::Window.new(:title => "SimpleElementsForm").exists? }
+  end
+
   module_function :adapter
+  module_function :navigate_to_simple_elements
 
   # Since adapters are different then the windows to be tested
   # might be different also.
@@ -61,19 +67,19 @@ module SpecHelper
                   :title_proc => lambda {|win| win.window_title(win.hwnd)}
           }
   }[adapter]
+
 end
 
 RSpec.configure do |config|
-  config.before(:all) do
-    @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
-#    @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
-  end
-
   config.before(:each) do
+    @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
+    sleep 0.1   # TODO should Window.wait_timeout not cause a wait for windows to exist?
+#    @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
     RAutomation::Window.wait_timeout = 60
   end
 
-  config.after(:all) do
+  config.after(:each) do
+    puts "killing #{@pid1}"
     Process.kill(9, @pid1) rescue nil
 #    Process.kill(9, @pid2) rescue nil
   end

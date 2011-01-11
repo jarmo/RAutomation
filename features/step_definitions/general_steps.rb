@@ -21,3 +21,6 @@ When /^I select the check box$/ do
   @main_form.select_checkbox
 end
 
+When /^the check box is ticked$/ do
+  fail "Checkbox not ticked" unless @main_form.checkbox_ticked?
+end

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
-  before :all do
+  before :each do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     RAutomation::WaitHelper.wait_until {window.present?}
 

@@ -1,13 +1,33 @@
 module RAutomation
-  class UnknownWindowException < RuntimeError
+  class UnknownElementException < RuntimeError
   end
-  class UnknownButtonException < RuntimeError
+  class UnknownWindowException < UnknownElementException
   end
-  class UnknownTextFieldException < RuntimeError
+  class UnknownButtonException < UnknownElementException
+  end
+  class UnknownTextFieldException < UnknownElementException
   end
 
   class Window
     include Adapter::Helper
+    extend ElementCollections
+
+    has_many :windows, :buttons, :text_fields
+
+    class << self
+      # @return [Windows] all windows. 
+      def windows
+        Windows.new(nil, {})
+      end
+    end
+    
+    # Retrieves all windows with similar locators to the current window.
+    # @param locators (see #initialize) 
+    # @return [Windows] all windows matching current window's _locators_ if no
+    #   explicit locators specified or windows matching the specified _locators_.
+    def windows(locators = @window.locators)
+      Windows.new(nil, locators)
+    end
 
     # Currently used {Adapter}.
     attr_reader :adapter
@@ -38,8 +58,8 @@ module RAutomation
     # __RAUTOMATION_ADAPTER__
     #
     # @note This constructor doesn't check for window's existance.
-    # @note Only visible Windows are supported.
-    # @param [Hash] locators for the window.
+    # @note Only visible windows are supported.
+    # @param [Hash] locators locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
       @window = Adapter.const_get(normalize(@adapter)).const_get(:Window).new(locators)
@@ -60,6 +80,7 @@ module RAutomation
       def wait_timeout
         @@wait_timeout
       end
+
     end
 
     # @return [Fixnum] handle of the window which is used internally for other methods.

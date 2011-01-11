@@ -68,5 +68,11 @@ namespace WindowsForms
             form.Show();
         }
 
+        private void buttonButton_Click(object sender, EventArgs e)
+        {
+            SimpleElementsForm buttonForm = new SimpleElementsForm();
+            buttonForm.Show();
+        }
+
     }
 }

@@ -5,7 +5,7 @@ module RAutomation
       module Functions
         extend FFI::Library
 
-        ffi_lib 'user32', 'kernel32'
+        ffi_lib 'user32', 'kernel32', 'oleacc'
         ffi_convention :stdcall
 
         callback :enum_callback, [:long, :pointer], :bool
@@ -57,6 +57,8 @@ module RAutomation
                         [:long], :long
         attach_function :get_window, :GetWindow,
                         [:long, :uint], :long
+        attach_function :get_last_error, :GetLastError,
+                        [], :long
 
         # kernel32
         attach_function :open_process, :OpenProcess,
@@ -66,7 +68,47 @@ module RAutomation
         attach_function :close_handle, :CloseHandle,
                         [:long], :bool
 
+        # oleacc
+        attach_function :accessible_object_from_window, :AccessibleObjectFromWindow,
+                        [:long, :uint, :pointer, :pointer], :void
+
+        class GUID < FFI::Struct
+          layout :data1, :uint,
+                 :data2, :int,
+                 :data3, :int,
+                 :data4_0, :short,
+                 :data4_1, :short,
+                 :data4_2, :short,
+                 :data4_3, :short,
+                 :data4_4, :short,
+                 :data4_5, :short,
+                 :data4_6, :short,
+                 :data4_7, :short,
+        end
+
         class << self
+
+          def accessible_object(hwnd)
+            guid = GUID.new
+            guid[:data1] = 0x618736e0
+            guid[:data2] = 0x3c3d
+            guid[:data3] = 0x11cf
+            guid[:data4_0] = 0x81
+            guid[:data4_1] = 0x0c
+            guid[:data4_2] = 0x00
+            guid[:data4_3] = 0xaa
+            guid[:data4_4] = 0x00
+            guid[:data4_5] = 0x38
+            guid[:data4_6] = 0x9b
+            guid[:data4_7] = 0x71
+
+            address_of_pointer_to_iaccessible = FFI::MemoryPointer.new :pointer
+            puts address_of_pointer_to_iaccessible
+            accessible_object_from_window hwnd, 0x00000000, guid, address_of_pointer_to_iaccessible
+
+            puts address_of_pointer_to_iaccessible.read_pointer
+          end
+
           def window_title(hwnd)
             title_length = window_title_length(hwnd) + 1
             title = FFI::MemoryPointer.new :char, title_length

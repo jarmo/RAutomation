@@ -5,6 +5,9 @@ module RAutomation
         include WaitHelper
         include Locators
 
+        # Default locators used for searching text fields.
+        DEFAULT_LOCATORS = {:class => /edit/i}
+
         # Creates the text field object.
         # @note this method is not meant to be accessed directly, but only through {RAutomation::Window#text_field}!
         # @param [RAutomation::Window] window this text field belongs to.

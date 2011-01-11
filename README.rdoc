@@ -11,24 +11,37 @@ for automated testing.
 RAutomation provides:
 * Easy to use and user-friendly API (inspired by Watir http://www.watir.com)
 * Cross-platform compatibility
-* Easy extensibility - with small scripting effort it's possible to add support for not yet
+* Easy extensibility - with small scripting effort it's possible to add support for not yet 
   supported platforms or technologies
 
 == USAGE
 
     require "rautomation"
-
+    
     window = RAutomation::Window.new(:title => /part of the title/i)
     window.exists? # => true
-
+    
     window.title # => "blah blah part Of the title blah"
     window.text # => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies..."
-
+    
     window.text_field(:class => "Edit", :index => 0).set "hello, world!"
     button = window.button(:text => "&Save")
     button.exists? # => true
     button.click
-
+    
+    all_windows = RAutomation::Window.windows
+    all_windows.each {|window| puts window.hwnd}
+    
+    window = RAutomation::Window.new(:title => /part of the title/i)
+    windows = window.windows
+    puts windows.size # => 2
+    windows.map {|window| window.title } # => ["part of the title 1", "part of the title 2"]
+    
+    window.windows(:title => /part of other title/i) # => all windows with matching specified title
+    
+    window.buttons.each {|button| puts button.value}
+    window.buttons(:value => /some value/i).each {|button| puts button.value}
+    
     window2 = RAutomation::Window.new(:title => "Other Title", :adapter => :autoit) # use AutoIt adapter
     # use adapter's (in this case AutoIt's) internal methods not part of the public API directly
     window2.WinClose("[TITLE:Other Title]")
@@ -82,12 +95,13 @@ Don't forget to fix the documentation for that adapter also!
 In case of any problems, feel free to contact me.
 
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
   future version unintentionally.
 * Commit, do not mess with rakefile, version, or history.
+  
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
