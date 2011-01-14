@@ -34,7 +34,7 @@ module RAutomation
 
         def checked?
           hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-          Functions.accessible_object hwnd
+          puts Functions.state_of_accessible_button hwnd
 
 #          return_value = Functions.send_message(Functions.control_hwnd(@window.hwnd, @locators), Constants::BM_GETSTATE, 0, nil)
 #          error_code = Functions.get_last_error

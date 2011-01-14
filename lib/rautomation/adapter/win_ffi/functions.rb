@@ -5,7 +5,7 @@ module RAutomation
       module Functions
         extend FFI::Library
 
-        ffi_lib 'user32', 'kernel32', 'oleacc'
+        ffi_lib 'user32', 'kernel32', 'ole32'
         ffi_convention :stdcall
 
         callback :enum_callback, [:long, :pointer], :bool
@@ -67,46 +67,128 @@ module RAutomation
                         [:long, :uint], :bool
         attach_function :close_handle, :CloseHandle,
                         [:long], :bool
+        attach_function :load_library, :LoadLibraryA,
+                        [:string], :long
+        attach_function :get_proc_address, :GetProcAddress,
+                        [:long, :string], :pointer
 
-        # oleacc
-        attach_function :accessible_object_from_window, :AccessibleObjectFromWindow,
-                        [:long, :uint, :pointer, :pointer], :void
+        # ole32
+        attach_function :co_initialize, :CoInitialize,
+                        [:pointer], :uint
+        attach_function :co_uninitialize, :CoUninitialize,
+                        [], :void
 
         class GUID < FFI::Struct
-          layout :data1, :uint,
-                 :data2, :int,
-                 :data3, :int,
-                 :data4_0, :short,
-                 :data4_1, :short,
-                 :data4_2, :short,
-                 :data4_3, :short,
-                 :data4_4, :short,
-                 :data4_5, :short,
-                 :data4_6, :short,
-                 :data4_7, :short,
+          layout :data1, :int32,
+                 :data2, :int16,
+                 :data3, :int16,
+                 :data4_0, :int8,
+                 :data4_1, :int8,
+                 :data4_2, :int8,
+                 :data4_3, :int8,
+                 :data4_4, :int8,
+                 :data4_5, :int8,
+                 :data4_6, :int8,
+                 :data4_7, :int8,
         end
+
+        class IAccessible < FFI::Struct
+          layout :lpVtbl, :pointer
+        end
+
+        class IAccessibleVtbl < FFI::Struct
+          layout  :QueryInterface, :pointer, 0,
+            :AddRef, :pointer, 4,
+            :Release, :pointer, 16,
+            :GetTypeInfoCount, :pointer, 20,
+            :GetTypeInfo, :pointer, 24,
+            :GetIDsOfNames, :pointer, 28,
+            :Invoke, :pointer, 32,
+            :get_accParent, :pointer, 36,
+            :get_accChildCount, :pointer, 40,
+            :get_accChild, :pointer, 44,
+            :get_accName, :pointer, 48,
+            :get_accValue, :pointer, 52,
+            :get_accDescription, :pointer, 56,
+            :get_accRole, :pointer, 60,
+            :get_accState, :pointer, 64,
+            :get_accHelp, :pointer, 68,
+            :get_accHelpTopic, :pointer,
+            :get_accKeyboardShortcut, :pointer,
+            :get_accFocus, :pointer,
+            :get_accSelection, :pointer,
+            :get_accDefaultAction, :pointer,
+            :accSelect, :pointer,
+            :accLocation, :pointer,
+            :accNavigate, :pointer,
+            :accHitTest, :pointer,
+            :accDoDefaultAction, :pointer,
+            :put_accName, :pointer,
+            :put_accValue, :pointer
+        end
+
+        class Variant < FFI::Struct
+          layout :vt, :long,
+              :wReserved1, :uint,
+              :wReserved2, :uint,
+              :wReserved3, :uint,
+              :lVal, :long
+        end
+
+        S_OK = 0
+        E_INVALIDARG = 0x80070057
+        E_NOINTERFACE = 0x80004002
 
         class << self
 
-          def accessible_object(hwnd)
-            guid = GUID.new
-            guid[:data1] = 0x618736e0
-            guid[:data2] = 0x3c3d
-            guid[:data3] = 0x11cf
-            guid[:data4_0] = 0x81
-            guid[:data4_1] = 0x0c
-            guid[:data4_2] = 0x00
-            guid[:data4_3] = 0xaa
-            guid[:data4_4] = 0x00
-            guid[:data4_5] = 0x38
-            guid[:data4_6] = 0x9b
-            guid[:data4_7] = 0x71
+          def state_of_accessible_button(hwnd)
+            co_initialize nil
 
-            address_of_pointer_to_iaccessible = FFI::MemoryPointer.new :pointer
-            puts address_of_pointer_to_iaccessible
-            accessible_object_from_window hwnd, 0x00000000, guid, address_of_pointer_to_iaccessible
+            module_handle = load_library "oleacc.dll"
+            if (module_handle != 0)
+              address_accessible_object_from_window = get_proc_address(module_handle, "AccessibleObjectFromWindow")
 
-            puts address_of_pointer_to_iaccessible.read_pointer
+                guid = GUID.new
+                guid[:data1] = 0x618736e0
+                guid[:data2] = 0x3c3d
+                guid[:data3] = 0x11cf
+                guid[:data4_0] = 0x81
+                guid[:data4_1] = 0x0c
+                guid[:data4_2] = 0x00
+                guid[:data4_3] = 0xaa
+                guid[:data4_4] = 0x00
+                guid[:data4_5] = 0x38
+                guid[:data4_6] = 0x9b
+                guid[:data4_7] = 0x71
+
+              i_accessible_ptr =  FFI::MemoryPointer.new(:pointer)
+              accessible_object_from_window = FFI::Function.new(:uint32, [:long, :uint32, :pointer, :pointer ], address_accessible_object_from_window)
+              hResult = accessible_object_from_window.call(hwnd, 0xFFFFFFFC, guid, i_accessible_ptr)  # for OBJID_CLIENT
+              if (hResult == S_OK)
+                i_accessible = IAccessible.new(i_accessible_ptr.read_pointer)
+                i_accessible_vtbl = IAccessibleVtbl.new(i_accessible[:lpVtbl])
+
+                get_accState = FFI::Function.new(:uint32, [:pointer, :pointer, :pointer], i_accessible_vtbl[:get_accState])
+
+                variant_in = Variant.new
+                variant_in[:vt] = 3
+                variant_in[:lVal] = 0  # CHILDID_SELF
+
+                variant_out = Variant.new
+
+                result = get_accState.call(i_accessible, variant_in, variant_out)   # segfault
+                put "result" + result.to_s
+                put "variant_out" + variant_out[:lVal]
+              end
+              if (hResult == E_INVALIDARG)
+                puts "E_INVALIDARG"
+              end
+              if (hResult == E_NOINTERFACE)
+                puts "E_NOINTERFACE"
+              end
+              puts "hResult = 0x" + hResult.to_s(16)
+            end
+            co_uninitialize
           end
 
           def window_title(hwnd)
