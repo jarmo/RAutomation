@@ -59,6 +59,7 @@ module RAutomation
     #
     # @note This constructor doesn't check for window's existance.
     # @note Only visible windows are supported.
+    # @note If given _locators_ include :hwnd then every other possible _locator_ is ignored.
     # @param [Hash] locators locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
