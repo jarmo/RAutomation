@@ -5,7 +5,7 @@ module RAutomation
       module Functions
         extend FFI::Library
 
-        ffi_lib 'user32', 'kernel32', 'ole32'
+        ffi_lib 'user32', 'kernel32', 'ole32', 'oleaut32'
         ffi_convention :stdcall
 
         callback :enum_callback, [:long, :pointer], :bool
@@ -77,6 +77,8 @@ module RAutomation
                         [:pointer], :uint
         attach_function :co_uninitialize, :CoUninitialize,
                         [], :void
+        attach_function :variant_init, :VariantInit,
+                        [:pointer], :void
 
         class GUID < FFI::Struct
           layout :data1, :int32,
@@ -128,16 +130,57 @@ module RAutomation
         end
 
         class Variant < FFI::Struct
-          layout :vt, :long,
-              :wReserved1, :uint,
-              :wReserved2, :uint,
-              :wReserved3, :uint,
+          layout :vt, :uint16,
+              :wReserved1, :uint16,
+              :wReserved2, :uint16,
+              :wReserved3, :uint16,
               :lVal, :long
         end
+
+#        typedef /* [wire_marshal] */ struct tagVARIANT VARIANT;
+#
+#        struct tagVARIANT
+#            {
+#            union
+#                {
+#                struct __tagVARIANT
+#                    {
+#                    VARTYPE vt;       unsigned short
+#                    WORD wReserved1;     unsigned short
+#                    WORD wReserved2;
+#                    WORD wReserved3;
+#                    union
+#                        {
+#                        LONGLONG llVal;
+#                        LONG lVal;
+#                        BYTE bVal;
+#                        SHORT iVal;
+#            [...]
+#                        UINT uintVal;
+#                        DECIMAL *pdecVal;
+#                        CHAR *pcVal;
+#                        USHORT *puiVal;
+#                        ULONG *pulVal;
+#                        ULONGLONG *pullVal;
+#                        INT *pintVal;
+#                        UINT *puintVal;
+#                        struct __tagBRECORD
+#                            {
+#                            PVOID pvRecord;
+#                            IRecordInfo *pRecInfo;
+#                            } 	__VARIANT_NAME_4;
+#                        } 	__VARIANT_NAME_3;
+#                    } 	__VARIANT_NAME_2;
+#                DECIMAL decVal;
+#                } 	__VARIANT_NAME_1;
+#            } ;
+
 
         S_OK = 0
         E_INVALIDARG = 0x80070057
         E_NOINTERFACE = 0x80004002
+
+        STATE_SYSTEM_CHECKED = 0x00000010
 
         class << self
 
@@ -168,17 +211,37 @@ module RAutomation
                 i_accessible = IAccessible.new(i_accessible_ptr.read_pointer)
                 i_accessible_vtbl = IAccessibleVtbl.new(i_accessible[:lpVtbl])
 
+
+#                query_interface = FFI::Function.new(:uint32, [:pointer, :pointer, :pointer], i_accessible_vtbl[:QueryInterface])
+#                result = query_interface.call(i_accessible, guid, i_accessible_ptr)
+#                puts "result = " + result.to_s(16)
+
                 get_accState = FFI::Function.new(:uint32, [:pointer, :pointer, :pointer], i_accessible_vtbl[:get_accState])
 
                 variant_in = Variant.new
-                variant_in[:vt] = 3
+                variant_init(variant_in)
+                variant_in[:vt] = 0x3
                 variant_in[:lVal] = 0  # CHILDID_SELF
 
-                variant_out = Variant.new
 
-                result = get_accState.call(i_accessible, variant_in, variant_out)   # segfault
-                put "result" + result.to_s
-                put "variant_out" + variant_out[:lVal]
+                variant_out = Variant.new
+                result = get_accState.call(i_accessible, nil, variant_out)   # segfault related to VARIANT
+                if (result == 0x80020008)
+                  puts "get_accState returned DISP_E_BADVARTYPE"
+                end
+                if (result == S_OK)
+                  puts "get_accState returned S_OK"
+                end
+                puts "get_accState result = 0x" + result.to_s(16)
+                puts "variant_out lval = " + variant_out[:lVal].to_s
+
+                if (variant_out[:lVal] & STATE_SYSTEM_CHECKED)
+                  puts "State is checked"
+                  return true
+                else
+                  puts "State is unchecked"
+                  return false
+                end
               end
               if (hResult == E_INVALIDARG)
                 puts "E_INVALIDARG"
