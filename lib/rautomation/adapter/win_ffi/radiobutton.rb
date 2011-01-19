@@ -1,7 +1,7 @@
 module RAutomation
   module Adapter
     module WinFfi
-      class Checkbox
+      class Radiobutton
         include WaitHelper
         include Locators
         include ButtonHelper
