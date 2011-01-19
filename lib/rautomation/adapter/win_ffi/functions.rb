@@ -5,7 +5,8 @@ module RAutomation
       module Functions
         extend FFI::Library
 
-        ffi_lib 'user32', 'kernel32', 'ole32', 'oleaut32'
+        # TODO once done adapt the path to the DLL (somewhere in the packaged gem)
+        ffi_lib 'user32', 'kernel32', 'ole32', File.dirname(__FILE__) + '/../../../../ext/IAccessibleDLL/Release/iaccessibleDll.dll'
         ffi_convention :stdcall
 
         callback :enum_callback, [:long, :pointer], :bool
@@ -69,190 +70,23 @@ module RAutomation
                         [:long], :bool
         attach_function :load_library, :LoadLibraryA,
                         [:string], :long
-        attach_function :get_proc_address, :GetProcAddress,
-                        [:long, :string], :pointer
 
         # ole32
         attach_function :co_initialize, :CoInitialize,
-                        [:pointer], :uint
-        attach_function :co_uninitialize, :CoUninitialize,
-                        [], :void
-        attach_function :variant_init, :VariantInit,
-                        [:pointer], :void
+                        [:pointer], :uint16
 
-        class GUID < FFI::Struct
-          layout :data1, :int32,
-                 :data2, :int16,
-                 :data3, :int16,
-                 :data4_0, :int8,
-                 :data4_1, :int8,
-                 :data4_2, :int8,
-                 :data4_3, :int8,
-                 :data4_4, :int8,
-                 :data4_5, :int8,
-                 :data4_6, :int8,
-                 :data4_7, :int8,
-        end
+        # iaccessible
+        attach_function :get_button_state, :get_button_state,
+                        [:long], :long
 
-        class IAccessible < FFI::Struct
-          layout :lpVtbl, :pointer
-        end
-
-        class IAccessibleVtbl < FFI::Struct
-          layout  :QueryInterface, :pointer, 
-            :AddRef, :pointer,
-            :Release, :pointer,
-            :GetTypeInfoCount, :pointer,
-            :GetTypeInfo, :pointer,
-            :GetIDsOfNames, :pointer,
-            :Invoke, :pointer,
-            :get_accParent, :pointer,
-            :get_accChildCount, :pointer,
-            :get_accChild, :pointer,
-            :get_accName, :pointer,
-            :get_accValue, :pointer,
-            :get_accDescription, :pointer,
-            :get_accRole, :pointer,
-            :get_accState, :pointer,
-            :get_accHelp, :pointer,
-            :get_accHelpTopic, :pointer,
-            :get_accKeyboardShortcut, :pointer,
-            :get_accFocus, :pointer,
-            :get_accSelection, :pointer,
-            :get_accDefaultAction, :pointer,
-            :accSelect, :pointer,
-            :accLocation, :pointer,
-            :accNavigate, :pointer,
-            :accHitTest, :pointer,
-            :accDoDefaultAction, :pointer,
-            :put_accName, :pointer,
-            :put_accValue, :pointer
-        end
-
-        class Variant < FFI::Struct
-          layout :vt, :uint16,
-              :wReserved1, :uint16,
-              :wReserved2, :uint16,
-              :wReserved3, :uint16,
-              :lVal, :long
-        end
-
-#        typedef /* [wire_marshal] */ struct tagVARIANT VARIANT;
-#
-#        struct tagVARIANT
-#            {
-#            union
-#                {
-#                struct __tagVARIANT
-#                    {
-#                    VARTYPE vt;       unsigned short
-#                    WORD wReserved1;     unsigned short
-#                    WORD wReserved2;
-#                    WORD wReserved3;
-#                    union
-#                        {
-#                        LONGLONG llVal;
-#                        LONG lVal;
-#                        BYTE bVal;
-#                        SHORT iVal;
-#            [...]
-#                        UINT uintVal;
-#                        DECIMAL *pdecVal;
-#                        CHAR *pcVal;
-#                        USHORT *puiVal;
-#                        ULONG *pulVal;
-#                        ULONGLONG *pullVal;
-#                        INT *pintVal;
-#                        UINT *puintVal;
-#                        struct __tagBRECORD
-#                            {
-#                            PVOID pvRecord;
-#                            IRecordInfo *pRecInfo;
-#                            } 	__VARIANT_NAME_4;
-#                        } 	__VARIANT_NAME_3;
-#                    } 	__VARIANT_NAME_2;
-#                DECIMAL decVal;
-#                } 	__VARIANT_NAME_1;
-#            } ;
-
-
-        S_OK = 0
-        E_INVALIDARG = 0x80070057
-        E_NOINTERFACE = 0x80004002
-
-        STATE_SYSTEM_CHECKED = 0x00000010
 
         class << self
 
-          def state_of_accessible_button(hwnd)
-            co_initialize nil
-
-            module_handle = load_library "oleacc.dll"
-            if (module_handle != 0)
-              address_accessible_object_from_window = get_proc_address(module_handle, "AccessibleObjectFromWindow")
-
-                guid = GUID.new
-                guid[:data1] = 0x618736e0
-                guid[:data2] = 0x3c3d
-                guid[:data3] = 0x11cf
-                guid[:data4_0] = 0x81
-                guid[:data4_1] = 0x0c
-                guid[:data4_2] = 0x00
-                guid[:data4_3] = 0xaa
-                guid[:data4_4] = 0x00
-                guid[:data4_5] = 0x38
-                guid[:data4_6] = 0x9b
-                guid[:data4_7] = 0x71
-
-              i_accessible_ptr =  FFI::MemoryPointer.new(:pointer)
-              accessible_object_from_window = FFI::Function.new(:uint32, [:long, :uint32, :pointer, :pointer ], address_accessible_object_from_window)
-              hResult = accessible_object_from_window.call(hwnd, 0xFFFFFFFC, guid, i_accessible_ptr)  # for OBJID_CLIENT
-              if (hResult == S_OK)
-                i_accessible = IAccessible.new(i_accessible_ptr.read_pointer)
-                i_accessible_vtbl = IAccessibleVtbl.new(i_accessible[:lpVtbl])
-
-
-#                query_interface = FFI::Function.new(:uint32, [:pointer, :pointer, :pointer], i_accessible_vtbl[:QueryInterface])
-#                result = query_interface.call(i_accessible, guid, i_accessible_ptr)
-#                puts "result = " + result.to_s(16)
-
-                get_accState = FFI::Function.new(:uint32, [:pointer, :pointer, :pointer], i_accessible_vtbl[:get_accState])
-
-                variant_in = Variant.new
-                variant_init(variant_in)
-                variant_in[:vt] = 0x3
-                variant_in[:lVal] = 0  # CHILDID_SELF
-
-
-                variant_out = Variant.new
-                result = get_accState.call(i_accessible, nil, variant_out)   # segfault related to VARIANT
-                if (result == 0x80020008)
-                  puts "get_accState returned DISP_E_BADVARTYPE"
-                end
-                if (result == S_OK)
-                  puts "get_accState returned S_OK"
-                end
-                puts "get_accState result = 0x" + result.to_s(16)
-                puts "variant_out lval = " + variant_out[:lVal].to_s
-
-                if (variant_out[:lVal] & STATE_SYSTEM_CHECKED)
-                  puts "State is checked"
-                  return true
-                else
-                  puts "State is unchecked"
-                  return false
-                end
-              end
-              if (hResult == E_INVALIDARG)
-                puts "E_INVALIDARG"
-              end
-              if (hResult == E_NOINTERFACE)
-                puts "E_NOINTERFACE"
-              end
-              puts "hResult = 0x" + hResult.to_s(16)
-            end
-            co_uninitialize
+          def checked? control_hwnd
+            state = get_button_state control_hwnd
+            (state & Constants::STATE_SYSTEM_CHECKED) != 0
           end
+
 
           def window_title(hwnd)
             title_length = window_title_length(hwnd) + 1

@@ -1,7 +1,7 @@
 begin
-  gem "ffi", "0.6.3"
+  gem "ffi"
 rescue Gem::LoadError
-  raise Gem::LoadError, "Unable to load FFI gem. Install it with:\n\tgem install ffi -v 0.6.3"
+  raise Gem::LoadError, "Unable to load FFI gem. Install it with:\n\tgem install ffi"
 end
 require "ffi"
 require File.dirname(__FILE__) + "/win_ffi/constants"

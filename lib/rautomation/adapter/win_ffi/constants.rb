@@ -28,6 +28,15 @@ module RAutomation
 
         # GetWindow constants
         GW_ENABLEDPOPUP = 6
+
+        # HRESULT
+        S_OK                 = 0
+
+        # IAccessible Button States
+        STATE_SYSTEM_CHECKED = 0x00000010
+
+        # VARIANT types
+        VT_I4 = 0x3
       end
     end
   end
