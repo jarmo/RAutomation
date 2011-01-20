@@ -35,8 +35,14 @@ module RAutomation
         # IAccessible Button States
         STATE_SYSTEM_CHECKED = 0x00000010
 
-        # VARIANT types
-        VT_I4 = 0x3
+        # Combobox
+        CB_GETCOUNT = 0x0146
+        CB_GETLBTEXTLEN = 0x0149
+        CB_GETLBTEXT = 0x0148
+        CB_GETCURSEL = 0x0147
+        CB_ERR = -1
+        CB_SETCURSEL = 0x14E
+
       end
     end
   end

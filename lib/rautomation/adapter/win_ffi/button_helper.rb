@@ -19,10 +19,6 @@ module RAutomation
           end
         end
 
-        def exist?
-          !!Functions.control_hwnd(@window.hwnd, @locators)
-        end
-
         def set?
           control_hwnd = Functions.control_hwnd(@window.hwnd, @locators)
 
@@ -44,7 +40,6 @@ module RAutomation
           clear if state_checked == false
         end
         
-        alias_method :exists?, :exist?
         alias_method :checked?, :set?
 
       end
