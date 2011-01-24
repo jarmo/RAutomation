@@ -19,6 +19,21 @@ module RAutomation
           extract(locators)
         end
 
+        def click
+          clicked = false
+          wait_until do
+            hwnd = Functions.control_hwnd(@window.hwnd, @locators)
+
+            @window.activate
+            @window.active? &&
+                    Functions.set_control_focus(hwnd) &&
+                    Functions.control_click(hwnd) &&
+                    clicked = true # is clicked at least once
+
+            block_given? ? yield : clicked && exists?
+          end
+        end
+
         def exist?
           !!Functions.control_hwnd(@window.hwnd, @locators)
         end
