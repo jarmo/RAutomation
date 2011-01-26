@@ -57,6 +57,15 @@ module RAutomation
           items
         end
 
+        def value
+          options().each do |option|
+            if option.selected?
+               return option.text
+            end
+          end
+          ""
+        end
+
       end
     end
   end

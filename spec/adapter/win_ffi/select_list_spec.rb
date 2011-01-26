@@ -36,4 +36,23 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
     select_list.options(:text => "Apple")[0].should be_selected
   end
 
+  it "#value" do
+    select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:class => /COMBOBOX/i)
+
+    #default empty state
+    select_list.value.should == ""
+
+    select_list.options(:text => "Apple")[0].select
+    select_list.value.should == "Apple"
+
+    select_list.options(:text => "Caimito")[0].select
+    select_list.value.should == "Caimito"
+    select_list.value.should_not == "Apple"
+
+    select_list.options(:text => "Orange")[0].select
+    select_list.value.should == "Orange"
+    select_list.value.should_not == "Caimito"
+    select_list.value.should_not == "Apple"
+  end
+
 end
