@@ -8,7 +8,13 @@ module SpecHelper
     ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter
   end
 
+  def navigate_to_simple_elements
+    main_window = RAutomation::Window.new(:title => "MainFormWindow")
+    main_window.button(:title => "Simple Elements").click { RAutomation::Window.new(:title => "SimpleElementsForm").exists? }
+  end
+
   module_function :adapter
+  module_function :navigate_to_simple_elements
 
   # Since adapters are different then the windows to be tested
   # might be different also.
@@ -38,53 +44,43 @@ module SpecHelper
                   :window2_button_text => "OK",
                   # Window 2 should have a text field with the specified class name.
                   :window2_text_field_class => "Edit",
-                  # Window 2 text field should have a default value.
-                  :window2_text_field_value => "undefined",
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.WinGetTitle("[TITLE:Explorer User Prompt]")}
           },
-          # This adapter needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
           :win_ffi => {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
-                  :window1 => "mspaint",
+                  :window1 => "ext\\WindowsForms\\bin\\WindowsForms.exe",
                   # Window 1 title, has to be a Regexp.
-                  :window1_title => /untitled - paint/i,
-                  # Path to some browser's binary.
-                  :window2 => '"c:\\program files\\internet explorer\\iexplore.exe"',
-                  # Window 2 title, has to be a String.
-                  :window2_title => "Explorer User Prompt",
+                  :window1_title => /FormWindow/i,
+                  :window1_full_title => 'MainFormWindow',
                   # Window 2 should have this text on it.
-                  :window2_text => "Where do you want to go today?",
+                  :window1_text => "This is a sample text",
                   # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
                   # VK_RETURN
-                  :window2_send_keys => 0xD,
+                  :window1_send_keys => 0x41,
                   # Window 2 should have a button with the following text.
-                  :window2_button_text => "OK",
+                  :window1_button_text => "OK",
                   # Window 2 should have a text field with the specified class name.
-                  :window2_text_field_class => "Edit",
-                  # Window 2 text field should have a default value.
-                  :window2_text_field_value => "undefined",
+                  :window1_text_field_class => "Edit",
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.window_title(win.hwnd)}
           }
   }[adapter]
+
 end
 
 RSpec.configure do |config|
-  config.before(:all) do
-    @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
-    @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
-    RAutomation::WaitHelper.wait_until {RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).present?}
-    RAutomation::WaitHelper.wait_until {RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).present?}
-  end
-
   config.before(:each) do
+    @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
+    sleep 0.1   # TODO should Window.wait_timeout not cause a wait for windows to exist?
+#    @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
     RAutomation::Window.wait_timeout = 60
   end
 
-  config.after(:all) do
+  config.after(:each) do
+    puts "killing #{@pid1}"
     Process.kill(9, @pid1) rescue nil
-    Process.kill(9, @pid2) rescue nil
+#    Process.kill(9, @pid2) rescue nil
   end
 end

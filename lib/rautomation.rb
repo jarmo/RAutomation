@@ -4,3 +4,4 @@ require "rautomation/element_collections"
 require "rautomation/window"
 require "rautomation/button"
 require "rautomation/text_field"
+

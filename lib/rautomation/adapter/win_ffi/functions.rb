@@ -5,7 +5,8 @@ module RAutomation
       module Functions
         extend FFI::Library
 
-        ffi_lib 'user32', 'kernel32'
+        # TODO once done adapt the path to the DLL (somewhere in the packaged gem)
+        ffi_lib 'user32', 'kernel32', 'ole32', File.dirname(__FILE__) + '/../../../../ext/IAccessibleDLL/Release/iaccessibleDll.dll'
         ffi_convention :stdcall
 
         callback :enum_callback, [:long, :pointer], :bool
@@ -57,6 +58,8 @@ module RAutomation
                         [:long], :long
         attach_function :get_window, :GetWindow,
                         [:long, :uint], :long
+        attach_function :get_last_error, :GetLastError,
+                        [], :long
 
         # kernel32
         attach_function :open_process, :OpenProcess,
@@ -65,8 +68,26 @@ module RAutomation
                         [:long, :uint], :bool
         attach_function :close_handle, :CloseHandle,
                         [:long], :bool
+        attach_function :load_library, :LoadLibraryA,
+                        [:string], :long
+
+        # ole32
+        attach_function :co_initialize, :CoInitialize,
+                        [:pointer], :uint16
+
+        # iaccessible
+        attach_function :get_button_state, :get_button_state,
+                        [:long], :long
+
 
         class << self
+
+          def checked? control_hwnd
+            state = get_button_state control_hwnd
+            (state & Constants::STATE_SYSTEM_CHECKED) != 0
+          end
+
+
           def window_title(hwnd)
             title_length = window_title_length(hwnd) + 1
             title = FFI::MemoryPointer.new :char, title_length
@@ -92,6 +113,20 @@ module RAutomation
             find_hwnd(locators) do |hwnd|
               window_visible(hwnd) && locators_match?(locators, window_properties(hwnd, locators))
             end
+          end
+
+          def child_window_locators(parent_hwnd, locators)
+            child_hwnd = locators[:hwnd] || child_hwnd(parent_hwnd, locators)
+            if child_hwnd
+              locators.merge!(:hwnd => child_hwnd)
+            else
+              popup_hwnd = get_window(parent_hwnd, Constants::GW_ENABLEDPOPUP)
+              if popup_hwnd != parent_hwnd
+                popup_properties = window_properties(popup_hwnd, locators)
+                locators.merge!(:hwnd => popup_hwnd) if locators_match?(locators, popup_properties)
+              end
+            end
+            locators
           end
 
           def child_window_locators(parent_hwnd, locators)
@@ -169,6 +204,14 @@ module RAutomation
 
           def set_control_text(control_hwnd, text)
             send_message(control_hwnd, Constants::WM_SETTEXT, 0, text)
+          end
+
+          def retrieve_combobox_item_text(control_hwnd, item_no)
+            text_len = send_message(control_hwnd, Constants::CB_GETLBTEXTLEN, item_no, nil)
+
+            string_buffer = FFI::MemoryPointer.new :char, text_len
+            send_message(control_hwnd, Constants::CB_GETLBTEXT, item_no, string_buffer)
+            string_buffer.read_string
           end
 
           private

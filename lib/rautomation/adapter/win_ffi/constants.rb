@@ -19,6 +19,8 @@ module RAutomation
         PROCESS_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE | 0xFFF
 
         BM_CLICK = 0xF5
+        BM_GETSTATE = 0xF2
+        BST_CHECKED = 0x1
 
         # keybd_event constants
         KEYEVENTF_EXTENDEDKEY = 0x1
@@ -26,6 +28,21 @@ module RAutomation
 
         # GetWindow constants
         GW_ENABLEDPOPUP = 6
+
+        # HRESULT
+        S_OK                 = 0
+
+        # IAccessible Button States
+        STATE_SYSTEM_CHECKED = 0x00000010
+
+        # Combobox
+        CB_GETCOUNT = 0x0146
+        CB_GETLBTEXTLEN = 0x0149
+        CB_GETLBTEXT = 0x0148
+        CB_GETCURSEL = 0x0147
+        CB_ERR = -1
+        CB_SETCURSEL = 0x14E
+
       end
     end
   end

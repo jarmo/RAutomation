@@ -1,13 +1,20 @@
 require 'spec_helper'
 
 describe RAutomation::Window do
+  before :each do
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
+    RAutomation::WaitHelper.wait_until {window.present?}
+
+#    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+#    RAutomation::WaitHelper.wait_until {window.present?}
+  end
 
   it "RAutomation::Window.adapter" do
     RAutomation::Window.new(:title => "random").adapter.should == (ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter)
   end
 
   it "Window#new by full title" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).should exist
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]).should exist
   end
 
   it "Window#new by regexp title" do
@@ -15,10 +22,10 @@ describe RAutomation::Window do
   end
 
   it "Window#new by hwnd" do
-    hwnd = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).hwnd
+    hwnd = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]).hwnd
     window = RAutomation::Window.new(:hwnd => hwnd)
     window.should exist
-    window.title.should == SpecHelper::DATA[:window2_title]
+    window.title.should == SpecHelper::DATA[:window1_full_title]
   end
 
   it "#exists?" do
@@ -46,7 +53,7 @@ describe RAutomation::Window do
   end
 
   it "#title" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).title.should == SpecHelper::DATA[:window2_title]
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).title.should == SpecHelper::DATA[:window1_full_title]
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").title}.
             to raise_exception(RAutomation::UnknownWindowException)
@@ -62,7 +69,7 @@ describe RAutomation::Window do
   end
 
   it "#text" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title]).text.should include(SpecHelper::DATA[:window2_text])
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).text.should include(SpecHelper::DATA[:window1_text])
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").text}.
             to raise_exception(RAutomation::UnknownWindowException)
@@ -96,15 +103,18 @@ describe RAutomation::Window do
   end
 
   it "#method_missing" do
-    win = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
-    SpecHelper::DATA[:title_proc].call(win).should == SpecHelper::DATA[:window2_title]
+    win = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
+    SpecHelper::DATA[:title_proc].call(win).should == SpecHelper::DATA[:window1_full_title]
   end
 
   it "#send_keys"do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     window.minimize # #send_keys should work even if window is minimized
-    window.send_keys(SpecHelper::DATA[:window2_send_keys])
-    RAutomation::WaitHelper.wait_until(15) {not window.exists?}
+    window.send_keys(SpecHelper::DATA[:window1_send_keys])
+    about_box = RAutomation::Window.new(:title => /About/i)
+    about_box.should be_present
+
+    about_box.send_keys(0x0D)
 
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").send_keys("123")}.

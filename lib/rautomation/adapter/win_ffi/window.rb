@@ -5,6 +5,17 @@ module RAutomation
         include WaitHelper
         include Locators
 
+        class << self
+
+          def initialize_com
+            @@oleacc_module_handle = Functions.load_library "oleacc.dll"
+
+            Functions.co_initialize nil if @@oleacc_module_handle != 0
+          end
+        end
+
+        initialize_com
+        
         # Locators of the window.
         attr_reader :locators
 
@@ -105,7 +116,9 @@ module RAutomation
               activate
               active?
             end
+            Functions.send_key(0x12, 0, 0, nil)
             Functions.send_key(key, 0, 0, nil)
+            Functions.send_key(0x12, 0, Constants::KEYEVENTF_KEYUP, nil)
             Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
           end
         end
@@ -121,10 +134,22 @@ module RAutomation
           Button.new(self, locator)
         end
 
+        def checkbox(locator)
+          Checkbox.new(self, locator)
+        end
+
+        def radiobutton(locator)
+          Radiobutton.new(self, locator)
+        end
+
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
         def text_field(locator)
           TextField.new(self, locator)
+        end
+
+        def select_list(locator)
+          SelectList.new(self, locator)
         end
 
         # Redirects all method calls not part of the public API to the {Functions} directly.
@@ -142,6 +167,14 @@ module RAutomation
         # @return [RAutomation::Window] child window, popup or regular window.
         def child(locators)
           RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
+        end
+
+        def ms_accessibility_available?
+          @@oleacc_module_handle != 0
+        end
+
+        def oleacc_module_handle
+          @@oleacc_module_handle
         end
         
       end
