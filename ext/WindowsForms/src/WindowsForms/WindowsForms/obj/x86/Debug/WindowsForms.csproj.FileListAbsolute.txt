@@ -21,3 +21,5 @@ C:\Projects\RAutomation\RAutomation\ext\WindowsForms\src\WindowsForms\WindowsFor
 C:\Projects\RAutomation\RAutomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Debug\WindowsForms.exe
 C:\Projects\RAutomation\RAutomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Debug\WindowsForms.pdb
 C:\Projects\RAutomation\RAutomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Debug\WindowsForms.SimpleElementsForm.resources
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Debug\WindowsForms.exe
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Debug\WindowsForms.pdb

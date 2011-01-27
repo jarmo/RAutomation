@@ -18,3 +18,4 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
   end
 
 end
+
