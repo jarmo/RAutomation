@@ -142,6 +142,10 @@ module RAutomation
           Radiobutton.new(self, locator)
         end
 
+        def table(locator)
+          Table.new(self, locator)
+        end
+
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
         def text_field(locator)
