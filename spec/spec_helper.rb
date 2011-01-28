@@ -74,13 +74,10 @@ RSpec.configure do |config|
   config.before(:each) do
     @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
     sleep 0.1   # TODO should Window.wait_timeout not cause a wait for windows to exist?
-#    @pid2 = IO.popen(SpecHelper::DATA[:window2] + " " + File.dirname(__FILE__) + "/test.html").pid
     RAutomation::Window.wait_timeout = 60
   end
 
   config.after(:each) do
-    puts "killing #{@pid1}"
     Process.kill(9, @pid1) rescue nil
-#    Process.kill(9, @pid2) rescue nil
   end
 end
