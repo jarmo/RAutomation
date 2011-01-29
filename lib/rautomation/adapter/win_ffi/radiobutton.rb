@@ -1,7 +1,7 @@
 module RAutomation
   module Adapter
     module WinFfi
-      class Radiobutton < Control
+      class RadioButton < Control
         include WaitHelper
         include Locators
         include ButtonHelper

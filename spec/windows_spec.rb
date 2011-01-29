@@ -32,9 +32,6 @@ describe RAutomation::Windows do
     windows = RAutomation::Window.new(:title => "MainFormWindows").windows(:title => "SimpleElementsForm")
     windows.should be_a(RAutomation::Windows)
 
-    puts windows[0].inspect
-    puts windows[1].inspect
-
     windows.size.should == 1
     expected_windows = [
       RAutomation::Window.new(:title => "SimpleElementsForm")

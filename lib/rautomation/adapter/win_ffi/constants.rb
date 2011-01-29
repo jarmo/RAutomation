@@ -43,6 +43,10 @@ module RAutomation
         CB_ERR = -1
         CB_SETCURSEL = 0x14E
 
+        # listview
+        LVM_FIRST = 0x1000
+        LVM_GETITEMCOUNT = LVM_FIRST + 4
+
       end
     end
   end

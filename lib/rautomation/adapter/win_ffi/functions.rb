@@ -79,7 +79,6 @@ module RAutomation
         attach_function :get_button_state, :get_button_state,
                         [:long], :long
 
-
         class << self
 
           def checked? control_hwnd
@@ -214,6 +213,16 @@ module RAutomation
             string_buffer.read_string
           end
 
+          def control_name(control_hwnd)
+            puts "Trying to get control name for #{control_hwnd}"
+            string_buffer = FFI::MemoryPointer.new :char, 255
+            if (get_control_name(control_hwnd, string_buffer) == Constants::S_OK)
+              string_buffer.read_string
+            else
+              fail "Cannot get name for control with HWND 0x" + control_hwnd.to_s(16)
+            end
+          end
+
           private
 
           def within_foreground_thread(hwnd)
@@ -289,3 +298,4 @@ module RAutomation
     end
   end
 end
+

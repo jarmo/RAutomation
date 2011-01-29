@@ -138,8 +138,12 @@ module RAutomation
           Checkbox.new(self, locator)
         end
 
-        def radiobutton(locator)
-          Radiobutton.new(self, locator)
+        def radio(locator)
+          RadioButton.new(self, locator)
+        end
+
+        def table(locator)
+          Table.new(self, locator)
         end
 
         # @see TextField#initialize

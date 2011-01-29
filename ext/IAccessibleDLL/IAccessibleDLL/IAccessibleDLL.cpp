@@ -1,10 +1,13 @@
 // IAccessibleDLL.cpp : Defines the exported functions for the DLL application.
 //
 
+#undef UNICODE
+
 #include "stdafx.h"
 #include <windows.h>
 #include <objbase.h>
 #include <OleAcc.h>
+#include <Commctrl.h>
 
 extern "C"
 __declspec( dllexport ) long get_button_state(HWND buttonHwnd) {
@@ -29,3 +32,5 @@ __declspec( dllexport ) long get_button_state(HWND buttonHwnd) {
 	
 	return varState.lVal ;
 }
+
+
