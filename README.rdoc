@@ -94,6 +94,10 @@ Don't forget to fix the documentation for that adapter also!
 
 In case of any problems, feel free to contact me.
 
+== Contributors
+
+* Stephan Schwab to WinFfi adapter - http://github.com/snscaimito
+
 == Note on Patches/Pull Requests
 
 * Fork the project.
@@ -107,4 +111,4 @@ In case of any problems, feel free to contact me.
 
 == Copyright
 
-Copyright (c) 2010 Jarmo Pertman. See LICENSE for details.
+Copyright (c) 2010-2011 Jarmo Pertman. See LICENSE for details.
