@@ -10,11 +10,10 @@ module SpecHelper
 
   def navigate_to_simple_elements
     main_window = RAutomation::Window.new(:title => "MainFormWindow")
-    main_window.button(:title => "Simple Elements").click { RAutomation::Window.new(:title => "SimpleElementsForm").exists? }
+    main_window.button(:title => "Simple Elements").click { RAutomation::Window.new(:title => "SimpleElementsForm").present? }
   end
 
-  module_function :adapter
-  module_function :navigate_to_simple_elements
+  module_function :adapter, :navigate_to_simple_elements
 
   # Since adapters are different then the windows to be tested
   # might be different also.
@@ -51,17 +50,19 @@ module SpecHelper
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
                   :window1 => "ext\\WindowsForms\\bin\\WindowsForms.exe",
+                  :window2 => "calc",
+                  :window2_title => /calc/i,
                   # Window 1 title, has to be a Regexp.
                   :window1_title => /FormWindow/i,
                   :window1_full_title => 'MainFormWindow',
-                  # Window 2 should have this text on it.
+                  # Window 1 should have this text on it.
                   :window1_text => "This is a sample text",
                   # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
                   # VK_RETURN
                   :window1_send_keys => 0x41,
-                  # Window 2 should have a button with the following text.
+                  # Window 1 should have a button with the following text.
                   :window1_button_text => "OK",
-                  # Window 2 should have a text field with the specified class name.
+                  # Window 1 should have a text field with the specified class name.
                   :window1_text_field_class => "Edit",
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.window_title(win.hwnd)}
@@ -73,7 +74,6 @@ end
 RSpec.configure do |config|
   config.before(:each) do
     @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
-    sleep 0.1   # TODO should Window.wait_timeout not cause a wait for windows to exist?
     RAutomation::Window.wait_timeout = 60
   end
 

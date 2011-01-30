@@ -3,40 +3,49 @@ require 'spec_helper'
 describe RAutomation::Windows do
   subject {self}
 
-  it "Window.windows returns all windows" do
-    SpecHelper::navigate_to_simple_elements
+  before :each do
+    window = RAutomation::Window.new(:pid => @pid1)
+    RAutomation::WaitHelper.wait_until {window.present?}
 
+    @pid2 = IO.popen(SpecHelper::DATA[:window2]).pid
+    window = RAutomation::Window.new(:pid => @pid2)
+    RAutomation::WaitHelper.wait_until {window.present?}
+  end
+
+  it "Window.windows returns all windows" do
     windows = RAutomation::Window.windows
     windows.should be_a(RAutomation::Windows)
     windows.size.should be >= 2
     expected_windows = [
-      RAutomation::Window.new(:title => "MainFormWindow"),
-      RAutomation::Window.new(:title => "SimpleElementsForm")
+      RAutomation::Window.new(:pid => @pid1),
+      RAutomation::Window.new(:pid => @pid2)
     ]
     should have_all_windows(expected_windows, windows)
   end
 
   it "Windows#windows returns all similar windows" do
-    windows = RAutomation::Window.new(:title => "MainFormWindow").windows
+    windows = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).windows
     windows.should be_a(RAutomation::Windows)
     windows.size.should == 1
     expected_windows = [
-      RAutomation::Window.new(:title => "MainFormWindow")
+      RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]),
     ]
     should have_all_windows(expected_windows, windows)
   end
 
   it "Windows#windows with parameters returns all matching windows" do
-    SpecHelper::navigate_to_simple_elements
-
-    windows = RAutomation::Window.new(:title => "MainFormWindows").windows(:title => "SimpleElementsForm")
+    windows = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).windows(:title => SpecHelper::DATA[:window2_title])
     windows.should be_a(RAutomation::Windows)
 
     windows.size.should == 1
     expected_windows = [
-      RAutomation::Window.new(:title => "SimpleElementsForm")
+      RAutomation::Window.new(:pid => @pid2),
     ]
     should have_all_windows(expected_windows, windows)
+  end
+
+  after :each do
+    Process.kill(9, @pid2) rescue nil    
   end
 
   def has_all_windows?(expected_windows, windows)
