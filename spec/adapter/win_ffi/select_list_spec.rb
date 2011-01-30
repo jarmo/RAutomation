@@ -18,7 +18,7 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
     select_list.options.map {|option| option.text}.should == expected_options
   end
 
-  it "#selected?" do
+  it "#selected? & #select" do
     select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:class => /COMBOBOX/i)
     select_list.options(:text => "Apple")[0].should_not be_selected
     select_list.options(:text => "Apple")[0].select.should be_true
