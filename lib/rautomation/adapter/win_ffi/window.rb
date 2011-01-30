@@ -162,7 +162,7 @@ module RAutomation
 
           def radio(locator)
             wait_until_exists
-            RAutomation::Adapter::WinFfi::RadioButton.new(@window, locator)
+            RAutomation::Adapter::WinFfi::Radio.new(@window, locator)
           end
 
           def table(locator)
