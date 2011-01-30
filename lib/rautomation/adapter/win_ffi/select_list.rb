@@ -44,7 +44,7 @@ module RAutomation
         def options(options = {})
           items = []
 
-          0.upto(item_count - 1).each do |item_no|
+          0.upto(item_count - 1) do |item_no|
             item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
 
             if (options[:text])
