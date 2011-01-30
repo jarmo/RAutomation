@@ -1,27 +1,21 @@
 require 'spec_helper'
 
 describe "WinFfi::RadioButton", :if => SpecHelper.adapter == :win_ffi do
-  it "radio button exists" do
+  it "#exist?" do
     RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should exist
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 2").should exist
+
+    RAutomation::Window.wait_timeout = 0.1
+    expect {RAutomation::Window.new(:title => "non-existent-window").
+            radio(:value => "Option 1")}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "alias exists? for exist?" do
-    fail "Alias exists? not found" unless RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").exists? == true
-  end
+  it "#set? & #set" do
+    radio = RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1")
+    radio.should_not be_set
 
-  it "click on radio buttons" do
-    radio1 = RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1")
-    radio2 = RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 2")
-
-    radio1.should_not be_set
-    radio2.should_not be_set
-
-    radio1.click
-    radio1.should be_set
-
-    radio2.click
-    radio2.should be_set
+    radio.set
+    radio.should be_set
   end
 
 end
