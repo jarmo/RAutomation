@@ -2,30 +2,21 @@ module RAutomation
   module Adapter
     module WinFfi
       module ButtonHelper
-        extend self
 
         def set?
           control_hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-
-          if (@window.ms_accessibility_available?)
-            Functions.checked? control_hwnd
-          else
-            fail "Using Win32 not yet implemented"
-          end
+          Functions.control_set? control_hwnd
         end
 
-        # TODO call a windows function to do this without clicking
+        # @todo call a windows function to do this without clicking
         def clear
-          click if set? == true
+          click {!set?} if set?
         end
 
-        # TODO call a windows function to do this without clicking
-        def set(state_checked)
-          click if state_checked == true
-          clear if state_checked == false
+        # @todo call a windows function to do this without clicking
+        def set
+          click {set?} unless set?
         end
-        
-        alias_method :checked?, :set?
 
       end
     end

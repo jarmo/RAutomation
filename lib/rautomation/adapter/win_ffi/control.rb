@@ -30,7 +30,7 @@ module RAutomation
                     Functions.control_click(hwnd) &&
                     clicked = true # is clicked at least once
 
-            block_given? ? yield : clicked && !exists?
+            block_given? ? yield : clicked && !exist?
           end
         end
 

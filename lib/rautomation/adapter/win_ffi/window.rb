@@ -6,15 +6,17 @@ module RAutomation
         include Locators
 
         class << self
-
           def initialize_com
             @@oleacc_module_handle = Functions.load_library "oleacc.dll"
-
-            Functions.co_initialize nil if @@oleacc_module_handle != 0
+            Functions.co_initialize nil
           end
         end
 
         initialize_com
+
+        def oleacc_module_handle
+          @@oleacc_module_handle
+        end
 
         # Locators of the window.
         attr_reader :locators
@@ -178,14 +180,6 @@ module RAutomation
           def child(locators)
             RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
           end
-        end
-
-        def ms_accessibility_available?
-          @@oleacc_module_handle != 0
-        end
-
-        def oleacc_module_handle
-          @@oleacc_module_handle
         end
 
       end
