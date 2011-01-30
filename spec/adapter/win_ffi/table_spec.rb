@@ -6,14 +6,14 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
     window.button(:value => "Data Entry Form").click { RAutomation::Window.new(:title => "DataEntryForm").exists? }
   end
 
-  it "finds the table" do
+  it "#table" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table(:class => /SysListView32/i)
     table.should exist
-  end
-
-  it "counts the number of rows" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:class => /SysListView32/i)
-    table.row_count.should == 2
+    
+    RAutomation::Window.wait_timeout = 0.1
+    expect {RAutomation::Window.new(:title => "non-existent-window").
+            table(:class => /SysListView32/i)}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
 end
