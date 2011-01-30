@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
-  before :each do
-    window = RAutomation::Window.new(:title => "MainFormWindow")
-    RAutomation::WaitHelper.wait_until {window.present?}
-  end
-
   it "#select_list" do
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:class => /COMBOBOX/i).should exist
 

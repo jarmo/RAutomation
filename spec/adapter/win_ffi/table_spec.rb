@@ -3,7 +3,6 @@ require 'spec_helper'
 describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
   before :each do
     window = RAutomation::Window.new(:title => "MainFormWindow")
-    RAutomation::WaitHelper.wait_until {window.present?}
     window.button(:value => "Data Entry Form").click { RAutomation::Window.new(:title => "DataEntryForm").exists? }
   end
 

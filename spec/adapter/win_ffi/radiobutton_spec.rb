@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe "WinFfi::RadioButton", :if => SpecHelper.adapter == :win_ffi do
-  before :each do
-    window = RAutomation::Window.new(:title => "MainFormWindow")
-    RAutomation::WaitHelper.wait_until {window.present?}
-  end
-
   it "radio button exists" do
     RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should exist
     RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 2").should exist

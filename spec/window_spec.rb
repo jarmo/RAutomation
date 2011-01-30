@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe RAutomation::Window do
-  before :each do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    RAutomation::WaitHelper.wait_until {window.present?}
-  end
-
   it "RAutomation::Window.adapter" do
     RAutomation::Window.new(:title => "random").adapter.should == (ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter)
   end

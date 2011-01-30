@@ -4,9 +4,6 @@ describe RAutomation::Windows do
   subject {self}
 
   before :each do
-    window = RAutomation::Window.new(:pid => @pid1)
-    RAutomation::WaitHelper.wait_until {window.present?}
-
     @pid2 = IO.popen(SpecHelper::DATA[:window2]).pid
     window = RAutomation::Window.new(:pid => @pid2)
     RAutomation::WaitHelper.wait_until {window.present?}
@@ -28,7 +25,7 @@ describe RAutomation::Windows do
     windows.should be_a(RAutomation::Windows)
     windows.size.should == 1
     expected_windows = [
-      RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]),
+      RAutomation::Window.new(:pid => @pid1),
     ]
     should have_all_windows(expected_windows, windows)
   end
