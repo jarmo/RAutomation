@@ -15,7 +15,7 @@ module RAutomation
         end
 
         initialize_com
-        
+
         # Locators of the window.
         attr_reader :locators
 
@@ -134,26 +134,10 @@ module RAutomation
           Button.new(self, locator)
         end
 
-        def checkbox(locator)
-          Checkbox.new(self, locator)
-        end
-
-        def radio(locator)
-          RadioButton.new(self, locator)
-        end
-
-        def table(locator)
-          Table.new(self, locator)
-        end
-
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
         def text_field(locator)
           TextField.new(self, locator)
-        end
-
-        def select_list(locator)
-          SelectList.new(self, locator)
         end
 
         # Redirects all method calls not part of the public API to the {Functions} directly.
@@ -162,15 +146,38 @@ module RAutomation
           Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
 
-        # Creates the child window object.
-        # @note This is an WinFfi adapter specific method, not part of the public API
-        # @example
-        #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
-        #     child(:title => /some popup/)
-        # @param (see Window#initialize)
-        # @return [RAutomation::Window] child window, popup or regular window.
-        def child(locators)
-          RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
+        # extend public API
+        RAutomation::Window.class_eval do
+          def select_list(locator)
+            wait_until_exists
+            RAutomation::Adapter::WinFfi::SelectList.new(@window, locator)
+          end
+
+          def checkbox(locator)
+            wait_until_exists
+            RAutomation::Adapter::WinFfi::Checkbox.new(@window, locator)
+          end
+
+          def radio(locator)
+            wait_until_exists
+            RAutomation::Adapter::WinFfi::RadioButton.new(@window, locator)
+          end
+
+          def table(locator)
+            wait_until_exists
+            RAutomation::Adapter::WinFfi::Table.new(@window, locator)
+          end
+
+          # Creates the child window object.
+          # @note This is an WinFfi adapter specific method, not part of the public API
+          # @example
+          #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
+          #     child(:title => /some popup/)
+          # @param (see Window#initialize)
+          # @return [RAutomation::Window] child window, popup or regular window.
+          def child(locators)
+            RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
+          end
         end
 
         def ms_accessibility_available?
@@ -180,7 +187,7 @@ module RAutomation
         def oleacc_module_handle
           @@oleacc_module_handle
         end
-        
+
       end
     end
   end
