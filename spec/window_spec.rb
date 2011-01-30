@@ -4,9 +4,6 @@ describe RAutomation::Window do
   before :each do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     RAutomation::WaitHelper.wait_until {window.present?}
-
-#    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window2_title])
-#    RAutomation::WaitHelper.wait_until {window.present?}
   end
 
   it "RAutomation::Window.adapter" do
@@ -109,12 +106,9 @@ describe RAutomation::Window do
 
   it "#send_keys"do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    window.minimize # #send_keys should work even if window is minimized
+    window.minimize # send_keys should work even if window is minimized
     window.send_keys(SpecHelper::DATA[:window1_send_keys])
-    about_box = RAutomation::Window.new(:title => /About/i)
-    about_box.should be_present
-
-    about_box.send_keys(0x0D)
+    SpecHelper::DATA[:proc_after_send_keys].call
 
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").send_keys("123")}.

@@ -58,8 +58,12 @@ module SpecHelper
                   # Window 1 should have this text on it.
                   :window1_text => "This is a sample text",
                   # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
-                  # VK_RETURN
+                  # "A" key
                   :window1_send_keys => 0x41,
+                  :proc_after_send_keys => lambda do
+                    about_box = RAutomation::Window.new(:title => /About/i)
+                    RAutomation::WaitHelper.wait_until {about_box.present?}
+                  end,
                   # Window 1 should have a button with the following text.
                   :window1_button_text => "OK",
                   # Window 1 should have a text field with the specified class name.
