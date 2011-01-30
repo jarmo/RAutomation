@@ -10,7 +10,7 @@ module SpecHelper
 
   def navigate_to_simple_elements
     main_window = RAutomation::Window.new(:title => "MainFormWindow")
-    main_window.button(:title => "Simple Elements").click { RAutomation::Window.new(:title => "SimpleElementsForm").present? }
+    main_window.button(:value => "Simple Elements").click { RAutomation::Window.new(:title => "SimpleElementsForm").present? }
   end
 
   module_function :adapter, :navigate_to_simple_elements
@@ -48,7 +48,7 @@ module SpecHelper
                   # Window 1 should have a text field with the specified class name.
                   :window1_text_field_class => "Edit",
                   # Adapter internal method invocation for getting title of window2
-                  :title_proc => lambda {|win| win.WinGetTitle("[TITLE:Explorer User Prompt]")}
+                  :title_proc => lambda {|win| win.WinGetTitle("[TITLE:MainFormWindow]")}
           },
           :win_ffi => {
                   # Path to some binary, which opens up a window, what can be
