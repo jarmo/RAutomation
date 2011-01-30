@@ -23,10 +23,3 @@ pkg
 
 .yardoc/
 doc/
-
-ext/src/WindowsForms/WindowsForms/bin/*
-ext/src/WindowsForms/WindowsForms/obj/*
-
-ext/IAccessibleDLL/IAccessibleDLL/Release/*
-ext/IAccessibleDLL/ipch/*
-ext/IAccessibleDLL/Release/*.pdb

@@ -18,6 +18,10 @@ RAutomation provides:
     gem.homepage = "http://github.com/jarmo/RAutomation"
     gem.authors = ["Jarmo Pertman"]
     gem.add_development_dependency "rspec", "~>2.3"
+
+    ignored_files = []
+    ignored_files << ".gitignore" << ".gemspec" << "features" << "IAccessibleDLL.sdf"
+    gem.files = `git ls-files`.strip.split($/).delete_if {|f| f =~ Regexp.union(*ignored_files)}
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
