@@ -30,3 +30,8 @@ ext/src/WindowsForms/WindowsForms/obj/*
 ext/IAccessibleDLL/IAccessibleDLL/Release/*
 ext/IAccessibleDLL/ipch/*
 ext/IAccessibleDLL/Release/*.pdb
+
+ext/ListViewExplorer/Debug/*
+ext/ListViewExplorer/Release/*
+ext/ListViewExplorer/ipch/*
+ext/ListViewExplorer/*.sdf
