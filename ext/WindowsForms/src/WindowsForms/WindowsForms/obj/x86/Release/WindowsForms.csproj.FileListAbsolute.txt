@@ -1,0 +1,13 @@
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\bin\Release\WindowsForms.exe
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\bin\Release\WindowsForms.pdb
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\ResolveAssemblyReference.cache
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.AboutBox.resources
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.DataEntryForm.resources
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.SimpleElementsForm.resources
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.PersonForm.resources
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.MainFormWindow.resources
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.Properties.Resources.resources
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\GenerateResource.read.1.tlog
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\GenerateResource.write.1.tlog
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.exe
+C:\projects\rautomation\ext\WindowsForms\src\WindowsForms\WindowsForms\obj\x86\Release\WindowsForms.pdb
