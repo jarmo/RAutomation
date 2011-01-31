@@ -28,18 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "John Doe",
-            "12/15/1967"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            "12/15/1967",
+            "FL"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Anna Doe",
-            "3/4/1975"}, -1);
+            "3/4/1975",
+            ""}, -1);
             this.deleteItemButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.addItemButton = new System.Windows.Forms.Button();
             this.personListView = new System.Windows.Forms.ListView();
             this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnDateOfBirth = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.closeDataEntryFormButton = new System.Windows.Forms.Button();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -82,12 +85,13 @@
             // 
             this.personListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnName,
-            this.columnDateOfBirth});
+            this.columnDateOfBirth,
+            this.columnState});
             this.personListView.GridLines = true;
             this.personListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.personListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
+            listViewItem1,
+            listViewItem2});
             this.personListView.Location = new System.Drawing.Point(6, 26);
             this.personListView.Name = "personListView";
             this.personListView.Size = new System.Drawing.Size(314, 74);
@@ -98,12 +102,16 @@
             // columnName
             // 
             this.columnName.Text = "Name";
-            this.columnName.Width = 200;
+            this.columnName.Width = 148;
             // 
             // columnDateOfBirth
             // 
             this.columnDateOfBirth.Text = "Date of birth";
             this.columnDateOfBirth.Width = 100;
+            // 
+            // columnState
+            // 
+            this.columnState.Text = "State";
             // 
             // closeDataEntryFormButton
             // 
@@ -163,5 +171,6 @@
         private System.Windows.Forms.Button closeDataEntryFormButton;
         private System.Windows.Forms.MaskedTextBox maskedTextBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ColumnHeader columnState;
     }
 }

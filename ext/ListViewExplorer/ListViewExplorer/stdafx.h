@@ -12,3 +12,4 @@
 
 #include <Windows.h>
 #include <OleAcc.h>
+#include <comutil.h>
