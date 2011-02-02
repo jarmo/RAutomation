@@ -78,6 +78,8 @@ module RAutomation
         # iaccessible
         attach_function :get_button_state, :get_button_state,
                         [:long], :long
+        attach_function :get_table_row_strings, :get_table_row_strings,
+                        [:long, :long, :pointer, :long], :void
 
         class << self
 
@@ -219,6 +221,17 @@ module RAutomation
             else
               fail "Cannot get name for control with HWND 0x" + control_hwnd.to_s(16)
             end
+          end
+
+          def retrieve_table_strings_for_row(control_hwnd, row)
+            hModule = load_library("oleacc.dll")   # TODO should be done only one time
+
+            strings_ptr = FFI::MemoryPointer.new :pointer
+
+            get_table_row_strings(hModule, control_hwnd, strings_ptr, row)
+            str_ptr = strings_ptr.read_pointer
+
+            str_ptr.get_array_of_string(0, 3)
           end
 
           private
