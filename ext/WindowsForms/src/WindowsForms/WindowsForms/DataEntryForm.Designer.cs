@@ -35,7 +35,7 @@
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Anna Doe",
             "3/4/1975",
-            ""}, -1);
+            "Mal : sehen"}, -1);
             this.deleteItemButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.addItemButton = new System.Windows.Forms.Button();
