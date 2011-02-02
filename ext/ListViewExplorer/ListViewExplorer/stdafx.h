@@ -13,3 +13,5 @@
 #include <Windows.h>
 #include <OleAcc.h>
 #include <comutil.h>
+
+#include "table_support.h"

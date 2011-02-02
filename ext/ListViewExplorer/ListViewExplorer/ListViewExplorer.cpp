@@ -123,6 +123,33 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("ListView Explorer\r\n") ;
 
 	HWND hwndListView = ask_for_list_view_handle() ;
+
+	HMODULE hModule = LoadLibraryA("oleacc.dll");
+	if (hModule == 0) {
+		printf("Cannot load oleacc.dll\r\n") ;
+		return 1 ;
+	}
+
+	long numberOfRows ;
+	long numberOfColumns ;
+	char ***tableStrings ;
+
+	get_table_strings(hModule, hwndListView, (char **)&tableStrings, &numberOfRows, &numberOfColumns) ;
+
+	printf("Now printing result\r\n") ;
+	for (int row = 0; row < numberOfRows; row++) {
+		for (int column = 0; column < numberOfColumns; column++) {
+			printf("row %d, col %d is '%s'\r\n", row, column, tableStrings[row][column]) ;
+			free(tableStrings[row][column]) ;
+		}
+		free(tableStrings[row]) ;
+	}
+
+
+	/*
+	printf("ListView Explorer\r\n") ;
+
+	HWND hwndListView = ask_for_list_view_handle() ;
 	IAccessible *pAccessible ;
 	LPFNACCESSIBLEOBJECTFROMWINDOW lpfnAccessibleObjectFromWindow ;
 
@@ -140,7 +167,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		iterate_over_childs(pAccessible) ;
 	} else
 		printf("Cannot retrieve IAccessible for window HWND %x. AccessibleObjectFromWindow returned %x\r\n", hwndListView, hResult) ;
-	
+	*/
 
 	return 0;
 }
