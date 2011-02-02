@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe RAutomation::TextFields do
 
-
   it "Window#text_fields returns all text fields" do
     SpecHelper::navigate_to_simple_elements
 

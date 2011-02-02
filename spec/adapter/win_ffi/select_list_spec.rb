@@ -1,38 +1,27 @@
 require 'spec_helper'
 
 describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
-  before :each do
-    window = RAutomation::Window.new(:title => "MainFormWindow")
-    RAutomation::WaitHelper.wait_until {window.present?}
-  end
-
-  it "select list exists" do
+  it "#select_list" do
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:class => /COMBOBOX/i).should exist
+
+    RAutomation::Window.wait_timeout = 0.1
+    expect {RAutomation::Window.new(:title => "non-existent-window").
+            select_list(:class => /COMBOBOX/i)}.
+            to raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "gets number of items" do
+  it "#options" do
     select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:class => /COMBOBOX/i)
-    select_list.item_count.should == 5
-  end
-
-  it "retrieves options" do
-    select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:class => /COMBOBOX/i)
-    expected_options = [ "Apple", "Caimito", "Coconut", "Orange", "Passion Fruit" ]
-
     select_list.options.size.should == 5
 
-    select_list.options.each do |value|
-        fail "#{value.text} is not part of the expected list" unless expected_options.include? value.text
-    end
+    expected_options = ["Apple", "Caimito", "Coconut", "Orange", "Passion Fruit"]
+    select_list.options.map {|option| option.text}.should == expected_options
   end
 
-  it "checks if option is selected" do
+  it "#selected? & #select" do
     select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:class => /COMBOBOX/i)
-
     select_list.options(:text => "Apple")[0].should_not be_selected
-
     select_list.options(:text => "Apple")[0].select.should be_true
-
     select_list.options(:text => "Apple")[0].should be_selected
   end
 
@@ -47,12 +36,6 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
 
     select_list.options(:text => "Caimito")[0].select
     select_list.value.should == "Caimito"
-    select_list.value.should_not == "Apple"
-
-    select_list.options(:text => "Orange")[0].select
-    select_list.value.should == "Orange"
-    select_list.value.should_not == "Caimito"
-    select_list.value.should_not == "Apple"
   end
 
 end

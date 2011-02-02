@@ -59,6 +59,7 @@ module RAutomation
     #
     # @note This constructor doesn't check for window's existance.
     # @note Only visible windows are supported.
+    # @note If given _locators_ include :hwnd then every other possible _locator_ is ignored.
     # @param [Hash] locators locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
@@ -84,12 +85,14 @@ module RAutomation
     end
 
     # @return [Fixnum] handle of the window which is used internally for other methods.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def hwnd
       wait_until_exists
       @window.hwnd
     end
 
     # @return [Fixnum] process identifier (PID) of the window.
+    # @raise [UnknownWindowException] if the window doesn't exist.
     def pid
       wait_until_exists
       @window.pid

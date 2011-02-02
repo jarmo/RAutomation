@@ -46,9 +46,8 @@ module RAutomation
         # @see RAutomation::Window#initialize
         def initialize(locators)
           @hwnd = locators[:hwnd]
-          if locators[:index] && locators.size == 1
-            @locator_index = locators.delete(:index)
-          end
+          @locator_index = locators.delete(:index) if locators[:index] && locators.size == 1
+          @locator_pid = locators.delete(:pid).to_i if locators[:pid]
           @locator_text = locators.delete(:text)
           extract(locators)
         end
@@ -59,20 +58,26 @@ module RAutomation
         def hwnd
           @hwnd ||= begin
                       locators = @autoit_locators
-                      if @locator_index
+                      if @locator_index || @locator_pid
                         # @todo Come up with some better solution for this case
-                        locators = "[regexptitle:]" # match all, needed for the case when only :index is used
+                        locators = "[regexptitle:]" # match all, needed for the case when only :index or :pid is used
                       end
-                      handles = @@autoit.WinList(locators, @locator_text).pop.compact.
-                        find_all {|handle| self.class.new(:hwnd => handle.hex).visible?}
-                      handle = handles[@locator_index || 0]
-                      handle ? handle.hex : nil
+                      windows = @@autoit.WinList(locators, @locator_text).pop.compact.
+                        map {|handle| self.class.new(:hwnd => handle.hex)}
+                      windows.delete_if {|window| !window.visible?}
+                      
+                      if @locator_pid
+                        window = windows.find {|win| win.pid == @locator_pid} 
+                      else
+                        window = windows[@locator_index || 0]
+                      end
+                      window ? window.hwnd : nil
                     end
         end
 
         # @see RAutomation::Window#pid
         def pid
-          @@autoit.WinGetProcess(hwnd)
+          @@autoit.WinGetProcess(locator_hwnd).to_i
         end
 
         # @see RAutomation::Window#title

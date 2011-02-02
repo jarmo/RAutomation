@@ -1,3 +1,18 @@
+=== Version 0.5.1 / 2011-01-30
+
+=== All adapters
+
+* added Window.windows, #windows, #buttons and #text_fields methods to retrieve collection of elements and use them with Enumerable/Array methods.
+
+=== WinFFI adapter
+
+* added Window#child method for searching child windows and popups
+* added initial support for Radio, Checkbox, SelectList and Table
+
+=== AutoIt adapter
+
+* allow to search windows by PID
+
 === Version 0.4.0 / 2010-12-23
 
 * allow to search windows without text (like empty Notepad window for example).

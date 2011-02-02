@@ -81,12 +81,6 @@ module RAutomation
 
         class << self
 
-          def checked? control_hwnd
-            state = get_button_state control_hwnd
-            (state & Constants::STATE_SYSTEM_CHECKED) != 0
-          end
-
-
           def window_title(hwnd)
             title_length = window_title_length(hwnd) + 1
             title = FFI::MemoryPointer.new :char, title_length
@@ -203,6 +197,10 @@ module RAutomation
 
           def set_control_text(control_hwnd, text)
             send_message(control_hwnd, Constants::WM_SETTEXT, 0, text)
+          end
+
+          def control_set?(control_hwnd)
+            get_button_state(control_hwnd) & Constants::STATE_SYSTEM_CHECKED != 0
           end
 
           def retrieve_combobox_item_text(control_hwnd, item_no)

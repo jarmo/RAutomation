@@ -1,42 +1,28 @@
 require 'spec_helper'
 
 describe "WinFfi::Checkbox", :if => SpecHelper.adapter == :win_ffi do
-  before :each do
-    window = RAutomation::Window.new(:title => "MainFormWindow")
-    RAutomation::WaitHelper.wait_until {window.present?}
-  end
-
-  it "checkbox exists" do
+  it "#checkbox" do
     RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should exist
+
+    RAutomation::Window.wait_timeout = 0.1
+    expect {RAutomation::Window.new(:title => "non-existing-window").checkbox(:value => "Something")}.
+      to raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "find whether check box is checked" do
+  it "#set? & #set" do
     checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
-    checkbox.should_not be_checked
     checkbox.should_not be_set
-    checkbox.click
-    checkbox.should be_checked
+
+    checkbox.set
     checkbox.should be_set
   end
 
-  it "clear the state" do
+  it "#clear" do
     checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
-    checkbox.should_not be_set
-    checkbox.click
+    checkbox.set
     checkbox.should be_set
 
     checkbox.clear
-    checkbox.should_not be_set
-  end
-
-  it "set checked state" do
-    checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
-    checkbox.should_not be_set
-
-    checkbox.set true
-    checkbox.should be_set
-
-    checkbox.set false
     checkbox.should_not be_set
   end
 
