@@ -174,6 +174,21 @@ char *trimwhitespace(char *str) {
 	return str; 
 } 
 
+char* remove_column_header_name(char *columnName, char *item) {
+	int itemLen = strlen(item) ;
+	int columnNameLen = strlen(columnName) ;
+
+	if (itemLen > 0) {
+		char *newItem = (char *)malloc(sizeof(char *) * (itemLen - columnNameLen)) ; // still a bit too long
+
+		strcpy(newItem, item + columnNameLen + 2) ;  // :<space>
+
+		free(item) ;
+		return newItem ;
+	} else
+		return item ;
+}
+
 void get_table_strings(HMODULE oleAccModule, HWND controlHwnd, char **tableStrings, long *numberOfRowsOut, long *numberOfColumnsOut) {
 	IAccessible *pAccessible ;
 	LPFNACCESSIBLEOBJECTFROMWINDOW lpfnAccessibleObjectFromWindow ;
@@ -218,7 +233,7 @@ void get_table_strings(HMODULE oleAccModule, HWND controlHwnd, char **tableStrin
 					} else
 						strcpy(item, "\0") ;
 
-					table_column[column] = trimwhitespace(item) ;
+					table_column[column] = remove_column_header_name(pHeaderNames[column], trimwhitespace(item)) ;
 				}
 			}
 
