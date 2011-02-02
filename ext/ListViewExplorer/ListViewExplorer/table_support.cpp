@@ -142,7 +142,7 @@ void walk_tree(IAccessible *pAccessible, char **pColumnHeaderNames, long *pColum
 	}
 }
 
-void find_column_headers(IAccessible *pAccessible, char **pHeaderNames, long *pColumns) {
+void find_column_headers(IAccessible *pAccessible, char ***pHeaderNames, long *pColumns) {
 	long columns = 0 ;
 
 	walk_tree(pAccessible, NULL, &columns) ;
@@ -151,11 +151,8 @@ void find_column_headers(IAccessible *pAccessible, char **pHeaderNames, long *pC
 	char **pHeaders = (char **)malloc(sizeof(char *) * columns) ;
 	walk_tree(pAccessible, pHeaders, &columns) ;
 
-		for (int i=0; i < columns; i++) {
-			printf("Column: %s\r\n", pHeaders[i]) ;
-			free((void *)pHeaders[i]) ;
-		}
-
+	*pHeaderNames = pHeaders ;
+	*pColumns = columns ;
 }
 
 char *trimwhitespace(char *str) {   
@@ -184,25 +181,24 @@ void get_table_strings(HMODULE oleAccModule, HWND controlHwnd, char **tableStrin
 	lpfnAccessibleObjectFromWindow = (LPFNACCESSIBLEOBJECTFROMWINDOW)GetProcAddress(oleAccModule, "AccessibleObjectFromWindow");
 
 	if (HRESULT hResult = lpfnAccessibleObjectFromWindow(controlHwnd, OBJID_CLIENT, IID_IAccessible, (void**)&pAccessible) == S_OK) {
-		int numberOfRows = get_number_of_rows(pAccessible) - 1 ;   // without the header
-		int numberOfColumns = 3 ;
+		int numberOfRows = get_number_of_rows(pAccessible) ;   // including the header
+		long numberOfColumns = 3 ;
 		char ***table_rows ;
+		char **pHeaderNames ;
 
-		char *pHeaderNames ;
-		long columns = 0 ;
-		find_column_headers(pAccessible, &pHeaderNames, &columns) ;
+		find_column_headers(pAccessible, &pHeaderNames, &numberOfColumns) ;
 		
-
 		table_rows = (char ***)malloc(sizeof(char*) * numberOfRows) ;
+		table_rows[0] = pHeaderNames ;
 
-		for (int row = 0; row < numberOfRows; row++) {
+		for (int row = 1; row < numberOfRows; row++) {
 			char **table_column = (char **)malloc(sizeof(char*) * numberOfColumns) ;
 
 			char *mainItem = (char *)malloc(sizeof(char) * BUFFER_SIZE) ;
-			get_name(row + 1, pAccessible, mainItem) ;
+			get_name(row, pAccessible, mainItem) ;
 
 			char *description = (char *)malloc(sizeof(char) * 2048) ;
-			get_description(row + 1, pAccessible, description) ;
+			get_description(row, pAccessible, description) ;
 
 			char *token ;
 			if (strlen(description) > 0)
