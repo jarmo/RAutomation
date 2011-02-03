@@ -79,7 +79,7 @@ module RAutomation
         attach_function :get_button_state, :get_button_state,
                         [:long], :long
         attach_function :get_table_row_strings, :get_table_row_strings,
-                        [:long, :long, :pointer, :long], :void
+                        [:long, :long, :pointer, :long, :pointer], :void
 
         class << self
 
@@ -227,11 +227,13 @@ module RAutomation
             hModule = load_library("oleacc.dll")   # TODO should be done only one time
 
             strings_ptr = FFI::MemoryPointer.new :pointer
+            columns_ptr = FFI::MemoryPointer.new :pointer
 
-            get_table_row_strings(hModule, control_hwnd, strings_ptr, row)
+            get_table_row_strings(hModule, control_hwnd, strings_ptr, row, columns_ptr)
             str_ptr = strings_ptr.read_pointer
+            columns = columns_ptr.read_long
 
-            str_ptr.get_array_of_string(0, 3)
+            str_ptr.get_array_of_string(0, columns)
           end
 
           private
