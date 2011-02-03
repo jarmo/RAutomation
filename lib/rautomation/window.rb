@@ -137,7 +137,7 @@ module RAutomation
     # @return [Boolean] true if window is visible, false otherwise.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def visible?
-      wait_until_present
+      wait_until_exists
       @window.visible?
     end
 
@@ -218,6 +218,12 @@ module RAutomation
       WaitHelper.wait_until {present?}
     rescue WaitHelper::TimeoutError
       raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist or is not visible!"
+    end
+
+    def wait_until_exists
+      WaitHelper.wait_until {exists?}
+    rescue WaitHelper::TimeoutError
+      raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist!"
     end
 
     def normalize adapter
