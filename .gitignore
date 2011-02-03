@@ -24,6 +24,10 @@ pkg
 .yardoc/
 doc/
 
+## VisualStudio
+*.sdf
+
+
 ext/WindowsForms/src/WindowsForms/WindowsForms/bin/Debug/*
 ext/WindowsForms/src/WindowsForms/WindowsForms/bin/Release/*.pdb
 ext/WindowsForms/src/WindowsForms/WindowsForms/obj/*
@@ -34,5 +38,6 @@ ext/IAccessibleDLL/Release/*.pdb
 
 ext/ListViewExplorer/ListViewExplorer/Debug/*
 ext/ListViewExplorer/ListViewExplorer/Release/*
+ext/ListViewExplorer/Debug/*
 ext/ListViewExplorer/ipch/*
 ext/ListViewExplorer/*.sdf
