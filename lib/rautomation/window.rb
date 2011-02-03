@@ -87,21 +87,21 @@ module RAutomation
     # @return [Fixnum] handle of the window which is used internally for other methods.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def hwnd
-      wait_until_exists
+      wait_until_present
       @window.hwnd
     end
 
     # @return [Fixnum] process identifier (PID) of the window.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def pid
-      wait_until_exists
+      wait_until_present
       @window.pid
     end
 
     # @return [String] title of the window.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def title
-      wait_until_exists
+      wait_until_present
       @window.title
     end
 
@@ -120,7 +120,7 @@ module RAutomation
     # @return [String] visible text of the window.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def text
-      wait_until_exists
+      wait_until_present
       @window.text
     end
 
@@ -150,14 +150,14 @@ module RAutomation
     # Maximizes the window.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def maximize
-      wait_until_exists
+      wait_until_present
       @window.maximize
     end
 
     # Minimizes the window.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def minimize
-      wait_until_exists
+      wait_until_present
       @window.minimize
     end
 
@@ -165,7 +165,7 @@ module RAutomation
     # @return [Boolean] true if window is minimized, false otherwise.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def minimized?
-      wait_until_exists
+      wait_until_present
       @window.minimized?
     end
 
@@ -173,14 +173,14 @@ module RAutomation
     # @note If the window is minimized, makes it visible again.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def restore
-      wait_until_exists
+      wait_until_present
       @window.restore
     end
 
     # Sends keyboard keys to the window. Refer to specific {Adapter} documentation for all possible values.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def send_keys(*keys)
-      wait_until_exists
+      wait_until_present
       @window.send_keys(*keys)
     end
 
@@ -195,7 +195,7 @@ module RAutomation
     # @param [Hash] locators for the {Button}.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def button(locators)
-      wait_until_exists
+      wait_until_present
       Button.new(@window, locators)
     end
 
@@ -203,7 +203,7 @@ module RAutomation
     # @note Refer to specific {Adapter} documentation for possible _locators_ parameters.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def text_field(locators)
-      wait_until_exists
+      wait_until_present
       TextField.new(@window, locators)
     end
 
@@ -214,10 +214,16 @@ module RAutomation
 
     private
 
+    def wait_until_present
+      WaitHelper.wait_until {present?}
+    rescue WaitHelper::TimeoutError
+      raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist or is not visible!"
+    end
+
     def wait_until_exists
       WaitHelper.wait_until {exists?}
     rescue WaitHelper::TimeoutError
-      raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist!" unless exists?
+      raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist!"
     end
 
     def normalize adapter
