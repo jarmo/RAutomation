@@ -237,3 +237,46 @@ __declspec( dllexport ) void get_table_row_strings(HMODULE oleAccModule, HWND co
 	*pTableRow = ((char ***)tableStrings)[row] ;
 	*pColumns = columns ;
 }
+
+extern "C"
+__declspec( dllexport ) void select_table_row(HMODULE oleAccModule, HWND controlHwnd, long row) {
+	IAccessible *pAccessible ;
+	LPFNACCESSIBLEOBJECTFROMWINDOW lpfnAccessibleObjectFromWindow ;
+
+	lpfnAccessibleObjectFromWindow = (LPFNACCESSIBLEOBJECTFROMWINDOW)GetProcAddress(oleAccModule, "AccessibleObjectFromWindow");
+
+	if (HRESULT hResult = lpfnAccessibleObjectFromWindow(controlHwnd, OBJID_CLIENT, IID_IAccessible, (void**)&pAccessible) == S_OK) {
+		VARIANT varChild ;
+		VariantInit(&varChild) ;
+		varChild.vt = VT_I4 ;
+		varChild.lVal = row ;
+
+		pAccessible->accSelect(SELFLAG_ADDSELECTION, varChild) ;
+	}
+}
+
+extern "C"
+__declspec( dllexport ) long get_table_row_state(HMODULE oleAccModule, HWND controlHwnd, long row) {
+	IAccessible *pAccessible ;
+	LPFNACCESSIBLEOBJECTFROMWINDOW lpfnAccessibleObjectFromWindow ;
+
+	lpfnAccessibleObjectFromWindow = (LPFNACCESSIBLEOBJECTFROMWINDOW)GetProcAddress(oleAccModule, "AccessibleObjectFromWindow");
+
+	if (HRESULT hResult = lpfnAccessibleObjectFromWindow(controlHwnd, OBJID_CLIENT, IID_IAccessible, (void**)&pAccessible) == S_OK) {
+		VARIANT varChild ;
+		VariantInit(&varChild) ;
+		varChild.vt = VT_I4 ;
+		varChild.lVal = row ;
+
+		VARIANT varState ;
+
+		HRESULT hr = pAccessible->get_accState(varChild, &varState) ;
+		if (hr == S_OK) {
+			if (varState.vt == VT_I4) {
+				return varState.lVal ;
+			} else
+				return FALSE ;
+		} else
+			return FALSE ;
+	}
+}

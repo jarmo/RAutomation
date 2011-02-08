@@ -26,5 +26,14 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
     ]
   end
 
+  it "#select" do
+    table = RAutomation::Window.new(:title => "DataEntryForm").table(:class => /SysListView32/i)
+
+    table.selected?(2).should == false
+
+    table.select(2)
+    table.selected?(2).should == true
+  end
+
 end
 
