@@ -1,6 +1,6 @@
 Feature: Combo box feature
   In order to test combo box features
-  As a tester
+  As a RAutomation user
   I want to be able to interact with tables
 
   Scenario: Use a combo box

@@ -1,6 +1,6 @@
 Feature: Table support
   In order to test table features
-  As a tester
+  As a  a RAutomation user
   I want to be able to interact with tables
 
   Scenario: Find a table
