@@ -80,6 +80,10 @@ module RAutomation
                         [:long], :long
         attach_function :get_table_row_strings, :get_table_row_strings,
                         [:long, :long, :pointer, :long, :pointer], :void
+        attach_function :select_table_row, :select_table_row,
+                        [:long, :long, :long], :void
+        attach_function :get_table_row_state, :get_table_row_state,
+                        [:long, :long, :long], :long
 
         class << self
 

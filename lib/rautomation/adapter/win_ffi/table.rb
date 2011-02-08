@@ -15,6 +15,15 @@ module RAutomation
 
           rows
         end
+
+        def select(row)
+          Functions.select_table_row(@window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
+        end
+
+        def selected?(row)
+          state = Functions.get_table_row_state(@window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
+          state & Constants::STATE_SYSTEM_SELECTED != 0
+        end
         
         private
 
