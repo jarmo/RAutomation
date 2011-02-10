@@ -11,4 +11,5 @@ describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
     child.title.should == "&About"
     #    child.text.should include "About"
   end
+
 end
