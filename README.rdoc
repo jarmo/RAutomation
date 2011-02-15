@@ -25,7 +25,7 @@ RAutomation provides:
     window.text # => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies..."
     
     window.text_field(:class => "Edit", :index => 0).set "hello, world!"
-    button = window.button(:text => "&Save")
+    button = window.button(:value => "&Save")
     button.exists? # => true
     button.click
     
