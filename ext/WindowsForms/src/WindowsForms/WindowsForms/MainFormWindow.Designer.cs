@@ -74,7 +74,7 @@
             this.button1.Location = new System.Drawing.Point(12, 96);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 23);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Close";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -84,7 +84,7 @@
             this.textField.Location = new System.Drawing.Point(142, 69);
             this.textField.Name = "textField";
             this.textField.Size = new System.Drawing.Size(253, 20);
-            this.textField.TabIndex = 3;
+            this.textField.TabIndex = 5;
             // 
             // checkBox
             // 
@@ -92,7 +92,7 @@
             this.checkBox.Location = new System.Drawing.Point(142, 105);
             this.checkBox.Name = "checkBox";
             this.checkBox.Size = new System.Drawing.Size(74, 17);
-            this.checkBox.TabIndex = 4;
+            this.checkBox.TabIndex = 6;
             this.checkBox.Text = "checkBox";
             this.checkBox.UseVisualStyleBackColor = true;
             this.checkBox.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -124,7 +124,7 @@
             this.radioButtonReset.Location = new System.Drawing.Point(143, 56);
             this.radioButtonReset.Name = "radioButtonReset";
             this.radioButtonReset.Size = new System.Drawing.Size(75, 23);
-            this.radioButtonReset.TabIndex = 3;
+            this.radioButtonReset.TabIndex = 9;
             this.radioButtonReset.Text = "Reset";
             this.radioButtonReset.UseVisualStyleBackColor = true;
             this.radioButtonReset.Click += new System.EventHandler(this.radioButtonReset_Click);
@@ -144,7 +144,7 @@
             this.radioButton2.Location = new System.Drawing.Point(107, 28);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(65, 17);
-            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabIndex = 8;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Option 2";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -156,7 +156,7 @@
             this.radioButton1.Location = new System.Drawing.Point(9, 28);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(65, 17);
-            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabIndex = 7;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Option 1";
             this.radioButton1.UseVisualStyleBackColor = true;
@@ -195,7 +195,7 @@
             this.FruitsComboBox.Location = new System.Drawing.Point(6, 27);
             this.FruitsComboBox.Name = "FruitsComboBox";
             this.FruitsComboBox.Size = new System.Drawing.Size(121, 21);
-            this.FruitsComboBox.TabIndex = 0;
+            this.FruitsComboBox.TabIndex = 10;
             this.FruitsComboBox.SelectedIndexChanged += new System.EventHandler(this.FruitsComboBox_SelectedIndexChanged);
             // 
             // nextFormButton
@@ -203,7 +203,7 @@
             this.nextFormButton.Location = new System.Drawing.Point(12, 38);
             this.nextFormButton.Name = "nextFormButton";
             this.nextFormButton.Size = new System.Drawing.Size(95, 23);
-            this.nextFormButton.TabIndex = 8;
+            this.nextFormButton.TabIndex = 2;
             this.nextFormButton.Text = "Data Entry Form";
             this.nextFormButton.UseVisualStyleBackColor = true;
             this.nextFormButton.Click += new System.EventHandler(this.nextFormButton_Click);
@@ -222,7 +222,7 @@
             this.buttonButton.Location = new System.Drawing.Point(12, 67);
             this.buttonButton.Name = "buttonButton";
             this.buttonButton.Size = new System.Drawing.Size(95, 23);
-            this.buttonButton.TabIndex = 10;
+            this.buttonButton.TabIndex = 3;
             this.buttonButton.Text = "Simple Elements";
             this.buttonButton.UseVisualStyleBackColor = true;
             this.buttonButton.Click += new System.EventHandler(this.buttonButton_Click);
