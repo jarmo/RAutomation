@@ -1,4 +1,7 @@
 Feature: Radio button feature
+  In order to test radio button features
+  As a  a RAutomation user
+  I want to be able to interact with tables
 
   Scenario: Set a radio button
     Given I am on the main form
