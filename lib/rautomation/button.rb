@@ -39,6 +39,11 @@ module RAutomation
 
     alias_method :exist?, :exists?
 
+    # Allows to execute specific {Adapter} methods not part of the public API.
+    def method_missing(name, *args)
+      @button.send(name, *args)
+    end
+
     private
 
     def wait_until_exists
