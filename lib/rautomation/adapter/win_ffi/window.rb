@@ -118,9 +118,18 @@ module RAutomation
               activate
               active?
             end
-            Functions.send_key(0x12, 0, 0, nil)
             Functions.send_key(key, 0, 0, nil)
-            Functions.send_key(0x12, 0, Constants::KEYEVENTF_KEYUP, nil)
+            Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
+          end
+        end
+
+        def send_keystrokes(keys)
+          converter = KeystrokeConverter.new
+          converter.convertKeyCodes(keys).each do |key|
+            Functions.set_active_window hwnd
+            Functions.set_foreground_window hwnd
+
+            Functions.send_key(key, 0, 0, nil)
             Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
           end
         end
