@@ -27,7 +27,12 @@ module RAutomation
 
         # @see RAutomation::TextField#value
         def value
-          Functions.control_value(Functions.control_hwnd(@window.hwnd, @locators))
+          Functions.control_value(hwnd)
+        end
+
+        # @see RAutomation::TextField#hwnd
+        def hwnd
+          Functions.control_hwnd(@window.hwnd, @locators)
         end
 
       end

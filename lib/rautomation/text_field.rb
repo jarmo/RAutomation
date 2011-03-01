@@ -37,6 +37,11 @@ module RAutomation
       @text_field.exists?
     end
 
+    def hwnd
+      wait_until_exists
+      @text_field.hwnd
+    end
+
     alias_method :exist?, :exists?
 
     private
