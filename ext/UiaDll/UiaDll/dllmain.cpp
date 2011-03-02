@@ -16,15 +16,22 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH: 
-		HRESULT hr ;
-		hr = CoInitializeEx(NULL, COINIT_MULTITHREADED) ;
-		if (FAILED(hr)) return FALSE ;
-		hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**)&pAutomation);
-		if (FAILED(hr)) return FALSE ;
-		break ;
 	case DLL_THREAD_ATTACH:
+		HRESULT hr ;
+		hr = CoInitialize(NULL) ;
+		if (FAILED(hr)) {
+			printf("CoInitialize failed. hr = 0x%x", hr) ;
+			return FALSE ;
+		}
+		hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**)&pAutomation);
+		if (FAILED(hr)) {
+			printf("CoCreateInstance failed. hr = 0x%x", hr) ;
+			return FALSE ;
+		}
+		break ;
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
+		CoUninitialize() ;
 		break;
 	}
 	return TRUE;

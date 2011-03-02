@@ -180,8 +180,15 @@ module RAutomation
           end
 
           def control_hwnd(window_hwnd, locators)
-            find_hwnd(locators, window_hwnd) do |hwnd|
-              locators_match?(locators, control_properties(hwnd, locators))
+            if locators[:id].nil?
+              find_hwnd(locators, window_hwnd) do |hwnd|
+                locators_match?(locators, control_properties(hwnd, locators))
+              end
+            else
+              puts "search by id"
+              uia_window = UiaDll::element_from_handle(window_hwnd) # finds IUIAutomationElement for given parent window
+              uia_control = UiaDll::find_child_by_id(uia_window, locators[:id].to_s)
+              UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
             end
           end
 

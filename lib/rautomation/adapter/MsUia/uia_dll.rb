@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module MsUiAutomation
+    module WinFfi
       # @private
       module UiaDll
         extend FFI::Library
@@ -12,6 +12,12 @@ module RAutomation
                         [:string], :pointer
         attach_function :is_offscreen, :RA_IsOffscreen,
                         [:pointer], :bool
+        attach_function :element_from_handle, :RA_ElementFromHandle,
+                        [:long], :pointer
+        attach_function :find_child_by_id, :RA_FindChildById,
+                        [:pointer, :string], :pointer
+        attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
+                        [:pointer], :long
 
       end
     end
