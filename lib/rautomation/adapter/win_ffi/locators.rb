@@ -13,7 +13,6 @@ module RAutomation
           locators[:index] = locators[:index].to_i if locators[:index]
 
           # control locator
-          locators[:id] = locators[:id].to_i if locators[:id]
           locators = self.class::DEFAULT_LOCATORS.merge(locators) if self.class.const_defined?(:DEFAULT_LOCATORS)
           @locators = locators
         end

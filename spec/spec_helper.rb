@@ -74,6 +74,9 @@ module SpecHelper
                   :window1_text_field_class => "Edit",
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.window_title(win.hwnd)}
+          },
+          :ms_ui_automation => {
+              :window1 => "ext\\WindowsForms\\bin\\WindowsForms.exe"
           }
   }[adapter]
 end
