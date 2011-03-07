@@ -62,7 +62,7 @@ extern "C" __declspec ( dllexport ) IUIAutomationElement *RA_FindChildById(IUIAu
 	if (SUCCEEDED(hr)) {
 		IUIAutomationElement *pFound ;
 
-		hr = pElement->FindFirst(TreeScope_Children, pCondition, &pFound) ;
+		hr = pElement->FindFirst(TreeScope_Descendants, pCondition, &pFound) ;
 		if (SUCCEEDED(hr)) {
 			if (pFound == NULL)
 				printf("RA_FindChildById: Element with automation id %s was not found\r\n", automationId) ;

@@ -185,10 +185,11 @@ module RAutomation
                 locators_match?(locators, control_properties(hwnd, locators))
               end
             else
-              puts "search by id"
               uia_window = UiaDll::element_from_handle(window_hwnd) # finds IUIAutomationElement for given parent window
               uia_control = UiaDll::find_child_by_id(uia_window, locators[:id].to_s)
-              UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+              hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+              raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
+              hwnd
             end
           end
 
