@@ -20,12 +20,12 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		HRESULT hr ;
 		hr = CoInitialize(NULL) ;
 		if (FAILED(hr)) {
-			printf("CoInitialize failed. hr = 0x%x", hr) ;
+			printf("UiaDll: CoInitialize failed. hr = 0x%x", hr) ;
 			return FALSE ;
 		}
 		hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**)&pAutomation);
 		if (FAILED(hr)) {
-			printf("CoCreateInstance failed. hr = 0x%x", hr) ;
+			printf("UiaDll: CoCreateInstance failed. hr = 0x%x", hr) ;
 			return FALSE ;
 		}
 		break ;

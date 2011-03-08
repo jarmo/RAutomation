@@ -45,6 +45,8 @@
             this.nextFormButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonButton = new System.Windows.Forms.Button();
+            this.enabledButton = new System.Windows.Forms.Button();
+            this.disabledButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -227,11 +229,32 @@
             this.buttonButton.UseVisualStyleBackColor = true;
             this.buttonButton.Click += new System.EventHandler(this.buttonButton_Click);
             // 
+            // enabledButton
+            // 
+            this.enabledButton.Location = new System.Drawing.Point(574, 27);
+            this.enabledButton.Name = "enabledButton";
+            this.enabledButton.Size = new System.Drawing.Size(75, 23);
+            this.enabledButton.TabIndex = 10;
+            this.enabledButton.Text = "Enabled";
+            this.enabledButton.UseVisualStyleBackColor = true;
+            // 
+            // disabledButton
+            // 
+            this.disabledButton.Enabled = false;
+            this.disabledButton.Location = new System.Drawing.Point(574, 69);
+            this.disabledButton.Name = "disabledButton";
+            this.disabledButton.Size = new System.Drawing.Size(75, 23);
+            this.disabledButton.TabIndex = 11;
+            this.disabledButton.Text = "Disabled";
+            this.disabledButton.UseVisualStyleBackColor = true;
+            // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 474);
+            this.Controls.Add(this.disabledButton);
+            this.Controls.Add(this.enabledButton);
             this.Controls.Add(this.buttonButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.nextFormButton);
@@ -273,6 +296,8 @@
         private System.Windows.Forms.Button nextFormButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonButton;
+        private System.Windows.Forms.Button enabledButton;
+        private System.Windows.Forms.Button disabledButton;
     }
 }
 

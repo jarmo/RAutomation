@@ -38,6 +38,14 @@ module RAutomation
           !!Functions.control_hwnd(@window.hwnd, @locators)
         end
 
+        def enabled?
+          !Functions.unavailable?(Functions.control_hwnd(@window.hwnd, @locators))
+        end
+
+        def disabled?
+          Functions.unavailable?(Functions.control_hwnd(@window.hwnd, @locators))
+        end
+
         alias_method :exists?, :exist?
 
       end

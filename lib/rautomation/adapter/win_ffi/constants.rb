@@ -35,6 +35,7 @@ module RAutomation
         S_OK                 = 0
 
         # IAccessible Button States
+        STATE_SYSTEM_UNAVAILABLE = 0x00000001
         STATE_SYSTEM_SELECTED	= 0x00000002
         STATE_SYSTEM_FOCUSED  = 0x00000004
         STATE_SYSTEM_CHECKED  = 0x00000010

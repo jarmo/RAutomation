@@ -221,6 +221,10 @@ module RAutomation
             get_button_state(control_hwnd) & Constants::STATE_SYSTEM_FOCUSED != 0
           end
 
+          def unavailable?(control_hwnd)
+            get_button_state(control_hwnd) & Constants::STATE_SYSTEM_UNAVAILABLE != 0
+          end
+
           def retrieve_combobox_item_text(control_hwnd, item_no)
             text_len = send_message(control_hwnd, Constants::CB_GETLBTEXTLEN, item_no, nil)
 
