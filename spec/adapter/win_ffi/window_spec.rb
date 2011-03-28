@@ -22,4 +22,9 @@ describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
     button.should exist
     button.should have_focus
   end
+
+  it "#control" do
+    window = RAutomation::Window.new(:title => /MainFormWindow/i)
+    window.control(:id => "aboutButton").should exist
+  end
 end
