@@ -46,6 +46,10 @@ module RAutomation
           Functions.unavailable?(Functions.control_hwnd(@window.hwnd, @locators))
         end
 
+        def has_focus?
+          Functions.has_focus?(Functions.control_hwnd(@window.hwnd, @locators))
+        end
+
         alias_method :exists?, :exist?
 
       end

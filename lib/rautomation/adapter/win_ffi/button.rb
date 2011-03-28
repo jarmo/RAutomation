@@ -13,10 +13,6 @@ module RAutomation
           Functions.control_value(Functions.control_hwnd(@window.hwnd, @locators))
         end
 
-        def has_focus?
-          Functions.has_focus?(Functions.control_hwnd(@window.hwnd, @locators))
-        end
-
       end
     end
   end
