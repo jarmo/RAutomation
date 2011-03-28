@@ -13,7 +13,14 @@ describe "WinFfi::Button", :if => SpecHelper.adapter == :win_ffi do
 
     window.button(:id => "disabledButton").should be_disabled
     window.button(:id => "disabledButton").should_not be_enabled
+  end
 
+  it "#set_focus" do
+    button = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).button(:id => "enabledButton")
+    button.should_not have_focus
+
+    button.set_focus
+    button.should have_focus
   end
 
 end

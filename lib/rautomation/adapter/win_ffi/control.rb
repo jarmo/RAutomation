@@ -50,6 +50,12 @@ module RAutomation
           Functions.has_focus?(Functions.control_hwnd(@window.hwnd, @locators))
         end
 
+
+        def set_focus
+          uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
+          UiaDll::set_focus(uia_control)
+        end
+
         alias_method :exists?, :exist?
 
       end

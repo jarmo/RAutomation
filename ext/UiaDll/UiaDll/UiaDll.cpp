@@ -89,3 +89,11 @@ extern "C" __declspec ( dllexport ) HWND RA_CurrentNativeWindowHandle(IUIAutomat
 	pElement->get_CurrentNativeWindowHandle(&uia_hwnd) ;
 	return (HWND)uia_hwnd ;
 }
+
+extern "C" __declspec ( dllexport ) BOOL RA_SetFocus(IUIAutomationElement *pElement) {
+	HRESULT hr = pElement->SetFocus() ;
+	if (hr != S_OK)
+		printf("RA_SetFocus: SetFocus on element returned 0x%x\r\n", hr) ;
+
+	return SUCCEEDED(hr) ;
+}

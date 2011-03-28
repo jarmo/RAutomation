@@ -18,6 +18,8 @@ module RAutomation
                         [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
                         [:pointer], :long
+        attach_function :set_focus, :RA_SetFocus,
+                        [:pointer], :bool
 
       end
     end
