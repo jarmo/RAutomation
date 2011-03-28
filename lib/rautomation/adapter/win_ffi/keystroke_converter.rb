@@ -10,6 +10,8 @@ module RAutomation
             item = element[0]
             if "tab".eql? item
               codes.push Constants::VK_TAB
+            elsif "backspace".eql? item
+              codes.push Constants::VK_BACK
             else
               convertCharacters codes, item
             end

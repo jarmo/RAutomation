@@ -14,9 +14,10 @@ describe "KeystrokeConverter" do
 
   it "convert key names" do
     converter = RAutomation::Adapter::WinFfi::KeystrokeConverter.new
-    codes = converter.convertKeyCodes("{tab}a")
+    codes = converter.convertKeyCodes("{tab}a{backspace}")
     codes[0].should == RAutomation::Adapter::WinFfi::Constants::VK_TAB
     codes[1].should == "a".ord
+    codes[2].should == RAutomation::Adapter::WinFfi::Constants::VK_BACK
   end
 
 end

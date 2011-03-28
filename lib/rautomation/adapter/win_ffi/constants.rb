@@ -26,6 +26,7 @@ module RAutomation
         KEYEVENTF_EXTENDEDKEY = 0x1
         KEYEVENTF_KEYUP = 0x2
 
+        VK_BACK = 0x08
         VK_TAB = 0x09
 
         # GetWindow constants
