@@ -45,6 +45,7 @@
             this.closeDataEntryFormButton = new System.Windows.Forms.Button();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,11 +140,21 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "Phone number";
             // 
+            // maskedTextBox2
+            // 
+            this.maskedTextBox2.Location = new System.Drawing.Point(425, 280);
+            this.maskedTextBox2.Mask = "00/00/0000";
+            this.maskedTextBox2.Name = "maskedTextBox2";
+            this.maskedTextBox2.Size = new System.Drawing.Size(100, 20);
+            this.maskedTextBox2.TabIndex = 14;
+            this.maskedTextBox2.ValidatingType = typeof(System.DateTime);
+            // 
             // DataEntryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 474);
+            this.Controls.Add(this.maskedTextBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.closeDataEntryFormButton);
@@ -171,5 +182,6 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ColumnHeader columnState;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
     }
 }

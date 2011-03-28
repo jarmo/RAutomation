@@ -38,4 +38,11 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
     select_list.value.should == "Caimito"
   end
 
+  it "enabled/disabled" do
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox").should be_enabled
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox").should_not be_disabled
+
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "comboBoxDisabled").should_not be_enabled
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "comboBoxDisabled").should be_disabled
+  end
 end

@@ -18,4 +18,12 @@ describe "WinFfi::RadioButton", :if => SpecHelper.adapter == :win_ffi do
     radio.should be_set
   end
 
+  it "enabled/disabled" do
+    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should be_enabled
+    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should_not be_disabled
+
+    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").should_not be_enabled
+    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").should be_disabled
+  end
+
 end
