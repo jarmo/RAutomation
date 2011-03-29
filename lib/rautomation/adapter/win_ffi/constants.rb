@@ -28,6 +28,7 @@ module RAutomation
 
         VK_BACK = 0x08
         VK_TAB = 0x09
+        VK_RETURN = 0x0D
 
         # GetWindow constants
         GW_ENABLEDPOPUP = 6
