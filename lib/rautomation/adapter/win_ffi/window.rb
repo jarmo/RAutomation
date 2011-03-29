@@ -4,6 +4,9 @@ module RAutomation
       class Window
         include WaitHelper
         include Locators
+        extend ElementCollections
+
+        has_many :controls
 
         class << self
           def initialize_com
@@ -157,6 +160,10 @@ module RAutomation
 
         def control(locator)
           Control.new(self, locator)
+        end
+
+        def controls(locator)
+          Controls.new(self, locator)
         end
 
         # Redirects all method calls not part of the public API to the {Functions} directly.

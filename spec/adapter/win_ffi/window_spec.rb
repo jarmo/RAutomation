@@ -27,4 +27,9 @@ describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
     window.control(:id => "aboutButton").should exist
   end
+
+  it "has controls" do
+    window = RAutomation::Window.new(:title => /MainFormWindow/i)
+    window.controls(:class => /BUTTON/i).size.should == 12
+  end
 end
