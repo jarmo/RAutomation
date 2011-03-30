@@ -12,6 +12,8 @@ module RAutomation
               codes.push Constants::VK_TAB
             elsif "backspace".eql? item
               codes.push Constants::VK_BACK
+            elsif "enter".eql? item
+              codes.push Constants::VK_RETURN
             else
               convertCharacters codes, item
             end
