@@ -24,6 +24,8 @@ module RAutomation
           def select
             Functions.send_message(@control_hwnd, Constants::CB_SETCURSEL, @index, nil) != Constants::CB_ERR
           end
+
+          alias_method :set, :select
         end
 
         def initialize(window, locators)
@@ -50,6 +52,18 @@ module RAutomation
         def value
           selected_option = options.find {|option| option.selected?}
           selected_option ? selected_option.text : ""
+        end
+
+        def option(options)
+          item_count.times do |item_no|
+            item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
+
+            if options[:text]
+              return SelectListOption.new(@hwnd, item, item_no) if options[:text] == item
+            end
+          end
+
+          nil
         end
 
         private

@@ -4,7 +4,7 @@ module RAutomation
     # Creates collection classes and methods for elements.
     # @param [Array<Symbol>] elements for which to create collection classes
     #   and methods.
-    def has_many(*elements)s
+    def has_many(*elements)
       elements.each do |element|
         class_name = element.to_s.split("_").map {|e| e.capitalize}.join
         RAutomation::Adapter::WinFfi.class_eval %Q{

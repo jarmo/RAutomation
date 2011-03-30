@@ -45,4 +45,12 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "comboBoxDisabled").should_not be_enabled
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "comboBoxDisabled").should be_disabled
   end
+
+  it "#option" do
+    select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
+
+    select_list.option(:text => "Apple").should_not be_selected
+    select_list.option(:text => "Apple").set
+    select_list.option(:text => "Apple").should be_selected
+  end
 end
