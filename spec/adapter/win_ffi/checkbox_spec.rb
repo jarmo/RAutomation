@@ -34,4 +34,10 @@ describe "WinFfi::Checkbox", :if => SpecHelper.adapter == :win_ffi do
     RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBoxDisabled").should be_disabled
   end
 
+  it "cannot check a disabled checkbox" do
+    lambda {
+      RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBoxDisabled").set
+    }.should raise_error
+  end
+
 end

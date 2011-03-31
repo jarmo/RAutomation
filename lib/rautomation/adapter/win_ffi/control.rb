@@ -20,17 +20,21 @@ module RAutomation
         end
 
         def click
-          clicked = false
-          wait_until do
-            hwnd = Functions.control_hwnd(@window.hwnd, @locators)
+          if enabled? then
+            clicked = false
+            wait_until do
+              hwnd = Functions.control_hwnd(@window.hwnd, @locators)
 
-            @window.activate
-            @window.active? &&
-                    Functions.set_control_focus(hwnd) &&
-                    Functions.control_click(hwnd) &&
-                    clicked = true # is clicked at least once
+              @window.activate
+              @window.active? &&
+                      Functions.set_control_focus(hwnd) &&
+                      Functions.control_click(hwnd) &&
+                      clicked = true # is clicked at least once
 
-            block_given? ? yield : clicked && !exist?
+              block_given? ? yield : clicked && !exist?
+            end
+          else
+            raise "Cannot click disabled control"
           end
         end
 
@@ -50,8 +54,9 @@ module RAutomation
           Functions.has_focus?(Functions.control_hwnd(@window.hwnd, @locators))
         end
 
-
         def set_focus
+          raise "Cannot set focus to disabled control" if disabled?
+
           uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
           UiaDll::set_focus(uia_control)
         end

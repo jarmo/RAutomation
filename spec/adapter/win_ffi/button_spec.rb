@@ -23,4 +23,14 @@ describe "WinFfi::Button", :if => SpecHelper.adapter == :win_ffi do
     button.should have_focus
   end
 
+  it "cannot click disabled button" do
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
+    lambda { window.button(:id => "disabledButton").click }.should raise_error
+  end
+
+  it "cannot set focus to disabled button" do
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
+    lambda { window.button(:id => "disabledButton").set_focus }.should raise_error
+  end
+
 end

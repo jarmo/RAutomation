@@ -26,4 +26,7 @@ describe "WinFfi::RadioButton", :if => SpecHelper.adapter == :win_ffi do
     RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").should be_disabled
   end
 
+  it "cannot set a disabled radio button" do
+    lambda { RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").set }.should raise_error
+  end
 end
