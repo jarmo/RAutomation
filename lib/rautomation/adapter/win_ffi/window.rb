@@ -127,8 +127,7 @@ module RAutomation
         end
 
         def send_keystrokes(keys)
-          converter = KeystrokeConverter.new
-          converter.convertKeyCodes(keys).each do |key|
+          KeystrokeConverter.convert(keys).each do |key|
             Functions.set_active_window hwnd
             Functions.set_foreground_window hwnd
 
