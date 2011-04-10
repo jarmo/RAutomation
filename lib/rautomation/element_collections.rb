@@ -6,9 +6,13 @@ module RAutomation
     #   and methods.
     def has_many(*elements)
       elements.each do |element|
-        class_name = element.to_s.split("_").map {|e| e.capitalize}.join
-        RAutomation.class_eval %Q{
-            class #{class_name}
+        class_name_plural = element.to_s.split("_").map {|e| e.capitalize}.join
+        class_name = class_name_plural.chop
+        adapter_class = self.to_s.scan(/(.*)::/).to_s
+        clazz = RAutomation.constants.include?(class_name) ? RAutomation : class_eval(adapter_class)
+        require "ruby-debug"; debugger;
+        clazz.class_eval %Q{
+            class #{class_name_plural}
               include Enumerable
 
               def initialize(window, locators)
@@ -20,7 +24,7 @@ module RAutomation
                 i = -1 
                 while true
                   args = [@window, @locators.merge(:index => i += 1)].compact
-                  object = RAutomation::#{class_name.chop}.new(*args)
+                  object = #{clazz}::#{class_name}.new(*args)
                   break unless object.exists?
                   yield object
                 end
@@ -35,7 +39,7 @@ module RAutomation
 
         class_eval %Q{
             def #{element}(locators = {})
-              #{class_name}.new(@window, locators)
+              #{class_name_plural}.new(@window, locators)
             end
         }
       end
