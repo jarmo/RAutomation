@@ -1,11 +1,3 @@
-unless String.instance_methods.include? :ord
-  class String
-    def ord
-      [0]
-    end
-  end
-end
-
 module RAutomation
   module Adapter
     module WinFfi
@@ -36,7 +28,7 @@ module RAutomation
           private
 
           def convert_characters(element)
-            element.split(//).inject([]) {|chars, char| chars << char.ord}
+            element.split(//).inject([]) {|chars, char| chars << char.unpack("c")[0]}
           end
 
         end
