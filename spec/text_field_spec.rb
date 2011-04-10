@@ -58,6 +58,7 @@ describe RAutomation::TextField do
 
     field.hwnd.should be_a(Fixnum)
 
+    RAutomation::Window.wait_timeout = 0.1
     expect { window.text_field(:class => "non-existing-window").hwnd }.
         to raise_exception(RAutomation::UnknownTextFieldException)
   end
