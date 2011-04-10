@@ -5,7 +5,7 @@ module RAutomation
       module UiaDll
         extend FFI::Library
 
-        ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
+        ffi_lib File.dirname(__FILE__) + '/../../../../../ext/UiaDll/Release/UiaDll.dll'
         ffi_convention :stdcall
 
         attach_function :find_window, :RA_FindWindow,
