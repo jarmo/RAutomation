@@ -9,21 +9,24 @@ module RAutomation
         class SelectListOption
           attr_accessor :text, :index, :control_hwnd
 
-          def initialize(control_hwnd, text, index)
-            @control_hwnd = control_hwnd
+          def initialize(select_list, text, index)
+            @select_list = select_list
             @text = text
             @index = index
           end
 
           def selected?
-            selected_idx = Functions.send_message(@control_hwnd, Constants::CB_GETCURSEL, 0, nil)
+            selected_idx = Functions.send_message(@select_list.control_hwnd, Constants::CB_GETCURSEL, 0, nil)
             return false if selected_idx == Constants::CB_ERR
-            @text == Functions.retrieve_combobox_item_text(@control_hwnd, selected_idx)
+            @text == Functions.retrieve_combobox_item_text(@select_list.control_hwnd, selected_idx)
           end
 
           def select
-            Functions.send_message(@control_hwnd, Constants::CB_SETCURSEL, @index, nil) != Constants::CB_ERR
+            raise "Cannot select from a disabled select list" if @select_list.disabled?
+            Functions.send_message(@select_list.control_hwnd, Constants::CB_SETCURSEL, @index, nil) != Constants::CB_ERR
           end
+
+          alias_method :set, :select
         end
 
         def initialize(window, locators)
@@ -38,9 +41,9 @@ module RAutomation
             item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
 
             if options[:text] 
-              items.push(SelectListOption.new(@hwnd, item, item_no)) if options[:text] == item
+              items.push(SelectListOption.new(self, item, item_no)) if options[:text] == item
             else
-              items.push(SelectListOption.new(@hwnd, item, item_no))
+              items.push(SelectListOption.new(self, item, item_no))
             end
           end
 
@@ -50,6 +53,22 @@ module RAutomation
         def value
           selected_option = options.find {|option| option.selected?}
           selected_option ? selected_option.text : ""
+        end
+
+        def option(options)
+          item_count.times do |item_no|
+            item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
+
+            if options[:text]
+              return SelectListOption.new(self, item, item_no) if options[:text] == item
+            end
+          end
+
+          nil
+        end
+
+        def control_hwnd
+          @hwnd
         end
 
         private

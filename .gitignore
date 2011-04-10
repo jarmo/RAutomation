@@ -23,3 +23,12 @@ pkg
 
 .yardoc/
 doc/
+
+## VisualStudio
+Debug
+Release
+ipch
+*.sdf
+*.user
+!ext/IAccessibleDLL/Release/*.dll
+

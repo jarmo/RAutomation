@@ -37,7 +37,17 @@ module RAutomation
       @text_field.exists?
     end
 
+    def hwnd
+      wait_until_exists
+      @text_field.hwnd
+    end
+
     alias_method :exist?, :exists?
+
+    # Allows to execute specific {Adapter} methods not part of the public API.
+    def method_missing(name, *args)
+      @text_field.send(name, *args)
+    end
 
     private
 

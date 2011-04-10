@@ -78,6 +78,12 @@ module RAutomation
         # iaccessible
         attach_function :get_button_state, :get_button_state,
                         [:long], :long
+        attach_function :get_table_row_strings, :get_table_row_strings,
+                        [:long, :long, :pointer, :long, :pointer], :void
+        attach_function :select_table_row, :select_table_row,
+                        [:long, :long, :long], :void
+        attach_function :get_table_row_state, :get_table_row_state,
+                        [:long, :long, :long], :long
 
         class << self
 
@@ -174,8 +180,16 @@ module RAutomation
           end
 
           def control_hwnd(window_hwnd, locators)
-            find_hwnd(locators, window_hwnd) do |hwnd|
-              locators_match?(locators, control_properties(hwnd, locators))
+            if locators[:id].nil?
+              find_hwnd(locators, window_hwnd) do |hwnd|
+                locators_match?(locators, control_properties(hwnd, locators))
+              end
+            else
+              uia_window = UiaDll::element_from_handle(window_hwnd) # finds IUIAutomationElement for given parent window
+              uia_control = UiaDll::find_child_by_id(uia_window, locators[:id].to_s)
+              hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+              raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
+              hwnd
             end
           end
 
@@ -203,6 +217,14 @@ module RAutomation
             get_button_state(control_hwnd) & Constants::STATE_SYSTEM_CHECKED != 0
           end
 
+          def has_focus?(control_hwnd)
+            get_button_state(control_hwnd) & Constants::STATE_SYSTEM_FOCUSED != 0
+          end
+
+          def unavailable?(control_hwnd)
+            get_button_state(control_hwnd) & Constants::STATE_SYSTEM_UNAVAILABLE != 0
+          end
+
           def retrieve_combobox_item_text(control_hwnd, item_no)
             text_len = send_message(control_hwnd, Constants::CB_GETLBTEXTLEN, item_no, nil)
 
@@ -219,6 +241,19 @@ module RAutomation
             else
               fail "Cannot get name for control with HWND 0x" + control_hwnd.to_s(16)
             end
+          end
+
+          def retrieve_table_strings_for_row(control_hwnd, row)
+            hModule = load_library("oleacc.dll")   # TODO should be done only one time
+
+            strings_ptr = FFI::MemoryPointer.new :pointer
+            columns_ptr = FFI::MemoryPointer.new :pointer
+
+            get_table_row_strings(hModule, control_hwnd, strings_ptr, row, columns_ptr)
+            str_ptr = strings_ptr.read_pointer
+            columns = columns_ptr.read_long
+
+            str_ptr.get_array_of_string(0, columns)
           end
 
           private

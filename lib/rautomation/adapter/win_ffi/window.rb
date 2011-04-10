@@ -4,6 +4,9 @@ module RAutomation
       class Window
         include WaitHelper
         include Locators
+        extend ElementCollections
+
+        has_many :controls
 
         class << self
           def initialize_com
@@ -118,9 +121,18 @@ module RAutomation
               activate
               active?
             end
-            Functions.send_key(0x12, 0, 0, nil)
             Functions.send_key(key, 0, 0, nil)
-            Functions.send_key(0x12, 0, Constants::KEYEVENTF_KEYUP, nil)
+            Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
+          end
+        end
+
+        def send_keystrokes(keys)
+          converter = KeystrokeConverter.new
+          converter.convertKeyCodes(keys).each do |key|
+            Functions.set_active_window hwnd
+            Functions.set_foreground_window hwnd
+
+            Functions.send_key(key, 0, 0, nil)
             Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
           end
         end
@@ -140,6 +152,18 @@ module RAutomation
         # @see RAutomation::Window#text_field
         def text_field(locator)
           TextField.new(self, locator)
+        end
+
+        def label(locator)
+          Label.new(self, locator)
+        end
+
+        def control(locator)
+          Control.new(self, locator)
+        end
+
+        def controls(locator)
+          Controls.new(self, locator)
         end
 
         # Redirects all method calls not part of the public API to the {Functions} directly.

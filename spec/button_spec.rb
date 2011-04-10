@@ -64,4 +64,5 @@ describe RAutomation::Button do
     button.should_not exist
     window.should_not exist
   end
+
 end

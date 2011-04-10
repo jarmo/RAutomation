@@ -35,6 +35,7 @@
             this.checkBox = new System.Windows.Forms.CheckBox();
             this.checkBoxLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButtonDisabled = new System.Windows.Forms.RadioButton();
             this.radioButtonReset = new System.Windows.Forms.Button();
             this.radioButtonLabel = new System.Windows.Forms.Label();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -45,6 +46,11 @@
             this.nextFormButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonButton = new System.Windows.Forms.Button();
+            this.enabledButton = new System.Windows.Forms.Button();
+            this.disabledButton = new System.Windows.Forms.Button();
+            this.checkBoxDisabled = new System.Windows.Forms.CheckBox();
+            this.textBoxDisabled = new System.Windows.Forms.TextBox();
+            this.comboBoxDisabled = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -74,7 +80,7 @@
             this.button1.Location = new System.Drawing.Point(12, 96);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 23);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Close";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -83,8 +89,8 @@
             // 
             this.textField.Location = new System.Drawing.Point(142, 69);
             this.textField.Name = "textField";
-            this.textField.Size = new System.Drawing.Size(253, 20);
-            this.textField.TabIndex = 3;
+            this.textField.Size = new System.Drawing.Size(184, 20);
+            this.textField.TabIndex = 5;
             // 
             // checkBox
             // 
@@ -92,7 +98,7 @@
             this.checkBox.Location = new System.Drawing.Point(142, 105);
             this.checkBox.Name = "checkBox";
             this.checkBox.Size = new System.Drawing.Size(74, 17);
-            this.checkBox.TabIndex = 4;
+            this.checkBox.TabIndex = 6;
             this.checkBox.Text = "checkBox";
             this.checkBox.UseVisualStyleBackColor = true;
             this.checkBox.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -108,23 +114,36 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButtonDisabled);
             this.groupBox1.Controls.Add(this.radioButtonReset);
             this.groupBox1.Controls.Add(this.radioButtonLabel);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Location = new System.Drawing.Point(142, 136);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(234, 89);
+            this.groupBox1.Size = new System.Drawing.Size(325, 89);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Groupd of radio buttons";
+            // 
+            // radioButtonDisabled
+            // 
+            this.radioButtonDisabled.AutoSize = true;
+            this.radioButtonDisabled.Enabled = false;
+            this.radioButtonDisabled.Location = new System.Drawing.Point(188, 28);
+            this.radioButtonDisabled.Name = "radioButtonDisabled";
+            this.radioButtonDisabled.Size = new System.Drawing.Size(100, 17);
+            this.radioButtonDisabled.TabIndex = 10;
+            this.radioButtonDisabled.TabStop = true;
+            this.radioButtonDisabled.Text = "Option Disabled";
+            this.radioButtonDisabled.UseVisualStyleBackColor = true;
             // 
             // radioButtonReset
             // 
             this.radioButtonReset.Location = new System.Drawing.Point(143, 56);
             this.radioButtonReset.Name = "radioButtonReset";
             this.radioButtonReset.Size = new System.Drawing.Size(75, 23);
-            this.radioButtonReset.TabIndex = 3;
+            this.radioButtonReset.TabIndex = 9;
             this.radioButtonReset.Text = "Reset";
             this.radioButtonReset.UseVisualStyleBackColor = true;
             this.radioButtonReset.Click += new System.EventHandler(this.radioButtonReset_Click);
@@ -144,7 +163,7 @@
             this.radioButton2.Location = new System.Drawing.Point(107, 28);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(65, 17);
-            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabIndex = 8;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Option 2";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -156,7 +175,7 @@
             this.radioButton1.Location = new System.Drawing.Point(9, 28);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(65, 17);
-            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabIndex = 7;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Option 1";
             this.radioButton1.UseVisualStyleBackColor = true;
@@ -164,6 +183,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.comboBoxDisabled);
             this.groupBox2.Controls.Add(this.fruitsLabel);
             this.groupBox2.Controls.Add(this.FruitsComboBox);
             this.groupBox2.Location = new System.Drawing.Point(142, 231);
@@ -195,7 +215,7 @@
             this.FruitsComboBox.Location = new System.Drawing.Point(6, 27);
             this.FruitsComboBox.Name = "FruitsComboBox";
             this.FruitsComboBox.Size = new System.Drawing.Size(121, 21);
-            this.FruitsComboBox.TabIndex = 0;
+            this.FruitsComboBox.TabIndex = 10;
             this.FruitsComboBox.SelectedIndexChanged += new System.EventHandler(this.FruitsComboBox_SelectedIndexChanged);
             // 
             // nextFormButton
@@ -203,7 +223,7 @@
             this.nextFormButton.Location = new System.Drawing.Point(12, 38);
             this.nextFormButton.Name = "nextFormButton";
             this.nextFormButton.Size = new System.Drawing.Size(95, 23);
-            this.nextFormButton.TabIndex = 8;
+            this.nextFormButton.TabIndex = 2;
             this.nextFormButton.Text = "Data Entry Form";
             this.nextFormButton.UseVisualStyleBackColor = true;
             this.nextFormButton.Click += new System.EventHandler(this.nextFormButton_Click);
@@ -222,16 +242,74 @@
             this.buttonButton.Location = new System.Drawing.Point(12, 67);
             this.buttonButton.Name = "buttonButton";
             this.buttonButton.Size = new System.Drawing.Size(95, 23);
-            this.buttonButton.TabIndex = 10;
+            this.buttonButton.TabIndex = 3;
             this.buttonButton.Text = "Simple Elements";
             this.buttonButton.UseVisualStyleBackColor = true;
             this.buttonButton.Click += new System.EventHandler(this.buttonButton_Click);
+            // 
+            // enabledButton
+            // 
+            this.enabledButton.Location = new System.Drawing.Point(574, 27);
+            this.enabledButton.Name = "enabledButton";
+            this.enabledButton.Size = new System.Drawing.Size(75, 23);
+            this.enabledButton.TabIndex = 10;
+            this.enabledButton.Text = "Enabled";
+            this.enabledButton.UseVisualStyleBackColor = true;
+            // 
+            // disabledButton
+            // 
+            this.disabledButton.Enabled = false;
+            this.disabledButton.Location = new System.Drawing.Point(574, 69);
+            this.disabledButton.Name = "disabledButton";
+            this.disabledButton.Size = new System.Drawing.Size(75, 23);
+            this.disabledButton.TabIndex = 11;
+            this.disabledButton.Text = "Disabled";
+            this.disabledButton.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxDisabled
+            // 
+            this.checkBoxDisabled.AutoSize = true;
+            this.checkBoxDisabled.Enabled = false;
+            this.checkBoxDisabled.Location = new System.Drawing.Point(353, 102);
+            this.checkBoxDisabled.Name = "checkBoxDisabled";
+            this.checkBoxDisabled.Size = new System.Drawing.Size(115, 17);
+            this.checkBoxDisabled.TabIndex = 12;
+            this.checkBoxDisabled.Text = "checkBoxDisabled";
+            this.checkBoxDisabled.UseVisualStyleBackColor = true;
+            // 
+            // textBoxDisabled
+            // 
+            this.textBoxDisabled.Enabled = false;
+            this.textBoxDisabled.Location = new System.Drawing.Point(332, 69);
+            this.textBoxDisabled.Name = "textBoxDisabled";
+            this.textBoxDisabled.Size = new System.Drawing.Size(184, 20);
+            this.textBoxDisabled.TabIndex = 13;
+            // 
+            // comboBoxDisabled
+            // 
+            this.comboBoxDisabled.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDisabled.Enabled = false;
+            this.comboBoxDisabled.FormattingEnabled = true;
+            this.comboBoxDisabled.Items.AddRange(new object[] {
+            "Apple",
+            "Caimito",
+            "Coconut",
+            "Orange",
+            "Passion Fruit"});
+            this.comboBoxDisabled.Location = new System.Drawing.Point(235, 27);
+            this.comboBoxDisabled.Name = "comboBoxDisabled";
+            this.comboBoxDisabled.Size = new System.Drawing.Size(84, 21);
+            this.comboBoxDisabled.TabIndex = 11;
             // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 474);
+            this.Controls.Add(this.textBoxDisabled);
+            this.Controls.Add(this.checkBoxDisabled);
+            this.Controls.Add(this.disabledButton);
+            this.Controls.Add(this.enabledButton);
             this.Controls.Add(this.buttonButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.nextFormButton);
@@ -273,6 +351,12 @@
         private System.Windows.Forms.Button nextFormButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonButton;
+        private System.Windows.Forms.Button enabledButton;
+        private System.Windows.Forms.Button disabledButton;
+        private System.Windows.Forms.CheckBox checkBoxDisabled;
+        private System.Windows.Forms.RadioButton radioButtonDisabled;
+        private System.Windows.Forms.TextBox textBoxDisabled;
+        private System.Windows.Forms.ComboBox comboBoxDisabled;
     }
 }
 
