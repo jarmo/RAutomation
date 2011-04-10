@@ -1,3 +1,21 @@
+=== Version 0.6.0 / 2011-04-10
+
+=== WinFFI adapter
+
+* added Table#strings, #select, #selected? methods.
+* added Label element support with #value method.
+* added Window#send_keystrokes method for easier specification of keyboard keys for typing.
+* added #has_focus? and #set_focus methods to controls.
+* added possibility to search controls by automation id as :id.
+* added #enabled? and #disabled? methods for controls.
+* added Window#control and #controls methods for accessing controls generally.
+* added SelectList#option method.
+
+=== MsUiAutomation
+
+* added new adapter MsUiAutomation.
+* added Window#exists? method.
+
 === Version 0.5.1 / 2011-01-30
 
 === All adapters
