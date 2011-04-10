@@ -10,7 +10,6 @@ module RAutomation
         class_name = class_name_plural.chop
         adapter_class = self.to_s.scan(/(.*)::/).to_s
         clazz = RAutomation.constants.include?(class_name) ? RAutomation : class_eval(adapter_class)
-        require "ruby-debug"; debugger;
         clazz.class_eval %Q{
             class #{class_name_plural}
               include Enumerable

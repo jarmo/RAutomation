@@ -22,7 +22,7 @@ module RAutomation
           end
 
           def select
-            raise "Cannot select from a disabled select list" if @select_list.disabled?
+            @select_list.assert_enabled
             Functions.send_message(@select_list.control_hwnd, Constants::CB_SETCURSEL, @index, nil) != Constants::CB_ERR
           end
 
@@ -58,10 +58,7 @@ module RAutomation
         def option(options)
           item_count.times do |item_no|
             item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
-
-            if options[:text]
-              return SelectListOption.new(self, item, item_no) if options[:text] == item
-            end
+            return SelectListOption.new(self, item, item_no) if options[:text] == item
           end
 
           nil
