@@ -8,12 +8,15 @@ module RAutomation
 
           input.scan(/(\w+)/).map do |element|
             item = element[0]
-            if "tab".eql? item
+            case item
+            when "tab"
               codes.push Constants::VK_TAB
-            elsif "backspace".eql? item
+            when "backspace"
               codes.push Constants::VK_BACK
-            elsif "enter".eql? item
+            when "enter"
               codes.push Constants::VK_RETURN
+            when "space"
+              codes.push Constants::VK_SPACE
             else
               convertCharacters codes, item
             end
