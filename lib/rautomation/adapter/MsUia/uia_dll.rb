@@ -20,6 +20,12 @@ module RAutomation
                         [:pointer], :long
         attach_function :set_focus, :RA_SetFocus,
                         [:pointer], :bool
+        attach_function :current_control_type, :RA_GetCurrentControlType,
+                        [:pointer], :int
+        attach_function :find_children, :RA_FindChildren,
+                        [:pointer, :pointer], :int
+        attach_function :get_name, :RA_GetName,
+                        [:pointer, :pointer], :int
 
       end
     end

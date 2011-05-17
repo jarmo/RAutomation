@@ -97,3 +97,72 @@ extern "C" __declspec ( dllexport ) BOOL RA_SetFocus(IUIAutomationElement *pElem
 
 	return SUCCEEDED(hr) ;
 }
+
+extern "C" __declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationElement *pElement) {
+	CONTROLTYPEID control_type ;
+
+	HRESULT hr = pElement->get_CurrentControlType(&control_type) ;
+	if (SUCCEEDED(hr))
+		return control_type ;
+	else {
+		printf("RA_GetCurrentControlType: CurrentControlType returned 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+}
+
+extern "C" __declspec ( dllexport ) int RA_FindChildren(IUIAutomationElement *pElement, IUIAutomationElement *pChildren[]) {
+	IUIAutomationCondition *pTrueCondition ;
+	IUIAutomationElementArray *pElementArray ;
+	int element_count ;
+
+	HRESULT hr = getGlobalIUIAutomation()->CreateTrueCondition(&pTrueCondition) ;
+	if (FAILED(hr)) {
+		printf("RA_FindChildren: Could not create true condition 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+
+	hr = pElement->FindAll(TreeScope_Children, pTrueCondition, &pElementArray) ;
+	if (FAILED(hr)) {
+		printf("RA_FindChildren: FindAll failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+	 
+	hr = pElementArray->get_Length(&element_count) ;
+	if (FAILED(hr)) {
+		printf("RA_FindChildren: get_length failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+
+	if (pChildren != NULL) {
+		// given some memory get the details
+		for (int index = 0; index < element_count; index++) {
+			IUIAutomationElement *pElement ;
+
+			hr = pElementArray->GetElement(index, &pElement) ;
+			if (FAILED(hr)) {
+				printf("RA_FindChildren: GetElement failed 0x%x\r\n", hr) ;
+			} else {
+				pChildren[index] = pElement ;
+			}
+		}
+	}
+
+	return element_count ;
+}
+
+extern "C" __declspec ( dllexport ) int RA_GetName(IUIAutomationElement *pElement, char *pName) {
+	BSTR bstrName ;
+	HRESULT hr = pElement->get_CurrentName(&bstrName) ;
+	if (FAILED(hr)) {
+		printf("RA_GetName: get_CurrentName failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+
+	char *pszName = _com_util::ConvertBSTRToString(bstrName) ;
+	if (pName == NULL) {
+		return strlen(pszName) ;
+	} else {
+		strcpy(pName, pszName) ;
+		return strlen(pszName) ;
+	}
+}

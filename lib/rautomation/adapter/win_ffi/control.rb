@@ -61,6 +61,13 @@ module RAutomation
           UiaDll::set_focus(uia_control)
         end
 
+        def uia_control(automation_id)
+          uia_window = UiaDll::element_from_handle(@window.hwnd) # finds IUIAutomationElement for given parent window
+          uia_element = UiaDll::find_child_by_id(uia_window, automation_id.to_s)
+          fail "Cannot find UIAutomationElement" if uia_element.nil?
+          uia_element
+        end
+
         alias_method :exists?, :exist?
 
       end

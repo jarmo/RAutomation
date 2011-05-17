@@ -166,6 +166,10 @@ module RAutomation
           Controls.new(self, locator)
         end
 
+        def list_box(locator)
+          ListBox.new(self, locator)
+        end
+
         # Redirects all method calls not part of the public API to the {Functions} directly.
         # @see RAutomation::Window#method_missing
         def method_missing(name, *args)

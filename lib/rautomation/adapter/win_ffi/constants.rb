@@ -54,6 +54,9 @@ module RAutomation
         LVM_FIRST = 0x1000
         LVM_GETITEMCOUNT = LVM_FIRST + 4
 
+        # UI Automation control type IDs
+        UIA_LIST_CONTROL_TYPE = 50008
+        UIA_LIST_ITEM_CONTROL_TYPE = 50007
       end
     end
   end
