@@ -6,6 +6,11 @@ describe "WinFfi::Button", :if => SpecHelper.adapter == :win_ffi do
     window.button(:id => "aboutButton").should exist
   end
 
+  it "check for button class" do
+    RAutomation::Window.new(:title => "MainFormWindow").button(:id => "textField").should_not exist
+  end
+
+
   it "enabled/disabled" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     window.button(:id => "enabledButton").should be_enabled

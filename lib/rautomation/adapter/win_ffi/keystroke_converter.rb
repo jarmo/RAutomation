@@ -29,7 +29,7 @@ module RAutomation
 
         def convertCharacters(codes, element)
           element.split(//).each do |character|
-            codes.push character.ord
+            codes.push character[0].ord
           end
         end
 

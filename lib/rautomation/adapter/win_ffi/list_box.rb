@@ -23,12 +23,10 @@ module RAutomation
         end
 
         def exist?
-          @locators[:id].nil? ? super : super && matches_type(ListBox.class)
+          @locators[:id].nil? ? super : super && matches_type(Constants::UIA_LIST_CONTROL_TYPE)
         end
 
-        def matches_type(clazz)
-          UiaDll::current_control_type(uia_control(@locators[:id])) == Constants::UIA_LIST_CONTROL_TYPE
-        end
+        alias_method :exists?, :exist?
 
       end
     end

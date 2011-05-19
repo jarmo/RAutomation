@@ -77,6 +77,13 @@ module RAutomation
           Functions.send_message(@hwnd, Constants::CB_GETCOUNT, 0, nil)
         end
 
+        def exist?
+#          puts "being called"
+          @locators[:id].nil? ? super : super && matches_type(Constants::UIA_COMBOBOX_CONTROL_TYPE)
+        end
+#
+#        alias_method :exists?, :exist?
+
       end
     end
   end

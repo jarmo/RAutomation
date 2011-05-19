@@ -38,6 +38,14 @@ module RAutomation
           Functions.control_hwnd(@window.hwnd, @locators)
         end
 
+        def exist?
+          @locators[:id].nil? ? super : super && matches_type(Constants::UIA_EDIT_CONTROL_TYPE)
+        end
+
+        alias_method :exists?, :exist?
+
+
+
       end
     end
   end
