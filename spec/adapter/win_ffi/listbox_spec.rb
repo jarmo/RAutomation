@@ -22,4 +22,17 @@ describe "WinFfi::ListBox", :if => SpecHelper.adapter == :win_ffi do
     list_box.items[2].should == "Mango"
   end
 
+
+  #in progress
+#  it "#select" do
+#    list_box = RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox")
+#
+#    list_box.selected?(2).should == false
+#
+#    list_box.select(2)
+#    list_box.selected?(2).should == true
+#  end
+
+
+
 end

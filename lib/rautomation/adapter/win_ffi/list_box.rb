@@ -28,6 +28,29 @@ module RAutomation
 
         alias_method :exists?, :exist?
 
+        def selected?(index)
+          children = FFI::MemoryPointer.new :pointer, self.count
+#          puts children
+          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          target_element = children.read_array_of_pointer(length)[index]
+          is_selected = FFI::MemoryPointer.new :pointer, 1
+#          puts is_selected
+
+#          puts "call dll method"
+          UiaDll::get_is_selected(target_element, is_selected)
+#           puts "return from method"
+#          puts is_selected.read_long
+          if(is_selected.read_long == 1)
+            return true
+          end
+          if(is_selected.read_long == 0)
+            return false
+          else
+            fail "Unknown return value: #{is_selected.read_long}"
+          end
+
+#          is_selected
+        end
       end
     end
   end

@@ -166,3 +166,20 @@ extern "C" __declspec ( dllexport ) int RA_GetName(IUIAutomationElement *pElemen
 		return strlen(pszName) ;
 	}
 }
+
+extern "C" __declspec ( dllexport ) int RA_GetIsSelected(ISelectionItemProvider *pElement, BOOL *pRetVal) {
+	printf("entering dll method\r\n") ;
+
+	//HRESULT hr = pElement->get_IsSelected(pRetVal) ;
+	
+	//if (FAILED(hr)) {
+	//	printf("RA_GetIsSelected: get_IsSelected failed 0x%x\r\n", hr) ;
+	//	return 0 ;
+	//}
+
+	*pRetVal = false;
+	printf("selected return of: %s\r\n", (*pRetVal) ? "true" : "false") ;
+	
+	
+	return 1;
+}
