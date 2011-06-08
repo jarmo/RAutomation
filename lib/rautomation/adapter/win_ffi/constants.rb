@@ -14,7 +14,7 @@ module RAutomation
 
         SMTO_ABORTIFHUNG = 0x2
 
-        STANDARD_RIGHTS_REQUIRED = 0xF0000 
+        STANDARD_RIGHTS_REQUIRED = 0xF0000
         SYNCHRONIZE = 0x100000
         PROCESS_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE | 0xFFF
 
@@ -30,18 +30,34 @@ module RAutomation
         VK_TAB = 0x09
         VK_RETURN = 0x0D
         VK_SPACE = 0x20
+        VK_SHIFT = 0x10
+        VK_LSHIFT = 0xA0
+        VK_RSHIFT = 0xA1
+        VK_MENU = 0x12
+        VK_LMENU = 0xA4
+        VK_RMENU = 0xA5
+        VK_CONTROL = 0x11
+        VK_LCONTROL = 0xA2
+        VK_RCONTROL = 0xA3
+        VK_CAPITAL = 0x14
+        VK_ESCAPE = 0x1B
+        VK_END = 0x23
+        VK_HOME = 0x24
+        VK_NUMLOCK = 0x90
+        VK_DELETE = 0x2E
+        VK_INSERT = 0x2D
 
         # GetWindow constants
         GW_ENABLEDPOPUP = 6
 
         # HRESULT
-        S_OK                 = 0
+        S_OK = 0
 
         # IAccessible Button States
         STATE_SYSTEM_UNAVAILABLE = 0x00000001
-        STATE_SYSTEM_SELECTED	= 0x00000002
-        STATE_SYSTEM_FOCUSED  = 0x00000004
-        STATE_SYSTEM_CHECKED  = 0x00000010
+        STATE_SYSTEM_SELECTED = 0x00000002
+        STATE_SYSTEM_FOCUSED = 0x00000004
+        STATE_SYSTEM_CHECKED = 0x00000010
 
         # Combobox
         CB_GETCOUNT = 0x0146
@@ -64,8 +80,6 @@ module RAutomation
         UIA_RADIO_BUTTON_CONTROL_TYPE = 50013
         UIA_COMBOBOX_CONTROL_TYPE = 50003
         UIA_EDIT_CONTROL_TYPE = 50004
-
-
 
 
       end

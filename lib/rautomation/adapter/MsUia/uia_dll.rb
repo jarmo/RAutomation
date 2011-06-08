@@ -28,7 +28,8 @@ module RAutomation
                         [:pointer, :pointer], :int
         attach_function :get_is_selected, :RA_GetIsSelected,
                         [:pointer, :pointer], :int
-
+        attach_function :select, :RA_Select,
+                        [:pointer], :int
       end
     end
   end

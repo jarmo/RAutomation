@@ -23,6 +23,17 @@ describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
     button.should have_focus
   end
 
+   it "send keystrokes to a text field" do
+    window = RAutomation::Window.new(:title => /MainFormWindow/i)
+
+    text_field = RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "textField")
+    text_field.set_focus()
+
+
+    window.send_keystrokes("abc123ABChiHI")
+    text_field.value.should == "abc123ABChiHI"
+   end
+
   it "#control" do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
     window.control(:id => "aboutButton").should exist

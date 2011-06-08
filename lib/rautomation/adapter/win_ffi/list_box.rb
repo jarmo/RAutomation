@@ -30,20 +30,20 @@ module RAutomation
 
         def selected?(index)
           children = FFI::MemoryPointer.new :pointer, self.count
-#          puts children
+#          puts "LIST pointer: #{children}"
           length = UiaDll::find_children(uia_control(@locators[:id]), children)
           target_element = children.read_array_of_pointer(length)[index]
           is_selected = FFI::MemoryPointer.new :pointer, 1
-#          puts is_selected
+#          puts "BOOLEAN pointer: #{is_selected}"
 
 #          puts "call dll method"
           UiaDll::get_is_selected(target_element, is_selected)
 #           puts "return from method"
-#          puts is_selected.read_long
-          if(is_selected.read_long == 1)
+          puts is_selected.read_long
+          if (is_selected.read_long == 1)
             return true
           end
-          if(is_selected.read_long == 0)
+          if (is_selected.read_long == 0)
             return false
           else
             fail "Unknown return value: #{is_selected.read_long}"
@@ -51,7 +51,34 @@ module RAutomation
 
 #          is_selected
         end
+
+        def select(index)
+          children = FFI::MemoryPointer.new :pointer, self.count
+
+          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          target_element = children.read_array_of_pointer(length)[index]
+
+          UiaDll::select(target_element)
+        end
+
+        def select_by_id(index)
+          children = FFI::MemoryPointer.new :pointer, self.count
+          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          target_element = children.read_array_of_pointer(length)[index]
+
+          UiaDll::select(target_element)
+        end
+
+        def select_by_name(index)
+          children = FFI::MemoryPointer.new :pointer, self.count
+          uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
+          length = UiaDll::find_children(uia_control, children)
+          target_element = children.read_array_of_pointer(length)[index]
+
+          UiaDll::select(target_element)
+        end
       end
     end
   end
 end
+
