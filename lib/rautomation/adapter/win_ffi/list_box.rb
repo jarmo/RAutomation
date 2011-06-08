@@ -39,7 +39,7 @@ module RAutomation
 #          puts "call dll method"
           UiaDll::get_is_selected(target_element, is_selected)
 #           puts "return from method"
-          puts is_selected.read_long
+#          puts "selected?: #{is_selected.read_long}"
           if (is_selected.read_long == 1)
             return true
           end
@@ -48,8 +48,6 @@ module RAutomation
           else
             fail "Unknown return value: #{is_selected.read_long}"
           end
-
-#          is_selected
         end
 
         def select(index)

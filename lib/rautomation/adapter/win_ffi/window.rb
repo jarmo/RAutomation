@@ -126,17 +126,6 @@ module RAutomation
           end
         end
 
-#        def send_keystrokes(keys)
-#          converter = KeystrokeConverter.new
-#          converter.convertKeyCodes(keys).each do |key|
-#            Functions.set_active_window hwnd
-#            Functions.set_foreground_window hwnd
-#
-#            Functions.send_key(key, 0, 0, nil)
-#            Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
-#          end
-#        end
-
         def send_keystrokes(keys)
           converter = KeystrokeConverter.new
           converter.convertKeyCodes(keys).each do |key|
@@ -145,10 +134,10 @@ module RAutomation
 
             if (shift_needed)
               Functions.send_key(Constants::VK_SHIFT, 0, 0, nil)
-              puts "shifting"
+#              puts "shifting"
             end
 
-            puts "sending #{key}"
+#            puts "sending #{key}"
             if key.is_a?(String)
               key.upcase!
               key = key[0].ord
@@ -161,11 +150,9 @@ module RAutomation
             Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
 
             if (shift_needed)
-              puts "unshifting"
+#              puts "unshifting"
               Functions.send_key(Constants::VK_SHIFT, 0, Constants::KEYEVENTF_KEYUP, nil)
             end
-
-            sleep 1
           end
         end
 

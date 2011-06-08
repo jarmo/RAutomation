@@ -9,7 +9,7 @@ module RAutomation
           rows = []
 
           (0..row_count).each do |row|
-            puts "Asking for row #{row}"
+#            puts "Asking for row #{row}"
             rows.push Functions.retrieve_table_strings_for_row(Functions.control_hwnd(@window.hwnd, @locators), row)
           end
 
