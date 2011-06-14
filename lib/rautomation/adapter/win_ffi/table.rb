@@ -7,10 +7,25 @@ module RAutomation
 
         def strings
           rows = []
+          header_columns = []
 
-          (0..row_count).each do |row|
-#            puts "Asking for row #{row}"
-            rows.push Functions.retrieve_table_strings_for_row(Functions.control_hwnd(@window.hwnd, @locators), row)
+          raise "Not a list control" unless UiaDll::current_control_type(uia_control(@locators[:id])) == Constants::UIA_LIST_CONTROL_TYPE
+
+          children_count = count_children(uia_control(@locators[:id]))
+          children = FFI::MemoryPointer.new :pointer, children_count
+          UiaDll::find_children(uia_control(@locators[:id]), children)
+          children.read_array_of_pointer(children_count).each do |child|
+            grandchildren_count = count_children(child)
+            grandchildren = FFI::MemoryPointer.new :pointer, grandchildren_count
+            UiaDll::find_children(child, grandchildren)
+            grandchildren.read_array_of_pointer(grandchildren_count).each do |grandchild|
+              grandchild_name = FFI::MemoryPointer.new :char, UiaDll::get_name(grandchild, nil) + 1
+              UiaDll::get_name(grandchild, grandchild_name)
+              header_columns.push grandchild_name.read_string
+            end
+
+            rows.push header_columns
+            header_columns = []
           end
 
           rows
@@ -24,11 +39,15 @@ module RAutomation
           state = Functions.get_table_row_state(@window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
           state & Constants::STATE_SYSTEM_SELECTED != 0
         end
-        
-        private
 
         def row_count
-          Functions.send_message(Functions.control_hwnd(@window.hwnd, @locators), Constants::LVM_GETITEMCOUNT, 0, nil)
+          UiaDll::find_children(uia_control(@locators[:id]), nil)
+        end
+
+        private
+
+        def count_children(element)
+          UiaDll::find_children(element, nil)
         end
 
 
