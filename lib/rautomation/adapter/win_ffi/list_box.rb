@@ -50,22 +50,9 @@ module RAutomation
           UiaDll::select(target_element)
         end
 
-        def select_by_id(index)
-          children = FFI::MemoryPointer.new :pointer, self.count
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
-          target_element = children.read_array_of_pointer(length)[index]
+        alias_method :strings, :items
 
-          UiaDll::select(target_element)
-        end
 
-        def select_by_name(index)
-          children = FFI::MemoryPointer.new :pointer, self.count
-          uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
-          length = UiaDll::find_children(uia_control, children)
-          target_element = children.read_array_of_pointer(length)[index]
-
-          UiaDll::select(target_element)
-        end
       end
     end
   end
