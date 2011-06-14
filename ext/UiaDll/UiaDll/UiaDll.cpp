@@ -167,28 +167,35 @@ extern "C" __declspec ( dllexport ) int RA_GetName(IUIAutomationElement *pElemen
 	}
 }
 
-extern "C" __declspec ( dllexport ) int RA_GetIsSelected(IUIAutomationSelectionItemPattern *pElement, BOOL *pRetVal) {
-
-	HRESULT hr = pElement->get_CurrentIsSelected(pRetVal) ;
-
-	//Me trying to see if it works without relying on what I pass in
-	//BOOL *RetValTwo = (BOOL *) malloc(sizeof(BOOL) * 1);
-	//HRESULT hr = pElement->get_CurrentIsSelected(RetValTwo);
-
+extern "C" __declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement, int *pResult) {
+	ISelectionItemProvider *pSelectionPattern ;
+	HRESULT hr = pElement->GetCurrentPattern(UIA_SelectionItemPatternId, (IUnknown**)&pSelectionPattern) ;
+	
 	if (FAILED(hr)) {
-		printf("RA_GetIsSelected: get_IsSelected failed 0x%x\r\n", hr) ;
-		return 0 ;
+		printf("RA_GetIsSelected: getCurrentPattern failed 0x%x\r\n") ;
+		return FALSE ;
 	}
 
-	//*pRetVal = false;
-
-	return 1;
+	BOOL pRetVal ;
+	hr = pSelectionPattern->get_IsSelected(&pRetVal) ;
+	if (FAILED(hr)) {
+		printf("RA_GetIsSelected: get_IsSelected failed 0x%x\r\n", hr) ;
+		return FALSE ;
+	} else {
+		*pResult = pRetVal ;
+		return TRUE ;
+	}
 }
 
-extern "C" __declspec ( dllexport ) int RA_Select(IUIAutomationSelectionItemPattern *pElement) {
+extern "C" __declspec ( dllexport ) int RA_Select(IUIAutomationElement *pElement) {
+	ISelectionItemProvider *pSelectionPattern ;
+	HRESULT hr = pElement->GetCurrentPattern(UIA_SelectionItemPatternId, (IUnknown**)&pSelectionPattern) ;
+	if (FAILED(hr)) {
+		printf("RA_GetIsSelected: getCurrentPattern failed 0x%x\r\n") ;
+		return FALSE ;
+	}
 
-	HRESULT hr = pElement->Select();
-
+	hr = pSelectionPattern->Select();
 	if (FAILED(hr)) {
 		printf("RA_Select: Select failed 0x%x\r\n", hr) ;
 		return 0 ;

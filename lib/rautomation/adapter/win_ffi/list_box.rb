@@ -30,23 +30,14 @@ module RAutomation
 
         def selected?(index)
           children = FFI::MemoryPointer.new :pointer, self.count
-#          puts "LIST pointer: #{children}"
           length = UiaDll::find_children(uia_control(@locators[:id]), children)
           target_element = children.read_array_of_pointer(length)[index]
-          is_selected = FFI::MemoryPointer.new :pointer, 1
-#          puts "BOOLEAN pointer: #{is_selected}"
+          is_selected = FFI::MemoryPointer.new :int, 1
 
-#          puts "call dll method"
-          UiaDll::get_is_selected(target_element, is_selected)
-#           puts "return from method"
-#          puts "selected?: #{is_selected.read_long}"
-          if (is_selected.read_long == 1)
-            return true
-          end
-          if (is_selected.read_long == 0)
-            return false
+          if UiaDll::get_is_selected(target_element, is_selected) == 1
+            return is_selected.read_int == 1
           else
-            fail "Unknown return value: #{is_selected.read_long}"
+            return false
           end
         end
 
