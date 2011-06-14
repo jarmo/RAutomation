@@ -10,11 +10,10 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
-  #todo find out why this test doesn't work with select list controls
-#  it "check for select list class" do
-#    puts "checking for class"
-#    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "textField").should_not exist
-#  end
+  it "check for select list class" do
+    puts "checking for class"
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "textField").should_not exist
+  end
 
   it "#options" do
     select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
