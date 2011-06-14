@@ -17,7 +17,7 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
   end
 
   it "#strings" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:class => /SysListView32/i)
+    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
     table.strings.should == [
         ["Name", "Date of birth", "State"],
