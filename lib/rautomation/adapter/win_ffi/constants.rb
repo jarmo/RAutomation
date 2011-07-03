@@ -30,6 +30,11 @@ module RAutomation
         VK_TAB = 0x09
         VK_RETURN = 0x0D
         VK_SPACE = 0x20
+        VK_CAPITAL = 0x14
+        VK_LEFT = 0x25
+        VK_UP = 0x26
+        VK_RIGHT = 0x27
+        VK_DOWN = 0x28
 
         # GetWindow constants
         GW_ENABLEDPOPUP = 6

@@ -179,9 +179,9 @@ module RAutomation
 
     # Sends keyboard keys to the window. Refer to specific {Adapter} documentation for all possible values.
     # @raise [UnknownWindowException] if the window doesn't exist.
-    def send_keys(*keys)
+    def send_keys(keys)
       wait_until_present
-      @window.send_keys(*keys)
+      @window.send_keys(keys)
     end
 
     # Closes the window if it exists.

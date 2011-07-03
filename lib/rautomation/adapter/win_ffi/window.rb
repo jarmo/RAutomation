@@ -112,27 +112,18 @@ module RAutomation
 
         # Activates the window and sends keys to it.
         #
-        # Refer to MSDN documentation at http://msdn.microsoft.com/en-us/library/dd375731(v=VS.85).aspx
-        # for the keycodes.
+        # Refer to KeystrokeConverter#convert_special_characters for the special keycodes.
         # @see RAutomation::Window#send_keys
-        def send_keys(*keys)
-          keys.each do |key|
+        def send_keys(keys)
+          KeystrokeConverter.convert(keys).each do |key|
             wait_until do
               activate
               active?
             end
             Functions.send_key(key, 0, 0, nil)
+            sleep 0.01
             Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
-          end
-        end
-
-        def send_keystrokes(keys)
-          KeystrokeConverter.convert(keys).each do |key|
-            Functions.set_active_window hwnd
-            Functions.set_foreground_window hwnd
-
-            Functions.send_key(key, 0, 0, nil)
-            Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
+            sleep 0.1
           end
         end
 
