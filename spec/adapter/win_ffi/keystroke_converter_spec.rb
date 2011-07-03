@@ -13,8 +13,7 @@ describe "KeystrokeConverter" do
   it "uses caps lock for entering downcase keys" do
     codes = RAutomation::Adapter::WinFfi::KeystrokeConverter.convert("aBc")
     converted_keys = convert_keys "abc"
-    converted_keys = converted_keys.insert(1, RAutomation::Adapter::WinFfi::Constants::VK_CAPITAL)
-    converted_keys = converted_keys.insert(3, RAutomation::Adapter::WinFfi::Constants::VK_CAPITAL)
+    converted_keys = converted_keys.insert(1, RAutomation::Adapter::WinFfi::Constants::VK_LSHIFT)
     codes.should == converted_keys
   end
 

@@ -115,15 +115,25 @@ module RAutomation
         # Refer to KeystrokeConverter#convert_special_characters for the special keycodes.
         # @see RAutomation::Window#send_keys
         def send_keys(keys)
+          shift_pressed = false
           KeystrokeConverter.convert(keys).each do |key|
             wait_until do
               activate
               active?
             end
-            Functions.send_key(key, 0, 0, nil)
-            sleep 0.01
-            Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
-            sleep 0.1
+            press_key key
+
+            if key == Constants::VK_LSHIFT
+              shift_pressed = true
+              next
+            end
+
+            release_key key
+
+            if shift_pressed
+              shift_pressed = false
+              release_key Constants::VK_LSHIFT
+            end
           end
         end
 
@@ -200,6 +210,17 @@ module RAutomation
           end
         end
 
+        private
+
+        def press_key key
+          Functions.send_key(key, 0, 0, nil)
+          sleep 0.01
+        end
+
+        def release_key key
+          Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
+          sleep 0.1
+        end
       end
     end
   end

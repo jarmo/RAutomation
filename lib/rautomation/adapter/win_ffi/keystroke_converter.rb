@@ -58,7 +58,7 @@ module RAutomation
           end
 
           def in_upcase(char_code)
-            [Constants::VK_CAPITAL, char_code, Constants::VK_CAPITAL]
+            [Constants::VK_LSHIFT, char_code]
           end
         end
       end
