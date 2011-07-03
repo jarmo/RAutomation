@@ -234,7 +234,6 @@ module RAutomation
           end
 
           def control_name(control_hwnd)
-            puts "Trying to get control name for #{control_hwnd}"
             string_buffer = FFI::MemoryPointer.new :char, 255
             if (get_control_name(control_hwnd, string_buffer) == Constants::S_OK)
               string_buffer.read_string

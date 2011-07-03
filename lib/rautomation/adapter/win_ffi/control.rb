@@ -36,7 +36,6 @@ module RAutomation
         end
 
         def exist?
-#          puts "calling control exist"
           !!Functions.control_hwnd(@window.hwnd, @locators)
         end
 
