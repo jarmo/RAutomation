@@ -63,7 +63,7 @@ module SpecHelper
                   :window1_text => "This is a sample text",
                   # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
                   # "A" key
-                  :window1_send_keys => 0x41,
+                  :window1_send_keys => "A",
                   :proc_after_send_keys => lambda do
                     about_box = RAutomation::Window.new(:title => /About/i)
                     RAutomation::WaitHelper.wait_until {about_box.present?}
