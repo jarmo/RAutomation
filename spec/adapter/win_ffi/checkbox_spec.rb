@@ -9,6 +9,11 @@ describe "WinFfi::Checkbox", :if => SpecHelper.adapter == :win_ffi do
       to raise_exception(RAutomation::UnknownWindowException)
   end
 
+  it "check for checkbox class" do
+    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "textField").should_not exist
+  end
+
+
   it "#set? & #set" do
     checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
     checkbox.should_not be_set

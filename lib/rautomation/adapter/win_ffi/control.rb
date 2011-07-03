@@ -36,6 +36,7 @@ module RAutomation
         end
 
         def exist?
+#          puts "calling control exist"
           !!Functions.control_hwnd(@window.hwnd, @locators)
         end
 
@@ -55,6 +56,17 @@ module RAutomation
           assert_enabled
           uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
           UiaDll::set_focus(uia_control)
+        end
+
+        def uia_control(automation_id)
+          uia_window = UiaDll::element_from_handle(@window.hwnd) # finds IUIAutomationElement for given parent window
+          uia_element = UiaDll::find_child_by_id(uia_window, automation_id.to_s)
+          fail "Cannot find UIAutomationElement" if uia_element.nil?
+          uia_element
+        end
+
+        def matches_type(clazz)
+          UiaDll::current_control_type(uia_control(@locators[:id])) == clazz
         end
 
         alias_method :exists?, :exist?

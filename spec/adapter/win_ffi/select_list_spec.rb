@@ -10,6 +10,10 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
+  it "check for select list class" do
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "textField").should_not exist
+  end
+
   it "#options" do
     select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
     select_list.options.size.should == 5

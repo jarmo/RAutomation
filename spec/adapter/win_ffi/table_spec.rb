@@ -7,7 +7,7 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
   end
 
   it "#table" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:class => /SysListView32/i)
+    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
     table.should exist
     
     RAutomation::Window.wait_timeout = 0.1
@@ -17,7 +17,7 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
   end
 
   it "#strings" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:class => /SysListView32/i)
+    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
     table.strings.should == [
         ["Name", "Date of birth", "State"],
@@ -27,7 +27,7 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
   end
 
   it "#select" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:class => /SysListView32/i)
+    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
     table.selected?(2).should == false
 

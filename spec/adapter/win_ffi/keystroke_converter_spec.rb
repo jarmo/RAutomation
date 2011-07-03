@@ -20,6 +20,7 @@ describe "KeystrokeConverter" do
 
   it "converts special keys" do
     codes = RAutomation::Adapter::WinFfi::KeystrokeConverter.convert("{tab}a{backspace}b{enter}c {left}d{right}ee{down}f{up}g{unsupported}")
+    #codes = converter.convertKeyCodes("abc{tab}123{backspace}ABC{enter}hi{space}HI{l_alt}{r_alt}{alt}{l_ctrl}{r_ctrl}{ctrl}{caps}{esc}{end}{home}{num_lock}{del}{ins}{shift}{l_shift}{r_shift}")
     expected_codes = [
       RAutomation::Adapter::WinFfi::Constants::VK_TAB,
       convert_keys("a"),
@@ -40,7 +41,6 @@ describe "KeystrokeConverter" do
     ].flatten
     codes.should == expected_codes
   end
-
 
   def convert_keys keys
     keys.split("").map {|k| k.upcase.unpack("c")[0]}

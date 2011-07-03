@@ -8,6 +8,11 @@ describe "WinFfi::Label", :if => SpecHelper.adapter == :win_ffi do
     window.label(:value => "This label should not exist").should_not exist
   end
 
+  it "check for label class" do
+    RAutomation::Window.new(:title => "MainFormWindow").label(:id => "textField").should_not exist
+  end
+
+
   it "#label" do
     window = RAutomation::Window.new(:title => "MainFormWindow")
 

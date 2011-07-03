@@ -44,6 +44,8 @@ module RAutomation
             end
           end
 
+          private
+
           def convert_characters(element)
             element.split(//).inject([]) do |chars, char|
               char_code = char.upcase.unpack("c")[0]
@@ -58,7 +60,6 @@ module RAutomation
           def in_upcase(char_code)
             [Constants::VK_CAPITAL, char_code, Constants::VK_CAPITAL]
           end
-
         end
       end
     end

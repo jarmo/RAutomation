@@ -41,6 +41,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBoxDisabled = new System.Windows.Forms.ComboBox();
             this.fruitsLabel = new System.Windows.Forms.Label();
             this.FruitsComboBox = new System.Windows.Forms.ComboBox();
             this.nextFormButton = new System.Windows.Forms.Button();
@@ -50,7 +51,7 @@
             this.disabledButton = new System.Windows.Forms.Button();
             this.checkBoxDisabled = new System.Windows.Forms.CheckBox();
             this.textBoxDisabled = new System.Windows.Forms.TextBox();
-            this.comboBoxDisabled = new System.Windows.Forms.ComboBox();
+            this.FruitListBox = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -193,6 +194,22 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Drop down list";
             // 
+            // comboBoxDisabled
+            // 
+            this.comboBoxDisabled.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDisabled.Enabled = false;
+            this.comboBoxDisabled.FormattingEnabled = true;
+            this.comboBoxDisabled.Items.AddRange(new object[] {
+            "Apple",
+            "Caimito",
+            "Coconut",
+            "Orange",
+            "Passion Fruit"});
+            this.comboBoxDisabled.Location = new System.Drawing.Point(235, 27);
+            this.comboBoxDisabled.Name = "comboBoxDisabled";
+            this.comboBoxDisabled.Size = new System.Drawing.Size(84, 21);
+            this.comboBoxDisabled.TabIndex = 11;
+            // 
             // fruitsLabel
             // 
             this.fruitsLabel.AutoSize = true;
@@ -285,27 +302,24 @@
             this.textBoxDisabled.Size = new System.Drawing.Size(184, 20);
             this.textBoxDisabled.TabIndex = 13;
             // 
-            // comboBoxDisabled
+            // FruitListBox
             // 
-            this.comboBoxDisabled.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDisabled.Enabled = false;
-            this.comboBoxDisabled.FormattingEnabled = true;
-            this.comboBoxDisabled.Items.AddRange(new object[] {
+            this.FruitListBox.FormattingEnabled = true;
+            this.FruitListBox.Items.AddRange(new object[] {
             "Apple",
-            "Caimito",
-            "Coconut",
             "Orange",
-            "Passion Fruit"});
-            this.comboBoxDisabled.Location = new System.Drawing.Point(235, 27);
-            this.comboBoxDisabled.Name = "comboBoxDisabled";
-            this.comboBoxDisabled.Size = new System.Drawing.Size(84, 21);
-            this.comboBoxDisabled.TabIndex = 11;
+            "Mango"});
+            this.FruitListBox.Location = new System.Drawing.Point(490, 136);
+            this.FruitListBox.Name = "FruitListBox";
+            this.FruitListBox.Size = new System.Drawing.Size(159, 95);
+            this.FruitListBox.TabIndex = 14;
             // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 474);
+            this.Controls.Add(this.FruitListBox);
             this.Controls.Add(this.textBoxDisabled);
             this.Controls.Add(this.checkBoxDisabled);
             this.Controls.Add(this.disabledButton);
@@ -357,6 +371,7 @@
         private System.Windows.Forms.RadioButton radioButtonDisabled;
         private System.Windows.Forms.TextBox textBoxDisabled;
         private System.Windows.Forms.ComboBox comboBoxDisabled;
+        private System.Windows.Forms.ListBox FruitListBox;
     }
 }
 
