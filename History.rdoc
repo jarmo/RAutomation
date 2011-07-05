@@ -1,3 +1,9 @@
+=== Version 0.6.1 / 2011-07-05
+
+=== WinFFI adapter
+
+* Fixed it for Ruby 1.9.2.
+
 === Version 0.6.0 / 2011-07-03
 
 === WinFFI adapter
