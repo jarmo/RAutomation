@@ -1,3 +1,10 @@
+== Version 0.6.2 / 2011-07-07
+
+=== WinFFI adapter
+
+* loading lazily oleacc.dll
+* loading lazily uia_dll.rb due to problems on certain Windows XP machines
+
 === Version 0.6.1 / 2011-07-05
 
 === WinFFI adapter
