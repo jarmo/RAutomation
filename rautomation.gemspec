@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rautomation}
-  s.version = "0.6.1"
+  s.version = "0.6.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Jarmo Pertman}]
-  s.date = %q{2011-07-05}
+  s.date = %q{2011-07-07}
   s.description = %q{RAutomation is a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
 
