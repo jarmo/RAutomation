@@ -1,6 +1,8 @@
 module RAutomation
   module Adapter
     module WinFfi
+      autoload :UiaDll, File.dirname(__FILE__) + "/ms_uia/uia_dll"
+
       class Window
         include WaitHelper
         include Locators
