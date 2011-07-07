@@ -5,13 +5,15 @@
 * loading lazily oleacc.dll
 * loading lazily uia_dll.rb due to problems on certain Windows XP machines
 
-=== Version 0.6.1 / 2011-07-05
+
+== Version 0.6.1 / 2011-07-05
 
 === WinFFI adapter
 
 * Fixed it for Ruby 1.9.2.
 
-=== Version 0.6.0 / 2011-07-03
+
+== Version 0.6.0 / 2011-07-03
 
 === WinFFI adapter
 
@@ -25,7 +27,8 @@
 * added SelectList#option method.
 * added ListBox element support with #count, #items, #exist?, #selected? and #select methods.
 
-=== Version 0.5.1 / 2011-01-30
+
+== Version 0.5.1 / 2011-01-30
 
 === All adapters
 
@@ -40,25 +43,30 @@
 
 * allow to search windows by PID
 
-=== Version 0.4.0 / 2010-12-23
+
+== Version 0.4.0 / 2010-12-23
 
 * allow to search windows without text (like empty Notepad window for example).
 * added possibility to use block for #click to specify successful clicking condition.
 * renamed :ffi adapter to :win_ffi because FFI may be used on other platforms too.
 
-=== Version 0.3.0 / 2010-12-18
+
+== Version 0.3.0 / 2010-12-18
 
 * added Ffi adapter specific method Window#child which searches for child windows and popups
 
-=== Version 0.2.1 / 2010-12-17
+
+== Version 0.2.1 / 2010-12-17
 
 * added yard options for documentation
 
-=== Version 0.2.0 / 2010-12-17
+
+== Version 0.2.0 / 2010-12-17
 
 * added Window#pid method
 
-=== Version 0.1.0 / 2010-12-14
+
+== Version 0.1.0 / 2010-12-14
 
 * added new default adapter for Windows: FFI
 * changes for AutoIt adapter:
@@ -67,20 +75,24 @@
   - :class_name locator is not allowed anymore. Use :class and :index together instead.
   - use :value for button locator instead of :text
 
-=== Version 0.0.4 / 2010-10-27
+
+== Version 0.0.4 / 2010-10-27
 
  * most Window, Button and TextField methods wait until the object exists.
      Use RAutomation::Window.wait_timeout= to set timeout before failing. Default is 60 seconds.
 
-=== Version 0.0.3 / 2010-10-15
+
+== Version 0.0.3 / 2010-10-15
 
  * RAutomation didn't load AutoIt correctly if it wasn't installed before
 
-=== Version 0.0.2 / 2010-10-14
+
+== Version 0.0.2 / 2010-10-14
 
  * using :value locator for buttons instead of :text
  * searching only visible windows with some text on them
 
-=== Version 0.0.1 / 2010-10-13
+
+== Version 0.0.1 / 2010-10-13
 
  * Initial release
