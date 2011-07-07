@@ -9,16 +9,13 @@ module RAutomation
         has_many :controls
 
         class << self
-          def initialize_com
-            @@oleacc_module_handle = Functions.load_library "oleacc.dll"
-            Functions.co_initialize nil
+          def oleacc_module_handle
+            @oleacc_module_handle ||= begin
+                                        oleacc = Functions.load_library "oleacc.dll"
+                                        Functions.co_initialize nil                                        
+                                        oleacc
+                                      end
           end
-        end
-
-        initialize_com
-
-        def oleacc_module_handle
-          @@oleacc_module_handle
         end
 
         # Locators of the window.
