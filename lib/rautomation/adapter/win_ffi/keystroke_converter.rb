@@ -23,24 +23,28 @@ module RAutomation
 
           def convert_special_characters chars
             case chars.downcase
-            when "{tab}"
-              Constants::VK_TAB
-            when "{backspace}"
-              Constants::VK_BACK
-            when "{enter}"
-              Constants::VK_RETURN
-            when "{left}"
-              Constants::VK_LEFT
-            when "{right}"
-              Constants::VK_RIGHT
-            when "{down}"
-              Constants::VK_DOWN
-            when "{up}"
-              Constants::VK_UP
-            else
-              # unsupported special tag, ignore the tag itself, but convert the
-              # characters inside the tag
-              convert_characters(chars.gsub(/[{}]/, ""))
+              when "{tab}"
+                Constants::VK_TAB
+              when "{backspace}"
+                Constants::VK_BACK
+              when "{enter}"
+                Constants::VK_RETURN
+              when "{left}"
+                Constants::VK_LEFT
+              when "{right}"
+                Constants::VK_RIGHT
+              when "{down}"
+                Constants::VK_DOWN
+              when "{up}"
+                Constants::VK_UP
+              when "{home}"
+                Constants::VK_HOME
+              when "{end}"
+                Constants::VK_END
+              else
+                # unsupported special tag, ignore the tag itself, but convert the
+                # characters inside the tag
+                convert_characters(chars.gsub(/[{}]/, ""))
             end
           end
 
