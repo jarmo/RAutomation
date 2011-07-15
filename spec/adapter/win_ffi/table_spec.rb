@@ -17,6 +17,12 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
   end
 
   it "#strings" do
+    table = RAutomation::Window.new(:title => "MainFormWindow").table(:id => "FruitListBox")
+
+    table.strings.should == ["Apple", "Orange", "Mango"]
+  end
+
+  it "#strings with nested elements" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
     table.strings.should == [
