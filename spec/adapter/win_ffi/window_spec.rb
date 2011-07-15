@@ -31,7 +31,7 @@ describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
     text_field.value.should == "abc123ABChiHI"
   end
 
-  it "sending keystrokes does not consume string" do
+  it "sending keystrokes does not change argument string" do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
 
     text_field = RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "textField")

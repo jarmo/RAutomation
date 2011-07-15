@@ -41,6 +41,8 @@ module RAutomation
                 Constants::VK_HOME
               when "{end}"
                 Constants::VK_END
+              when "{delete}"
+                Constants::VK_DELETE
               else
                 # unsupported special tag, ignore the tag itself, but convert the
                 # characters inside the tag

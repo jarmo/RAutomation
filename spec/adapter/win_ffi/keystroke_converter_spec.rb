@@ -18,7 +18,7 @@ describe "KeystrokeConverter" do
   end
 
   it "converts special keys" do
-    codes = RAutomation::Adapter::WinFfi::KeystrokeConverter.convert("{tab}a{backspace}b{enter}c {left}d{right}ee{down}f{up}g{unsupported}{home}{end}")
+    codes = RAutomation::Adapter::WinFfi::KeystrokeConverter.convert("{tab}a{backspace}b{enter}c {left}d{right}ee{down}f{up}g{unsupported}{home}{end}{delete}")
     expected_codes = [
         RAutomation::Adapter::WinFfi::Constants::VK_TAB,
         convert_keys("a"),
@@ -37,7 +37,9 @@ describe "KeystrokeConverter" do
         convert_keys("g"),
         convert_keys("unsupported"),
         RAutomation::Adapter::WinFfi::Constants::VK_HOME,
-        RAutomation::Adapter::WinFfi::Constants::VK_END
+        RAutomation::Adapter::WinFfi::Constants::VK_END,
+        RAutomation::Adapter::WinFfi::Constants::VK_DELETE
+
 
     ].flatten
     codes.should == expected_codes

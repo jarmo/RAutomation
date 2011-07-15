@@ -209,7 +209,7 @@ module RAutomation
           end
         end
 
-        private
+#        private
 
         def press_key key
           Functions.send_key(key, 0, 0, nil)
