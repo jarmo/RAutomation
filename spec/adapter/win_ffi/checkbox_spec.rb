@@ -5,8 +5,8 @@ describe "WinFfi::Checkbox", :if => SpecHelper.adapter == :win_ffi do
     RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should exist
 
     RAutomation::Window.wait_timeout = 0.1
-    expect {RAutomation::Window.new(:title => "non-existing-window").checkbox(:value => "Something")}.
-      to raise_exception(RAutomation::UnknownWindowException)
+    expect { RAutomation::Window.new(:title => "non-existing-window").checkbox(:value => "Something") }.
+        to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "check for checkbox class" do
@@ -20,6 +20,11 @@ describe "WinFfi::Checkbox", :if => SpecHelper.adapter == :win_ffi do
 
     checkbox.set
     checkbox.should be_set
+  end
+
+  it "#value" do
+    checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBox")
+    checkbox.value.should == "checkBox"
   end
 
   it "#clear" do
