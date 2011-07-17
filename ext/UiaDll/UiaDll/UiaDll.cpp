@@ -231,10 +231,19 @@ extern "C" __declspec ( dllexport ) int RA_Set_Value(IUIAutomationElement *pElem
 	hr = pValuePattern->SetValue(unicodestr);
     ::SysFreeString(unicodestr);
 
+	
+
 	if (FAILED(hr)) {
 		printf("RA_SetValue: SetValue failed 0x%x\r\n", hr) ;
 		return 0 ;
 	}
+
+	//It'd be great if this worked
+	/*hr = UiaRaiseAutomationEvent((IRawElementProviderSimple*) pElement, UIA_Selection_InvalidatedEventId);
+	if (FAILED(hr)) {
+		printf("RA_SetValue: UiaRaiseAutomationEvent failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}*/
 
 	return 1;
 }
