@@ -203,3 +203,39 @@ extern "C" __declspec ( dllexport ) int RA_Select(IUIAutomationElement *pElement
 
 	return 1;
 }
+
+extern "C" __declspec ( dllexport ) int RA_Set_Value(IUIAutomationElement *pElement, char *pValue) {
+	IValueProvider *pValuePattern ;
+	HRESULT hr = pElement->GetCurrentPattern(UIA_ValuePatternId, (IUnknown**)&pValuePattern) ;
+	
+	if (FAILED(hr)) {
+		printf("RA_Set_Value: getCurrentPattern failed 0x%x\r\n") ;
+		return 0 ;
+	}
+
+	BSTR unicodestr;
+	
+	int lenA = lstrlenA(pValue);
+    int lenW = ::MultiByteToWideChar(CP_ACP, 0, pValue, lenA, 0, 0);
+
+    if (lenW > 0)
+    {
+      unicodestr = ::SysAllocStringLen(0, lenW);
+      ::MultiByteToWideChar(CP_ACP, 0, pValue, lenA, unicodestr, lenW);
+    }
+    else
+    {
+       printf("RA_Set_Value: conversion to unicode string failed\r\n");
+    }
+
+	hr = pValuePattern->SetValue(unicodestr);
+    ::SysFreeString(unicodestr);
+
+	if (FAILED(hr)) {
+		printf("RA_SetValue: SetValue failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+
+	return 1;
+}
+

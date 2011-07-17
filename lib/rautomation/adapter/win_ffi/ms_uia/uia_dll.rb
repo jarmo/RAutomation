@@ -30,6 +30,8 @@ module RAutomation
                         [:pointer, :pointer], :int
         attach_function :select, :RA_Select,
                         [:pointer], :int
+        attach_function :set_value, :RA_Set_Value,
+                        [:pointer, :pointer], :int
       end
     end
   end
