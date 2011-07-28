@@ -148,6 +148,14 @@ module RAutomation
           @@autoit.Send(keys)
         end
 
+        def move_mouse(x_coord, y_coord)
+          @@autoit.MouseMove(x_coord,y_coord)
+        end
+
+        def click_mouse(button = "left")
+          @@autoit.MouseClick(button)
+        end
+
         # @see RAutomation::Window#close
         def close
           @@autoit.WinClose(locator_hwnd)
