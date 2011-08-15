@@ -50,6 +50,23 @@ __declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
 	}
 }
 
+extern "C"
+__declspec ( dllexport ) IUIAutomationElement *RA_ElementFromPoint(int xCoord, int yCoord) {
+	IUIAutomationElement *pElement ;
+	POINT point;
+
+	point.x = xCoord;
+	point.y = yCoord;
+
+	HRESULT hr = getGlobalIUIAutomation()->ElementFromPoint(point, &pElement) ;
+	if (SUCCEEDED(hr))
+		return pElement ;
+	else {
+		printf("RA_ElementFromPoint: Cannot find element from point %d , %d. HRESULT was 0x%x\r\n", xCoord, yCoord, hr) ;
+		return NULL ;
+	}
+}
+
 extern "C" __declspec ( dllexport ) IUIAutomationElement *RA_FindChildById(IUIAutomationElement *pElement, char *automationId) {
 	IUIAutomationCondition *pCondition ;
 	VARIANT varProperty ;
