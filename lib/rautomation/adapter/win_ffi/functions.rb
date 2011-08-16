@@ -128,20 +128,6 @@ module RAutomation
             locators
           end
 
-          def child_window_locators(parent_hwnd, locators)
-            child_hwnd = locators[:hwnd] || child_hwnd(parent_hwnd, locators)
-            if child_hwnd
-              locators.merge!(:hwnd => child_hwnd)
-            else
-              popup_hwnd = get_window(parent_hwnd, Constants::GW_ENABLEDPOPUP)
-              if popup_hwnd != parent_hwnd
-                popup_properties = window_properties(popup_hwnd, locators)
-                locators.merge!(:hwnd => popup_hwnd) if locators_match?(locators, popup_properties)
-              end
-            end
-            locators
-          end
-
           def window_pid(hwnd)
             pid = FFI::MemoryPointer.new :int
             window_thread_process_id(hwnd, pid)

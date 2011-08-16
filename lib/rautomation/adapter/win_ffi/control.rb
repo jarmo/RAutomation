@@ -64,7 +64,7 @@ module RAutomation
           uia_element
         end
 
-        def matches_type(clazz)
+        def matches_type?(clazz)
           UiaDll::current_control_type(uia_control(@locators[:id])) == clazz
         end
 
