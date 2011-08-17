@@ -30,9 +30,9 @@ module RAutomation
         # @private
         # Special-cased locators
         LOCATORS = {
-          [:title, Regexp] => :regexptitle,
-          :index => :instance,
-          :hwnd => :handle
+            [:title, Regexp] => :regexptitle,
+            :index => :instance,
+            :hwnd => :handle
         }
 
         # Creates the window object.
@@ -57,22 +57,22 @@ module RAutomation
         # @see RAutomation::Window#hwnd
         def hwnd
           @hwnd ||= begin
-                      locators = @autoit_locators
-                      if @locator_index || @locator_pid
-                        # @todo Come up with some better solution for this case
-                        locators = "[regexptitle:]" # match all, needed for the case when only :index or :pid is used
-                      end
-                      windows = @@autoit.WinList(locators, @locator_text).pop.compact.
-                        map {|handle| self.class.new(:hwnd => handle.hex)}
-                      windows.delete_if {|window| !window.visible?}
-                      
-                      if @locator_pid
-                        window = windows.find {|win| win.pid == @locator_pid} 
-                      else
-                        window = windows[@locator_index || 0]
-                      end
-                      window ? window.hwnd : nil
-                    end
+            locators = @autoit_locators
+            if @locator_index || @locator_pid
+              # @todo Come up with some better solution for this case
+              locators = "[regexptitle:]" # match all, needed for the case when only :index or :pid is used
+            end
+            windows = @@autoit.WinList(locators, @locator_text).pop.compact.
+                map { |handle| self.class.new(:hwnd => handle.hex) }
+            windows.delete_if { |window| !window.visible? }
+
+            if @locator_pid
+              window = windows.find { |win| win.pid == @locator_pid }
+            else
+              window = windows[@locator_index || 0]
+            end
+            window ? window.hwnd : nil
+          end
         end
 
         # @see RAutomation::Window#pid
@@ -148,12 +148,42 @@ module RAutomation
           @@autoit.Send(keys)
         end
 
+        #In case you want to call an autoit method that currently lacks a friendly Ruby wrapper
+        def autoit_method(method, *arguments)
+          method_call = "@@autoit.send(\"#{method}\","
+
+          arguments.each do |argument|
+            if argument.is_a? String
+              method_call << "\"#{argument}\","
+            else
+              method_call << "#{argument},"
+            end
+          end
+
+          method_call.slice!(method_call.length - 1)
+          method_call << ")"
+
+          eval method_call
+        end
+
         def move_mouse(x_coord, y_coord)
           @@autoit.MouseMove(x_coord,y_coord)
         end
 
+        def mouse_position
+          [@@autoit.MouseGetPosX, @@autoit.MouseGetPosY]
+        end
+
         def click_mouse(button = "left")
           @@autoit.MouseClick(button)
+        end
+
+        def press_mouse(button = "left")
+          @@autoit.MouseDown(button)
+        end
+
+        def release_mouse(button = "left")
+          @@autoit.MouseUp(button)
         end
 
         # @see RAutomation::Window#close
