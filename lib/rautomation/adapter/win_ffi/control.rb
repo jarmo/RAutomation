@@ -27,9 +27,9 @@ module RAutomation
 
             @window.activate
             @window.active? &&
-              Functions.set_control_focus(hwnd) &&
-              Functions.control_click(hwnd) &&
-              clicked = true # is clicked at least once
+                Functions.set_control_focus(hwnd) &&
+                Functions.control_click(hwnd) &&
+                clicked = true # is clicked at least once
 
             block_given? ? yield : clicked && !exist?
           end
@@ -62,6 +62,15 @@ module RAutomation
           uia_element = UiaDll::find_child_by_id(uia_window, automation_id.to_s)
           fail "Cannot find UIAutomationElement" if uia_element.nil?
           uia_element
+        end
+
+        def bounding_rectangle
+          element = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
+
+          boundary = FFI::MemoryPointer.new :long, 4
+          UiaDll::bounding_rectangle(element, boundary)
+
+          boundary.read_array_of_long(4)
         end
 
         def matches_type?(clazz)

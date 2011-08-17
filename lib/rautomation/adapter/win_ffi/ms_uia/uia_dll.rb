@@ -24,6 +24,8 @@ module RAutomation
                         [:pointer], :bool
         attach_function :current_control_type, :RA_GetCurrentControlType,
                         [:pointer], :int
+        attach_function :bounding_rectangle, :RA_CurrentBoundingRectangle,
+                        [:pointer, :pointer], :int
         attach_function :find_children, :RA_FindChildren,
                         [:pointer, :pointer], :int
         attach_function :get_name, :RA_GetName,

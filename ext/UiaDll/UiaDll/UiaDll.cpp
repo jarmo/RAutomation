@@ -127,6 +127,25 @@ extern "C" __declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationEl
 	}
 }
 
+extern "C" __declspec ( dllexport ) int RA_CurrentBoundingRectangle(IUIAutomationElement *pElement, long *rectangle) {
+	RECT boundary;
+
+	HRESULT hr = pElement->get_CurrentBoundingRectangle(&boundary) ;
+	if (SUCCEEDED(hr)) {
+	
+		rectangle[0] = boundary.left;
+		rectangle[1] = boundary.top;
+		rectangle[2] = boundary.right;
+		rectangle[3] = boundary.bottom;
+
+		return 1;
+	}
+	else {
+		printf("RA_CurrentBoundingRectangle: get_CurrentBoundingRectangle failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+}
+
 extern "C" __declspec ( dllexport ) int RA_FindChildren(IUIAutomationElement *pElement, IUIAutomationElement *pChildren[]) {
 	IUIAutomationCondition *pTrueCondition ;
 	IUIAutomationElementArray *pElementArray ;
