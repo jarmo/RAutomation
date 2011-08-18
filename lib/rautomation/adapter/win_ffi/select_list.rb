@@ -74,7 +74,7 @@ module RAutomation
         end
 
         def exist?
-          @locators[:id].nil? ? super : super && matches_type?(Constants::UIA_COMBOBOX_CONTROL_TYPE)
+          super && matches_type?(Constants::UIA_COMBOBOX_CONTROL_TYPE)
         end
 
         alias_method :exists?, :exist?
