@@ -74,7 +74,12 @@ module RAutomation
         end
 
         def matches_type?(clazz)
-          UiaDll::current_control_type(uia_control(@locators[:id])) == clazz
+          get_current_control_type == clazz
+        end
+
+        def get_current_control_type
+          uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
+          UiaDll::current_control_type(uia_control)
         end
 
         alias_method :exists?, :exist?
