@@ -4,6 +4,7 @@ describe "WinFfi::TextField", :if => SpecHelper.adapter == :win_ffi do
 
   it "check for text field class" do
     RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "checkBox").should_not exist
+    RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "textField").should exist
   end
 
   it "enabled/disabled" do

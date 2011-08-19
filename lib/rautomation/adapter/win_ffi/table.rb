@@ -54,6 +54,12 @@ module RAutomation
           UiaDll::find_children(uia_control(@locators[:id]), nil)
         end
 
+        def exist?
+          super && matches_type?(Constants::UIA_LIST_CONTROL_TYPE)
+        end
+
+        alias_method :exists?, :exist?
+
         private
 
         def count_children(element)

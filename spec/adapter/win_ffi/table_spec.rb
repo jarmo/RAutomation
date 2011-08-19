@@ -16,6 +16,11 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
+  it "check for table class" do
+    RAutomation::Window.new(:title => "DataEntryForm").table(:id => "deleteItemButton").should_not exist
+    RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView").should exist
+  end
+
   it "#strings" do
     table = RAutomation::Window.new(:title => "MainFormWindow").table(:id => "FruitListBox")
 

@@ -11,6 +11,7 @@ describe "WinFfi::Checkbox", :if => SpecHelper.adapter == :win_ffi do
 
   it "check for checkbox class" do
     RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "textField").should_not exist
+    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBox").should exist
   end
 
 

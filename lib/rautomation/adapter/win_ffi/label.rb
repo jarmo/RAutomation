@@ -10,7 +10,7 @@ module RAutomation
         end
 
         def exist?
-          super && matches_type?(Constants::UIA_LABEL_CONTROL_TYPE)
+          super && matches_type?(Constants::UIA_TEXT_CONTROL_TYPE)
         end
 
         alias_method :exists?, :exist?

@@ -12,6 +12,7 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
 
   it "check for select list class" do
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "textField").should_not exist
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox").should exist
   end
 
   it "#options" do

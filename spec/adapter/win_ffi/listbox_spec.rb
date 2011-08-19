@@ -8,6 +8,7 @@ describe "WinFfi::ListBox", :if => SpecHelper.adapter == :win_ffi do
 
   it "check for listbox class" do
     RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "textField").should_not exist
+    RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox").should exist
   end
 
   it "counts items" do

@@ -39,7 +39,7 @@ module RAutomation
 
         def exist?
           begin
-            hwnd
+            !!hwnd
           rescue UnknownElementException
             false
           end
