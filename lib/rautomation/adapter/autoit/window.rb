@@ -148,24 +148,6 @@ module RAutomation
           @@autoit.Send(keys)
         end
 
-        #In case you want to call an autoit method that currently lacks a friendly Ruby wrapper
-        def autoit_method(method, *arguments)
-          method_call = "@@autoit.send(\"#{method}\","
-
-          arguments.each do |argument|
-            if argument.is_a? String
-              method_call << "\"#{argument}\","
-            else
-              method_call << "#{argument},"
-            end
-          end
-
-          method_call.slice!(method_call.length - 1)
-          method_call << ")"
-
-          eval method_call
-        end
-
         def move_mouse(x_coord, y_coord)
           @@autoit.MouseMove(x_coord,y_coord)
         end
