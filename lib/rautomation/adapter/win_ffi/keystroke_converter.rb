@@ -55,10 +55,39 @@ module RAutomation
           def convert_characters(element)
             element.split(//).inject([]) do |chars, char|
               char_code = char.upcase.unpack("c")[0]
-              if char =~ /[A-Z]/
-                chars += in_upcase(char_code)
-              else
-                chars << char_code
+              case char
+                when "!"
+                  chars += in_upcase(49)
+                when "@"
+                  chars += in_upcase(50)
+                when "\#"
+                  chars += in_upcase(51)
+                when "$"
+                  chars += in_upcase(52)
+                when "%"
+                  chars += in_upcase(53)
+                when "^"
+                  chars += in_upcase(54)
+                when "&"
+                  chars += in_upcase(55)
+                when "*"
+                  chars += in_upcase(56)
+                when "("
+                  chars += in_upcase(57)
+                when ")"
+                  chars += in_upcase(48)
+                when "\""
+                  chars += in_upcase(0xDE)
+                when "'"
+                  chars << 0xDE
+                when "/"
+                  chars << 0xBF
+                else
+                  if char =~ /[A-Z]/
+                    chars += in_upcase(char_code)
+                  else
+                    chars << char_code
+                  end
               end
             end
           end

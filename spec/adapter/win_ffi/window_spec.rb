@@ -27,8 +27,8 @@ describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
     text_field = RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "textField")
     text_field.set_focus
-    window.send_keys("abc123ABChiHI")
-    text_field.value.should == "abc123ABChiHI"
+    window.send_keys("abc123ABChiHI!\#@$%^&*()\"/")
+    text_field.value.should == "abc123ABChiHI!\#@$%^&*()\"/"
   end
 
   it "sending keystrokes does not change argument string" do
