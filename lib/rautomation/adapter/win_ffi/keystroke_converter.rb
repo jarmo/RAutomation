@@ -82,6 +82,20 @@ module RAutomation
                   chars << 0xDE
                 when "/"
                   chars << 0xBF
+                when "-"
+                  chars << 0xBD
+                when ","
+                  chars << 0xBC
+                when "'"
+                  chars << 0xDE
+                when "&"
+                  chars += in_upcase(0x37)
+                when "_"
+                  chars += in_upcase(0xBD)
+                when "<"
+                  chars += in_upcase(0xBC)
+                when ">"
+                  chars += in_upcase(0xBE)
                 else
                   if char =~ /[A-Z]/
                     chars += in_upcase(char_code)
