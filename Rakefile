@@ -41,16 +41,20 @@ namespace :spec do
 
   task :spec => :check_dependencies
 
-  desc "Run all specs against all adapters"
-  task :all do
-    adapters = %w[win_ffi autoit].each do |adapter|
+  adapters = %w[win_ffi autoit]
+  adapters.each do |adapter|
+    desc "Run specs against #{adapter} adapter"
+    task adapter do
       ENV["RAUTOMATION_ADAPTER"] = adapter
       puts "Running specs for adapter: #{adapter}"
       task = Rake::Task["spec:spec"]
       task.reenable
-      task.invoke
+      task.invoke      
     end
   end
+
+  desc "Run specs against all adapters"
+  task :all => adapters.map {|a| "spec:#{a}"}
 end
 
 require 'yard'
