@@ -1,3 +1,8 @@
+== Version 0.6.3 / 2011-07-16
+
+  * use current window's handle (hwnd) in WinFfi::Window#child method
+
+
 == Version 0.6.2 / 2011-07-07
 
 === WinFFI adapter
