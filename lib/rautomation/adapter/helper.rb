@@ -2,6 +2,7 @@ module RAutomation
   module Adapter
     autoload :Autoit, File.dirname(__FILE__) + "/autoit.rb"
     autoload :WinFfi, File.dirname(__FILE__) + "/win_ffi.rb"
+    autoload :MS_Uia, File.dirname(__FILE__) + "/ms_uia.rb"
 
     module Helper
       extend self
