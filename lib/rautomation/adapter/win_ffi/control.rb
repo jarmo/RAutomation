@@ -39,7 +39,11 @@ module RAutomation
 
         def exist?
           begin
-            !!hwnd
+            if @locators[:point]
+              !!UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+            else
+              !!hwnd
+            end
           rescue UnknownElementException
             false
           end
@@ -79,13 +83,48 @@ module RAutomation
           boundary.read_array_of_long(4)
         end
 
+        def visible?
+          element = UiaDll::element_from_handle(hwnd)
+
+          off_screen = FFI::MemoryPointer.new :int
+
+          if UiaDll::is_offscreen(element, off_screen) == 0
+            fail "Could not check element"
+          end
+
+          puts "return #{off_screen.read_int}"
+          if off_screen.read_int == 0
+            return true
+          end
+          false
+        end
+
         def matches_type?(clazz)
           get_current_control_type == clazz
         end
 
         def get_current_control_type
-          uia_control = UiaDll::element_from_handle(hwnd)
+          if @locators[:point]
+            uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+          else
+            uia_control = UiaDll::element_from_handle(hwnd)
+          end
+
           UiaDll::current_control_type(uia_control)
+        end
+
+        #I'm experimental! :)
+        def new_control_type_method
+          uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+          UiaDll::current_control_type(uia_control)
+        end
+
+        def control_name
+          uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+          element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(uia_control, nil) + 1
+
+          UiaDll::get_name(uia_control, element_name)
+          element_name.read_string
         end
 
         alias_method :exists?, :exist?

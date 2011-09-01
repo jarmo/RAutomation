@@ -11,7 +11,9 @@ module RAutomation
       # Retrieves default {Adapter} for the current platform.
       def default_adapter
         if ENV['OS'] == 'Windows_NT'
-          :win_ffi
+#          :win_ffi
+#          :autoit
+          :ms_uia
         else
           raise "unsupported platform for RAutomation: #{RUBY_PLATFORM}"
         end

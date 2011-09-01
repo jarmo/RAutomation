@@ -30,6 +30,32 @@ __declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationI
 }
 
 extern "C"
+__declspec( dllexport ) IUIAutomationElement *RA_FindWindowByPID(int processId) {
+	IUIAutomationElement *pRootElement ;
+
+	HRESULT hr = getGlobalIUIAutomation()->GetRootElement(&pRootElement) ;
+	if (SUCCEEDED(hr)) {
+		IUIAutomationCondition *pCondition ;
+		VARIANT varProperty ;
+
+		VariantInit(&varProperty) ;
+		varProperty.vt = VT_I4 ;
+		varProperty.bstrVal = _bstr_t(processId) ;
+
+		hr = getGlobalIUIAutomation()->CreatePropertyCondition(UIA_ProcessIdPropertyId, varProperty, &pCondition) ;
+		if (SUCCEEDED(hr)) {
+			IUIAutomationElement *pFound ;
+
+			hr = pRootElement->FindFirst(TreeScope_Children, pCondition, &pFound) ;
+			if (SUCCEEDED(hr)) {
+				return pFound ;
+			}
+		}
+	}
+	return NULL ;
+}
+
+extern "C"
 __declspec( dllexport ) BOOL RA_IsOffscreen(IUIAutomationElement *pElement) {
 	BOOL isOffscreen ;
 	pElement->get_CurrentIsOffscreen(&isOffscreen) ;
@@ -47,6 +73,19 @@ __declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
 	else {
 		printf("RA_ElementFromHandle: Cannot find element from handle 0x%x. HRESULT was 0x%x\r\n", hwnd, hr) ;
 		return NULL ;
+	}
+}
+
+extern "C"
+__declspec ( dllexport ) BOOL RA_GetFocusedElement(IUIAutomationElement **element) {
+	
+	HRESULT hr = getGlobalIUIAutomation()->GetFocusedElement(element);
+	
+	if (SUCCEEDED(hr))
+		return true ;
+	else {
+		printf("RA_GetFocusedElement: Cannot find element from focus. HRESULT was 0x%x\r\n", hr) ;
+		return false ;
 	}
 }
 
@@ -107,6 +146,20 @@ extern "C" __declspec ( dllexport ) HWND RA_CurrentNativeWindowHandle(IUIAutomat
 	return (HWND)uia_hwnd ;
 }
 
+extern "C" __declspec ( dllexport ) int RA_GetCurrentProcessId(IUIAutomationElement *pElement) {
+	HRESULT hr;
+	int process_id;
+
+	pElement->get_CurrentProcessId(&process_id);
+
+    if (SUCCEEDED(hr))
+		return process_id;
+	else {
+		printf("RA_GetCurrentProcessId: get_CurrentProcessId returned 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+}
+
 extern "C" __declspec ( dllexport ) BOOL RA_SetFocus(IUIAutomationElement *pElement) {
 	HRESULT hr = pElement->SetFocus() ;
 	if (hr != S_OK)
@@ -142,6 +195,26 @@ extern "C" __declspec ( dllexport ) int RA_CurrentBoundingRectangle(IUIAutomatio
 	}
 	else {
 		printf("RA_CurrentBoundingRectangle: get_CurrentBoundingRectangle failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+}
+
+extern "C" __declspec ( dllexport ) int RA_CurrentIsOffscreen(IUIAutomationElement *pElement, int *visible) {
+	BOOL offscreen;
+
+	HRESULT hr = pElement->get_CurrentIsOffscreen(&offscreen) ;
+	if (SUCCEEDED(hr)) {
+		if(offscreen){
+		  *visible = 1;
+		}
+		else
+		{
+		  *visible = 0;
+		}
+		return 1;
+	}
+	else {
+		printf("RA_CurrentIsOffscreen: get_CurrentIsOffscreen failed 0x%x\r\n", hr) ;
 		return 0 ;
 	}
 }

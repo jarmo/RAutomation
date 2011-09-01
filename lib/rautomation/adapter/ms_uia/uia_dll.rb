@@ -1,15 +1,18 @@
 module RAutomation
   module Adapter
-    module MS_Uia
+    module MsUia
       # @private
       module UiaDll
         extend FFI::Library
 
-        ffi_lib File.dirname(__FILE__) + '/../../../../../ext/UiaDll/Release/UiaDll.dll'
+        puts "dll.rb: #{File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'}"
+        ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
         ffi_convention :stdcall
 
         attach_function :find_window, :RA_FindWindow,
                         [:string], :pointer
+        attach_function :find_window_by_pid, :RA_FindWindowByPID,
+                        [:int], :pointer
         attach_function :is_offscreen, :RA_IsOffscreen,
                         [:pointer], :bool
         attach_function :element_from_handle, :RA_ElementFromHandle,
@@ -25,6 +28,8 @@ module RAutomation
         attach_function :set_focus, :RA_SetFocus,
                         [:pointer], :bool
         attach_function :current_control_type, :RA_GetCurrentControlType,
+                        [:pointer], :int
+        attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
         attach_function :bounding_rectangle, :RA_CurrentBoundingRectangle,
                         [:pointer, :pointer], :int

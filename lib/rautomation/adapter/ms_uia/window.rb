@@ -1,30 +1,30 @@
 module RAutomation
   module Adapter
-    module MS_Uia
+    module MsUia
+      puts "DLL: location #{File.dirname(__FILE__) + "/uia_dll"}"
       autoload :UiaDll, File.dirname(__FILE__) + "/uia_dll"
 
       class Window
         include WaitHelper
         include Locators
-        extend ElementCollections
+#        extend ElementCollections
+#        has_many :controls
 
-        has_many :controls
-
-        class << self
-          def oleacc_module_handle
-            @oleacc_module_handle ||= begin
-                                        oleacc = Functions.load_library "oleacc.dll"
-                                        Functions.co_initialize nil                                        
-                                        oleacc
-                                      end
-          end
-        end
+#        class << self
+#          def oleacc_module_handle
+#            @oleacc_module_handle ||= begin
+#                                        oleacc = Functions.load_library "oleacc.dll"
+#                                        Functions.co_initialize nil
+#                                        oleacc
+#                                      end
+#          end
+#        end
 
         # Locators of the window.
         attr_reader :locators
 
         # Possible locators are :title, :text, :hwnd, :pid, :class and :index.
-
+        #todo - update list of valid locators for UIA
         # Creates the window object.
         # @note this method is not meant to be accessed directly, but only through {RAutomation::Window#initialize}!
         # @param [Hash] locators for searching the window.
@@ -40,22 +40,59 @@ module RAutomation
           extract(locators)
         end
 
+
+        def element
+          puts "finding element with #{@locators.inspect}"
+          case
+            when @locators[:id]
+              puts "finding element by id #{@locators[:id].to_s}"
+              uia_element = UiaDll::find_window(@locators[:id].to_s)
+              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_element == nil
+              puts "element found:#{uia_element.inspect}"
+              uia_element
+            when @locators[:pid]
+              puts "finding element by pid #{@locators[:pid].to_i}"
+              uia_element = UiaDll::find_window_by_pid(@locators[:pid].to_i)
+              puts uia_element
+              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_element == nil
+              puts "element found:#{uia_element.inspect}"
+              uia_element
+#              when locators[:point]
+#                uia_control = UiaDll::element_from_point(locators[:point][0], locators[:point][1])
+#                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+#                raise UnknownElementException, "#{locators[:point]} does not exist" if hwnd == 0
+#                uia_element
+#              else
+#                hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
+#                  locators_match?(locators, control_properties(hwnd, locators))
+#                end
+#
+#                raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
+            else
+              puts "no element found"
+          end
+          puts "returning element"
+          uia_element = 5
+        end
+
         # Retrieves handle of the window.
         # @note Searches only for visible windows.
         # @see RAutomation::Window#hwnd
-        def hwnd
-          @hwnd ||= Functions.window_hwnd(@locators)
-        end
+#        def hwnd
+#          @hwnd ||= Functions.window_hwnd(@locators)
+#        end
 
         # @see RAutomation::Window#pid
         def pid
-          Functions.window_pid(hwnd)
+          puts "finding pid"
+          UiaDll::current_process_id(element)
+          puts "pid found"
         end
 
         # @see RAutomation::Window#title
-        def title
-          Functions.window_title(hwnd)
-        end
+#        def title
+#          Functions.window_title(hwnd)
+#        end
 
         def bounding_rectangle
           window = UiaDll::element_from_handle(hwnd)
@@ -67,219 +104,212 @@ module RAutomation
         end
 
         # @see RAutomation::Window#activate
-        def activate
-          return if !exists? || active?
-          restore if minimized?
-          Functions.activate_window(hwnd)
-          sleep 1
-        end
+#        def activate
+#          return if !exists? || active?
+#          restore if minimized?
+#          Functions.activate_window(hwnd)
+#          sleep 1
+#        end
 
         # @see RAutomation::Window#active?
-        def active?
-          exists? && Functions.foreground_window == hwnd
-        end
+#        def active?
+#          exists? && Functions.foreground_window == hwnd
+#        end
 
         # @see RAutomation::Window#text
-        def text
-          Functions.window_text(hwnd)
-        end
+#        def text
+#          Functions.window_text(hwnd)
+#        end
 
         # @see RAutomation::Window#exists?
         def exists?
-          result = hwnd && Functions.window_exists(hwnd)
-          !!result
+          !!pid
         end
 
         # @see RAutomation::Window#visible?
-        def visible?
-          Functions.window_visible(hwnd)
-        end
+#        def visible?
+#          Functions.window_visible(hwnd)
+#        end
 
         # @see RAutomation::Window#maximize
-        def maximize
-          Functions.show_window(hwnd, Constants::SW_MAXIMIZE)
-          sleep 1
-        end
+#        def maximize
+#          Functions.show_window(hwnd, Constants::SW_MAXIMIZE)
+#          sleep 1
+#        end
 
         # @see RAutomation::Window#minimize
-        def minimize
-          Functions.show_window(hwnd, Constants::SW_MINIMIZE)
-          sleep 1
-        end
+#        def minimize
+#          Functions.show_window(hwnd, Constants::SW_MINIMIZE)
+#          sleep 1
+#        end
 
         # @see RAutomation::Window#minimized?
-        def minimized?
-          Functions.minimized(hwnd)
-        end
+#        def minimized?
+#          Functions.minimized(hwnd)
+#        end
 
         # @see RAutomation::Window#restore
-        def restore
-          Functions.show_window(hwnd, Constants::SW_RESTORE)
-          sleep 1
-        end
+#        def restore
+#          Functions.show_window(hwnd, Constants::SW_RESTORE)
+#          sleep 1
+#        end
 
         # Activates the window and sends keys to it.
         #
         # Refer to KeystrokeConverter#convert_special_characters for the special keycodes.
         # @see RAutomation::Window#send_keys
-        def send_keys(keys)
-          shift_pressed = false
-          KeystrokeConverter.convert(keys).each do |key|
-            wait_until do
-              activate
-              active?
-            end
-            press_key key
-
-            if key == Constants::VK_LSHIFT
-              shift_pressed = true
-              next
-            end
-
-            release_key key
-
-            if shift_pressed
-              shift_pressed = false
-              release_key Constants::VK_LSHIFT
-            end
-          end
-        end
-
-
+#        def send_keys(keys)
+#          shift_pressed = false
+#          KeystrokeConverter.convert(keys).each do |key|
+#            wait_until do
+#              activate
+#              active?
+#            end
+#            press_key key
+#
+#            if key == Constants::VK_LSHIFT
+#              shift_pressed = true
+#              next
+#            end
+#
+#            release_key key
+#
+#            if shift_pressed
+#              shift_pressed = false
+#              release_key Constants::VK_LSHIFT
+#            end
+#          end
+#        end
 
 
-
-
-def get_focused_element
-          element_pointer = FFI::MemoryPointer.new :pointer
-
-          if UiaDll::get_focused_element(element_pointer)
-            element = element_pointer.read_pointer
-            puts "element found"
-            puts "type:"
-            element_type = UiaDll::current_control_type(element)
-            puts element_type
-
-            element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(element, nil) + 1
-
-            puts UiaDll::get_name(element, element_name)
-            puts "name:"
-            puts element_name.read_string
-
-
-            case element_type
-              when Constants::UIA_BUTTON_CONTROL_TYPE
-                button(Hash.new)
-              when Constants::UIA_CHECKBOX_CONTROL_TYPE
-                checkbox(nil)
-              when Constants::UIA_RADIO_BUTTON_CONTROL_TYPE
-                radio(nil)
-              when Constants::UIA_COMBOBOX_CONTROL_TYPE
-                select_list(nil)
-              when Constants::UIA_EDIT_CONTROL_TYPE
-                text_field(nil)
-              when Constants::UIA_TEXT_CONTROL_TYPE
-                label(nil)
+#def get_focused_element
+#          element_pointer = FFI::MemoryPointer.new :pointer
+#
+#          if UiaDll::get_focused_element(element_pointer)
+#            element = element_pointer.read_pointer
+#            puts "element found"
+#            puts "type:"
+#            element_type = UiaDll::current_control_type(element)
+#            puts element_type
+#
+#            element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(element, nil) + 1
+#
+#            puts UiaDll::get_name(element, element_name)
+#            puts "name:"
+#            puts element_name.read_string
+#
+#
+#            case element_type
+#              when Constants::UIA_BUTTON_CONTROL_TYPE
+#                button(Hash.new)
+#              when Constants::UIA_CHECKBOX_CONTROL_TYPE
+#                checkbox(nil)
+#              when Constants::UIA_RADIO_BUTTON_CONTROL_TYPE
+#                radio(nil)
+#              when Constants::UIA_COMBOBOX_CONTROL_TYPE
+#                select_list(nil)
+#              when Constants::UIA_EDIT_CONTROL_TYPE
+#                text_field(nil)
+#              when Constants::UIA_TEXT_CONTROL_TYPE
+#                label(nil)
 #                when UIA_WINDOW_CONTROL_TYPE
-              #New window code here
-              when Constants::UIA_LIST_CONTROL_TYPE
-                table(nil)
-              else
-                control(nil)
-            end
-
-          else
-            puts "no element found"
-            nil
-          end
-        end
-
-
-
+        #New window code here
+#              when Constants::UIA_LIST_CONTROL_TYPE
+#                table(nil)
+#              else
+#                control(nil)
+#            end
+#
+#          else
+#            puts "no element found"
+#            nil
+#          end
+#        end
+#
 
 
         # @see RAutomation::Window#close
-        def close
-          Functions.close_window(hwnd)
-        end
+#        def close
+#          Functions.close_window(hwnd)
+#        end
 
         # @see Button#initialize
         # @see RAutomation::Window#button
-        def button(locator)
-          Button.new(self, locator)
-        end
+#        def button(locator)
+#          Button.new(self, locator)
+#        end
 
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
-        def text_field(locator)
-          TextField.new(self, locator)
-        end
+#        def text_field(locator)
+#          TextField.new(self, locator)
+#        end
 
-        def label(locator)
-          Label.new(self, locator)
-        end
+#        def label(locator)
+#          Label.new(self, locator)
+#        end
 
-        def control(locator)
-          Control.new(self, locator)
-        end
+#        def control(locator)
+#          Control.new(self, locator)
+#        end
 
-        def controls(locator)
-          Controls.new(self, locator)
-        end
+#        def controls(locator)
+#          Controls.new(self, locator)
+#        end
 
-        def list_box(locator)
-          ListBox.new(self, locator)
-        end
+#        def list_box(locator)
+#          ListBox.new(self, locator)
+#        end
 
         # Redirects all method calls not part of the public API to the {Functions} directly.
         # @see RAutomation::Window#method_missing
-        def method_missing(name, *args)
-          Functions.respond_to?(name) ? Functions.send(name, *args) : super
-        end
+#        def method_missing(name, *args)
+#          Functions.respond_to?(name) ? Functions.send(name, *args) : super
+#        end
 
         # extend public API
-        RAutomation::Window.class_eval do
-          def select_list(locator)
-            wait_until_exists
-            RAutomation::Adapter::WinFfi::SelectList.new(@window, locator)
-          end
+#        RAutomation::Window.class_eval do
+#          def select_list(locator)
+#            wait_until_exists
+#            RAutomation::Adapter::WinFfi::SelectList.new(@window, locator)
+#          end
+#
+#          def checkbox(locator)
+#            wait_until_exists
+#            RAutomation::Adapter::WinFfi::Checkbox.new(@window, locator)
+#          end
+#
+#          def radio(locator)
+#            wait_until_exists
+#            RAutomation::Adapter::WinFfi::Radio.new(@window, locator)
+#          end
+#
+#          def table(locator)
+#            wait_until_exists
+#            RAutomation::Adapter::WinFfi::Table.new(@window, locator)
+#          end
+#
+        # Creates the child window object.
+        # @note This is an WinFfi adapter specific method, not part of the public API
+        # @example
+        #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
+        #     child(:title => /some popup/)
+        # @param (see Window#initialize)
+        # @return [RAutomation::Window] child window, popup or regular window.
+#          def child(locators)
+#            RAutomation::Window.new Functions.child_window_locators(@window.hwnd, locators)
+#          end
+#        end
 
-          def checkbox(locator)
-            wait_until_exists
-            RAutomation::Adapter::WinFfi::Checkbox.new(@window, locator)
-          end
+        private
 
-          def radio(locator)
-            wait_until_exists
-            RAutomation::Adapter::WinFfi::Radio.new(@window, locator)
-          end
-
-          def table(locator)
-            wait_until_exists
-            RAutomation::Adapter::WinFfi::Table.new(@window, locator)
-          end
-
-          # Creates the child window object.
-          # @note This is an WinFfi adapter specific method, not part of the public API
-          # @example
-          #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
-          #     child(:title => /some popup/)
-          # @param (see Window#initialize)
-          # @return [RAutomation::Window] child window, popup or regular window.
-          def child(locators)
-            RAutomation::Window.new Functions.child_window_locators(@window.hwnd, locators)
-          end
-        end
-
-#        private
-
-        def press_key key
-          Functions.send_key(key, 0, 0, nil)
-        end
-
-        def release_key key
-          Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
-        end
+#        def press_key key
+#          Functions.send_key(key, 0, 0, nil)
+#        end
+#
+#        def release_key key
+#          Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
+#        end
       end
     end
   end

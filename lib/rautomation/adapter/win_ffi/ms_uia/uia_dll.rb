@@ -16,6 +16,8 @@ module RAutomation
                         [:long], :pointer
         attach_function :element_from_point, :RA_ElementFromPoint,
                         [:int, :int], :pointer
+        attach_function :get_focused_element, :RA_GetFocusedElement,
+                        [:pointer], :bool
         attach_function :find_child_by_id, :RA_FindChildById,
                         [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
@@ -25,6 +27,8 @@ module RAutomation
         attach_function :current_control_type, :RA_GetCurrentControlType,
                         [:pointer], :int
         attach_function :bounding_rectangle, :RA_CurrentBoundingRectangle,
+                        [:pointer, :pointer], :int
+        attach_function :is_offscreen, :RA_CurrentIsOffscreen,
                         [:pointer, :pointer], :int
         attach_function :find_children, :RA_FindChildren,
                         [:pointer, :pointer], :int

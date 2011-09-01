@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module MS_Uia
+    module MsUia
       # @private
       module Locators
 

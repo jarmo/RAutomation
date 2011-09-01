@@ -1,13 +1,13 @@
 module RAutomation
   module Adapter
-    module MS_Uia
+    module MsUia
       class Button < Control
         include WaitHelper
         include Locators
 
         # Default locators used for searching buttons.
         DEFAULT_LOCATORS = {:class => /button/i}
-
+=begin
         # @see RAutomation::Button#value
         def value
           Functions.control_value(Functions.control_hwnd(@window.hwnd, @locators))
@@ -18,7 +18,7 @@ module RAutomation
         end
 
         alias_method :exists?, :exist?
-
+=end
       end
     end
   end

@@ -1,13 +1,13 @@
 module RAutomation
   module Adapter
-    module MS_Uia
+    module MsUia
       class TextField < Control
         include WaitHelper
         include Locators
 
         # Default locators used for searching text fields.
         DEFAULT_LOCATORS = {:class => /edit/i}
-
+=begin
         # @see RAutomation::TextField#set
         def set(text)
           raise "Cannot set value on a disabled text field" if disabled?
@@ -44,7 +44,7 @@ module RAutomation
 
         alias_method :exists?, :exist?
 
-
+=end
 
       end
     end

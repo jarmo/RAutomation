@@ -1,10 +1,10 @@
 module RAutomation
   module Adapter
-    module MS_Uia
+    module MsUia
       class Control
         include WaitHelper
         include Locators
-
+=begin
         # Creates the control object.
         # @note this method is not meant to be accessed directly
         # @param [RAutomation::Window] window this button belongs to.
@@ -132,6 +132,8 @@ module RAutomation
         def assert_enabled
           raise "Cannot interact with disabled control #{@locators.inspect} on window #{@window.locators.inspect}!" if disabled?
         end
+
+=end
       end
     end
   end
