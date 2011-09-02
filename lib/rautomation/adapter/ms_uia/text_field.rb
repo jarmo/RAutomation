@@ -7,7 +7,8 @@ module RAutomation
 
         # Default locators used for searching text fields.
         DEFAULT_LOCATORS = {:class => /edit/i}
-=begin
+
+        #todo - replace with UIA version
         # @see RAutomation::TextField#set
         def set(text)
           raise "Cannot set value on a disabled text field" if disabled?
@@ -28,11 +29,13 @@ module RAutomation
           set ""
         end
 
+        #todo - replace with UIA version
         # @see RAutomation::TextField#value
         def value
           Functions.control_value(hwnd)
         end
 
+        #todo - replace with UIA version
         # @see RAutomation::TextField#hwnd
         def hwnd
           Functions.control_hwnd(@window.hwnd, @locators)
@@ -43,8 +46,6 @@ module RAutomation
         end
 
         alias_method :exists?, :exist?
-
-=end
 
       end
     end

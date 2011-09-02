@@ -30,29 +30,28 @@ __declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationI
 }
 
 extern "C"
-__declspec( dllexport ) IUIAutomationElement *RA_FindWindowByPID(int processId) {
-	IUIAutomationElement *pRootElement ;
+__declspec( dllexport ) int RA_FindWindowByPID(int processId, IUIAutomationElement *pElement) {
+	IUIAutomationElement *pRootElement;
 
-	HRESULT hr = getGlobalIUIAutomation()->GetRootElement(&pRootElement) ;
+	HRESULT hr = getGlobalIUIAutomation()->GetRootElement(&pRootElement);
 	if (SUCCEEDED(hr)) {
-		IUIAutomationCondition *pCondition ;
-		VARIANT varProperty ;
+		IUIAutomationCondition *pCondition;
+		VARIANT varProperty;
 
-		VariantInit(&varProperty) ;
-		varProperty.vt = VT_I4 ;
-		varProperty.bstrVal = _bstr_t(processId) ;
+		VariantInit(&varProperty);
+		varProperty.vt = VT_I4;
+		varProperty.intVal = (processId);
 
-		hr = getGlobalIUIAutomation()->CreatePropertyCondition(UIA_ProcessIdPropertyId, varProperty, &pCondition) ;
+		hr = getGlobalIUIAutomation()->CreatePropertyCondition(UIA_ProcessIdPropertyId, varProperty, &pCondition);
 		if (SUCCEEDED(hr)) {
-			IUIAutomationElement *pFound ;
 
-			hr = pRootElement->FindFirst(TreeScope_Children, pCondition, &pFound) ;
+			hr = pRootElement->FindFirst(TreeScope_Children, pCondition, &pElement);
 			if (SUCCEEDED(hr)) {
-				return pFound ;
+				return 1;
 			}
 		}
 	}
-	return NULL ;
+	return 0;
 }
 
 extern "C"
@@ -147,15 +146,23 @@ extern "C" __declspec ( dllexport ) HWND RA_CurrentNativeWindowHandle(IUIAutomat
 }
 
 extern "C" __declspec ( dllexport ) int RA_GetCurrentProcessId(IUIAutomationElement *pElement) {
+	
+	printf("I made it into RA_GetCurrentProcessId");
+
 	HRESULT hr;
 	int process_id;
 
-	pElement->get_CurrentProcessId(&process_id);
+	
 
-    if (SUCCEEDED(hr))
+	hr = pElement->get_CurrentProcessId(&process_id);
+
+    if  (SUCCEEDED(hr)){
+		printf("I made it out of RA_GetCurrentProcessId");
 		return process_id;
+	}
 	else {
 		printf("RA_GetCurrentProcessId: get_CurrentProcessId returned 0x%x\r\n", hr) ;
+		printf("I made it out of RA_GetCurrentProcessId");
 		return 0 ;
 	}
 }

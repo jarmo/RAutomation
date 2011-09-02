@@ -4,7 +4,7 @@ module RAutomation
       class Control
         include WaitHelper
         include Locators
-=begin
+
         # Creates the control object.
         # @note this method is not meant to be accessed directly
         # @param [RAutomation::Window] window this button belongs to.
@@ -19,10 +19,12 @@ module RAutomation
           extract(locators)
         end
 
+        #todo - replace with UIA version
         def hwnd
           Functions.control_hwnd(@window.hwnd, @locators)
         end
 
+        #todo - replace with UIA version
         def click
           assert_enabled
           clicked = false
@@ -37,6 +39,7 @@ module RAutomation
           end
         end
 
+        #todo - make existence be based on having a process id
         def exist?
           begin
             if @locators[:point]
@@ -53,10 +56,12 @@ module RAutomation
           !disabled?
         end
 
+        #todo - replace with UIA version
         def disabled?
           Functions.unavailable?(hwnd)
         end
 
+        #todo - replace with UIA version
         def has_focus?
           Functions.has_focus?(hwnd)
         end
@@ -92,7 +97,7 @@ module RAutomation
             fail "Could not check element"
           end
 
-          puts "return #{off_screen.read_int}"
+#          puts "return #{off_screen.read_int}"
           if off_screen.read_int == 0
             return true
           end
@@ -132,8 +137,6 @@ module RAutomation
         def assert_enabled
           raise "Cannot interact with disabled control #{@locators.inspect} on window #{@window.locators.inspect}!" if disabled?
         end
-
-=end
       end
     end
   end

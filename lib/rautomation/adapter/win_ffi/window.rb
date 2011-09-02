@@ -62,7 +62,6 @@ module RAutomation
 
           boundary = FFI::MemoryPointer.new :long, 4
           UiaDll::bounding_rectangle(window, boundary)
-
           boundary.read_array_of_long(4)
         end
 

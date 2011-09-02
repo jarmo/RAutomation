@@ -1,7 +1,8 @@
+#todo - some files are common between WinFfi and MsUia adapter, consider pulling out to shared location
+
 module RAutomation
   module Adapter
     module MsUia
-      # @private
       module Locators
 
         private

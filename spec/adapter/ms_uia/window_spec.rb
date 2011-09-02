@@ -7,7 +7,7 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
 
     window.maximize
-    window.get_bounding_rectangle.should == [-4, -4, 1444, 874]
+    window.bounding_rectangle.should == [-4, -4, 1444, 874]
   end
 
 =begin
