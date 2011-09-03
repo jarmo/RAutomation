@@ -28,16 +28,34 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.rcov = true
+task :default => "spec:all"
+
+namespace :spec do
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+
+  RSpec::Core::RakeTask.new(:rcov) do |spec|
+    spec.rcov = true
+  end
+
+  task :spec => :check_dependencies
+
+  adapters = %w[win_ffi autoit]
+  adapters.each do |adapter|
+    desc "Run specs against #{adapter} adapter"
+    task adapter do
+      ENV["RAUTOMATION_ADAPTER"] = adapter
+      puts "Running specs for adapter: #{adapter}"
+      task = Rake::Task["spec:spec"]
+      task.reenable
+      task.invoke      
+    end
+  end
+
+  desc "Run specs against all adapters"
+  task :all => adapters.map {|a| "spec:#{a}"}
 end
-
-task :spec => :check_dependencies
-
-task :default => :spec
 
 require 'yard'
 YARD::Rake::YardocTask.new

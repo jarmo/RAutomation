@@ -56,7 +56,7 @@ Check out the documentation for other possible usages!
 2. create script and run it
 
 Available adapters:
-* :ffi - uses Windows API directly with FFI (default)
+* :win_ffi - uses Windows API directly with FFI (default)
 * :autoit - uses AutoIt for automation
 
 When using AutoIt adapter:
