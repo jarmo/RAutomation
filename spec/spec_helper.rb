@@ -50,7 +50,7 @@ module SpecHelper
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.WinGetTitle("[TITLE:MainFormWindow]")}
           },
-          :win_ffi => {
+          :win_32 => {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
                   :window1 => "ext\\WindowsForms\\bin\\WindowsForms.exe",

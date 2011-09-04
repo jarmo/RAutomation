@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       # @private
       module Constants
         WM_GETTEXT = 0xD
@@ -80,13 +80,13 @@ module RAutomation
         UIA_LIST_ITEM_CONTROL_TYPE = 50007
         UIA_CHECKBOX_CONTROL_TYPE = 50002
         UIA_BUTTON_CONTROL_TYPE = 50000
-        UIA_LABEL_CONTROL_TYPE = 50020
+        UIA_TEXT_CONTROL_TYPE = 50020
         UIA_RADIO_BUTTON_CONTROL_TYPE = 50013
         UIA_COMBOBOX_CONTROL_TYPE = 50003
         UIA_EDIT_CONTROL_TYPE = 50004
         UIA_HEADER_CONTROL_TYPE = 50034
-        UIA_HEADER_ITEM_CONTROL_TYPE	=	50035
-
+        UIA_HEADER_ITEM_CONTROL_TYPE = 50035
+        UIA_WINDOW_CONTROL_TYPE = 50032
 
       end
     end
