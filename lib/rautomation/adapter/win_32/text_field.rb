@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       class TextField < Control
         include WaitHelper
         include Locators

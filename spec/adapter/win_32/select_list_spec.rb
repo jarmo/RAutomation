@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::SelectList", :if => SpecHelper.adapter == :win_32 do
   it "#select_list" do
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox").should exist
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::Checkbox", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::Checkbox", :if => SpecHelper.adapter == :win_32 do
   it "#checkbox" do
     RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should exist
 

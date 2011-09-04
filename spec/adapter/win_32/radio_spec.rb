@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::RadioButton", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::RadioButton", :if => SpecHelper.adapter == :win_32 do
   it "#exist?" do
     RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should exist
 

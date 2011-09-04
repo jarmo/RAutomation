@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       autoload :UiaDll, File.dirname(__FILE__) + "/ms_uia/uia_dll"
 
       class Window
@@ -188,26 +188,26 @@ module RAutomation
         RAutomation::Window.class_eval do
           def select_list(locator)
             wait_until_exists
-            RAutomation::Adapter::WinFfi::SelectList.new(@window, locator)
+            RAutomation::Adapter::Win32::SelectList.new(@window, locator)
           end
 
           def checkbox(locator)
             wait_until_exists
-            RAutomation::Adapter::WinFfi::Checkbox.new(@window, locator)
+            RAutomation::Adapter::Win32::Checkbox.new(@window, locator)
           end
 
           def radio(locator)
             wait_until_exists
-            RAutomation::Adapter::WinFfi::Radio.new(@window, locator)
+            RAutomation::Adapter::Win32::Radio.new(@window, locator)
           end
 
           def table(locator)
             wait_until_exists
-            RAutomation::Adapter::WinFfi::Table.new(@window, locator)
+            RAutomation::Adapter::Win32::Table.new(@window, locator)
           end
 
           # Creates the child window object.
-          # @note This is an WinFfi adapter specific method, not part of the public API
+          # @note This is an Win32 adapter specific method, not part of the public API
           # @example
           #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
           #     child(:title => /some popup/)
