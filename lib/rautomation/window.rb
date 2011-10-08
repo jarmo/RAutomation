@@ -15,9 +15,10 @@ module RAutomation
     has_many :windows, :buttons, :text_fields
 
     class << self
+      # @param locators (see #initialize)
       # @return [Windows] all windows. 
-      def windows
-        Windows.new(nil, {})
+      def windows(locators = {})
+        Windows.new(nil, locators)
       end
     end
     
