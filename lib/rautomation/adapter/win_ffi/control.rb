@@ -23,8 +23,6 @@ module RAutomation
           assert_enabled
           clicked = false
           wait_until do
-            hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-
             @window.activate
             @window.active? &&
               Functions.set_control_focus(hwnd) &&
@@ -35,8 +33,12 @@ module RAutomation
           end
         end
 
+        def hwnd
+          Functions.control_hwnd(@window.hwnd, @locators)
+        end
+
         def exist?
-          !!Functions.control_hwnd(@window.hwnd, @locators)
+          !!hwnd
         end
 
         def enabled?
@@ -44,17 +46,17 @@ module RAutomation
         end
 
         def disabled?
-          Functions.unavailable?(Functions.control_hwnd(@window.hwnd, @locators))
+          Functions.unavailable? hwnd
         end
 
         def has_focus?
-          Functions.has_focus?(Functions.control_hwnd(@window.hwnd, @locators))
+          Functions.has_focus? hwnd
         end
 
         def set_focus
           assert_enabled
-          uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
-          UiaDll::set_focus(uia_control)
+          uia_control = UiaDll::element_from_handle hwnd
+          UiaDll::set_focus uia_control
         end
 
         def uia_control(automation_id)

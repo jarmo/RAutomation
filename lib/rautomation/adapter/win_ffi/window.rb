@@ -57,6 +57,15 @@ module RAutomation
           Functions.window_title(hwnd)
         end
 
+        # @see RAutomation::Window#class_names
+        def class_names
+          classes = []
+          controls.each do |control|
+            classes << Functions.control_class(control.hwnd)
+          end
+          classes.sort
+        end
+
         # @see RAutomation::Window#activate
         def activate
           return if !exists? || active?
@@ -159,10 +168,6 @@ module RAutomation
 
         def control(locator)
           Control.new(self, locator)
-        end
-
-        def controls(locator)
-          Controls.new(self, locator)
         end
 
         def list_box(locator)

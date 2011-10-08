@@ -30,6 +30,10 @@ module RAutomation
           extract(locators)
         end
 
+        def hwnd
+          Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @autoit_locators).hex
+        end
+
         # @see RAutomation::TextField#set
         def set(text)
           wait_until do
@@ -53,7 +57,7 @@ module RAutomation
 
         # @see RAutomation::TextField#exists?
         def exists?
-          not Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @autoit_locators).empty?
+          hwnd != 0
         end
       end
     end

@@ -85,6 +85,11 @@ module RAutomation
           @@autoit.WinGetTitle(locator_hwnd)
         end
 
+        # @see RAutomation::Window#class_names
+        def class_names
+          @@autoit.WinGetClassList(locator_hwnd).split("\n").sort
+        end
+
         # @see RAutomation::Window#activate
         def activate
           @@autoit.WinWait(locator_hwnd, "", 1)

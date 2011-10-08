@@ -38,7 +38,7 @@ module RAutomation
 
         class_eval %Q{
             def #{element}(locators = {})
-              #{class_name_plural}.new(@window, locators)
+              #{adapter_class}::#{class_name_plural}.new(@window || self, locators)
             end
         }
       end

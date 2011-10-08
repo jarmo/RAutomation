@@ -21,7 +21,7 @@ module RAutomation
         Windows.new(nil, locators)
       end
     end
-    
+
     # Retrieves all windows with similar locators to the current window.
     # @param locators (see #initialize) 
     # @return [Windows] all windows matching current window's _locators_ if no
@@ -104,6 +104,13 @@ module RAutomation
     def title
       wait_until_present
       @window.title
+    end
+
+    # @return [Array<String>] all {Window} class names in a sorted array.
+    # @raise [UnknownWindowException] if the window doesn't exist.
+    def class_names
+      wait_until_present
+      @window.class_names
     end
 
     # Activates the Window, e.g. brings it to the top of other windows.
