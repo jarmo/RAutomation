@@ -51,6 +51,15 @@ describe RAutomation::Windows do
     should have_all_windows(expected_windows, windows)
   end
 
+  it "Window.windows doesn't allow :hwnd or :pid as it's locators" do
+  RAutomation::Window.wait_timeout = 0.1
+  expect { RAutomation::Window.windows(:hwnd => 123) }.
+      to raise_exception(RAutomation::ElementCollections::UnsupportedLocatorException)
+
+  expect { RAutomation::Window.windows(:pid => 123) }.
+      to raise_exception(RAutomation::ElementCollections::UnsupportedLocatorException)
+  end
+
   after :each do
     Process.kill(9, @pid2) rescue nil    
   end
