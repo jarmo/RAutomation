@@ -12,6 +12,7 @@ describe "WinFfi::RadioButton", :if => SpecHelper.adapter == :win_ffi do
 
   it "check for radio class" do
     RAutomation::Window.new(:title => "MainFormWindow").radio(:id => "textField").should_not exist
+    RAutomation::Window.new(:title => "MainFormWindow").radio(:id => "radioButton2").should exist
   end
 
 

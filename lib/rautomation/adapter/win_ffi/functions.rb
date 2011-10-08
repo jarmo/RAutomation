@@ -128,20 +128,6 @@ module RAutomation
             locators
           end
 
-          def child_window_locators(parent_hwnd, locators)
-            child_hwnd = locators[:hwnd] || child_hwnd(parent_hwnd, locators)
-            if child_hwnd
-              locators.merge!(:hwnd => child_hwnd)
-            else
-              popup_hwnd = get_window(parent_hwnd, Constants::GW_ENABLEDPOPUP)
-              if popup_hwnd != parent_hwnd
-                popup_properties = window_properties(popup_hwnd, locators)
-                locators.merge!(:hwnd => popup_hwnd) if locators_match?(locators, popup_properties)
-              end
-            end
-            locators
-          end
-
           def window_pid(hwnd)
             pid = FFI::MemoryPointer.new :int
             window_thread_process_id(hwnd, pid)
@@ -180,16 +166,25 @@ module RAutomation
           end
 
           def control_hwnd(window_hwnd, locators)
-            if locators[:id].nil?
-              find_hwnd(locators, window_hwnd) do |hwnd|
-                locators_match?(locators, control_properties(hwnd, locators))
-              end
-            else
-              uia_window = UiaDll::element_from_handle(window_hwnd) # finds IUIAutomationElement for given parent window
-              uia_control = UiaDll::find_child_by_id(uia_window, locators[:id].to_s)
-              hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
-              raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
-              hwnd
+            case
+              when locators[:id]
+                uia_window = UiaDll::element_from_handle(window_hwnd) # finds IUIAutomationElement for given parent window
+                uia_control = UiaDll::find_child_by_id(uia_window, locators[:id].to_s)
+                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+                raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
+                hwnd
+              when locators[:point]
+                uia_control = UiaDll::element_from_point(locators[:point][0], locators[:point][1])
+                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+                raise UnknownElementException, "#{locators[:point]} does not exist" if hwnd == 0
+                hwnd
+              else
+                hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
+                  locators_match?(locators, control_properties(hwnd, locators))
+                end
+
+                raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
+                hwnd
             end
           end
 
@@ -243,7 +238,7 @@ module RAutomation
           end
 
           def retrieve_table_strings_for_row(control_hwnd, row)
-            hModule = load_library("oleacc.dll")   # TODO should be done only one time
+            hModule = load_library("oleacc.dll") # TODO should be done only one time
 
             strings_ptr = FFI::MemoryPointer.new :pointer
             columns_ptr = FFI::MemoryPointer.new :pointer

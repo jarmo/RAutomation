@@ -57,6 +57,15 @@ module RAutomation
           Functions.window_title(hwnd)
         end
 
+        def bounding_rectangle
+          window = UiaDll::element_from_handle(hwnd)
+
+          boundary = FFI::MemoryPointer.new :long, 4
+          UiaDll::bounding_rectangle(window, boundary)
+
+          boundary.read_array_of_long(4)
+        end
+
         # @see RAutomation::Window#activate
         def activate
           return if !exists? || active?
@@ -209,16 +218,14 @@ module RAutomation
           end
         end
 
-        private
+#        private
 
         def press_key key
           Functions.send_key(key, 0, 0, nil)
-          sleep 0.01
         end
 
         def release_key key
           Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
-          sleep 0.1
         end
       end
     end

@@ -19,24 +19,30 @@ module RAutomation
           extract(locators)
         end
 
+        def hwnd
+          Functions.control_hwnd(@window.hwnd, @locators)
+        end
+
         def click
           assert_enabled
           clicked = false
           wait_until do
-            hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-
             @window.activate
             @window.active? &&
-              Functions.set_control_focus(hwnd) &&
-              Functions.control_click(hwnd) &&
-              clicked = true # is clicked at least once
+                Functions.set_control_focus(hwnd) &&
+                Functions.control_click(hwnd) &&
+                clicked = true # is clicked at least once
 
             block_given? ? yield : clicked && !exist?
           end
         end
 
         def exist?
-          !!Functions.control_hwnd(@window.hwnd, @locators)
+          begin
+            !!hwnd
+          rescue UnknownElementException
+            false
+          end
         end
 
         def enabled?
@@ -44,16 +50,16 @@ module RAutomation
         end
 
         def disabled?
-          Functions.unavailable?(Functions.control_hwnd(@window.hwnd, @locators))
+          Functions.unavailable?(hwnd)
         end
 
         def has_focus?
-          Functions.has_focus?(Functions.control_hwnd(@window.hwnd, @locators))
+          Functions.has_focus?(hwnd)
         end
 
         def set_focus
           assert_enabled
-          uia_control = UiaDll::element_from_handle(Functions.control_hwnd(@window.hwnd, @locators))
+          uia_control = UiaDll::element_from_handle(hwnd)
           UiaDll::set_focus(uia_control)
         end
 
@@ -64,8 +70,22 @@ module RAutomation
           uia_element
         end
 
-        def matches_type(clazz)
-          UiaDll::current_control_type(uia_control(@locators[:id])) == clazz
+        def bounding_rectangle
+          element = UiaDll::element_from_handle(hwnd)
+
+          boundary = FFI::MemoryPointer.new :long, 4
+          UiaDll::bounding_rectangle(element, boundary)
+
+          boundary.read_array_of_long(4)
+        end
+
+        def matches_type?(clazz)
+          get_current_control_type == clazz
+        end
+
+        def get_current_control_type
+          uia_control = UiaDll::element_from_handle(hwnd)
+          UiaDll::current_control_type(uia_control)
         end
 
         alias_method :exists?, :exist?

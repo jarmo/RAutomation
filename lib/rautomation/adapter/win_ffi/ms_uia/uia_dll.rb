@@ -14,6 +14,8 @@ module RAutomation
                         [:pointer], :bool
         attach_function :element_from_handle, :RA_ElementFromHandle,
                         [:long], :pointer
+        attach_function :element_from_point, :RA_ElementFromPoint,
+                        [:int, :int], :pointer
         attach_function :find_child_by_id, :RA_FindChildById,
                         [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
@@ -22,6 +24,8 @@ module RAutomation
                         [:pointer], :bool
         attach_function :current_control_type, :RA_GetCurrentControlType,
                         [:pointer], :int
+        attach_function :bounding_rectangle, :RA_CurrentBoundingRectangle,
+                        [:pointer, :pointer], :int
         attach_function :find_children, :RA_FindChildren,
                         [:pointer, :pointer], :int
         attach_function :get_name, :RA_GetName,
@@ -30,6 +34,8 @@ module RAutomation
                         [:pointer, :pointer], :int
         attach_function :select, :RA_Select,
                         [:pointer], :int
+        attach_function :set_value, :RA_Set_Value,
+                        [:pointer, :pointer], :int
       end
     end
   end

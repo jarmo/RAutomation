@@ -12,6 +12,7 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
 
   it "check for select list class" do
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "textField").should_not exist
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox").should exist
   end
 
   it "#options" do
@@ -26,6 +27,13 @@ describe "WinFfi::SelectList", :if => SpecHelper.adapter == :win_ffi do
     select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
     select_list.options(:text => "Apple")[0].should_not be_selected
     select_list.options(:text => "Apple")[0].select.should be_true
+    select_list.options(:text => "Apple")[0].should be_selected
+  end
+
+  it "#set" do
+    select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
+    select_list.options(:text => "Apple")[0].should_not be_selected
+    select_list.set("Apple")
     select_list.options(:text => "Apple")[0].should be_selected
   end
 
