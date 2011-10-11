@@ -43,45 +43,38 @@ module RAutomation
 
 
         def element
-#          puts "finding element with #{@locators.inspect}"
-
-          element_pointer = FFI::MemoryPointer.new :pointer
+          puts "finding element with #{@locators.inspect}"
 
           case
+            when @locators[:focus]
+              puts "finding element by focus"
+              uia_control = UiaDll::get_focused_element
+              uia_control
             when @locators[:id]
-#              puts "finding element by id #{@locators[:id].to_s}"
-              element_pointer = UiaDll::find_window(@locators[:id].to_s)
+              puts "finding element by id #{@locators[:id].to_s}"
+              uia_control = UiaDll::find_window(@locators[:id].to_s)
               raise UnknownElementException, "#{@locators[:id]} does not exist" if element_pointer == nil
-#              puts "element found:#{element_pointer.inspect}"
-              element_pointer
-            when @locators[:pid]
+              uia_control
+#            when @locators[:pid]
 #              puts "finding element by pid #{@locators[:pid].to_i}"
-              success = UiaDll::find_window_by_pid(@locators[:pid].to_i, element_pointer)
+#              success = UiaDll::find_window_by_pid(@locators[:pid].to_i, element_pointer)
 #              puts element_pointer
 #              puts element_pointer.read_pointer
-              raise UnknownElementException, "#{@locators[:id]} does not exist" if success == 0
+#              raise UnknownElementException, "#{@locators[:id]} does not exist" if success == 0
 #              puts "element found:#{element_pointer.inspect}"
-              element_pointer
-#              when locators[:point]
-#                uia_control = UiaDll::element_from_point(locators[:point][0], locators[:point][1])
-#                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
-#                raise UnknownElementException, "#{locators[:point]} does not exist" if hwnd == 0
-#                uia_element
-#              else
-#                hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
-#                  locators_match?(locators, control_properties(hwnd, locators))
-#                end
-#
-#                raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
+#              element_pointer
+            when @locators[:point]
+              uia_control = UiaDll::element_from_point(locators[:point][0], locators[:point][1])
+              raise UnknownElementException, "#{locators[:point]} does not exist" if uia_control == nil
+              uia_control
             else
-#              puts "no element found"
+              hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
+                locators_match?(locators, control_properties(hwnd, locators))
+              end
+              raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
+              uia_control = UiaDll::element_from_handle(hwnd)
+              uia_control
           end
-#          puts "returning element"
-#puts "element found:#{element_pointer.inspect}"
-              read_element = element_pointer.read_pointer
-
-#             puts "element read:#{read_element.inspect}"
-                                    read_element
         end
 
         #todo - replace with UIA version
@@ -104,6 +97,16 @@ module RAutomation
           value
         end
 
+        def new_pid
+          puts "finding pid"
+
+#                  value = Functions.window_pid(hwnd)
+          value = UiaDll::current_process_id(uia_control())
+
+          puts "pid found"
+          value
+        end
+
         #todo - replace with UIA version
         # @see RAutomation::Window#title
         def title
@@ -119,7 +122,10 @@ module RAutomation
           boundary.read_array_of_long(4)
         end
 
-        #todo - replace with UIA version
+        def move_mouse(x, y)
+          UiaDll::move_mouse(x, y)
+        end
+
         # @see RAutomation::Window#activate
         def activate
           return if !exists? || active?
@@ -160,7 +166,7 @@ module RAutomation
 #          puts "calling sub exists?"
 #          p = !!pid
 #          puts "exists? complete"
- #         p
+          #         p
         end
 
         #todo - replace with UIA version
@@ -224,6 +230,10 @@ module RAutomation
           end
         end
 
+
+        def get_focused_element
+          UiaDll::get_focused_element()
+        end
 
 #def get_focused_element
 #          element_pointer = FFI::MemoryPointer.new :pointer
@@ -302,6 +312,10 @@ module RAutomation
 
         def list_box(locator)
           ListBox.new(self, locator)
+        end
+
+        def list_item(locator)
+          ListItem.new(self, locator)
         end
 
         # Redirects all method calls not part of the public API to the {Functions} directly.

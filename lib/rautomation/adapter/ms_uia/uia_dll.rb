@@ -19,7 +19,7 @@ module RAutomation
         attach_function :element_from_point, :RA_ElementFromPoint,
                         [:int, :int], :pointer
         attach_function :get_focused_element, :RA_GetFocusedElement,
-                        [:pointer], :bool
+                        [], :pointer
         attach_function :find_child_by_id, :RA_FindChildById,
                         [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
@@ -28,6 +28,10 @@ module RAutomation
                         [:pointer], :bool
         attach_function :current_control_type, :RA_GetCurrentControlType,
                         [:pointer], :int
+        attach_function :desktop_handle, :RA_GetDesktopHandle,
+                        [], :long
+        attach_function :move_mouse, :RA_MoveMouse,
+                        [:int,:int], :long
         attach_function :bounding_rectangle, :RA_CurrentBoundingRectangle,
                         [:pointer, :pointer], :int
         attach_function :is_offscreen, :RA_CurrentIsOffscreen,

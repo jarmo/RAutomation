@@ -45,6 +45,10 @@ module RAutomation
                 Constants::VK_END
               when "{delete}"
                 Constants::VK_DELETE
+              when "{pgdown}"
+                Constants::VK_NEXT
+              when "{pgup}"
+                Constants::VK_PRIOR
               else
                 # unsupported special tag, ignore the tag itself, but convert the
                 # characters inside the tag

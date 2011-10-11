@@ -41,9 +41,17 @@ module RAutomation
           rows
         end
 
-        #todo - replace with UIA version
-        def select(row)
-          Functions.select_table_row(Window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
+#        def select(row)
+#          Functions.select_table_row(Window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
+#        end
+
+        def select(index)
+          children = FFI::MemoryPointer.new :pointer, row_count
+
+          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          target_element = children.read_array_of_pointer(length)[index]
+
+          UiaDll::select(target_element)
         end
 
         #todo - replace with UIA version

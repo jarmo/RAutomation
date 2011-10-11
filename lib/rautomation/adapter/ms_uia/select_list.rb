@@ -78,6 +78,26 @@ module RAutomation
           @hwnd
         end
 
+        def select(index)
+          Functions.send_message(@hwnd, Constants::CB_SETCURSEL, index, nil) != Constants::CB_ERR
+        end
+
+        def list_item_height
+          Functions.send_message(@hwnd, Constants::CB_GETITEMHEIGHT, 0 ,nil)
+        end
+
+        def dropbox_boundary
+          boundary = FFI::MemoryPointer.new :long, 4
+
+          Functions.send_message(@hwnd, Constants::CB_GETDROPPEDCONTROLRECT, 0 ,boundary)
+
+          boundary.read_array_of_long(4)
+        end
+
+        def get_top_index
+          Functions.send_message(@hwnd, Constants::CB_GETTOPINDEX, 0 ,nil)
+        end
+
         def exist?
           super && matches_type?(Constants::UIA_COMBOBOX_CONTROL_TYPE)
         end
