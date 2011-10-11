@@ -7,9 +7,6 @@ module RAutomation
 
         def value
           list_item = uia_element
-#          hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-#          checkbox = UiaDll::element_from_handle(hwnd)
-
           item_value = FFI::MemoryPointer.new :char, UiaDll::get_name(list_item, nil) + 1
           UiaDll::get_name(list_item, item_value)
           item_value.read_string

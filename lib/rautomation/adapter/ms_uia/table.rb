@@ -9,11 +9,14 @@ module RAutomation
           rows = []
           header_columns = []
 
-          raise "Not a list control" unless UiaDll::current_control_type(uia_control(@locators[:id])) == Constants::UIA_LIST_CONTROL_TYPE
+          raise "Not a list control" unless UiaDll::current_control_type(uia_element) == Constants::UIA_LIST_CONTROL_TYPE
 
-          children_count = count_children(uia_control(@locators[:id]))
+
+          children_count = count_children(uia_element)
+
           children = FFI::MemoryPointer.new :pointer, children_count
-          UiaDll::find_children(uia_control(@locators[:id]), children)
+          UiaDll::find_children(uia_element, children)
+
 
           children.read_array_of_pointer(children_count).each do |child|
             grandchildren_count = count_children(child)
@@ -48,7 +51,8 @@ module RAutomation
         def select(index)
           children = FFI::MemoryPointer.new :pointer, row_count
 
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          length = UiaDll::find_children(uia_element, children)
+
           target_element = children.read_array_of_pointer(length)[index]
 
           UiaDll::select(target_element)
@@ -61,7 +65,7 @@ module RAutomation
         end
 
         def row_count
-          UiaDll::find_children(uia_control(@locators[:id]), nil)
+          UiaDll::find_children(uia_element, nil)
         end
 
         def exist?

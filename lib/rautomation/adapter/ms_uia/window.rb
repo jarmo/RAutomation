@@ -47,34 +47,21 @@ module RAutomation
 
           case
             when @locators[:focus]
-              puts "finding element by focus"
               uia_control = UiaDll::get_focused_element
-              uia_control
             when @locators[:id]
-              puts "finding element by id #{@locators[:id].to_s}"
               uia_control = UiaDll::find_window(@locators[:id].to_s)
-              raise UnknownElementException, "#{@locators[:id]} does not exist" if element_pointer == nil
-              uia_control
-#            when @locators[:pid]
-#              puts "finding element by pid #{@locators[:pid].to_i}"
-#              success = UiaDll::find_window_by_pid(@locators[:pid].to_i, element_pointer)
-#              puts element_pointer
-#              puts element_pointer.read_pointer
-#              raise UnknownElementException, "#{@locators[:id]} does not exist" if success == 0
-#              puts "element found:#{element_pointer.inspect}"
-#              element_pointer
+              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_control.nil?
             when @locators[:point]
-              uia_control = UiaDll::element_from_point(locators[:point][0], locators[:point][1])
-              raise UnknownElementException, "#{locators[:point]} does not exist" if uia_control == nil
-              uia_control
+              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+              raise UnknownElementException, "#{@locators[:point]} does not exist" if uia_control.nil?
             else
               hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
                 locators_match?(locators, control_properties(hwnd, locators))
               end
               raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
               uia_control = UiaDll::element_from_handle(hwnd)
-              uia_control
           end
+          uia_control
         end
 
         #todo - replace with UIA version

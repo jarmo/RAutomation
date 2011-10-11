@@ -7,13 +7,14 @@ module RAutomation
         include Locators
 
         def count
-          UiaDll::find_children(uia_control(@locators[:id]), nil)
+          UiaDll::find_children(uia_element, nil)
         end
 
         def items
           list_items = []
           children = FFI::MemoryPointer.new :pointer, self.count
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          length = UiaDll::find_children(uia_element, children)
+
 
           children.read_array_of_pointer(length).each do |child|
             child_name = FFI::MemoryPointer.new :char, UiaDll::get_name(child, nil) + 1
@@ -36,7 +37,8 @@ module RAutomation
 
         def selected?(index)
           children = FFI::MemoryPointer.new :pointer, self.count
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          length = UiaDll::find_children(uia_element, children)
+
           target_element = children.read_array_of_pointer(length)[index]
           is_selected = FFI::MemoryPointer.new :int, 1
 
@@ -50,7 +52,8 @@ module RAutomation
         def select(index)
           children = FFI::MemoryPointer.new :pointer, self.count
 
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
+          length = UiaDll::find_children(uia_element, children)
+
           target_element = children.read_array_of_pointer(length)[index]
 
           UiaDll::select(target_element)

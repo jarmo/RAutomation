@@ -113,12 +113,6 @@ module RAutomation
           UiaDll::current_control_type(uia_control)
         end
 
-        #I'm experimental! :)
-        def new_control_type_method
-          uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-          UiaDll::current_control_type(uia_control)
-        end
-
         def control_name
           uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
           element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(uia_control, nil) + 1
