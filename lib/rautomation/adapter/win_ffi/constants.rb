@@ -1,7 +1,6 @@
 module RAutomation
   module Adapter
     module WinFfi
-      # @private
       module Constants
         WM_GETTEXT = 0xD
         WM_SETTEXT = 0xC
@@ -50,6 +49,8 @@ module RAutomation
         VK_NUMLOCK = 0x90
         VK_DELETE = 0x2E
         VK_INSERT = 0x2D
+        VK_NEXT = 0x22
+        VK_PRIOR = 0x21
 
         # GetWindow constants
         GW_ENABLEDPOPUP = 6
@@ -65,11 +66,16 @@ module RAutomation
 
         # Combobox
         CB_GETCOUNT = 0x0146
+        CB_GETTOPINDEX  = 0x015b
         CB_GETLBTEXTLEN = 0x0149
         CB_GETLBTEXT = 0x0148
         CB_GETCURSEL = 0x0147
+        CB_GETDROPPEDCONTROLRECT = 0x0152
+        CB_GETITEMHEIGHT = 0x0154
         CB_ERR = -1
         CB_SETCURSEL = 0x14E
+        CB_SELECTSTRING = 0x14D
+        CB_SETEDITSEL = 0x142
 
         # listview
         LVM_FIRST = 0x1000
@@ -87,6 +93,7 @@ module RAutomation
         UIA_HEADER_CONTROL_TYPE = 50034
         UIA_HEADER_ITEM_CONTROL_TYPE = 50035
         UIA_WINDOW_CONTROL_TYPE = 50032
+        UIA_PANE_CONTROL_TYPE = 50033
 
       end
     end
