@@ -135,6 +135,34 @@ extern "C" __declspec ( dllexport ) IUIAutomationElement *RA_FindChildById(IUIAu
 	}
 }
 
+extern "C" __declspec ( dllexport ) IUIAutomationElement *RA_FindChildByName(IUIAutomationElement *pElement, char *elementName) {
+	IUIAutomationCondition *pCondition ;
+	VARIANT varProperty ;
+
+	VariantInit(&varProperty) ;
+	varProperty.vt = VT_BSTR ;
+	varProperty.bstrVal = _bstr_t(elementName) ;
+
+	HRESULT hr = getGlobalIUIAutomation()->CreatePropertyCondition(UIA_NamePropertyId, varProperty, &pCondition) ;
+	if (SUCCEEDED(hr)) {
+		IUIAutomationElement *pFound ;
+
+		hr = pElement->FindFirst(TreeScope_Descendants, pCondition, &pFound) ;
+		if (SUCCEEDED(hr)) {
+			if (pFound == NULL)
+				printf("RA_FindChildByName: Element with automation name %s was not found\r\n", elementName) ;
+
+			return pFound ;
+		} else {
+			printf("RA_FindChildByName: FindFirst for children looking for %s failed. hr = 0x%x\r\n", elementName, hr) ;
+			return NULL ;
+		}
+	} else {
+		printf("RA_FindChildByName: Cannot create search condition. hr = 0x%x\r\n", hr) ;
+		return NULL ;
+	}
+}
+
 extern "C" __declspec ( dllexport ) HWND RA_CurrentNativeWindowHandle(IUIAutomationElement *pElement) {
 	UIA_HWND uia_hwnd ;
 

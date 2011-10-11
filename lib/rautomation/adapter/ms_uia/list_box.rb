@@ -14,12 +14,18 @@ module RAutomation
           list_items = []
           children = FFI::MemoryPointer.new :pointer, self.count
           length = UiaDll::find_children(uia_control(@locators[:id]), children)
+
           children.read_array_of_pointer(length).each do |child|
             child_name = FFI::MemoryPointer.new :char, UiaDll::get_name(child, nil) + 1
             UiaDll::get_name(child, child_name)
-            list_items.push child_name.read_string
+            list_items.push(@window.list_item(:value => child_name.read_string))
           end
+
           list_items
+        end
+
+        def strings
+          items.collect { |item| item.value}
         end
 
         def exist?
@@ -50,7 +56,6 @@ module RAutomation
           UiaDll::select(target_element)
         end
 
-        alias_method :strings, :items
 
       end
     end

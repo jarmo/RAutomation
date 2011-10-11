@@ -24,30 +24,26 @@ module RAutomation
           Functions.control_hwnd(@window.hwnd, @locators)
         end
 
-
-        def element
-          puts "finding element with #{@locators.inspect}"
-
-
-#          def uia_control(automation_id)
-#          uia_window = UiaDll::element_from_handle(@window.hwnd) # finds IUIAutomationElement for given parent window
-#          uia_element = UiaDll::find_child_by_id(uia_window, automation_id.to_s)
-#          fail "Cannot find UIAutomationElement" if uia_element.nil?
-#          uia_element
-#        end
+        def uia_element
+#          puts "finding element with #{@locators.inspect}"
 
           case
+            when @locators[:value]
+              uia_window = UiaDll::element_from_handle(@window.hwnd)
+              uia_control = UiaDll::find_child_by_name(uia_window, @locators[:value].to_s)
+              raise UnknownElementException, "#{@locators[:value]} does not exist" if uia_control.nil?
+              uia_control
             when @locators[:focus]
-              puts "finding element by focus"
               uia_control = UiaDll::get_focused_element
               uia_control
             when @locators[:id]
-              puts "finding element by id #{@locators[:id].to_s}"
               uia_window = UiaDll::element_from_handle(@window.hwnd)
-
               uia_control = UiaDll::find_child_by_id(uia_window, @locators[:id].to_s)
-
-              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_control == nil
+              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_control.nil?
+              uia_control
+            when @locators[:point]
+              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+              raise UnknownElementException, "#{@locators[:point]} does not exist" if uia_control == nil
               uia_control
             #            when @locators[:pid]
             #              puts "finding element by pid #{@locators[:pid].to_i}"
@@ -57,10 +53,6 @@ module RAutomation
             #              raise UnknownElementException, "#{@locators[:id]} does not exist" if success == 0
             #              puts "element found:#{element_pointer.inspect}"
             #              element_pointer
-            when @locators[:point]
-              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-              raise UnknownElementException, "#{@locators[:point]} does not exist" if uia_control == nil
-              uia_control
             else
               handle= hwnd
               raise UnknownElementException, "Element with #{@locators.inspect} does not exist" if (handle == 0) or (handle == nil)
@@ -134,13 +126,7 @@ module RAutomation
         end
 
         def bounding_rectangle
-#          control = element
-          if @locators[:focus]
-            puts "by focus"
-            control = UiaDll::get_focused_element
-          else
-            control = UiaDll::element_from_handle(hwnd)
-          end
+          control = uia_element
 
           boundary = FFI::MemoryPointer.new :long, 4
           UiaDll::bounding_rectangle(control, boundary)
@@ -171,17 +157,17 @@ module RAutomation
         def get_current_control_type(control = nil)
           uia_control = control
 
-#          if control == nil
-#            uia_control = element
-#          end
-
           if control == nil
-            if @locators[:point]
-              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-            else
-              uia_control = UiaDll::element_from_handle(hwnd)
-            end
+            uia_control = uia_element
           end
+
+#          if control == nil
+#            if @locators[:point]
+#              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+#            else
+#              uia_control = UiaDll::element_from_handle(hwnd)
+#            end
+#          end
 
           UiaDll::current_control_type(uia_control)
         end
@@ -197,7 +183,8 @@ module RAutomation
         end
 
         def control_name
-          uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+          uia_control = uia_element
+#          uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
           element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(uia_control, nil) + 1
 
           UiaDll::get_name(uia_control, element_name)

@@ -22,6 +22,8 @@ module RAutomation
                         [], :pointer
         attach_function :find_child_by_id, :RA_FindChildById,
                         [:pointer, :string], :pointer
+        attach_function :find_child_by_name, :RA_FindChildByName,
+                        [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
                         [:pointer], :long
         attach_function :set_focus, :RA_SetFocus,

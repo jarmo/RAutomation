@@ -18,9 +18,10 @@ describe "MsUia::ListBox", :if => SpecHelper.adapter == :ms_uia do
 
   it "lists items" do
     list_box = RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox")
-    list_box.items[0].should == "Apple"
-    list_box.items[1].should == "Orange"
-    list_box.items[2].should == "Mango"
+
+    list_box.items[0].value.should == "Apple"
+    list_box.items[1].value.should == "Orange"
+    list_box.items[2].value.should == "Mango"
   end
 
 
