@@ -29,6 +29,7 @@ __declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationI
 	return NULL ;
 }
 
+//This doesn't work
 extern "C"
 __declspec( dllexport ) int RA_FindWindowByPID(int processId, IUIAutomationElement *pElement) {
 	IUIAutomationElement *pRootElement;
@@ -76,12 +77,13 @@ __declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
 }
 
 extern "C"
-__declspec ( dllexport ) BOOL RA_GetFocusedElement(IUIAutomationElement **element) {
+__declspec ( dllexport ) IUIAutomationElement *RA_GetFocusedElement() {
+	IUIAutomationElement *pelement;
 	
-	HRESULT hr = getGlobalIUIAutomation()->GetFocusedElement(element);
+	HRESULT hr = getGlobalIUIAutomation()->GetFocusedElement(&pelement);
 	
 	if (SUCCEEDED(hr))
-		return true ;
+		return pelement;
 	else {
 		printf("RA_GetFocusedElement: Cannot find element from focus. HRESULT was 0x%x\r\n", hr) ;
 		return false ;
@@ -146,23 +148,16 @@ extern "C" __declspec ( dllexport ) HWND RA_CurrentNativeWindowHandle(IUIAutomat
 }
 
 extern "C" __declspec ( dllexport ) int RA_GetCurrentProcessId(IUIAutomationElement *pElement) {
-	
-	printf("I made it into RA_GetCurrentProcessId");
-
 	HRESULT hr;
 	int process_id;
-
-	
 
 	hr = pElement->get_CurrentProcessId(&process_id);
 
     if  (SUCCEEDED(hr)){
-		printf("I made it out of RA_GetCurrentProcessId");
 		return process_id;
 	}
 	else {
 		printf("RA_GetCurrentProcessId: get_CurrentProcessId returned 0x%x\r\n", hr) ;
-		printf("I made it out of RA_GetCurrentProcessId");
 		return 0 ;
 	}
 }
@@ -185,6 +180,14 @@ extern "C" __declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationEl
 		printf("RA_GetCurrentControlType: CurrentControlType returned 0x%x\r\n", hr) ;
 		return 0 ;
 	}
+}
+
+extern "C" __declspec ( dllexport ) long RA_MoveMouse(int x, int y) {
+	return SetCursorPos(x,y);
+}
+
+extern "C" __declspec ( dllexport ) long RA_GetDesktopHandle() {
+	return (long)GetDesktopWindow();
 }
 
 extern "C" __declspec ( dllexport ) int RA_CurrentBoundingRectangle(IUIAutomationElement *pElement, long *rectangle) {
