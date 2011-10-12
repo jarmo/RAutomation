@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "MsUia::RadioButton", :if => SpecHelper.adapter == :ms_uia do
+
   it "#exist?" do
     RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should exist
 

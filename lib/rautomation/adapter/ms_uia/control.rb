@@ -25,22 +25,44 @@ module RAutomation
         end
 
         def uia_element
-          puts "finding element with #{@locators.inspect}"
+#          puts "finding element with #{@locators.inspect}"
 
           case
             when @locators[:value]
               uia_window = UiaDll::element_from_handle(@window.hwnd)
+              begin
+                uia_window.read_pointer
+              rescue FFI::NullPointerError => e
+                raise UnknownElementException, "Window with handle #{@window.hwnd} does not exist"
+              end
               uia_control = UiaDll::find_child_by_name(uia_window, @locators[:value].to_s)
-              raise UnknownElementException, "#{@locators[:value]} does not exist" if uia_control.nil?
+              begin
+                uia_control.read_pointer
+              rescue FFI::NullPointerError => e
+                raise UnknownElementException, "#{@locators[:value]} does not exist"
+              end
             when @locators[:focus]
               uia_control = UiaDll::get_focused_element
+              begin
+                uia_control.read_pointer
+              rescue FFI::NullPointerError => e
+                raise UnknownElementException, "Focused element does not exist"
+              end
             when @locators[:id]
               uia_window = UiaDll::element_from_handle(@window.hwnd)
               uia_control = UiaDll::find_child_by_id(uia_window, @locators[:id].to_s)
-              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_control.nil?
+              begin
+                uia_control.read_pointer
+              rescue FFI::NullPointerError => e
+                raise UnknownElementException, "#{@locators[:id]} does not exist"
+              end
             when @locators[:point]
               uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-              raise UnknownElementException, "#{@locators[:point]} does not exist" if uia_control.nil?
+              begin
+                uia_control.read_pointer
+              rescue FFI::NullPointerError => e
+                raise UnknownElementException, "#{@locators[:point]} does not exist"
+              end
             else
               handle= hwnd
               raise UnknownElementException, "Element with #{@locators.inspect} does not exist" if (handle == 0) or (handle == nil)
@@ -65,22 +87,9 @@ module RAutomation
           end
         end
 
-#        def exist?
-#          begin
-#            !!hwnd
-#          rescue UnknownElementException
-#            false
-#          end
-#        end
-
-
         def exist?
           begin
-            if @locators[:point]
-              !!UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-            else
-              !!hwnd
-            end
+            !!uia_element
           rescue UnknownElementException
             false
           end
