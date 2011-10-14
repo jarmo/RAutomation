@@ -300,17 +300,23 @@ extern "C" __declspec ( dllexport ) int RA_FindChildren(IUIAutomationElement *pE
 extern "C" __declspec ( dllexport ) int RA_GetName(IUIAutomationElement *pElement, char *pName) {
 	BSTR bstrName ;
 	HRESULT hr = pElement->get_CurrentName(&bstrName) ;
+
 	if (FAILED(hr)) {
 		printf("RA_GetName: get_CurrentName failed 0x%x\r\n", hr) ;
-		return 0 ;
+		return -1 ;
 	}
 
 	char *pszName = _com_util::ConvertBSTRToString(bstrName) ;
-	if (pName == NULL) {
-		return strlen(pszName) ;
+
+	if (pszName != NULL){
+		if (pName == NULL) {
+			return strlen(pszName) ;
+		} else {
+			strcpy(pName, pszName) ;
+			return strlen(pszName) ;
+		}
 	} else {
-		strcpy(pName, pszName) ;
-		return strlen(pszName) ;
+		return -1;
 	}
 }
 

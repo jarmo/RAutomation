@@ -218,54 +218,45 @@ module RAutomation
         end
 
 
+        def display_tree
+          root_element = UiaDll::element_from_handle(hwnd)
+
+          child_name = FFI::MemoryPointer.new :char, UiaDll::get_name(root_element, nil) + 1
+          UiaDll::get_name(root_element, child_name)
+
+          [child_name.read_string.inspect, gather_children(root_element)]
+        end
+
+        def gather_children(root_element)
+          element_tree = []
+
+          child_count = count_children(root_element)
+          children = FFI::MemoryPointer.new :pointer, child_count
+          UiaDll::find_children(root_element, children)
+
+          children.read_array_of_pointer(child_count).each do |child|
+            child_name = FFI::MemoryPointer.new :char, UiaDll::get_name(child, nil) + 1
+            UiaDll::get_name(child, child_name)
+
+            grandchild_count = count_children(child)
+
+            if grandchild_count > 0
+              element_tree << [child_name.read_string.inspect, gather_children(child)]
+            else
+              element_tree << child_name.read_string.inspect
+            end
+          end
+
+          element_tree
+        end
+
+        def count_children(element)
+          UiaDll::find_children(element, nil)
+        end
+
         def get_focused_element
           UiaDll::get_focused_element()
         end
-
-#def get_focused_element
-#          element_pointer = FFI::MemoryPointer.new :pointer
-#
-#          if UiaDll::get_focused_element(element_pointer)
-#            element = element_pointer.read_pointer
-#            puts "element found"
-#            puts "type:"
-#            element_type = UiaDll::current_control_type(element)
-#            puts element_type
-#
-#            element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(element, nil) + 1
-#
-#            puts UiaDll::get_name(element, element_name)
-#            puts "name:"
-#            puts element_name.read_string
-#
-#
-#            case element_type
-#              when Constants::UIA_BUTTON_CONTROL_TYPE
-#                button(Hash.new)
-#              when Constants::UIA_CHECKBOX_CONTROL_TYPE
-#                checkbox(nil)
-#              when Constants::UIA_RADIO_BUTTON_CONTROL_TYPE
-#                radio(nil)
-#              when Constants::UIA_COMBOBOX_CONTROL_TYPE
-#                select_list(nil)
-#              when Constants::UIA_EDIT_CONTROL_TYPE
-#                text_field(nil)
-#              when Constants::UIA_TEXT_CONTROL_TYPE
-#                label(nil)
-#                when UIA_WINDOW_CONTROL_TYPE
-        #New window code here
-#              when Constants::UIA_LIST_CONTROL_TYPE
-#                table(nil)
-#              else
-#                control(nil)
-#            end
-#
-#          else
-#            puts "no element found"
-#            nil
-#          end
-#        end
-#
 
         #todo - replace with UIA version
         # @see RAutomation::Window#close
