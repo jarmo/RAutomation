@@ -98,6 +98,10 @@ module RAutomation
           Functions.send_message(@hwnd, Constants::CB_GETTOPINDEX, 0 ,nil)
         end
 
+        def scroll_to_item(row)
+          Functions.send_message(@hwnd, Constants::CB_SETTOPINDEX , row ,nil)
+        end
+
         def exist?
           super && matches_type?(Constants::UIA_COMBOBOX_CONTROL_TYPE)
         end

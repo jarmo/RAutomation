@@ -76,6 +76,10 @@ module RAutomation
         CB_SETCURSEL = 0x14E
         CB_SELECTSTRING = 0x14D
         CB_SETEDITSEL = 0x142
+        CB_SETTOPINDEX = 0x015c
+
+        #ListBox
+        LB_SETTOPINDEX = 0x0197
 
         # listview
         LVM_FIRST = 0x1000

@@ -151,7 +151,7 @@ extern "C" __declspec ( dllexport ) IUIAutomationElement *RA_FindChildByName(IUI
 		if (SUCCEEDED(hr)) {
 			if (pFound == NULL)
 				printf("RA_FindChildByName: Element with automation name %s was not found\r\n", elementName) ;
-
+			    //printf("RA_FindChildByName: success with value %s\r\n", elementName) ;
 			return pFound ;
 		} else {
 			printf("RA_FindChildByName: FindFirst for children looking for %s failed. hr = 0x%x\r\n", elementName, hr) ;

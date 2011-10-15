@@ -59,6 +59,9 @@ module RAutomation
           UiaDll::select(target_element)
         end
 
+        def scroll_to_item(row)
+          Functions.send_message(hwnd, Constants::LB_SETTOPINDEX, row ,nil)
+        end
 
       end
     end
