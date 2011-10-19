@@ -79,7 +79,10 @@ module RAutomation
         CB_SETTOPINDEX = 0x015c
 
         #ListBox
-        LB_SETTOPINDEX = 0x0197
+        LB_SETTOPINDEX   = 0x0197
+        LB_GETITEMHEIGHT = 0x01A1
+        LB_GETITEMRECT   = 0x0198
+        LB_GETTOPINDEX   = 0x018E
 
         # listview
         LVM_FIRST = 0x1000
@@ -88,6 +91,7 @@ module RAutomation
         # UI Automation control type IDs
         UIA_LIST_CONTROL_TYPE = 50008
         UIA_LIST_ITEM_CONTROL_TYPE = 50007
+        UIA_DATA_ITEM_CONTROL_TYPE =50029
         UIA_CHECKBOX_CONTROL_TYPE = 50002
         UIA_BUTTON_CONTROL_TYPE = 50000
         UIA_TEXT_CONTROL_TYPE = 50020
