@@ -34,6 +34,8 @@ module RAutomation
                         [], :long
         attach_function :move_mouse, :RA_MoveMouse,
                         [:int,:int], :long
+        attach_function :click_mouse, :RA_ClickMouse,
+                        [], :long
         attach_function :bounding_rectangle, :RA_CurrentBoundingRectangle,
                         [:pointer, :pointer], :int
         attach_function :is_offscreen, :RA_CurrentIsOffscreen,

@@ -113,6 +113,10 @@ module RAutomation
           UiaDll::move_mouse(x, y)
         end
 
+        def click_mouse()
+          UiaDll::click_mouse
+        end
+
         # @see RAutomation::Window#activate
         def activate
           return if !exists? || active?

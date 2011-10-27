@@ -210,6 +210,12 @@ extern "C" __declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationEl
 	}
 }
 
+extern "C" __declspec ( dllexport ) long RA_ClickMouse() {
+	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+    mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+	return 0;
+}
+
 extern "C" __declspec ( dllexport ) long RA_MoveMouse(int x, int y) {
 	return SetCursorPos(x,y);
 }
