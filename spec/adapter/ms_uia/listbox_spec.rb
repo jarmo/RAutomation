@@ -6,7 +6,7 @@ describe "MsUia::ListBox", :if => SpecHelper.adapter == :ms_uia do
     RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox").should exist
   end
 
-  it "check for listbox class" do
+  it "checks for ListBox class" do
     RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "textField").should_not exist
     RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox").should exist
   end
@@ -24,6 +24,17 @@ describe "MsUia::ListBox", :if => SpecHelper.adapter == :ms_uia do
     list_box.items[2].value.should == "Mango"
   end
 
+  it "returns a value" do
+    list_box = RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox")
+
+    list_box.value.should == ""
+    list_box.select(0)
+    list_box.value.should == "Apple"
+    list_box.select(1)
+    list_box.value.should == "Orange"
+    list_box.select(2)
+    list_box.value.should == "Mango"
+  end
 
   it "#selected?" do
     list_box = RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox")

@@ -30,6 +30,16 @@ module RAutomation
           items.collect { |item| item.value}
         end
 
+        def value
+          count.times do |index|
+            if selected?(index)
+              return strings[index]
+            end
+          end
+
+          ""
+        end
+
         def exist?
           super && matches_type?(Constants::UIA_LIST_CONTROL_TYPE)
         end
