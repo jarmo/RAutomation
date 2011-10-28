@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       class Table < Control
         include WaitHelper
         include Locators
@@ -14,14 +14,24 @@ module RAutomation
           children_count = count_children(uia_control(@locators[:id]))
           children = FFI::MemoryPointer.new :pointer, children_count
           UiaDll::find_children(uia_control(@locators[:id]), children)
+
           children.read_array_of_pointer(children_count).each do |child|
             grandchildren_count = count_children(child)
-            grandchildren = FFI::MemoryPointer.new :pointer, grandchildren_count
-            UiaDll::find_children(child, grandchildren)
-            grandchildren.read_array_of_pointer(grandchildren_count).each do |grandchild|
-              grandchild_name = FFI::MemoryPointer.new :char, UiaDll::get_name(grandchild, nil) + 1
-              UiaDll::get_name(grandchild, grandchild_name)
-              header_columns.push grandchild_name.read_string
+
+            if grandchildren_count > 0
+
+              grandchildren = FFI::MemoryPointer.new :pointer, grandchildren_count
+              UiaDll::find_children(child, grandchildren)
+
+              grandchildren.read_array_of_pointer(grandchildren_count).each do |grandchild|
+                grandchild_name = FFI::MemoryPointer.new :char, UiaDll::get_name(grandchild, nil) + 1
+                UiaDll::get_name(grandchild, grandchild_name)
+                header_columns.push grandchild_name.read_string
+              end
+            else
+              grandchild_name = FFI::MemoryPointer.new :char, UiaDll::get_name(child, nil) + 1
+              UiaDll::get_name(child, grandchild_name)
+              header_columns = grandchild_name.read_string
             end
 
             rows.push header_columns
@@ -43,6 +53,12 @@ module RAutomation
         def row_count
           UiaDll::find_children(uia_control(@locators[:id]), nil)
         end
+
+        def exist?
+          super && matches_type?(Constants::UIA_LIST_CONTROL_TYPE)
+        end
+
+        alias_method :exists?, :exist?
 
         private
 

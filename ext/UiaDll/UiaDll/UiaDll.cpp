@@ -50,6 +50,23 @@ __declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
 	}
 }
 
+extern "C"
+__declspec ( dllexport ) IUIAutomationElement *RA_ElementFromPoint(int xCoord, int yCoord) {
+	IUIAutomationElement *pElement ;
+	POINT point;
+
+	point.x = xCoord;
+	point.y = yCoord;
+
+	HRESULT hr = getGlobalIUIAutomation()->ElementFromPoint(point, &pElement) ;
+	if (SUCCEEDED(hr))
+		return pElement ;
+	else {
+		printf("RA_ElementFromPoint: Cannot find element from point %d , %d. HRESULT was 0x%x\r\n", xCoord, yCoord, hr) ;
+		return NULL ;
+	}
+}
+
 extern "C" __declspec ( dllexport ) IUIAutomationElement *RA_FindChildById(IUIAutomationElement *pElement, char *automationId) {
 	IUIAutomationCondition *pCondition ;
 	VARIANT varProperty ;
@@ -106,6 +123,25 @@ extern "C" __declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationEl
 		return control_type ;
 	else {
 		printf("RA_GetCurrentControlType: CurrentControlType returned 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+}
+
+extern "C" __declspec ( dllexport ) int RA_CurrentBoundingRectangle(IUIAutomationElement *pElement, long *rectangle) {
+	RECT boundary;
+
+	HRESULT hr = pElement->get_CurrentBoundingRectangle(&boundary) ;
+	if (SUCCEEDED(hr)) {
+	
+		rectangle[0] = boundary.left;
+		rectangle[1] = boundary.top;
+		rectangle[2] = boundary.right;
+		rectangle[3] = boundary.bottom;
+
+		return 1;
+	}
+	else {
+		printf("RA_CurrentBoundingRectangle: get_CurrentBoundingRectangle failed 0x%x\r\n", hr) ;
 		return 0 ;
 	}
 }
@@ -203,3 +239,48 @@ extern "C" __declspec ( dllexport ) int RA_Select(IUIAutomationElement *pElement
 
 	return 1;
 }
+
+extern "C" __declspec ( dllexport ) int RA_Set_Value(IUIAutomationElement *pElement, char *pValue) {
+	IValueProvider *pValuePattern ;
+	HRESULT hr = pElement->GetCurrentPattern(UIA_ValuePatternId, (IUnknown**)&pValuePattern) ;
+	
+	if (FAILED(hr)) {
+		printf("RA_Set_Value: getCurrentPattern failed 0x%x\r\n") ;
+		return 0 ;
+	}
+
+	BSTR unicodestr;
+	
+	int lenA = lstrlenA(pValue);
+    int lenW = ::MultiByteToWideChar(CP_ACP, 0, pValue, lenA, 0, 0);
+
+    if (lenW > 0)
+    {
+      unicodestr = ::SysAllocStringLen(0, lenW);
+      ::MultiByteToWideChar(CP_ACP, 0, pValue, lenA, unicodestr, lenW);
+    }
+    else
+    {
+       printf("RA_Set_Value: conversion to unicode string failed\r\n");
+    }
+
+	hr = pValuePattern->SetValue(unicodestr);
+    ::SysFreeString(unicodestr);
+
+	
+
+	if (FAILED(hr)) {
+		printf("RA_SetValue: SetValue failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}
+
+	//It'd be great if this worked
+	/*hr = UiaRaiseAutomationEvent((IRawElementProviderSimple*) pElement, UIA_Selection_InvalidatedEventId);
+	if (FAILED(hr)) {
+		printf("RA_SetValue: UiaRaiseAutomationEvent failed 0x%x\r\n", hr) ;
+		return 0 ;
+	}*/
+
+	return 1;
+}
+

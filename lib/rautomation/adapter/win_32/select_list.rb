@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
 
       class SelectList < Control
         include WaitHelper
@@ -11,8 +11,8 @@ module RAutomation
 
           def initialize(select_list, text, index)
             @select_list = select_list
-            @text = text
-            @index = index
+            @text        = text
+            @index       = index
           end
 
           def selected?
@@ -34,13 +34,18 @@ module RAutomation
           @hwnd = Functions.control_hwnd(@window.hwnd, @locators)
         end
 
+        def set(value)
+          list      = UiaDll::element_from_handle(@hwnd)
+          UiaDll::set_value(list, value)
+        end
+
         def options(options = {})
           items = []
 
           item_count.times do |item_no|
             item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
 
-            if options[:text] 
+            if options[:text]
               items.push(SelectListOption.new(self, item, item_no)) if options[:text] == item
             else
               items.push(SelectListOption.new(self, item, item_no))
@@ -51,7 +56,7 @@ module RAutomation
         end
 
         def value
-          selected_option = options.find {|option| option.selected?}
+          selected_option = options.find { |option| option.selected? }
           selected_option ? selected_option.text : ""
         end
 
@@ -69,7 +74,7 @@ module RAutomation
         end
 
         def exist?
-          @locators[:id].nil? ? super : super && matches_type(Constants::UIA_COMBOBOX_CONTROL_TYPE)
+          super && matches_type?(Constants::UIA_COMBOBOX_CONTROL_TYPE)
         end
 
         alias_method :exists?, :exist?

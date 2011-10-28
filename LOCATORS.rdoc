@@ -1,0 +1,18 @@
+= Locators in RAutomation
+
+== AVAILABLE LOCATORS
+
+:id
+
+:parent_id
+
+:title
+
+:value
+
+:class
+
+:hwnd
+
+:pid
+

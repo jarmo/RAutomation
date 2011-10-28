@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::Table", :if => SpecHelper.adapter == :win_32 do
   before :each do
     window = RAutomation::Window.new(:title => "MainFormWindow")
     window.button(:value => "Data Entry Form").click { RAutomation::Window.new(:title => "DataEntryForm").exists? }
@@ -16,7 +16,18 @@ describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
+  it "check for table class" do
+    RAutomation::Window.new(:title => "DataEntryForm").table(:id => "deleteItemButton").should_not exist
+    RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView").should exist
+  end
+
   it "#strings" do
+    table = RAutomation::Window.new(:title => "MainFormWindow").table(:id => "FruitListBox")
+
+    table.strings.should == ["Apple", "Orange", "Mango"]
+  end
+
+  it "#strings with nested elements" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
     table.strings.should == [

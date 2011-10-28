@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       class TextField < Control
         include WaitHelper
         include Locators
@@ -34,7 +34,7 @@ module RAutomation
         end
 
         def exist?
-          @locators[:id].nil? ? super : super && matches_type(Constants::UIA_EDIT_CONTROL_TYPE)
+          super && matches_type?(Constants::UIA_EDIT_CONTROL_TYPE)
         end
 
         alias_method :exists?, :exist?
