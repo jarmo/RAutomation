@@ -1,8 +1,8 @@
 module RAutomation
   module Adapter
     autoload :Autoit, File.dirname(__FILE__) + "/autoit.rb"
-    autoload :WinFfi, File.dirname(__FILE__) + "/win_ffi.rb"
     autoload :MsUia, File.dirname(__FILE__) + "/ms_uia.rb"
+    autoload :Win32, File.dirname(__FILE__) + "/win_32.rb"
 
     module Helper
       extend self
@@ -11,9 +11,7 @@ module RAutomation
       # Retrieves default {Adapter} for the current platform.
       def default_adapter
         if ENV['OS'] == 'Windows_NT'
-#          :win_ffi
-#          :autoit
-          :ms_uia
+          :win_32
         else
           raise "unsupported platform for RAutomation: #{RUBY_PLATFORM}"
         end

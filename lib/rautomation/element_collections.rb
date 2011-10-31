@@ -1,6 +1,9 @@
 module RAutomation
   # @private
   module ElementCollections
+    class UnsupportedLocatorException < RuntimeError
+    end
+
     # Creates collection classes and methods for elements.
     # @param [Array<Symbol>] elements for which to create collection classes
     #   and methods.
@@ -15,6 +18,11 @@ module RAutomation
               include Enumerable
 
               def initialize(window, locators)
+               if locators[:hwnd] || locators[:pid]
+                raise UnsupportedLocatorException, 
+                  ":hwnd or :pid in " + locators.inspect + " are not supported for #{adapter_class}::#{class_name_plural}"
+                end
+
                 @window = window
                 @locators = locators
               end
@@ -38,7 +46,7 @@ module RAutomation
 
         class_eval %Q{
             def #{element}(locators = {})
-              #{class_name_plural}.new(@window, locators)
+              #{adapter_class}::#{class_name_plural}.new(@window || self, locators)
             end
         }
       end

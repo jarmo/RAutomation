@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       class Control
         include WaitHelper
         include Locators
@@ -37,16 +37,14 @@ module RAutomation
           end
         end
 
+        def hwnd
+          Functions.control_hwnd(@window.hwnd, @locators)
+        end
+
         def exist?
-          begin
-            if @locators[:point]
-              !!UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-            else
-              !!hwnd
-            end
-          rescue UnknownElementException
-            false
-          end
+          !!hwnd
+        rescue UnknownElementException
+          false
         end
 
         def enabled?
@@ -54,7 +52,7 @@ module RAutomation
         end
 
         def disabled?
-          Functions.unavailable?(hwnd)
+          Functions.unavailable? hwnd
         end
 
         def has_focus?
@@ -63,8 +61,8 @@ module RAutomation
 
         def set_focus
           assert_enabled
-          uia_control = UiaDll::element_from_handle(hwnd)
-          UiaDll::set_focus(uia_control)
+          uia_control = UiaDll::element_from_handle hwnd
+          UiaDll::set_focus uia_control
         end
 
         def uia_control(automation_id)

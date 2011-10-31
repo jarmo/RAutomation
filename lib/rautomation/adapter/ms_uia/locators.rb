@@ -1,4 +1,4 @@
-#todo - some files are common between WinFfi and MsUia adapter, consider pulling out to shared location
+#todo - some files are common between Win32 and MsUia adapter, consider pulling out to shared location
 
 module RAutomation
   module Adapter

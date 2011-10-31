@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::ListBox", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::ListBox", :if => SpecHelper.adapter == :win_32 do
 
   it "#exists" do
     RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox").should exist

@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       class Radio < Control
         include WaitHelper
         include Locators

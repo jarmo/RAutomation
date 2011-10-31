@@ -19,6 +19,16 @@ describe RAutomation::Windows do
     ]
     should have_all_windows(expected_windows, windows)
   end
+  
+  it "Window.windows accepts locators too" do
+    windows = RAutomation::Window.windows(:title => SpecHelper::DATA[:window1_title])
+    windows.should be_a(RAutomation::Windows)
+    windows.size.should == 1
+    expected_windows = [
+      RAutomation::Window.new(:pid => @pid1),
+    ]
+    should have_all_windows(expected_windows, windows)
+  end
 
   it "Windows#windows returns all similar windows" do
     windows = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).windows
@@ -39,6 +49,15 @@ describe RAutomation::Windows do
       RAutomation::Window.new(:pid => @pid2),
     ]
     should have_all_windows(expected_windows, windows)
+  end
+
+  it "Window.windows doesn't allow :hwnd or :pid as it's locators" do
+  RAutomation::Window.wait_timeout = 0.1
+  expect { RAutomation::Window.windows(:hwnd => 123) }.
+      to raise_exception(RAutomation::ElementCollections::UnsupportedLocatorException)
+
+  expect { RAutomation::Window.windows(:pid => 123) }.
+      to raise_exception(RAutomation::ElementCollections::UnsupportedLocatorException)
   end
 
   after :each do

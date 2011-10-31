@@ -53,7 +53,7 @@ module SpecHelper
                   # Adapter internal method invocation for getting title of window2
                   :title_proc => lambda {|win| win.WinGetTitle("[TITLE:MainFormWindow]")}
           },
-          :win_ffi => {
+          :win_32 => {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
                   :window1 => "ext\\WindowsForms\\bin\\WindowsForms.exe",
@@ -110,7 +110,7 @@ end
 
 RSpec.configure do |config|
   config.before(:each) do
-    RAutomation::Window.wait_timeout = 60
+    RAutomation::Window.wait_timeout = 15
 
     @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
 #    puts"waiting for window with pid #{@pid1} to be present"

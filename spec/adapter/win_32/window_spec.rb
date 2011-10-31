@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "WinFfi::Window", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::Window", :if => SpecHelper.adapter == :win_32 do
   it "#child" do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
     window.should exist

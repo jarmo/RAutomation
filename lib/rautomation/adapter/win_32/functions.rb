@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       # @private
       module Functions
         extend FFI::Library
@@ -97,13 +97,13 @@ module RAutomation
           alias_method :control_title, :window_title
 
           def window_text(hwnd)
-            found_text = ""
+            found_text = []
             window_callback = FFI::Function.new(:bool, [:long, :pointer], {:convention => :stdcall}) do |child_hwnd, _|
               found_text << text_for(child_hwnd)
               true
             end
             enum_child_windows(hwnd, window_callback, nil)
-            found_text
+            found_text.join(" ")
           end
 
           alias_method :control_text, :window_text

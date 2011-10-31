@@ -2,7 +2,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rautomation'
 require 'rspec'
 
-describe "KeystrokeConverter", :if => SpecHelper.adapter == :ms_uia do
+describe "KeystrokeConverter" do
 
   it "converts plain ASCII" do
     codes = RAutomation::Adapter::Win32::KeystrokeConverter.convert("abc")

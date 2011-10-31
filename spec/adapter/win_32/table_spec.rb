@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::Table", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::Table", :if => SpecHelper.adapter == :win_32 do
   before :each do
     window = RAutomation::Window.new(:title => "MainFormWindow")
     window.button(:value => "Data Entry Form").click { RAutomation::Window.new(:title => "DataEntryForm").exists? }

@@ -331,7 +331,7 @@ module RAutomation
 
           #todo - replace with UIA version
           # Creates the child window object.
-          # @note This is an WinFfi adapter specific method, not part of the public API
+          # @note This is an Win32 adapter specific method, not part of the public API
           # @example
           #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
           #     child(:title => /some popup/)

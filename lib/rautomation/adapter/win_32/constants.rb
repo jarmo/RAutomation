@@ -1,6 +1,7 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
+      # @private
       module Constants
         WM_GETTEXT = 0xD
         WM_SETTEXT = 0xC

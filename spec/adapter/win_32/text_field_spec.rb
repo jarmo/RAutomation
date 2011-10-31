@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::TextField", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::TextField", :if => SpecHelper.adapter == :win_32 do
 
   it "check for text field class" do
     RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "checkBox").should_not exist

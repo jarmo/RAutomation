@@ -1,6 +1,6 @@
 module RAutomation
   module Adapter
-    module WinFfi
+    module Win32
       class TextField < Control
         include WaitHelper
         include Locators
@@ -33,18 +33,11 @@ module RAutomation
           Functions.control_value(hwnd)
         end
 
-        # @see RAutomation::TextField#hwnd
-        def hwnd
-          Functions.control_hwnd(@window.hwnd, @locators)
-        end
-
         def exist?
           super && matches_type?(Constants::UIA_EDIT_CONTROL_TYPE)
         end
 
         alias_method :exists?, :exist?
-
-
 
       end
     end

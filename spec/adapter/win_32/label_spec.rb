@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "WinFfi::Label", :if => SpecHelper.adapter == :win_ffi do
+describe "Win32::Label", :if => SpecHelper.adapter == :win_32 do
   it "#exist?" do
     window = RAutomation::Window.new(:title => "MainFormWindow")
 
