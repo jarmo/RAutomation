@@ -3,7 +3,7 @@
 * Web: http://www.github.com/jarmo/RAutomation
 * Author: Jarmo Pertman (mailto:jarmo.p[at]gmail.com)
 
-{<img alt='Click here to lend your support to: RAutomation and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/16196.png?skin_name=chrome' />}[http://www.pledgie.com/campaigns/16196]
+{<img alt='Click here to lend your support to: RAutomation and make a donation at www.pledgie.com !' src='https://www.pledgie.com/campaigns/16196.png?skin_name=chrome' />}[https://www.pledgie.com/campaigns/16196]
 
 RAutomation is a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
