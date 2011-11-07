@@ -16,54 +16,16 @@ describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
 
     control = window.control(:id => "radioButtonReset")
     control.new_pid.should == @pid1
+   end
+
+  it "has a class" do
+    window = RAutomation::Window.new(:title => /MainFormWindow/i)
+
+    control = window.control(:id => "radioButtonReset")
+    control.control_class.should =~ /WindowsForms10.BUTTON.app.0.2bf8098_r1[0-9]_ad1/
   end
 
 =begin
-it "playing with points" do
-
-    window1      = RAutomation::Window.new(:title => "KY - Agent Gateway Sales and Service")
-
-    window1.activate
-    a_control = window1.control(:point => [215,255])
-    puts "exist?:"
-    puts a_control.exist?
-    puts "type:"
-    puts a_control.get_current_control_type
-    puts "value:"
-    puts a_control.control_name
-
-    puts " "
-
-a_control = window1.control(:point => [236,272])
-    puts "exist?:"
-    puts a_control.exist?
-    puts "type:"
-    puts a_control.new_control_type_method
-
-    puts "value:"
-    puts a_control.control_name
-
-  end
-
-  it "control by focus" do
-    window      = RAutomation::Window.new(:title => /MainFormWindow/i)
-
-    button = window.button(:value => "Reset")
-    button.set_focus
-
-    another_button = window.get_focused_element
-    box1 = another_button.bounding_rectangle
-        box2 =   button.bounding_rectangle
-
-
-    puts "#{box1}"
-    puts "#{box2}"
-
-    sleep 10
-    box1.should == box2
-  end
-
-
   it "control visibility" do
 
     window1      = RAutomation::Window.new(:title => "KY - Agent Gateway Sales and Service")

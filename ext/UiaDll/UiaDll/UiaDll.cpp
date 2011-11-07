@@ -326,6 +326,29 @@ extern "C" __declspec ( dllexport ) int RA_GetName(IUIAutomationElement *pElemen
 	}
 }
 
+extern "C" __declspec ( dllexport ) int RA_GetClassName(IUIAutomationElement *pElement, char *pClass) {
+	BSTR bstrClass ;
+	HRESULT hr = pElement->get_CurrentClassName(&bstrClass) ;
+
+	if (FAILED(hr)) {
+		printf("RA_GetName: get_CurrentClassName failed 0x%x\r\n", hr) ;
+		return -1 ;
+	}
+
+	char *pszClass = _com_util::ConvertBSTRToString(bstrClass) ;
+
+	if (pszClass != NULL){
+		if (pClass == NULL) {
+			return strlen(pszClass) ;
+		} else {
+			strcpy(pClass, pszClass) ;
+			return strlen(pszClass) ;
+		}
+	} else {
+		return -1;
+	}
+}
+
 extern "C" __declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement, int *pResult) {
 	ISelectionItemProvider *pSelectionPattern ;
 	HRESULT hr = pElement->GetCurrentPattern(UIA_SelectionItemPatternId, (IUnknown**)&pSelectionPattern) ;
