@@ -349,7 +349,7 @@ extern "C" __declspec ( dllexport ) int RA_GetClassName(IUIAutomationElement *pE
 	}
 }
 
-extern "C" __declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement, int *pResult) {
+extern "C" __declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement) {
 	ISelectionItemProvider *pSelectionPattern ;
 	HRESULT hr = pElement->GetCurrentPattern(UIA_SelectionItemPatternId, (IUnknown**)&pSelectionPattern) ;
 	
@@ -358,14 +358,13 @@ extern "C" __declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *
 		return FALSE ;
 	}
 
-	BOOL pRetVal ;
-	hr = pSelectionPattern->get_IsSelected(&pRetVal) ;
+	BOOL RetVal ;
+	hr = pSelectionPattern->get_IsSelected(&RetVal) ;
 	if (FAILED(hr)) {
 		printf("RA_GetIsSelected: get_IsSelected failed 0x%x\r\n", hr) ;
 		return FALSE ;
 	} else {
-		*pResult = pRetVal ;
-		return TRUE ;
+		return RetVal ;
 	}
 }
 

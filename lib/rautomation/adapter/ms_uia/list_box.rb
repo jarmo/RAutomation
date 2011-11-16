@@ -47,17 +47,11 @@ module RAutomation
         alias_method :exists?, :exist?
 
         def selected?(index)
-          children = FFI::MemoryPointer.new :pointer, self.count
-          length = UiaDll::find_children(uia_element, children)
-
-          target_element = children.read_array_of_pointer(length)[index]
-          is_selected = FFI::MemoryPointer.new :int, 1
-
-          if UiaDll::get_is_selected(target_element, is_selected) == 1
-            return is_selected.read_int == 1
-          else
-            return false
+          if items[index]
+            return items[index].selected?
           end
+
+          false
         end
 
         def select(index)

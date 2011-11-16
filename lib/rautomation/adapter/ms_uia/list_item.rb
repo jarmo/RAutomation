@@ -37,6 +37,10 @@ module RAutomation
           super && matches_type?(Constants::UIA_LIST_ITEM_CONTROL_TYPE)
         end
 
+        def selected?
+          UiaDll::get_is_selected(uia_element)
+        end
+
         alias_method :exists?, :exist?
 
       end

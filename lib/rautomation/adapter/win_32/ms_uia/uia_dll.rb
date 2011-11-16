@@ -35,7 +35,7 @@ module RAutomation
         attach_function :get_name, :RA_GetName,
                         [:pointer, :pointer], :int
         attach_function :get_is_selected, :RA_GetIsSelected,
-                        [:pointer, :pointer], :int
+                        [:pointer], :bool
         attach_function :select, :RA_Select,
                         [:pointer], :int
         attach_function :set_value, :RA_Set_Value,

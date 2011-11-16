@@ -32,13 +32,8 @@ module RAutomation
           children = FFI::MemoryPointer.new :pointer, self.count
           length = UiaDll::find_children(uia_control(@locators[:id]), children)
           target_element = children.read_array_of_pointer(length)[index]
-          is_selected = FFI::MemoryPointer.new :int, 1
 
-          if UiaDll::get_is_selected(target_element, is_selected) == 1
-            return is_selected.read_int == 1
-          else
-            return false
-          end
+          UiaDll::get_is_selected(target_element)
         end
 
         def select(index)
