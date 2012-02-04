@@ -135,7 +135,10 @@ module RAutomation
     # Checks if the window exists (does have to be visible).
     # @return [Boolean] true if the window exists, false otherwise.
     def exists?
-      @window.exists?
+#      puts "checking for existence"
+      e = @window.exists?
+#      puts "existence check complete"
+      e
     end
 
     alias_method :exist?, :exists?
@@ -152,7 +155,10 @@ module RAutomation
     # Checks if the window exists and is visible.
     # @return [Boolean] true if window exists and is visible, false otherwise
     def present?
-      exists? && visible?
+#      puts "checking for existence and visibility"
+      present = exists? && visible?
+#      puts "existence and visibility check complete"
+      present
     end
 
     # Maximizes the window.

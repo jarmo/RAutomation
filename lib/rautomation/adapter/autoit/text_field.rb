@@ -59,6 +59,11 @@ module RAutomation
         def exists?
           hwnd != 0
         end
+
+        def hwnd
+          handle = Window.autoit.ControlGetHandle(@window.locator_hwnd, "", @autoit_locators)
+          handle.to_i(16)
+        end
       end
     end
   end

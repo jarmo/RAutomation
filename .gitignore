@@ -20,6 +20,8 @@ pkg
 
 ## PROJECT::SPECIFIC
 .idea/*
+Gemfile
+Gemfile.lock
 
 .yardoc/
 doc/

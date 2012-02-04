@@ -41,7 +41,7 @@ namespace :spec do
 
   task :spec => :check_dependencies
 
-  adapters = %w[win_ffi autoit]
+  adapters = %w[win_32 autoit ms_uia]
   adapters.each do |adapter|
     desc "Run specs against #{adapter} adapter"
     task adapter do

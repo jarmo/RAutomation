@@ -11,11 +11,11 @@ describe RAutomation::Buttons do
   end
 
   it "Window#buttons with parameters returns all matching buttons" do
-    SpecHelper::navigate_to_simple_elements
+      SpecHelper::navigate_to_simple_elements
 
-    buttons = RAutomation::Window.new(:title => "SimpleElementsForm").buttons(:value => 'button1')
-    buttons.size.should == 1
-    buttons.first.value.should == 'button1'
+      buttons = RAutomation::Window.new(:title => "SimpleElementsForm").buttons(:value => 'button1')
+      buttons.size.should == 1
+      buttons.first.value.should == 'button1'
   end
 
 end

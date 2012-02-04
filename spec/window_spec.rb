@@ -54,7 +54,10 @@ describe RAutomation::Window do
   it "#class_names" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     window.class_names.size.should == 24
-    window.class_names.should include("WindowsForms10.Window.8.app.0.2bf8098_r15_ad1")
+
+    fail "Expected class name not found." unless window.class_names.include?("WindowsForms10.Window.8.app.0.2bf8098_r15_ad1") or
+                                                 window.class_names.include?("WindowsForms10.Window.8.app.0.2bf8098_r16_ad1")
+
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").class_names}.
             to raise_exception(RAutomation::UnknownWindowException)    
