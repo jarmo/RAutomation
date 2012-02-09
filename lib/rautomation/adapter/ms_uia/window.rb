@@ -193,6 +193,17 @@ module RAutomation
           sleep 1
         end
 
+        # @see RAutomation::Window#minimize
+        def move_window(width, height, x=get_window_rect[0], y=get_window_rect[1])
+          Functions.move_window(hwnd, x, y, width, height)
+          sleep 1
+        end
+
+        # returns an array containing the windows left, top, right, bottom coordinates [left, top, right, bottom]
+        def get_window_rect
+          Functions.get_window_rect(hwnd)
+        end
+
         #todo - replace with UIA version if possible
         # Activates the window and sends keys to it.
         #
