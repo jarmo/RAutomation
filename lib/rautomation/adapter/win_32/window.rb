@@ -13,10 +13,10 @@ module RAutomation
         class << self
           def oleacc_module_handle
             @oleacc_module_handle ||= begin
-                                        oleacc = Functions.load_library "oleacc.dll"
-                                        Functions.co_initialize nil                                        
-                                        oleacc
-                                      end
+              oleacc = Functions.load_library "oleacc.dll"
+              Functions.co_initialize nil
+              oleacc
+            end
           end
         end
 
@@ -125,6 +125,18 @@ module RAutomation
           Functions.show_window(hwnd, Constants::SW_RESTORE)
           sleep 1
         end
+
+        # @see RAutomation::Window#minimize
+        def move_window(width, height, x=get_window_rect[0], y=get_window_rect[1])
+          Functions.move_window(hwnd, x, y, width, height)
+          sleep 1
+        end
+
+        # returns an array containing the windows left, top, right, bottom coordinates [left, top, right, bottom]
+        def get_window_rect
+          Functions.get_window_rect(hwnd)
+        end
+
 
         # Activates the window and sends keys to it.
         #
