@@ -135,10 +135,7 @@ module RAutomation
     # Checks if the window exists (does have to be visible).
     # @return [Boolean] true if the window exists, false otherwise.
     def exists?
-#      puts "checking for existence"
-      e = @window.exists?
-#      puts "existence check complete"
-      e
+      @window.exists?
     end
 
     alias_method :exist?, :exists?
@@ -155,10 +152,7 @@ module RAutomation
     # Checks if the window exists and is visible.
     # @return [Boolean] true if window exists and is visible, false otherwise
     def present?
-#      puts "checking for existence and visibility"
-      present = exists? && visible?
-#      puts "existence and visibility check complete"
-      present
+      exists? && visible?
     end
 
     # Maximizes the window.
@@ -208,7 +202,7 @@ module RAutomation
     # @note Refer to specific {Adapter} documentation for possible _locator_ parameters.
     # @param [Hash] locators for the {Button}.
     # @raise [UnknownWindowException] if the window doesn't exist.
-    def button(locators)
+    def button(locators={})
       wait_until_present
       Button.new(@window, locators)
     end
@@ -216,7 +210,7 @@ module RAutomation
     # Retrieves {TextField} on the window.
     # @note Refer to specific {Adapter} documentation for possible _locators_ parameters.
     # @raise [UnknownWindowException] if the window doesn't exist.
-    def text_field(locators)
+    def text_field(locators={})
       wait_until_present
       TextField.new(@window, locators)
     end
