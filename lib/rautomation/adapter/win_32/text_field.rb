@@ -27,18 +27,6 @@ module RAutomation
           raise "Cannot set value on a disabled text field" if disabled?
           set ""
         end
-
-        # @see RAutomation::TextField#value
-        def value
-          Functions.control_value(hwnd)
-        end
-
-        def exist?
-          super && matches_type?(Constants::UIA_EDIT_CONTROL_TYPE)
-        end
-
-        alias_method :exists?, :exist?
-
       end
     end
   end

@@ -1,8 +1,6 @@
 module RAutomation
   module Adapter
     module Win32
-      autoload :UiaDll, File.dirname(__FILE__) + "/ms_uia/uia_dll"
-
       class Window
         include WaitHelper
         include Locators
@@ -61,17 +59,9 @@ module RAutomation
         def class_names
           classes = []
           controls.each do |control|
-            classes << Functions.control_class(control.hwnd)
+            classes << control.class_name
           end
           classes.sort
-        end
-
-        def bounding_rectangle
-          window = UiaDll::element_from_handle(hwnd)
-
-          boundary = FFI::MemoryPointer.new :long, 4
-          UiaDll::bounding_rectangle(window, boundary)
-          boundary.read_array_of_long(4)
         end
 
         # @see RAutomation::Window#activate
@@ -170,15 +160,15 @@ module RAutomation
           TextField.new(self, locator)
         end
 
-        def label(locator)
+        def label(locator={})
           Label.new(self, locator)
         end
 
-        def control(locator)
+        def control(locator={})
           Control.new(self, locator)
         end
 
-        def list_box(locator)
+        def list_box(locator={})
           ListBox.new(self, locator)
         end
 
@@ -190,22 +180,22 @@ module RAutomation
 
         # extend public API
         RAutomation::Window.class_eval do
-          def select_list(locator)
+          def select_list(locator={})
             wait_until_exists
             RAutomation::Adapter::Win32::SelectList.new(@window, locator)
           end
 
-          def checkbox(locator)
+          def checkbox(locator={})
             wait_until_exists
             RAutomation::Adapter::Win32::Checkbox.new(@window, locator)
           end
 
-          def radio(locator)
+          def radio(locator={})
             wait_until_exists
             RAutomation::Adapter::Win32::Radio.new(@window, locator)
           end
 
-          def table(locator)
+          def table(locator={})
             wait_until_exists
             RAutomation::Adapter::Win32::Table.new(@window, locator)
           end

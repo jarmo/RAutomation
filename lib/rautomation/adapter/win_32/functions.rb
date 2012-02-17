@@ -165,27 +165,15 @@ module RAutomation
             end
           end
 
-          def control_hwnd(window_hwnd, locators)
-            case
-              when locators[:id]
-                uia_window = UiaDll::element_from_handle(window_hwnd) # finds IUIAutomationElement for given parent window
-                uia_control = UiaDll::find_child_by_id(uia_window, locators[:id].to_s)
-                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
-                raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
-                hwnd
-              when locators[:point]
-                uia_control = UiaDll::element_from_point(locators[:point][0], locators[:point][1])
-                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
-                raise UnknownElementException, "#{locators[:point]} does not exist" if hwnd == 0
-                hwnd
-              else
-                hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
-                  locators_match?(locators, control_properties(hwnd, locators))
-                end
+          alias_method :activate_control, :activate_window
 
-                raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
-                hwnd
+          def control_hwnd(window_hwnd, locators)
+            hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
+              locators_match?(locators, control_properties(hwnd, locators))
             end
+
+            raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
+            hwnd
           end
 
           alias_method :child_hwnd, :control_hwnd

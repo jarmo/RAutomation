@@ -23,6 +23,10 @@ module RAutomation
           Functions.control_hwnd(@window.hwnd, @locators)
         end
 
+        def class_name
+          Functions.control_class(hwnd)
+        end
+
         def click
           assert_enabled
           clicked = false
@@ -47,6 +51,8 @@ module RAutomation
           false
         end
 
+        alias_method :exists?, :exist?
+
         def enabled?
           !disabled?
         end
@@ -55,71 +61,21 @@ module RAutomation
           Functions.unavailable? hwnd
         end
 
-        def has_focus?
+        def focus
+          assert_enabled
+          @window.activate
+          Functions.activate_control hwnd
+        end
+
+        def focused?
           Functions.has_focus?(hwnd)
         end
 
-        def set_focus
-          assert_enabled
-          uia_control = UiaDll::element_from_handle hwnd
-          UiaDll::set_focus uia_control
+        def value
+          Functions.control_value(hwnd)
         end
 
-        def uia_control(automation_id)
-          uia_window = UiaDll::element_from_handle(@window.hwnd) # finds IUIAutomationElement for given parent window
-          uia_element = UiaDll::find_child_by_id(uia_window, automation_id.to_s)
-          fail "Cannot find UIAutomationElement" if uia_element.nil?
-          uia_element
-        end
-
-        def bounding_rectangle
-          element = UiaDll::element_from_handle(hwnd)
-
-          boundary = FFI::MemoryPointer.new :long, 4
-          UiaDll::bounding_rectangle(element, boundary)
-
-          boundary.read_array_of_long(4)
-        end
-
-        def visible?
-          element = UiaDll::element_from_handle(hwnd)
-
-          off_screen = FFI::MemoryPointer.new :int
-
-          if UiaDll::is_offscreen(element, off_screen) == 0
-            fail "Could not check element"
-          end
-
-          puts "return #{off_screen.read_int}"
-          if off_screen.read_int == 0
-            return true
-          end
-          false
-        end
-
-        def matches_type?(clazz)
-          get_current_control_type == clazz
-        end
-
-        def get_current_control_type
-          if @locators[:point]
-            uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-          else
-            uia_control = UiaDll::element_from_handle(hwnd)
-          end
-
-          UiaDll::current_control_type(uia_control)
-        end
-
-        def control_name
-          uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-          element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(uia_control, nil) + 1
-
-          UiaDll::get_name(uia_control, element_name)
-          element_name.read_string
-        end
-
-        alias_method :exists?, :exist?
+        private
 
         def assert_enabled
           raise "Cannot interact with disabled control #{@locators.inspect} on window #{@window.locators.inspect}!" if disabled?

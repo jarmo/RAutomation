@@ -1,13 +1,15 @@
 module RAutomation
   module Adapter
     module Win32
-
       class SelectList < Control
         include WaitHelper
         include Locators
 
+        # Default locators used for searching buttons.
+        DEFAULT_LOCATORS = {:class => /combobox/i}
+
         class SelectListOption
-          attr_accessor :text, :index, :control_hwnd
+          attr_accessor :text, :index
 
           def initialize(select_list, text, index)
             @select_list = select_list
@@ -16,34 +18,24 @@ module RAutomation
           end
 
           def selected?
-            selected_idx = Functions.send_message(@select_list.control_hwnd, Constants::CB_GETCURSEL, 0, nil)
+            selected_idx = Functions.send_message(@select_list.hwnd, Constants::CB_GETCURSEL, 0, nil)
             return false if selected_idx == Constants::CB_ERR
-            @text == Functions.retrieve_combobox_item_text(@select_list.control_hwnd, selected_idx)
+            @text == Functions.retrieve_combobox_item_text(@select_list.hwnd, selected_idx)
           end
 
           def select
-            @select_list.assert_enabled
-            Functions.send_message(@select_list.control_hwnd, Constants::CB_SETCURSEL, @index, nil) != Constants::CB_ERR
+            @select_list.send :assert_enabled
+            Functions.send_message(@select_list.hwnd, Constants::CB_SETCURSEL, @index, nil) != Constants::CB_ERR
           end
 
           alias_method :set, :select
-        end
-
-        def initialize(window, locators)
-          super
-          @hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-        end
-
-        def set(value)
-          list      = UiaDll::element_from_handle(@hwnd)
-          UiaDll::set_value(list, value)
         end
 
         def options(options = {})
           items = []
 
           item_count.times do |item_no|
-            item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
+            item = Functions.retrieve_combobox_item_text(hwnd, item_no)
 
             if options[:text]
               items.push(SelectListOption.new(self, item, item_no)) if options[:text] == item
@@ -62,47 +54,41 @@ module RAutomation
 
         def option(options)
           item_count.times do |item_no|
-            item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
+            item = Functions.retrieve_combobox_item_text(hwnd, item_no)
             return SelectListOption.new(self, item, item_no) if options[:text] == item
           end
 
           nil
         end
 
-        def control_hwnd
-          @hwnd
+        def select(index)
+          Functions.send_message(hwnd, Constants::CB_SETCURSEL, index, nil) != Constants::CB_ERR
         end
 
-        def select(index)
-          Functions.send_message(@hwnd, Constants::CB_SETCURSEL, index, nil) != Constants::CB_ERR
+        def set(text)
+          option(:text => text).set
         end
 
         def list_item_height
-          Functions.send_message(@hwnd, Constants::CB_GETITEMHEIGHT, 0 ,nil)
+          Functions.send_message(hwnd, Constants::CB_GETITEMHEIGHT, 0 ,nil)
         end
 
         def dropbox_boundary
           boundary = FFI::MemoryPointer.new :long, 4
 
-          Functions.send_message(@hwnd, Constants::CB_GETDROPPEDCONTROLRECT, 0 ,boundary)
+          Functions.send_message(hwnd, Constants::CB_GETDROPPEDCONTROLRECT, 0 ,boundary)
 
           boundary.read_array_of_long(4)
         end
 
         def get_top_index
-          Functions.send_message(@hwnd, Constants::CB_GETTOPINDEX, 0 ,nil)
+          Functions.send_message(hwnd, Constants::CB_GETTOPINDEX, 0 ,nil)
         end
-
-        def exist?
-          super && matches_type?(Constants::UIA_COMBOBOX_CONTROL_TYPE)
-        end
-
-        alias_method :exists?, :exist?
 
         private
 
         def item_count
-          Functions.send_message(@hwnd, Constants::CB_GETCOUNT, 0, nil)
+          Functions.send_message(hwnd, Constants::CB_GETCOUNT, 0, nil)
         end
 
       end

@@ -9,12 +9,6 @@ describe "Win32::Checkbox", :if => SpecHelper.adapter == :win_32 do
         to raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "check for checkbox class" do
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "textField").should_not exist
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBox").should exist
-  end
-
-
   it "#set? & #set" do
     checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
     checkbox.should_not be_set
@@ -24,7 +18,7 @@ describe "Win32::Checkbox", :if => SpecHelper.adapter == :win_32 do
   end
 
   it "#value" do
-    checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBox")
+    checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
     checkbox.value.should == "checkBox"
   end
 
@@ -38,16 +32,16 @@ describe "Win32::Checkbox", :if => SpecHelper.adapter == :win_32 do
   end
 
   it "enabled/disabled" do
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBox").should be_enabled
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBox").should_not be_disabled
+    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should be_enabled
+    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should_not be_disabled
 
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBoxDisabled").should_not be_enabled
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBoxDisabled").should be_disabled
+    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBoxDisabled").should_not be_enabled
+    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBoxDisabled").should be_disabled
   end
 
   it "cannot check a disabled checkbox" do
     lambda {
-      RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBoxDisabled").set
+      RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBoxDisabled").set
     }.should raise_error
   end
 

@@ -10,12 +10,6 @@ describe "Win32::RadioButton", :if => SpecHelper.adapter == :win_32 do
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
-  it "check for radio class" do
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:id => "textField").should_not exist
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:id => "radioButton2").should exist
-  end
-
-
   it "#set? & #set" do
     radio = RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1")
     radio.should_not be_set

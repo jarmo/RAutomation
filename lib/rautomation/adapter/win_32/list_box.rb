@@ -1,52 +1,37 @@
 module RAutomation
   module Adapter
     module Win32
-
       class ListBox < Control
         include WaitHelper
         include Locators
 
+        # Default locators used for searching buttons.
+        DEFAULT_LOCATORS = {:class => /listbox/i}
+
         def count
-          UiaDll::find_children(uia_control(@locators[:id]), nil)
+          Functions.send_message(hwnd, Constants::LB_GETCOUNT, 0, nil)
         end
+
+        alias_method :size, :count
 
         def items
-          list_items = []
-          children = FFI::MemoryPointer.new :pointer, self.count
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
-          children.read_array_of_pointer(length).each do |child|
-            child_name = FFI::MemoryPointer.new :char, UiaDll::get_name(child, nil) + 1
-            UiaDll::get_name(child, child_name)
-            list_items.push child_name.read_string
+          count.times.reduce([]) do |memo, i|
+            text_length = Functions.send_message(hwnd, Constants::LB_GETTEXTLEN, 0, nil) + 1
+            text = FFI::MemoryPointer.new :char, text_length
+            Functions.send_message(hwnd, Constants::LB_GETTEXT, i, text)
+            memo << text.read_string
           end
-          list_items
-        end
-
-        def exist?
-          super && matches_type?(Constants::UIA_LIST_CONTROL_TYPE)
-        end
-
-        alias_method :exists?, :exist?
-
-        def selected?(index)
-          children = FFI::MemoryPointer.new :pointer, self.count
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
-          target_element = children.read_array_of_pointer(length)[index]
-
-          UiaDll::get_is_selected(target_element)
-        end
-
-        def select(index)
-          children = FFI::MemoryPointer.new :pointer, self.count
-
-          length = UiaDll::find_children(uia_control(@locators[:id]), children)
-          target_element = children.read_array_of_pointer(length)[index]
-
-          UiaDll::select(target_element)
         end
 
         alias_method :strings, :items
 
+        def selected?(i)
+          Functions.send_message(hwnd, Constants::LB_GETSEL, i, nil) > 0
+        end
+
+        def select(i)
+          Functions.send_message(hwnd, Constants::LB_SETCURSEL, i, nil)
+        end
 
       end
     end

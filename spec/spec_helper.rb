@@ -113,9 +113,7 @@ RSpec.configure do |config|
     RAutomation::Window.wait_timeout = 15
 
     @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
-#    puts"waiting for window with pid #{@pid1} to be present"
     RAutomation::WaitHelper.wait_until {RAutomation::Window.new(:pid => @pid1).present?}
-#    puts"window present"
   end
 
   config.after(:each) do
