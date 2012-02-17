@@ -34,7 +34,8 @@ module RAutomation
         # @option locators [String, Fixnum] :index 0-based index to specify n-th window if all other criteria match
         #   all other criteria match
         # @see RAutomation::Window#initialize
-        def initialize(locators)
+        def initialize(container, locators)
+          @container = container
           extract(locators)
         end
 
@@ -160,56 +161,57 @@ module RAutomation
           TextField.new(self, locator)
         end
 
-        def label(locator={})
-          Label.new(self, locator)
-        end
-
-        def control(locator={})
-          Control.new(self, locator)
-        end
-
-        def list_box(locator={})
-          ListBox.new(self, locator)
-        end
-
         # Redirects all method calls not part of the public API to the {Functions} directly.
         # @see RAutomation::Window#method_missing
         def method_missing(name, *args)
           Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
 
-        # extend public API
-        RAutomation::Window.class_eval do
-          def select_list(locator={})
-            wait_until_exists
-            RAutomation::Adapter::Win32::SelectList.new(@window, locator)
-          end
+        # Win32 adapter specific API methods
+        def label(locator={})
+          @container.wait_until_present
+          Label.new(self, locator)
+        end
 
-          def checkbox(locator={})
-            wait_until_exists
-            RAutomation::Adapter::Win32::Checkbox.new(@window, locator)
-          end
+        def control(locator={})
+          @container.wait_until_present
+          Control.new(self, locator)
+        end
 
-          def radio(locator={})
-            wait_until_exists
-            RAutomation::Adapter::Win32::Radio.new(@window, locator)
-          end
+        def list_box(locator={})
+          @container.wait_until_present
+          ListBox.new(self, locator)
+        end
 
-          def table(locator={})
-            wait_until_exists
-            RAutomation::Adapter::Win32::Table.new(@window, locator)
-          end
+        def select_list(locator={})
+          @container.wait_until_present
+          SelectList.new(self, locator)
+        end
 
-          # Creates the child window object.
-          # @note This is an Win32 adapter specific method, not part of the public API
-          # @example
-          #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
-          #     child(:title => /some popup/)
-          # @param (see Window#initialize)
-          # @return [RAutomation::Window] child window, popup or regular window.
-          def child(locators)
-            RAutomation::Window.new Functions.child_window_locators(@window.hwnd, locators)
-          end
+        def checkbox(locator={})
+          @container.wait_until_present
+          Checkbox.new(self, locator)
+        end
+
+        def radio(locator={})
+          @container.wait_until_present
+          Radio.new(self, locator)
+        end
+
+        def table(locator={})
+          @container.wait_until_present
+          Table.new(self, locator)
+        end
+
+        # Creates the child window object.
+        # @note This is an Win32 adapter specific method, not part of the public API
+        # @example
+        #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
+        #     child(:title => /some popup/)
+        # @param (see Window#initialize)
+        # @return [RAutomation::Window] child window, popup or regular window.
+        def child(locators)
+          RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
         end
 
         private

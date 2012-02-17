@@ -37,31 +37,9 @@ module RAutomation
         # @option locators [String, Fixnum] :index 0-based index to specify n-th window if all other criteria match
         #   all other criteria match
         # @see RAutomation::Window#initialize
-        def initialize(locators)
+        def initialize(container, locators)
+          @container = container
           extract(locators)
-        end
-
-
-        def element
-          puts "finding element with #{@locators.inspect}"
-
-          case
-            when @locators[:focus]
-              uia_control = UiaDll::get_focused_element
-            when @locators[:id]
-              uia_control = UiaDll::find_window(@locators[:id].to_s)
-              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_control.nil?
-            when @locators[:point]
-              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-              raise UnknownElementException, "#{@locators[:point]} does not exist" if uia_control.nil?
-            else
-              hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
-                locators_match?(locators, control_properties(hwnd, locators))
-              end
-              raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
-              uia_control = UiaDll::element_from_handle(hwnd)
-          end
-          uia_control
         end
 
         #todo - replace with UIA version
@@ -75,23 +53,7 @@ module RAutomation
         #todo - replace with UIA version
         # @see RAutomation::Window#pid
         def pid
-#          puts "finding pid"
-
-          value = Functions.window_pid(hwnd)
-#          value = UiaDll::current_process_id(element)
-
-#          puts "pid found"
-          value
-        end
-
-        def new_pid
-          puts "finding pid"
-
-#                  value = Functions.window_pid(hwnd)
-          value = UiaDll::current_process_id(uia_control())
-
-          puts "pid found"
-          value
+          Functions.window_pid(hwnd)
         end
 
         #todo - replace with UIA version
@@ -100,21 +62,17 @@ module RAutomation
           Functions.window_title(hwnd)
         end
 
-        def bounding_rectangle
-          window = UiaDll::element_from_handle(hwnd)
+        # @see RAutomation::Window#class_names
+        def class_names
+          root_element = UiaDll::element_from_handle(hwnd)
 
-          boundary = FFI::MemoryPointer.new :long, 4
-          UiaDll::bounding_rectangle(window, boundary)
+          root_class = FFI::MemoryPointer.new :char, UiaDll::get_class_name(root_element, nil) + 1
+          UiaDll::get_class_name(root_element, root_class)
 
-          boundary.read_array_of_long(4)
-        end
-
-        def move_mouse(x, y)
-          UiaDll::move_mouse(x, y)
-        end
-
-        def click_mouse()
-          UiaDll::click_mouse
+          classes = gather_children_classes(root_element)
+          classes = classes.flatten
+          classes.delete("")
+          classes.sort
         end
 
         # @see RAutomation::Window#activate
@@ -125,17 +83,6 @@ module RAutomation
           restore if minimized?
           sleep 1
         end
-
-        #todo - replace with UIA version
-        #Why are these different?
-        # @see RAutomation::Window#activate
-#        def activate
-#          return if !exists? || active?
-#          Functions.activate_window(hwnd)
-#         restore if minimized?
-#         sleep 1
-#        end
-
 
         #todo - replace with UIA version
         # @see RAutomation::Window#active?
@@ -152,12 +99,7 @@ module RAutomation
         #todo - replace with UIA version
         # @see RAutomation::Window#exists?
         def exists?
-          result = hwnd && Functions.window_exists(hwnd)
-          !!result
-#          puts "calling sub exists?"
-#          p = !!pid
-#          puts "exists? complete"
-          #         p
+          hwnd && Functions.window_exists(hwnd)
         end
 
         #todo - replace with UIA version
@@ -221,6 +163,54 @@ module RAutomation
           end
         end
 
+        #todo - replace with UIA version
+        # @see RAutomation::Window#close
+        def close
+          Functions.close_window(hwnd)
+        end
+
+        # @see Button#initialize
+        # @see RAutomation::Window#button
+        def button(locator)
+          Button.new(self, locator)
+        end
+
+        # @see TextField#initialize
+        # @see RAutomation::Window#text_field
+        def text_field(locator)
+          TextField.new(self, locator)
+        end
+
+        # Redirects all method calls not part of the public API to the {Functions} directly.
+        # @see RAutomation::Window#method_missing
+        def method_missing(name, *args)
+          Functions.respond_to?(name) ? Functions.send(name, *args) : super
+        end
+
+        # MsUia adapter specific API methods
+        def element
+          case
+            when @locators[:focus]
+              uia_control = UiaDll::get_focused_element
+            when @locators[:id]
+              uia_control = UiaDll::find_window(@locators[:id].to_s)
+              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_control.nil?
+            when @locators[:point]
+              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
+              raise UnknownElementException, "#{@locators[:point]} does not exist" if uia_control.nil?
+            else
+              hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
+                locators_match?(locators, control_properties(hwnd, locators))
+              end
+              raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
+              uia_control = UiaDll::element_from_handle(hwnd)
+          end
+          uia_control
+        end
+
+        def new_pid
+          UiaDll::current_process_id(uia_control())
+        end
 
         def display_tree
           root_element = UiaDll::element_from_handle(hwnd)
@@ -258,18 +248,6 @@ module RAutomation
           UiaDll::find_children(element, nil)
         end
 
-        def class_names
-          root_element = UiaDll::element_from_handle(hwnd)
-
-          root_class = FFI::MemoryPointer.new :char, UiaDll::get_class_name(root_element, nil) + 1
-          UiaDll::get_class_name(root_element, root_class)
-
-          classes = gather_children_classes(root_element)
-          classes = classes.flatten
-          classes.delete("")
-          classes.sort
-        end
-
         def gather_children_classes(root_element)
           element_tree = []
 
@@ -297,89 +275,81 @@ module RAutomation
           UiaDll::get_focused_element()
         end
 
-        #todo - replace with UIA version
-        # @see RAutomation::Window#close
-        def close
-          Functions.close_window(hwnd)
+        def bounding_rectangle
+          window = UiaDll::element_from_handle(hwnd)
+
+          boundary = FFI::MemoryPointer.new :long, 4
+          UiaDll::bounding_rectangle(window, boundary)
+
+          boundary.read_array_of_long(4)
         end
 
-        # @see Button#initialize
-        # @see RAutomation::Window#button
-        def button(locator)
-          Button.new(self, locator)
+        def move_mouse(x, y)
+          UiaDll::move_mouse(x, y)
         end
 
-        # @see TextField#initialize
-        # @see RAutomation::Window#text_field
-        def text_field(locator)
-          TextField.new(self, locator)
+        def click_mouse()
+          UiaDll::click_mouse
         end
 
         def label(locator)
+          @container.wait_until_present
           Label.new(self, locator)
         end
 
         def control(locator)
+          @container.wait_until_present
           Control.new(self, locator)
         end
 
         def controls(locator)
+          @container.wait_until_present
           Controls.new(self, locator)
         end
 
         def list_box(locator)
+          @container.wait_until_present
           ListBox.new(self, locator)
         end
 
         def list_item(locator)
+          @container.wait_until_present
           ListItem.new(self, locator)
         end
 
-        # Redirects all method calls not part of the public API to the {Functions} directly.
-        # @see RAutomation::Window#method_missing
-        def method_missing(name, *args)
-          Functions.respond_to?(name) ? Functions.send(name, *args) : super
+        def select_list(locator)
+          @container.wait_until_present
+          SelectList.new(self, locator)
         end
 
-        #todo - why is the class extended like this?
-        # extend public API
-        RAutomation::Window.class_eval do
-          def select_list(locator)
-            wait_until_exists
-            RAutomation::Adapter::MsUia::SelectList.new(@window, locator)
-          end
-
-          def checkbox(locator)
-            wait_until_exists
-            RAutomation::Adapter::MsUia::Checkbox.new(@window, locator)
-          end
-
-          def radio(locator)
-            wait_until_exists
-            RAutomation::Adapter::MsUia::Radio.new(@window, locator)
-          end
-
-          def table(locator)
-            wait_until_exists
-            RAutomation::Adapter::MsUia::Table.new(@window, locator)
-          end
-
-          #todo - replace with UIA version
-          # Creates the child window object.
-          # @note This is an Win32 adapter specific method, not part of the public API
-          # @example
-          #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
-          #     child(:title => /some popup/)
-          # @param (see Window#initialize)
-          # @return [RAutomation::Window] child window, popup or regular window.
-          def child(locators)
-            RAutomation::Window.new Functions.child_window_locators(@window.hwnd, locators)
-          end
+        def checkbox(locator)
+          @container.wait_until_present
+          Checkbox.new(self, locator)
         end
 
-#        private
+        def radio(locator)
+          @container.wait_until_present
+          Radio.new(self, locator)
+        end
 
-        #todo - replace with UIA versions if possible
+        def table(locator)
+          @container.wait_until_present
+          Table.new(self, locator)
+        end
+
+        #todo - replace with UIA version
+        # Creates the child window object.
+        # @note This is an Win32 adapter specific method, not part of the public API
+        # @example
+        #   RAutomation::Window.new(:title => /Windows Internet Explorer/i).
+        #     child(:title => /some popup/)
+        # @param (see Window#initialize)
+        # @return [RAutomation::Window] child window, popup or regular window.
+        def child(locators)
+          RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
+        end
+
+        private
 
         def press_key key
           Functions.send_key(key, 0, 0, nil)

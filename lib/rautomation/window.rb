@@ -64,7 +64,7 @@ module RAutomation
     # @param [Hash] locators locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
-      @window = Adapter.const_get(normalize(@adapter)).const_get(:Window).new(locators)
+      @window = Adapter.const_get(normalize(@adapter)).const_get(:Window).new(self, locators)
     end
 
     class << self
@@ -220,8 +220,6 @@ module RAutomation
       @window.send(name, *args)
     end
 
-    private
-
     def wait_until_present
       WaitHelper.wait_until {present?}
     rescue WaitHelper::TimeoutError
@@ -233,6 +231,8 @@ module RAutomation
     rescue WaitHelper::TimeoutError
       raise UnknownWindowException, "Window with locator #{@window.locators.inspect} doesn't exist!"
     end
+
+    private
 
     def normalize adapter
       adapter.to_s.split("_").map {|word| word.capitalize}.join

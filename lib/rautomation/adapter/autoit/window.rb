@@ -44,7 +44,8 @@ module RAutomation
         # @option locators [String, Fixnum] :hwnd Window handle in decimal format
         # @option locators [String, Fixnum] :index 0-based index to specify n-th window if all other criteria match
         # @see RAutomation::Window#initialize
-        def initialize(locators)
+        def initialize(container, locators)
+          @container = container
           @hwnd = locators[:hwnd]
           @locator_index = locators.delete(:index) if locators[:index] && locators.size == 1
           @locator_pid = locators.delete(:pid).to_i if locators[:pid]
@@ -63,7 +64,7 @@ module RAutomation
               locators = "[regexptitle:]" # match all, needed for the case when only :index or :pid is used
             end
             windows = @@autoit.WinList(locators, @locator_text).pop.compact.
-                map { |handle| self.class.new(:hwnd => handle.hex) }
+                map { |handle| RAutomation::Window.new(:hwnd => handle.hex) }
             windows.delete_if { |window| !window.visible? }
 
             if @locator_pid
@@ -153,8 +154,35 @@ module RAutomation
           @@autoit.Send(keys)
         end
 
+        # @see RAutomation::Window#close
+        def close
+          @@autoit.WinClose(locator_hwnd)
+          @@autoit.WinKill(locator_hwnd)
+        end
+
+        # @see Button#initialize
+        # @see RAutomation::Window#button
+        def button(locator={})
+          Button.new(self, locator)
+        end
+
+        # @see TextField#initialize
+        # @see RAutomation::Window#text_field
+        def text_field(locator={})
+          TextField.new(self, locator)
+        end
+
+        # Redirects all method calls not part of the public API to the AutoIt directly.
+        # @example execute AutoIt's WinGetTitle function:
+        #   RAutomation::Window.new(:hwnd => 123456).WinGetTitle(...)
+        # @see RAutomation::Window#method_missing
+        def method_missing(name, *args)
+          @@autoit.send(name, *args)
+        end
+
+        # AutoIt adapter specific API methods
         def move_mouse(x_coord, y_coord)
-          @@autoit.MouseMove(x_coord,y_coord)
+          @@autoit.MouseMove(x_coord, y_coord)
         end
 
         def mouse_position
@@ -171,32 +199,6 @@ module RAutomation
 
         def release_mouse(button = "left")
           @@autoit.MouseUp(button)
-        end
-
-        # @see RAutomation::Window#close
-        def close
-          @@autoit.WinClose(locator_hwnd)
-          @@autoit.WinKill(locator_hwnd)
-        end
-
-        # @see Button#initialize
-        # @see RAutomation::Window#button
-        def button(locator)
-          Button.new(self, locator)
-        end
-
-        # @see TextField#initialize
-        # @see RAutomation::Window#text_field
-        def text_field(locator)
-          TextField.new(self, locator)
-        end
-
-        # Redirects all method calls not part of the public API to the AutoIt directly.
-        # @example execute AutoIt's WinGetTitle function:
-        #   RAutomation::Window.new(:hwnd => 123456).WinGetTitle(...)
-        # @see RAutomation::Window#method_missing
-        def method_missing(name, *args)
-          @@autoit.send(name, *args)
         end
 
         # @private
