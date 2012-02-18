@@ -8,7 +8,7 @@ describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
 
     window.maximize
     control = window.control(:id => "radioButtonReset")
-    control.bounding_rectangle.should == [285, 218, 360, 241]
+    control.bounding_rectangle.should be_all {|coord| coord.between?(200, 400)}
   end
 
    it "control process id", :special => true do
@@ -25,27 +25,4 @@ describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
     control.control_class.should =~ /WindowsForms10.BUTTON.app.0.2bf8098_r1[0-9]_ad1/
   end
 
-=begin
-  it "control visibility" do
-
-    window1      = RAutomation::Window.new(:title => "KY - Agent Gateway Sales and Service")
-
-    window1.activate
-    button = window1.button(:value => "Sm_Modify_N\nSm_Modify_D\nSm_Modify_P")
-    puts "exist?:"
-    puts button.exist?
-    puts "type:"
-    puts button.get_current_control_type
-    puts "visible?:"
-    puts button.visible?
-
-button = window1.button(:value => "Sm_Print_Rate_Report_N\nSm_Print_Rate_Report_D\nSm_Print_Rate_Report_P")
-    puts "exist?:"
-    puts button.exist?
-    puts "type:"
-    puts button.get_current_control_type
-    puts "visible?:"
-    puts button.visible?
-  end
-=end
 end
