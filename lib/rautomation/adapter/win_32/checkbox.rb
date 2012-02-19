@@ -6,6 +6,8 @@ module RAutomation
         include Locators
         include ButtonHelper
 
+        DEFAULT_LOCATORS = {:class => /button/i}
+
       end
     end
   end
