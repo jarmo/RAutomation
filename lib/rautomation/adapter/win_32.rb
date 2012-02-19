@@ -5,7 +5,7 @@ rescue Gem::LoadError
 end
 require "ffi"
 require File.dirname(__FILE__) + "/win_32/constants"
-require File.dirname(__FILE__) + "/win_32/keystroke_converter"
+require File.dirname(__FILE__) + "/win_32/keys"
 require File.dirname(__FILE__) + "/win_32/functions"
 require File.dirname(__FILE__) + "/win_32/locators"
 require File.dirname(__FILE__) + "/win_32/window"

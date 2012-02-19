@@ -172,7 +172,7 @@ module RAutomation
               locators_match?(locators, control_properties(hwnd, locators))
             end
 
-            raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
+            raise UnknownElementException, "Element with #{locators.inspect} does not exist" if hwnd == 0 || hwnd.nil?
             hwnd
           end
 

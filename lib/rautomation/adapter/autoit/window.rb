@@ -151,7 +151,7 @@ module RAutomation
             activate
             active?
           end
-          @@autoit.Send(keys)
+          @@autoit.Send(keys[0])
         end
 
         # @see RAutomation::Window#close

@@ -142,7 +142,7 @@ module RAutomation
         # @see RAutomation::Window#send_keys
         def send_keys(keys)
           shift_pressed = false
-          KeystrokeConverter.convert(keys).each do |key|
+          KeystrokeConverter.convert(keys[0]).each do |key|
             wait_until do
               activate
               active?
