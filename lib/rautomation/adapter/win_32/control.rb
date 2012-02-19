@@ -33,7 +33,7 @@ module RAutomation
           wait_until do
             @window.activate
             @window.active? &&
-                Functions.set_control_focus(hwnd) &&
+                focus &&
                 Functions.control_click(hwnd) &&
                 clicked = true # is clicked at least once
 
