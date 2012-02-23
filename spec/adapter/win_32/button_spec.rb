@@ -10,7 +10,7 @@ describe "Win32::Button", :if => SpecHelper.adapter == :win_32 do
     window.button(:value => "Disabled").should_not be_enabled
   end
 
-  it "#set_focus" do
+  it "#focus" do
     button = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).button(:value => "Enabled")
     button.should_not be_focused
     button.focus

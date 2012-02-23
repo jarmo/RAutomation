@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "Win32::TextField", :if => SpecHelper.adapter == :win_32 do
 
   it "enabled/disabled" do
-    RAutomation::Window.new(:title => "MainFormWindow").text_field.should be_enabled
-    RAutomation::Window.new(:title => "MainFormWindow").text_field.should_not be_disabled
+    RAutomation::Window.new(:title => "MainFormWindow").text_field(:index => 1).should be_enabled
+    RAutomation::Window.new(:title => "MainFormWindow").text_field(:index => 1).should_not be_disabled
   end
 
   it "cannot set a value to a disabled text field" do

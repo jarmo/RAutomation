@@ -64,7 +64,6 @@ module RAutomation
         def focus
           assert_enabled
           @window.activate
-          Functions.activate_control hwnd
           Functions.set_control_focus hwnd
         end
 

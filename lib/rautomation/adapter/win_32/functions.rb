@@ -62,6 +62,8 @@ module RAutomation
                         [], :long
 
         # kernel32
+        attach_function :current_thread_id, :GetCurrentThreadId,
+                        [], :long
         attach_function :open_process, :OpenProcess,
                         [:int, :bool, :int], :long
         attach_function :terminate_process, :TerminateProcess,
@@ -241,7 +243,7 @@ module RAutomation
           private
 
           def within_foreground_thread(hwnd)
-            foreground_thread = window_thread_process_id(foreground_window, nil)
+            foreground_thread = current_thread_id
             other_thread = window_thread_process_id(hwnd, nil)
             attach_thread_input(foreground_thread, other_thread, true) unless other_thread == foreground_thread
             yield
@@ -266,13 +268,8 @@ module RAutomation
 
           def locators_match?(locators, properties)
             locators.all? do |locator, value|
-              if locator == :index
-                true
-              elsif value.is_a?(Regexp)
-                properties[locator] =~ value
-              else
-                properties[locator] == value
-              end
+              locator == :index or
+                value.is_a?(Regexp) ? properties[locator] =~ value : properties[locator] == value
             end
           end
 

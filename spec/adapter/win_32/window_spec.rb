@@ -24,15 +24,16 @@ describe "Win32::Window", :if => SpecHelper.adapter == :win_32 do
 
   it "#send_keys" do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
-    window.text_field(:index => 1).focus
+    text_field = window.text_field(:index => 1)
+    text_field.focus
     window.send_keys "abc123ABChiHI!"
-    window.text_field.value.should == "abc123ABChiHI!"
+    text_field.value.should == "abc123ABChiHI!"
 
     window.send_keys :space, "X"
-    window.text_field.value.should == "abc123ABChiHI! X"
+    text_field.value.should == "abc123ABChiHI! X"
 
     window.send_keys [:control, "a"], :backspace
-    window.text_field.value.should be_empty
+    text_field.value.should be_empty
   end
 
   it "#control" do
