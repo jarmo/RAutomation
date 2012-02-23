@@ -12,6 +12,10 @@ module RAutomation
         callback :enum_callback, [:long, :pointer], :bool
 
         # user32
+        attach_function :_get_window_rect, :GetWindowRect,
+                        [:long, :pointer], :bool
+        attach_function :_move_window, :MoveWindow,
+                        [:long, :int, :int, :int, :int, :bool], :bool
         attach_function :enum_windows, :EnumWindows,
                         [:enum_callback, :pointer], :long
         attach_function :enum_child_windows, :EnumChildWindows,
@@ -95,6 +99,17 @@ module RAutomation
             _window_title(hwnd, title, title_length)
             title.read_string
           end
+
+          def move_window(hwnd, x, y, width, height)
+            _move_window(hwnd, x, y, width, height, true)
+          end
+
+          def get_window_rect(hwnd)
+            x = FFI::MemoryPointer.new(:long, 4)
+            _get_window_rect(hwnd, x)
+            x.read_array_of_long(4)
+          end
+
 
           alias_method :control_title, :window_title
 
