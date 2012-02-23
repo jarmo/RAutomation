@@ -1,3 +1,10 @@
+== 0.7.1 / 2012-02-24
+
+=== Win32 adapter
+
+  * add Window#dimensions to get coordinates of the window
+  * add Window#move to move/resize the window
+
 == Version 0.7.0 / 2012-02-23
 
 === All adapters
