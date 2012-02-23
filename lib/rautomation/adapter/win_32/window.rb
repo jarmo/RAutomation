@@ -119,15 +119,25 @@ module RAutomation
           sleep 1
         end
 
-        # @see RAutomation::Window#minimize
-        def move_window(width, height, x=get_window_rect[0], y=get_window_rect[1])
-          Functions.move_window(hwnd, x, y, width, height)
+        # Moves/resizes the window. 
+        # @note All coordinates are optional and if not specified current coordinates will be used
+        # @param [Hash] coords for specifying the coordinates.
+        # @option coords [Fixnum] :left Window coordinate from the left side of screen
+        # @option coords [Fixnum] :top Window coordinate from the top of the screen
+        # @option coords [Fixnum] :width Width of window
+        # @option coords [Fixnum] :height Height of window
+        def move(coords={})
+          @container.wait_until_present
+          rect = dimensions.merge(coords)
+          Functions.move_window(hwnd, rect[:left], rect[:top], rect[:width], rect[:height])
           sleep 1
         end
 
-        # returns an array containing the windows left, top, right, bottom coordinates [left, top, right, bottom]
-        def get_window_rect
-          Functions.get_window_rect(hwnd)
+        # @return [Hash] Hash[:left, :top, :width, :height] with window coordinates
+        def dimensions
+          @container.wait_until_present
+          left, top, right, bottom = Functions.window_rect(hwnd)
+          {:left => left, :top => top, :width => right - left, :height => bottom - top}
         end
 
 
@@ -136,7 +146,7 @@ module RAutomation
         # @example
         #   RAutomation::Window.new(:title => //).send_keys "hello!"
         #   RAutomation::Window.new(:title => //).send_keys [:control, "a"], "world!"
-        # Refer to Keys#KEYS for all the special keycodes.
+        # Refer to {Keys::KEYS} for all the special keycodes.
         # @see RAutomation::Window#send_keys
         def send_keys(args)
           Keys.encode(args).each do |arg|

@@ -2,9 +2,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rautomation'
 require 'rspec'
 
-#require 'simplecov'
-#SimpleCov.start
-
 module SpecHelper
   # @private
   def adapter

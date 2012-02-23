@@ -100,18 +100,17 @@ module RAutomation
             title.read_string
           end
 
+          alias_method :control_title, :window_title
+
           def move_window(hwnd, x, y, width, height)
             _move_window(hwnd, x, y, width, height, true)
           end
 
-          def get_window_rect(hwnd)
+          def window_rect(hwnd)
             x = FFI::MemoryPointer.new(:long, 4)
             _get_window_rect(hwnd, x)
             x.read_array_of_long(4)
           end
-
-
-          alias_method :control_title, :window_title
 
           def window_text(hwnd)
             found_text = []
