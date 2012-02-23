@@ -20,7 +20,7 @@ RAutomation provides:
     gem.add_development_dependency "rspec", "~>2.3"
 
     ignored_files = []
-    ignored_files << ".gitignore" << ".gemspec" << "features" << "IAccessibleDLL.sdf"
+    ignored_files << ".gitignore" << ".gemspec" << "IAccessibleDLL.sdf"
     gem.files = `git ls-files`.strip.split($/).delete_if {|f| f =~ Regexp.union(*ignored_files)}
   end
   Jeweler::GemcutterTasks.new
