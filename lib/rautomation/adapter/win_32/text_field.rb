@@ -27,6 +27,15 @@ module RAutomation
           raise "Cannot set value on a disabled text field" if disabled?
           set ""
         end
+
+        # @see RAutomation::Window#send_keys
+        def send_keys(*keys)
+          @window.container.wait_until_present
+          assert_enabled
+          @window.activate
+          focus
+          @window.send_keys(keys)
+        end
       end
     end
   end

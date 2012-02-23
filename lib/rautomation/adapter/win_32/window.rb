@@ -18,6 +18,8 @@ module RAutomation
           end
         end
 
+        attr_reader :container
+
         # Locators of the window.
         attr_reader :locators
 

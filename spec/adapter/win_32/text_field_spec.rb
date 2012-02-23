@@ -12,4 +12,13 @@ describe "Win32::TextField", :if => SpecHelper.adapter == :win_32 do
     lambda { RAutomation::Window.new(:title => "MainFormWindow").text_field.clear }.should raise_error
   end
 
+  it "#send_keys" do
+    text_field = RAutomation::Window.new(:title => "MainFormWindow").text_field(:index => 1)
+    text_field.send_keys "abc"
+    text_field.value.should == "abc"
+
+    text_field.send_keys [:control, "a"], :backspace
+    text_field.value.should be_empty
+  end
+
 end
