@@ -1,3 +1,24 @@
+== Version 0.7.0 / 2012-xx-xx
+
+=== All adapters
+
+  * renamed WinFfi adapter to Win32 adapter
+  * added experimental MsUia adapter
+  * added support for JRuby
+  * Window.windows accepts locators too
+  * added Window#class_names for retrieving internal class names of the window and it's controls
+  * default locator is :index => 0 when nothing else specified
+
+=== Win32 adapter
+
+  * Window#send_keys has now syntax similar to WatirSpec (https://github.com/watir/watirspec/blob/master/element_spec.rb#L206-249)
+  * added TextField#send_keys
+
+=== AutoIt adapter
+
+  * added Window#mouse_move, #mouse_click, #mouse_position, #press_mouse and #release_mouse methods for AutoIt adapter
+
+
 == Version 0.6.3 / 2011-07-16
 
   * use current window's handle (hwnd) in WinFfi::Window#child method
