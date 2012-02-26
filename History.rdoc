@@ -1,9 +1,10 @@
-== 0.7.1 / 2012-02-24
+== 0.7.1 / 2012-02-26
 
 === Win32 adapter
 
   * add Window#dimensions to get coordinates of the window
   * add Window#move to move/resize the window
+  * fix Window#child not to raise any exceptions for cases where window isn't technically a child
 
 == Version 0.7.0 / 2012-02-23
 
