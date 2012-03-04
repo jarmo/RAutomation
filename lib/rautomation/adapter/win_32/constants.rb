@@ -62,6 +62,11 @@ module RAutomation
         LB_SETCURSEL = 0x186
         LB_GETSEL = 0x187
 
+        # SendInput
+        INPUT_MOUSE = 0
+        MOUSEEVENTF_LEFTDOWN = 0x2
+        MOUSEEVENTF_LEFTUP = 0x4
+
       end
     end
   end

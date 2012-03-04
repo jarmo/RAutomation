@@ -64,6 +64,12 @@ module RAutomation
                         [:long, :uint], :long
         attach_function :get_last_error, :GetLastError,
                         [], :long
+        attach_function :send_input, :SendInput,
+                        [:uint, :pointer, :int], :int
+        attach_function :_get_cursor_pos, :GetCursorPos,
+                        [:pointer], :bool
+        attach_function :set_cursor_pos, :SetCursorPos,
+                        [:int, :int], :int
 
         # kernel32
         attach_function :current_thread_id, :GetCurrentThreadId,
@@ -104,6 +110,13 @@ module RAutomation
 
           def move_window(hwnd, x, y, width, height)
             _move_window(hwnd, x, y, width, height, true)
+          end
+
+          def get_cursor_pos
+            ptr = FFI::MemoryPointer.new(:long, 2)
+            _get_cursor_pos(ptr)
+            x, y = ptr.read_array_of_long(2)
+            return {:x => x, :y => y}
           end
 
           def window_rect(hwnd)

@@ -177,6 +177,11 @@ module RAutomation
           Functions.close_window(hwnd)
         end
 
+        def mouse
+          @container.wait_until_present
+          Mouse.new(self)
+        end
+
         # @see Button#initialize
         # @see RAutomation::Window#button
         def button(locator)
