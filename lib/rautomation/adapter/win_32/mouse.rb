@@ -6,15 +6,13 @@ module RAutomation
           @window = window
         end
 
-        def move coords={}
-          coords = (@last_position || position).merge coords
+        def move(coords={})
+          @last_position = coords = (@last_position || position).merge coords
 
           until position[:x] == coords[:x] && position[:y] == coords[:y]
             @window.activate
             Functions.set_cursor_pos coords[:x], coords[:y]
           end
-
-          @last_position = coords
         end
 
         def position

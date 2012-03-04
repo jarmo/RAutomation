@@ -160,6 +160,11 @@ module RAutomation
           @@autoit.WinKill(locator_hwnd)
         end
 
+        def mouse
+          @container.wait_until_present
+          Mouse.new(self)
+        end
+
         # @see Button#initialize
         # @see RAutomation::Window#button
         def button(locator={})
@@ -178,27 +183,6 @@ module RAutomation
         # @see RAutomation::Window#method_missing
         def method_missing(name, *args)
           @@autoit.send(name, *args)
-        end
-
-        # AutoIt adapter specific API methods
-        def move_mouse(x_coord, y_coord)
-          @@autoit.MouseMove(x_coord, y_coord)
-        end
-
-        def mouse_position
-          [@@autoit.MouseGetPosX, @@autoit.MouseGetPosY]
-        end
-
-        def click_mouse(button = "left")
-          @@autoit.MouseClick(button)
-        end
-
-        def press_mouse(button = "left")
-          @@autoit.MouseDown(button)
-        end
-
-        def release_mouse(button = "left")
-          @@autoit.MouseUp(button)
         end
 
         # @private

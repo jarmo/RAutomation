@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Win32::Mouse", :if => SpecHelper.adapter == :win_32 do
+describe "AutoIt::Mouse", :if => SpecHelper.adapter == :autoit do
 
   it "#click" do
     window = RAutomation::Window.new(:title => "MainFormWindow")
@@ -37,7 +37,7 @@ describe "Win32::Mouse", :if => SpecHelper.adapter == :win_32 do
     mouse.press
     mouse.move :x => 194
     mouse.release
-    window.send_keys [:control, "c"]
+    window.send_keys "^c"
 
     text_field.set("new string")
     text_field.value.should == "new string"
@@ -46,9 +46,8 @@ describe "Win32::Mouse", :if => SpecHelper.adapter == :win_32 do
     mouse.press
     mouse.move :x => 194
     mouse.release
-    window.send_keys [:control, "v"]
+    window.send_keys "^v"
 
     text_field.value.should == "start string"
   end
 end
-
