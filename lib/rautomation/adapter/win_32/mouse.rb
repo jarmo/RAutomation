@@ -7,7 +7,7 @@ module RAutomation
         end
 
         def move(coords={})
-          @last_position = coords = (@last_position || position).merge coords
+          @last_position = coords = (@last_position || position).merge(coords)
 
           until position[:x] == coords[:x] && position[:y] == coords[:y]
             @window.activate
