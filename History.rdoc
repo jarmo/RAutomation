@@ -1,3 +1,14 @@
+== 0.7.2 / 2012-03-18
+
+=== Win32 adapter
+
+  * add mouse API with Window#mouse method
+  * add Mouse#move, #position, #click, #press and #release methods
+
+=== AutoIt adapter
+  
+  * support the same mouse API as Win32 adapter
+
 == 0.7.1 / 2012-02-26
 
 === Win32 adapter
