@@ -1,12 +1,14 @@
 PATH
   remote: .
   specs:
-    rautomation (0.7.0)
+    rautomation (0.7.2)
+      ffi
 
 GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.3)
+    ffi (1.0.11)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)

@@ -7,16 +7,20 @@ module RAutomation
         include ButtonHelper
 
         def value
-          hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-          checkbox = UiaDll::element_from_handle(hwnd)
+          checkbox = uia_element
 
           checkbox_value = FFI::MemoryPointer.new :char, UiaDll::get_name(checkbox, nil) + 1
           UiaDll::get_name(checkbox, checkbox_value)
+
           checkbox_value.read_string
         end
 
         def exist?
           super && matches_type?(Constants::UIA_CHECKBOX_CONTROL_TYPE)
+        end
+
+        def set?
+          UiaDll::get_is_set(uia_element)
         end
 
         alias_method :exists?, :exist?

@@ -349,6 +349,25 @@ extern "C" __declspec ( dllexport ) int RA_GetClassName(IUIAutomationElement *pE
 	}
 }
 
+extern "C" __declspec ( dllexport ) BOOL RA_GetIsSet(IUIAutomationElement *pElement) {
+	IToggleProvider *pTogglePattern ;
+	HRESULT hr = pElement->GetCurrentPattern(UIA_TogglePatternId, (IUnknown**)&pTogglePattern) ;
+	
+	if (FAILED(hr)) {
+		printf("RA_GetIsSet: getCurrentPattern failed 0x%x\r\n") ;
+		return FALSE ;
+	}
+
+	ToggleState  RetVal ;
+	hr = pTogglePattern->get_ToggleState(&RetVal) ;
+	if (FAILED(hr)) {
+		printf("RA_GetIsSet: get_ToggleState failed 0x%x\r\n", hr) ;
+		return FALSE ;
+	} else {
+		return RetVal ;
+	}
+}
+
 extern "C" __declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement) {
 	ISelectionItemProvider *pSelectionPattern ;
 	HRESULT hr = pElement->GetCurrentPattern(UIA_SelectionItemPatternId, (IUnknown**)&pSelectionPattern) ;
