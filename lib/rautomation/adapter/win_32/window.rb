@@ -177,6 +177,8 @@ module RAutomation
           Functions.close_window(hwnd)
         end
 
+        # Retrieves the {Mouse} object for automating mouse movements and clicks
+        # @raise [UnknownWindowException] if the window doesn't exist.
         def mouse
           @container.wait_until_present
           Mouse.new(self)
@@ -204,6 +206,11 @@ module RAutomation
         def label(locator={})
           @container.wait_until_present
           Label.new(self, locator)
+        end
+
+        def password_field(locator)
+          @container.wait_until_present
+          PasswordField.new(self, locator)
         end
 
         def control(locator={})

@@ -10,7 +10,7 @@ module RAutomation
 
         # @see RAutomation::TextField#set
         def set(text)
-          raise "Cannot set value on a disabled text field" if disabled?
+          assert_enabled
 
           wait_until do
             hwnd = Functions.control_hwnd(@window.hwnd, @locators)
@@ -18,13 +18,13 @@ module RAutomation
             @window.active? &&
                     focus &&
                     Functions.set_control_text(hwnd, text) &&
-                    value == text
+                    set?(text)
           end
         end
 
         # @see RAutomation::TextField#clear
         def clear
-          raise "Cannot set value on a disabled text field" if disabled?
+          assert_enabled
           set ""
         end
 
@@ -35,6 +35,16 @@ module RAutomation
           @window.activate
           focus
           @window.send_keys(keys)
+        end
+
+        private
+
+        def set?(text)
+          value == text
+        end
+
+        def assert_enabled
+          raise "Cannot set value on a disabled text field" if disabled?
         end
       end
     end
