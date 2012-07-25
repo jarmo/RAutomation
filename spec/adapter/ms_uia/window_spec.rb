@@ -1,17 +1,43 @@
 require "spec_helper"
 
 describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
+  let(:window) {RAutomation::Window.new(:title => /MainFormWindow/i)}
 
 
 
   it "move and click" do
-    window = RAutomation::Window.new(:title => /MainFormWindow/i)
+    #window = RAutomation::Window.new(:title => /MainFormWindow/i)
                             window.maximize
     window.move_mouse(62,46)
     sleep 1
     window.click_mouse
     sleep 1
 
+  end
+
+  context "#send_keys" do
+    it "send tab keystrokes to move focus between elements" do
+      window.button(:value => "&About").focus
+      window.button(:value => "&About").should be_focused
+
+      window.send_keys(:tab, :tab, :tab)
+      button = window.button(:value => "Close")
+      button.should exist
+      button.should be_focused
+    end
+
+    it "send arbitrary characters and control keys" do
+      text_field = window.text_field(:index => 1)
+      text_field.focus
+      window.send_keys "abc123ABChiHI!"
+      text_field.value.should == "abc123ABChiHI!"
+
+      window.send_keys :space, "X"
+      text_field.value.should == "abc123ABChiHI! X"
+
+      window.send_keys [:control, "a"], :backspace
+      text_field.value.should be_empty
+    end
   end
 
 =begin

@@ -5,6 +5,7 @@ rescue Gem::LoadError
 end
 require "ffi"
 require File.dirname(__FILE__) + "/ms_uia/constants"
+require File.dirname(__FILE__) + "/ms_uia/keys"
 require File.dirname(__FILE__) + "/ms_uia/keystroke_converter"
 require File.dirname(__FILE__) + "/ms_uia/functions"
 require File.dirname(__FILE__) + "/ms_uia/locators"

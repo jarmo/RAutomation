@@ -20,12 +20,12 @@ describe "MsUia::Button", :if => SpecHelper.adapter == :ms_uia do
     window.button(:id => "disabledButton").should_not be_enabled
   end
 
-  it "#set_focus" do
+  it "#focus" do
     button = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).button(:id => "enabledButton")
-    button.should_not have_focus
+    button.should_not be_focused
 
-    button.set_focus
-    button.should have_focus
+    button.focus
+    button.should be_focused
   end
 
   it "cannot click disabled button" do
@@ -35,7 +35,7 @@ describe "MsUia::Button", :if => SpecHelper.adapter == :ms_uia do
 
   it "cannot set focus to disabled button" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    lambda { window.button(:id => "disabledButton").set_focus }.should raise_error
+    lambda { window.button(:id => "disabledButton").focus }.should raise_error
   end
 
 end

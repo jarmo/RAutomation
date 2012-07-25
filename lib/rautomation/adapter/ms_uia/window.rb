@@ -135,32 +135,35 @@ module RAutomation
           sleep 1
         end
 
-        #todo - replace with UIA version if possible
         # Activates the window and sends keys to it.
         #
-        # Refer to KeystrokeConverter#convert_special_characters for the special keycodes.
+        # @example
+        #   RAutomation::Window.new(:title => //).send_keys "hello!"
+        #   RAutomation::Window.new(:title => //).send_keys [:control, "a"], "world!"
+        # Refer to {Keys::KEYS} for all the special keycodes.
         # @see RAutomation::Window#send_keys
-        def send_keys(keys)
-          shift_pressed = false
-          KeystrokeConverter.convert(keys[0]).each do |key|
+        def send_keys(args)
+          Keys.encode(args).each do |arg|
             wait_until do
               activate
               active?
             end
-            press_key key
 
-            if key == Constants::VK_LSHIFT
-              shift_pressed = true
-              next
-            end
-
-            release_key key
-
-            if shift_pressed
-              shift_pressed = false
-              release_key Constants::VK_LSHIFT
+            if arg.is_a?(Array)
+              arg.reduce([]) do |pressed_keys, k|
+                if k == Keys[:null]
+                  pressed_keys.each {|pressed_key| release_key pressed_key}
+                  pressed_keys = []
+                else
+                  pressed_keys << press_key(k)
+                end
+                pressed_keys
+              end
+            else
+              send_key arg
             end
           end
+          sleep 1
         end
 
         #todo - replace with UIA version
@@ -353,11 +356,20 @@ module RAutomation
 
         def press_key key
           Functions.send_key(key, 0, 0, nil)
+          key
         end
 
         def release_key key
           Functions.send_key(key, 0, Constants::KEYEVENTF_KEYUP, nil)
+          key
         end
+
+        def send_key key
+          press_key key
+          release_key key
+          key
+        end
+
       end
     end
   end
