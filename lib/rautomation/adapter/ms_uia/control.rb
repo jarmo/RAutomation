@@ -106,11 +106,11 @@ module RAutomation
         end
 
         #todo - replace with UIA version
-        def has_focus?
+        def focused?
           Functions.has_focus?(hwnd)
         end
 
-        def set_focus
+        def focus
           assert_enabled
           uia_control = UiaDll::element_from_handle(hwnd)
           UiaDll::set_focus(uia_control)
