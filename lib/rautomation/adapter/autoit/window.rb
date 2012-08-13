@@ -16,7 +16,9 @@ module RAutomation
             @@autoit = WIN32OLE.new('AutoItX3.Control')
           rescue WIN32OLERuntimeError
             dll = File.dirname(__FILE__) + "/../../../../ext/AutoItX/AutoItX3.dll"
-            system("regsvr32.exe /s #{dll.gsub('/', '\\')}")
+            unless system("regsvr32.exe /s #{dll.gsub('/', '\\')}")
+              raise "Start Ruby with administrative rights when using AutoIt adapter for the first time."
+            end
             @@autoit = WIN32OLE.new('AutoItX3.Control')
           end
         end
