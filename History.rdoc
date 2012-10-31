@@ -1,3 +1,13 @@
+== 0.7.3 / 2012-10-31
+
+=== Win32 adapter
+
+  * Add support for PasswordField.
+
+=== AutoIt adapter
+
+  * Show error message when registration of AutoIt dll fails.
+
 == 0.7.2 / 2012-03-18
 
 === Win32 adapter
