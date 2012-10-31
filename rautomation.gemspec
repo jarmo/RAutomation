@@ -21,5 +21,7 @@ RAutomation provides:
 
   s.add_runtime_dependency("ffi")
   s.add_development_dependency("rspec", "~>2.3")
+  s.add_development_dependency("rake")
+  s.add_development_dependency("yard")
 end
 
