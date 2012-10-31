@@ -96,9 +96,10 @@
             // checkBox
             // 
             this.checkBox.AutoSize = true;
+            this.checkBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.checkBox.Location = new System.Drawing.Point(142, 105);
             this.checkBox.Name = "checkBox";
-            this.checkBox.Size = new System.Drawing.Size(74, 17);
+            this.checkBox.Size = new System.Drawing.Size(80, 18);
             this.checkBox.TabIndex = 6;
             this.checkBox.Text = "checkBox";
             this.checkBox.UseVisualStyleBackColor = true;
@@ -131,9 +132,10 @@
             // 
             this.radioButtonDisabled.AutoSize = true;
             this.radioButtonDisabled.Enabled = false;
+            this.radioButtonDisabled.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.radioButtonDisabled.Location = new System.Drawing.Point(188, 28);
             this.radioButtonDisabled.Name = "radioButtonDisabled";
-            this.radioButtonDisabled.Size = new System.Drawing.Size(100, 17);
+            this.radioButtonDisabled.Size = new System.Drawing.Size(106, 18);
             this.radioButtonDisabled.TabIndex = 10;
             this.radioButtonDisabled.TabStop = true;
             this.radioButtonDisabled.Text = "Option Disabled";
@@ -161,9 +163,10 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
+            this.radioButton2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.radioButton2.Location = new System.Drawing.Point(107, 28);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(65, 17);
+            this.radioButton2.Size = new System.Drawing.Size(71, 18);
             this.radioButton2.TabIndex = 8;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Option 2";
@@ -173,9 +176,10 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.radioButton1.Location = new System.Drawing.Point(9, 28);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(65, 17);
+            this.radioButton1.Size = new System.Drawing.Size(71, 18);
             this.radioButton1.TabIndex = 7;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Option 1";
@@ -287,9 +291,10 @@
             // 
             this.checkBoxDisabled.AutoSize = true;
             this.checkBoxDisabled.Enabled = false;
+            this.checkBoxDisabled.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.checkBoxDisabled.Location = new System.Drawing.Point(353, 102);
             this.checkBoxDisabled.Name = "checkBoxDisabled";
-            this.checkBoxDisabled.Size = new System.Drawing.Size(115, 17);
+            this.checkBoxDisabled.Size = new System.Drawing.Size(121, 18);
             this.checkBoxDisabled.TabIndex = 12;
             this.checkBoxDisabled.Text = "checkBoxDisabled";
             this.checkBoxDisabled.UseVisualStyleBackColor = true;
