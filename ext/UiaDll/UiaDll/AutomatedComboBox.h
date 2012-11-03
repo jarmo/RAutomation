@@ -10,5 +10,11 @@ public:
 
 private:
 	AutomationElement^	_comboControl;
+	void Select(AutomationElement^ itemToSelect);
+
+	property PropertyCondition^ SelectionCondition {
+private:
+	PropertyCondition^ get() { return gcnew PropertyCondition(AutomationElement::IsSelectionItemPatternAvailableProperty, true); }
+	}
 };
 
