@@ -58,6 +58,8 @@ module RAutomation
                         [:int], :pointer
         attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
+        attach_function :select_combo_by_index, :RA_SelectComboByIndex,
+                        [:long, :int], :bool
       end
     end
   end

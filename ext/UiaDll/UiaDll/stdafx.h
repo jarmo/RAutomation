@@ -13,7 +13,10 @@
 #include <ObjBase.h>
 #include <UIAutomation.h>
 #include <comutil.h> 
+#include <atlbase.h>
 
 // TODO: reference additional headers your program requires here
 
 #include "globals.h"
+
+using namespace System;

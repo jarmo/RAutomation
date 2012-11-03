@@ -2,6 +2,11 @@
 //
 
 #include "stdafx.h"
+#include "AutomatedComboBox.h"
+#include "ToggleStateHelper.h"
+
+IUIAutomation* getGlobalIUIAutomation() ;
+
 extern "C" {
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
 		IUIAutomationElement *pRootElement ;
@@ -344,22 +349,7 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) BOOL RA_GetIsSet(IUIAutomationElement *pElement) {
-		IToggleProvider *pTogglePattern ;
-		HRESULT hr = pElement->GetCurrentPattern(UIA_TogglePatternId, (IUnknown**)&pTogglePattern) ;
-
-		if (FAILED(hr)) {
-			printf("RA_GetIsSet: getCurrentPattern failed 0x%x\r\n") ;
-			return FALSE ;
-		}
-
-		ToggleState  RetVal ;
-		hr = pTogglePattern->get_ToggleState(&RetVal) ;
-		if (FAILED(hr)) {
-			printf("RA_GetIsSet: get_ToggleState failed 0x%x\r\n", hr) ;
-			return FALSE ;
-		} else {
-			return RetVal ;
-		}
+		return ToggleStateHelper().IsSet(pElement);
 	}
 
 	__declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement) {
@@ -396,6 +386,11 @@ extern "C" {
 		}
 
 		return 1;
+	}
+
+	__declspec ( dllexport ) bool RA_SelectComboByIndex(const HWND windowHandle, const int whichItem) {
+		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
+		return autoComboBox->SelectByIndex(whichItem);
 	}
 
 	__declspec ( dllexport ) int RA_Set_Value(IUIAutomationElement *pElement, char *pValue) {
