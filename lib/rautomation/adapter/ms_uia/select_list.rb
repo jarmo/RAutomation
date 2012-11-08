@@ -25,7 +25,7 @@ module RAutomation
           #todo - replace with UIA version
           def select
             @select_list.assert_enabled
-            Functions.send_message(@select_list.control_hwnd, Constants::CB_SETCURSEL, @index, nil) != Constants::CB_ERR
+            UiaDll::select_combo_by_index @select_list.control_hwnd, @index
           end
 
           alias_method :set, :select
@@ -79,7 +79,7 @@ module RAutomation
         end
 
         def select(index)
-          Functions.send_message(@hwnd, Constants::CB_SETCURSEL, index, nil) != Constants::CB_ERR
+          UiaDll::select_combo_by_index @hwnd, index
         end
 
         def list_item_height

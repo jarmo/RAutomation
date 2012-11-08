@@ -72,6 +72,32 @@ describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
     lambda { select_list.option(:text => "Apple").set }.should raise_error
   end
 
+  it "fires change event when the value is set" do
+
+    select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
+
+    select_list.option(:text => "Apple").should_not be_selected
+    select_list.set("Apple")
+    select_list.option(:text => "Apple").should be_selected
+
+    label = RAutomation::Window.new(:title => "MainFormWindow").label(:id => "fruitsLabel")
+    RAutomation::WaitHelper.wait_until { label.exist? }
+    label.value.should == "Apple"
+  end
+
+  it "fires change event when the index changes" do
+
+    select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
+    label = RAutomation::Window.new(:title => "MainFormWindow").label(:id => "fruitsLabel")
+
+    select_list.options[4].select
+    select_list.option(:text => "Passion Fruit").should be_selected
+    label.value.should == "Passion Fruit"
+
+    select_list.select 3
+    select_list.option(:text => "Orange").should be_selected
+    label.value.should == "Orange"
+  end
 
 #  it "control by focus" do
 #    window      = RAutomation::Window.new(:title => /MainFormWindow/i)
@@ -92,18 +118,5 @@ describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
 #
 #    sleep 10
 #    box1.should == box2
-#  end
-
-#  it "fires change event when selected" do
-#
-#    select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
-#
-#    select_list.option(:text => "Apple").should_not be_selected
-#    select_list.set("Apple")
-#    select_list.option(:text => "Apple").should be_selected
-#
-#    label = RAutomation::Window.new(:title => "MainFormWindow").label(:id => "fruitsLabel")
-#    sleep 1
-#    label.value.should == "Apple"
 #  end
 end

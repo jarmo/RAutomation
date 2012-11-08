@@ -29,6 +29,8 @@ Debug
 Release
 ipch
 *.sdf
+*.suo
 *.user
 !ext/IAccessibleDLL/Release/*.dll
-
+*.opensdf
+_ReSharper*/
