@@ -9,7 +9,7 @@ module RAutomation
           rows = []
           header_columns = []
 
-          raise "Not a list control" unless UiaDll::current_control_type(uia_element) == Constants::UIA_LIST_CONTROL_TYPE
+          raise "Not a list control" unless of_type_table?
 
 
           children_count = count_children(uia_element)
@@ -69,7 +69,11 @@ module RAutomation
         end
 
         def exist?
-          super && matches_type?(Constants::UIA_LIST_CONTROL_TYPE)
+          super && of_type_table?
+        end
+
+        def of_type_table?
+          matches_type?(Constants::UIA_LIST_CONTROL_TYPE) || matches_type?(Constants::UIA_DATA_GRID_CONTROL_TYPE)
         end
 
         alias_method :exists?, :exist?
