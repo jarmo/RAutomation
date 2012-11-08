@@ -81,7 +81,7 @@ describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
     select_list.option(:text => "Apple").should be_selected
 
     label = RAutomation::Window.new(:title => "MainFormWindow").label(:id => "fruitsLabel")
-    sleep 1
+    RAutomation::WaitHelper.wait_until { label.exist? }
     label.value.should == "Apple"
   end
 
