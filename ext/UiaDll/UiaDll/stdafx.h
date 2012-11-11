@@ -15,8 +15,9 @@
 #include <comutil.h> 
 #include <atlbase.h>
 
-// TODO: reference additional headers your program requires here
+#include <list>
 
 #include "globals.h"
 
 using namespace System;
+using namespace System::Runtime::InteropServices;

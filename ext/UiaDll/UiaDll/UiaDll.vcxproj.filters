@@ -36,6 +36,9 @@
     <ClInclude Include="ToggleStateHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuItemSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UiaDll.cpp">
@@ -54,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ToggleStateHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuItemSelector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
