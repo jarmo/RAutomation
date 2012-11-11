@@ -52,14 +52,21 @@
             this.checkBoxDisabled = new System.Windows.Forms.CheckBox();
             this.textBoxDisabled = new System.Windows.Forms.TextBox();
             this.FruitListBox = new System.Windows.Forms.ListBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.faileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.roundaboutWayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(139, 38);
+            this.label1.Location = new System.Drawing.Point(139, 65);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 0;
@@ -68,7 +75,7 @@
             // 
             // aboutButton
             // 
-            this.aboutButton.Location = new System.Drawing.Point(12, 9);
+            this.aboutButton.Location = new System.Drawing.Point(12, 36);
             this.aboutButton.Name = "aboutButton";
             this.aboutButton.Size = new System.Drawing.Size(95, 23);
             this.aboutButton.TabIndex = 1;
@@ -78,7 +85,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 96);
+            this.button1.Location = new System.Drawing.Point(12, 123);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 23);
             this.button1.TabIndex = 4;
@@ -88,7 +95,7 @@
             // 
             // textField
             // 
-            this.textField.Location = new System.Drawing.Point(142, 69);
+            this.textField.Location = new System.Drawing.Point(142, 96);
             this.textField.Name = "textField";
             this.textField.Size = new System.Drawing.Size(184, 20);
             this.textField.TabIndex = 5;
@@ -97,7 +104,7 @@
             // 
             this.checkBox.AutoSize = true;
             this.checkBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.checkBox.Location = new System.Drawing.Point(142, 105);
+            this.checkBox.Location = new System.Drawing.Point(142, 132);
             this.checkBox.Name = "checkBox";
             this.checkBox.Size = new System.Drawing.Size(80, 18);
             this.checkBox.TabIndex = 6;
@@ -108,7 +115,7 @@
             // checkBoxLabel
             // 
             this.checkBoxLabel.AutoSize = true;
-            this.checkBoxLabel.Location = new System.Drawing.Point(246, 106);
+            this.checkBoxLabel.Location = new System.Drawing.Point(246, 133);
             this.checkBoxLabel.Name = "checkBoxLabel";
             this.checkBoxLabel.Size = new System.Drawing.Size(80, 13);
             this.checkBoxLabel.TabIndex = 5;
@@ -121,7 +128,7 @@
             this.groupBox1.Controls.Add(this.radioButtonLabel);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(142, 136);
+            this.groupBox1.Location = new System.Drawing.Point(142, 163);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(325, 89);
             this.groupBox1.TabIndex = 6;
@@ -191,7 +198,7 @@
             this.groupBox2.Controls.Add(this.comboBoxDisabled);
             this.groupBox2.Controls.Add(this.fruitsLabel);
             this.groupBox2.Controls.Add(this.FruitsComboBox);
-            this.groupBox2.Location = new System.Drawing.Point(142, 231);
+            this.groupBox2.Location = new System.Drawing.Point(142, 258);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(325, 63);
             this.groupBox2.TabIndex = 7;
@@ -241,7 +248,7 @@
             // 
             // nextFormButton
             // 
-            this.nextFormButton.Location = new System.Drawing.Point(12, 38);
+            this.nextFormButton.Location = new System.Drawing.Point(12, 65);
             this.nextFormButton.Name = "nextFormButton";
             this.nextFormButton.Size = new System.Drawing.Size(95, 23);
             this.nextFormButton.TabIndex = 2;
@@ -252,7 +259,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(139, 14);
+            this.label2.Location = new System.Drawing.Point(139, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(108, 13);
             this.label2.TabIndex = 9;
@@ -260,7 +267,7 @@
             // 
             // buttonButton
             // 
-            this.buttonButton.Location = new System.Drawing.Point(12, 67);
+            this.buttonButton.Location = new System.Drawing.Point(12, 94);
             this.buttonButton.Name = "buttonButton";
             this.buttonButton.Size = new System.Drawing.Size(95, 23);
             this.buttonButton.TabIndex = 3;
@@ -270,7 +277,7 @@
             // 
             // enabledButton
             // 
-            this.enabledButton.Location = new System.Drawing.Point(574, 27);
+            this.enabledButton.Location = new System.Drawing.Point(574, 54);
             this.enabledButton.Name = "enabledButton";
             this.enabledButton.Size = new System.Drawing.Size(75, 23);
             this.enabledButton.TabIndex = 10;
@@ -280,7 +287,7 @@
             // disabledButton
             // 
             this.disabledButton.Enabled = false;
-            this.disabledButton.Location = new System.Drawing.Point(574, 69);
+            this.disabledButton.Location = new System.Drawing.Point(574, 96);
             this.disabledButton.Name = "disabledButton";
             this.disabledButton.Size = new System.Drawing.Size(75, 23);
             this.disabledButton.TabIndex = 11;
@@ -292,7 +299,7 @@
             this.checkBoxDisabled.AutoSize = true;
             this.checkBoxDisabled.Enabled = false;
             this.checkBoxDisabled.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.checkBoxDisabled.Location = new System.Drawing.Point(353, 102);
+            this.checkBoxDisabled.Location = new System.Drawing.Point(353, 129);
             this.checkBoxDisabled.Name = "checkBoxDisabled";
             this.checkBoxDisabled.Size = new System.Drawing.Size(121, 18);
             this.checkBoxDisabled.TabIndex = 12;
@@ -302,7 +309,7 @@
             // textBoxDisabled
             // 
             this.textBoxDisabled.Enabled = false;
-            this.textBoxDisabled.Location = new System.Drawing.Point(332, 69);
+            this.textBoxDisabled.Location = new System.Drawing.Point(332, 96);
             this.textBoxDisabled.Name = "textBoxDisabled";
             this.textBoxDisabled.Size = new System.Drawing.Size(184, 20);
             this.textBoxDisabled.TabIndex = 13;
@@ -314,10 +321,59 @@
             "Apple",
             "Orange",
             "Mango"});
-            this.FruitListBox.Location = new System.Drawing.Point(490, 136);
+            this.FruitListBox.Location = new System.Drawing.Point(490, 163);
             this.FruitListBox.Name = "FruitListBox";
             this.FruitListBox.Size = new System.Drawing.Size(159, 95);
             this.FruitListBox.TabIndex = 14;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.faileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(724, 24);
+            this.menuStrip1.TabIndex = 15;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // faileToolStripMenuItem
+            // 
+            this.faileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.roundaboutWayToolStripMenuItem});
+            this.faileToolStripMenuItem.Name = "faileToolStripMenuItem";
+            this.faileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.faileToolStripMenuItem.Text = "&File";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutButton_Click);
+            // 
+            // roundaboutWayToolStripMenuItem
+            // 
+            this.roundaboutWayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toToolStripMenuItem});
+            this.roundaboutWayToolStripMenuItem.Name = "roundaboutWayToolStripMenuItem";
+            this.roundaboutWayToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.roundaboutWayToolStripMenuItem.Text = "Roundabout Way";
+            // 
+            // toToolStripMenuItem
+            // 
+            this.toToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem1});
+            this.toToolStripMenuItem.Name = "toToolStripMenuItem";
+            this.toToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toToolStripMenuItem.Text = "To";
+            // 
+            // aboutToolStripMenuItem1
+            // 
+            this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem1.Text = "&About";
+            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // MainFormWindow
             // 
@@ -340,12 +396,16 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.aboutButton);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainFormWindow";
             this.Text = "MainFormWindow";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,6 +437,12 @@
         private System.Windows.Forms.TextBox textBoxDisabled;
         private System.Windows.Forms.ComboBox comboBoxDisabled;
         private System.Windows.Forms.ListBox FruitListBox;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem faileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem roundaboutWayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
     }
 }
 

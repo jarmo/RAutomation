@@ -73,6 +73,5 @@ namespace WindowsForms
             SimpleElementsForm buttonForm = new SimpleElementsForm();
             buttonForm.Show();
         }
-
     }
 }
