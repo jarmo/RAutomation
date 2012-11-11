@@ -184,6 +184,12 @@ module RAutomation
           TextField.new(self, locator)
         end
 
+        # Returns a {Menu} object use to build a path to a menu item to open.
+        # @param [Hash] locator for the {Menu}.  Only :text is allowed.
+        def menu(locator)
+          Menu.new(self, locator)
+        end
+
         # Redirects all method calls not part of the public API to the {Functions} directly.
         # @see RAutomation::Window#method_missing
         def method_missing(name, *args)
@@ -369,7 +375,6 @@ module RAutomation
           release_key key
           key
         end
-
       end
     end
   end

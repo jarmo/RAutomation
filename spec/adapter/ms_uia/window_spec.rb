@@ -40,6 +40,43 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     end
   end
 
+  context "menu items" do
+    let(:about_box) { RAutomation::Window.new :title => "About" }
+
+    it "can select menu items" do
+      window.menu(:text => "File").menu(:text => "About").open
+      RAutomation::WaitHelper.wait_until { about_box.present? }
+    end
+
+    it "can select deep menu items" do
+      window.menu(:text => "File")
+            .menu(:text => "Roundabout Way")
+            .menu(:text => "About").open
+      RAutomation::WaitHelper.wait_until { about_box.present? }
+    end
+
+    it "raises when errors occur" do
+      lambda { window.menu(:text => "File").menu(:text => "Does Not Exist").open}.should raise_error
+    end
+
+    it "indicates if the menu item does not exist" do
+      begin
+        window.menu(:text => "File").menu(:text => "Should Not Exist").open
+        fail "Should have failed to find the menu item"
+      rescue Exception => e
+        e.message.should match /MenuItem with the text "Should Not Exist" does not exist/
+      end
+    end
+
+    it "knows when menu items exist" do
+      window.menu(:text => "File").menu(:text => "About").should exist
+    end
+
+    it "knows when menu items do not exist" do
+      window.menu(:text => "File").menu(:text => "Missing").should_not exist
+    end
+  end
+
 =begin
   it "control by focus" do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
