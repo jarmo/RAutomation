@@ -62,6 +62,8 @@ module RAutomation
                         [:pointer, :pointer], :int
         attach_function :select_menu_item, :RA_SelectMenuItem,
                         [:long, :pointer, :int, :varargs], :void
+        attach_function :menu_item_exists, :RA_MenuItemExists,
+                        [:long, :varargs], :bool
       end
     end
   end

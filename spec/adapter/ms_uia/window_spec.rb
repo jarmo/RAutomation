@@ -67,6 +67,14 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
         e.message.should match /MenuItem with the text "Should Not Exist" does not exist/
       end
     end
+
+    it "knows when menu items exist" do
+      window.menu(:text => "File").menu(:text => "About").should exist
+    end
+
+    it "knows when menu items do not exist" do
+      window.menu(:text => "File").menu(:text => "Missing").should_not exist
+    end
   end
 
 =begin

@@ -9,6 +9,7 @@
 IUIAutomation* getGlobalIUIAutomation() ;
 
 
+BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems);
 void SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInfoSize, std::list<const char*>& menuItems);
 
 extern "C" {
@@ -419,6 +420,27 @@ extern "C" {
 
 		SelectMenuItem(windowHandle, errorInfo, errorInfoSize, menuItems);
 	}
+
+	__declspec ( dllexport ) BOOL RA_MenuItemExists(const HWND windowHandle, const char* arg0, ...) {
+		va_list arguments;
+		va_start(arguments, arg0);			
+
+		std::list<const char*> menuItems;
+
+		const char* lastArgument = arg0;
+		while( NULL != lastArgument ) {
+			menuItems.push_back(lastArgument);
+			lastArgument = va_arg(arguments, const char*);
+		}
+
+		return MenuItemExists(windowHandle, menuItems);
+	}
+}
+
+BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)
+{
+	auto menuSelector = gcnew MenuItemSelector();
+	return menuSelector->MenuItemExists(windowHandle, menuItems);
 }
 
 void SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInfoSize, std::list<const char*>& menuItems)

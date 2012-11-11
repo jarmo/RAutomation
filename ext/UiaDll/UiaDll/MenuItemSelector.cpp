@@ -6,14 +6,30 @@ using namespace std;
 void MenuItemSelector::SelectMenuPath(const HWND windowHandle, list<const char*>& menuItems)
 {
 	auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
-	auto foundMenuItem = automationElement;
+	auto foundMenuItem = FindMenuItem(automationElement, menuItems);
+	auto invokePattern = dynamic_cast<InvokePattern^>(foundMenuItem->GetCurrentPattern(InvokePattern::Pattern));
+	invokePattern->Invoke();
+}
+
+BOOL MenuItemSelector::MenuItemExists(const HWND windowHandle, list<const char*>& menuItems)
+{
+	try {
+		auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
+		return FindMenuItem(automationElement, menuItems) != nullptr;
+	} catch(Exception^ e) {
+		return FALSE;
+	}
+}
+
+AutomationElement^ MenuItemSelector::FindMenuItem(AutomationElement^ rootElement, std::list<const char*>& menuItems)
+{
+	auto foundMenuItem = rootElement;
 
 	for(list<const char*>::iterator menuItem = menuItems.begin(); menuItem != menuItems.end(); ++menuItem) {
 		foundMenuItem = GetNextMenuItem(foundMenuItem, gcnew String(*menuItem));
 	}
 
-	auto invokePattern = dynamic_cast<InvokePattern^>(foundMenuItem->GetCurrentPattern(InvokePattern::Pattern));
-	invokePattern->Invoke();
+	return foundMenuItem;
 }
 
 PropertyCondition^ MenuItemSelector::NameConditionFor(String^ name)

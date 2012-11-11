@@ -15,12 +15,20 @@ module RAutomation
           self
         end
 
+        def exists?
+          UiaDll::menu_item_exists window.hwnd, *menu_items_arg
+        end
+
         def open
           error_info = FFI::MemoryPointer.new :char, 1024
-          args = menu_items.map {|s| [:string, s]}.flatten
-          UiaDll::select_menu_item window.hwnd, error_info, 1024, *args, :pointer, nil
+          UiaDll::select_menu_item window.hwnd, error_info, 1024, *menu_items_arg
           error = error_info.get_string 0
           raise error unless error.empty?
+        end
+
+        private
+        def menu_items_arg
+          menu_items.map {|s| [:string, s]}.flatten << :pointer << nil
         end
       end
     end
