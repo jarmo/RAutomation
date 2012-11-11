@@ -24,8 +24,12 @@ PropertyCondition^ MenuItemSelector::NameConditionFor(String^ name)
 AutomationElement^ MenuItemSelector::GetNextMenuItem(AutomationElement^ foundMenuItem, String^ nextMenu)
 {
 	TryToExpand(AsExpandCollapse(foundMenuItem));
-	return foundMenuItem->FindFirst(System::Windows::Automation::TreeScope::Subtree,
+	auto nextMenuItem = foundMenuItem->FindFirst(System::Windows::Automation::TreeScope::Subtree,
 								   gcnew AndCondition(MenuItemControlType, NameConditionFor(nextMenu)));
+	if( nullptr == nextMenuItem ) {
+		throw gcnew Exception(String::Format("MenuItem with the text \"{0}\" does not exist", nextMenu));
+	}
+	return nextMenuItem;
 }
 
 ExpandCollapsePattern^ MenuItemSelector::AsExpandCollapse(AutomationElement^ foundMenuItem)

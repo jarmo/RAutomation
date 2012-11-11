@@ -56,6 +56,15 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     it "raises when errors occur" do
       lambda { window.select_menu_item "Does", "Not Exist" }.should raise_error
     end
+
+    it "indicates if the menu item does not exist" do
+      begin
+        window.select_menu_item "File", "Should Not Exist"
+        fail "Should have failed to find the menu item"
+      rescue Exception => e
+        e.message.should match /MenuItem with the text "Should Not Exist" does not exist/
+      end
+    end
   end
 
 =begin
