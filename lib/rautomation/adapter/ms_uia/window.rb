@@ -370,6 +370,14 @@ module RAutomation
           key
         end
 
+        def select_menu_item(*args)
+          error_info = FFI::MemoryPointer.new :char, 1024
+          menu_items = args.map {|s| [:string, s]}
+          UiaDll::select_menu_item hwnd, error_info, 1024, *menu_items.flatten, :pointer, nil
+          error = error_info.get_string 0
+          raise error unless error.empty?
+        end
+
       end
     end
   end

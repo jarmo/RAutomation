@@ -60,6 +60,8 @@ module RAutomation
                         [:long, :int], :bool
         attach_function :set_value, :RA_SelectComboByValue,
                         [:pointer, :pointer], :int
+        attach_function :select_menu_item, :RA_SelectMenuItem,
+                        [:long, :pointer, :int, :varargs], :void
       end
     end
   end

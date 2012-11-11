@@ -40,6 +40,24 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     end
   end
 
+  context "menu items" do
+    let(:about_box) { RAutomation::Window.new :title => "About" }
+
+    it "can select menu items" do
+      window.select_menu_item "File", "About"
+      RAutomation::WaitHelper.wait_until { about_box.present? }
+    end
+
+    it "can select deep menu items" do
+      window.select_menu_item "File", "Roundabout Way", "To", "About"
+      RAutomation::WaitHelper.wait_until { about_box.present? }
+    end
+
+    it "raises when errors occur" do
+      lambda { window.select_menu_item "Does", "Not Exist" }.should raise_error
+    end
+  end
+
 =begin
   it "control by focus" do
     window = RAutomation::Window.new(:title => /MainFormWindow/i)
