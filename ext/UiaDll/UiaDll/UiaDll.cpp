@@ -417,6 +417,7 @@ extern "C" {
 			menuItems.push_back(lastArgument);
 			lastArgument = va_arg(arguments, const char*);
 		}
+		va_end(arguments);
 
 		SelectMenuItem(windowHandle, errorInfo, errorInfoSize, menuItems);
 	}
@@ -432,6 +433,7 @@ extern "C" {
 			menuItems.push_back(lastArgument);
 			lastArgument = va_arg(arguments, const char*);
 		}
+		va_end(arguments);
 
 		return MenuItemExists(windowHandle, menuItems);
 	}
