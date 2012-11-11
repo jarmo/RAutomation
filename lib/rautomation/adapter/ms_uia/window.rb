@@ -184,6 +184,12 @@ module RAutomation
           TextField.new(self, locator)
         end
 
+        # Returns a {Menu} object use to build a path to a menu item to open.
+        # @param [Hash] locator for the {Menu}.  Only :text is allowed.
+        def menu(locator)
+          Menu.new(self, locator)
+        end
+
         # Redirects all method calls not part of the public API to the {Functions} directly.
         # @see RAutomation::Window#method_missing
         def method_missing(name, *args)
@@ -369,15 +375,6 @@ module RAutomation
           release_key key
           key
         end
-
-        def select_menu_item(*args)
-          error_info = FFI::MemoryPointer.new :char, 1024
-          menu_items = args.map {|s| [:string, s]}
-          UiaDll::select_menu_item hwnd, error_info, 1024, *menu_items.flatten, :pointer, nil
-          error = error_info.get_string 0
-          raise error unless error.empty?
-        end
-
       end
     end
   end

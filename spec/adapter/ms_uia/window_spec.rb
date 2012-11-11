@@ -44,22 +44,24 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     let(:about_box) { RAutomation::Window.new :title => "About" }
 
     it "can select menu items" do
-      window.select_menu_item "File", "About"
+      window.menu(:text => "File").menu(:text => "About").open
       RAutomation::WaitHelper.wait_until { about_box.present? }
     end
 
     it "can select deep menu items" do
-      window.select_menu_item "File", "Roundabout Way", "To", "About"
+      window.menu(:text => "File")
+            .menu(:text => "Roundabout Way")
+            .menu(:text => "About").open
       RAutomation::WaitHelper.wait_until { about_box.present? }
     end
 
     it "raises when errors occur" do
-      lambda { window.select_menu_item "Does", "Not Exist" }.should raise_error
+      lambda { window.menu(:text => "File").menu(:text => "Does Not Exist").open}.should raise_error
     end
 
     it "indicates if the menu item does not exist" do
       begin
-        window.select_menu_item "File", "Should Not Exist"
+        window.menu(:text => "File").menu(:text => "Should Not Exist").open
         fail "Should have failed to find the menu item"
       rescue Exception => e
         e.message.should match /MenuItem with the text "Should Not Exist" does not exist/
