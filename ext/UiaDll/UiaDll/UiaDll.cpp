@@ -467,9 +467,7 @@ void SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInf
 		menuSelector->SelectMenuPath(windowHandle, menuItems);
 	} catch(Exception^ e) {
 		if( errorInfo ) {
-			auto unmanagedString = Marshal::StringToHGlobalAnsi(e->ToString());
-			strncpy(errorInfo, (const char*)(void*)unmanagedString, errorInfoSize - 1);
-			Marshal::FreeHGlobal(unmanagedString);
+			StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
 		}
 	}
 }

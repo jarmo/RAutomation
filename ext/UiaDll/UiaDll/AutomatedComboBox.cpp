@@ -38,9 +38,7 @@ bool AutomatedComboBox::GetValueByIndex(const int whichItem, char* comboValue, c
 		auto selectionItem = SelectionItems[whichItem];
 		auto nameProperty = dynamic_cast<String^>(selectionItem->GetCurrentPropertyValue(AutomationElement::NameProperty));
 
-		auto unmanagedString = Marshal::StringToHGlobalAnsi(nameProperty->ToString());
-		strncpy(comboValue, (const char*)(void*)unmanagedString, comboValueSize - 1);
-		Marshal::FreeHGlobal(unmanagedString);
+		StringHelper::CopyToUnmanagedString(nameProperty, comboValue, comboValueSize);
 		return true;
 	} catch(Exception^ e) {
 		Console::WriteLine(e->ToString());
