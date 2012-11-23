@@ -66,6 +66,8 @@ module RAutomation
                         [:long, :varargs], :bool
         attach_function :get_combobox_count, :RA_GetComboOptionsCount,
                         [:long], :int
+        attach_function :get_combobox_value, :RA_GetComboValueByIndex,
+                        [:long, :int, :pointer, :int], :bool
       end
     end
   end
