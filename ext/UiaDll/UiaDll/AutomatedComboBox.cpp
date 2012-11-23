@@ -32,6 +32,33 @@ bool AutomatedComboBox::SelectByValue(const char* whichItem)
 	}
 }
 
+bool AutomatedComboBox::GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize)
+{
+	try {
+		auto selectionItem = SelectionItems[whichItem];
+		auto nameProperty = dynamic_cast<String^>(selectionItem->GetCurrentPropertyValue(AutomationElement::NameProperty));
+
+		StringHelper::CopyToUnmanagedString(nameProperty, comboValue, comboValueSize);
+		return true;
+	} catch(Exception^ e) {
+		Console::WriteLine(e->ToString());
+		return false;
+	}
+}
+
+int AutomatedComboBox::SelectedIndex::get() {
+	int selectedIndex = 0;
+	for each(AutomationElement^ selectionItem in SelectionItems) {
+	  auto selectionPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
+	  if( selectionPattern->Current.IsSelected ) {
+		  return selectedIndex;
+	  }
+	  ++selectedIndex;
+	}
+	return -1;
+}
+
+
 void AutomatedComboBox::Select(AutomationElement^ itemToSelect)
 {
 	auto selectionPattern = dynamic_cast<SelectionItemPattern^>(itemToSelect->GetCurrentPattern(SelectionItemPattern::Pattern));

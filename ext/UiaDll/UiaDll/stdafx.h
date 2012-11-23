@@ -21,3 +21,5 @@
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
+
+#include "StringHelper.h"
