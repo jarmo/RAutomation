@@ -48,6 +48,19 @@ bool AutomatedComboBox::GetValueByIndex(const int whichItem, char* comboValue, c
 	}
 }
 
+int AutomatedComboBox::SelectedIndex::get() {
+	int selectedIndex = 0;
+	for each(AutomationElement^ selectionItem in SelectionItems) {
+	  auto selectionPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
+	  if( selectionPattern->Current.IsSelected ) {
+		  return selectedIndex;
+	  }
+	  ++selectedIndex;
+	}
+	return -1;
+}
+
+
 void AutomatedComboBox::Select(AutomationElement^ itemToSelect)
 {
 	auto selectionPattern = dynamic_cast<SelectionItemPattern^>(itemToSelect->GetCurrentPattern(SelectionItemPattern::Pattern));
