@@ -14,6 +14,21 @@ public:
 	int get() { return SelectionItems->Count; }
 	}
 
+	property int SelectedIndex {
+public:
+	int get() {
+		int selectedIndex = 0;
+		for each(AutomationElement^ selectionItem in SelectionItems) {
+		  auto selectionPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
+		  if( selectionPattern->Current.IsSelected ) {
+			  return selectedIndex;
+		  }
+		  ++selectedIndex;
+		}
+		return -1;
+	}
+	}
+
 private:
 	AutomationElement^	_comboControl;
 	void Select(AutomationElement^ itemToSelect);

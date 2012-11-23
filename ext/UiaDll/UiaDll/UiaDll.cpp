@@ -398,6 +398,11 @@ extern "C" {
 		return autoComboBox->Count;
 	}
 
+	__declspec ( dllexport ) int RA_GetSelectedComboIndex(const HWND windowHandle) {
+		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
+		return autoComboBox->SelectedIndex;
+	}
+
 	__declspec ( dllexport ) bool RA_GetComboValueByIndex(const HWND windowHandle, const int whichItem, char* comboValue, const int comboValueSize) {
 		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
 		return autoComboBox->GetValueByIndex(whichItem, comboValue, comboValueSize);
