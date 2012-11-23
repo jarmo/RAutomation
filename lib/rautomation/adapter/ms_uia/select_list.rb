@@ -15,11 +15,8 @@ module RAutomation
             @index       = index
           end
 
-          #todo - replace with UIA version
           def selected?
-            selected_idx = Functions.send_message(@select_list.control_hwnd, Constants::CB_GETCURSEL, 0, nil)
-            return false if selected_idx == Constants::CB_ERR
-            @text == Functions.retrieve_combobox_item_text(@select_list.control_hwnd, selected_idx)
+            @index == UiaDll::get_combobox_selected_index(@select_list.control_hwnd)
           end
 
           #todo - replace with UIA version

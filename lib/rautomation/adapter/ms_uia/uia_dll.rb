@@ -68,6 +68,8 @@ module RAutomation
                         [:long], :int
         attach_function :get_combobox_value, :RA_GetComboValueByIndex,
                         [:long, :int, :pointer, :int], :bool
+        attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
+                        [:long], :int
       end
     end
   end
