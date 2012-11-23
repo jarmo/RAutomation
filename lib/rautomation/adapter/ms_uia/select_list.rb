@@ -110,9 +110,8 @@ module RAutomation
 
         private
 
-        #todo - replace with UIA version
         def item_count
-          Functions.send_message(@hwnd, Constants::CB_GETCOUNT, 0, nil)
+          UiaDll::get_combobox_count(@hwnd)
         end
 
       end
