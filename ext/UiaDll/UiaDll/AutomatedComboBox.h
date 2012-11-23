@@ -8,9 +8,19 @@ public:
 	bool SelectByIndex(const int whichItem);
 	bool SelectByValue(const char* whichItem);
 
+	property int Count {
+public:
+	int get() { return SelectionItems->Count; }
+	}
+
 private:
 	AutomationElement^	_comboControl;
 	void Select(AutomationElement^ itemToSelect);
+
+	property AutomationElementCollection^ SelectionItems {
+private:
+	AutomationElementCollection^ get() { return _comboControl->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }
+	}
 
 	property PropertyCondition^ SelectionCondition {
 private:
