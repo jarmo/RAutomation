@@ -19,7 +19,6 @@ module RAutomation
             @index == UiaDll::get_combobox_selected_index(@select_list.control_hwnd)
           end
 
-          #todo - replace with UIA version
           def select
             @select_list.assert_enabled
             UiaDll::select_combo_by_index @select_list.control_hwnd, @index
@@ -28,7 +27,6 @@ module RAutomation
           alias_method :set, :select
         end
 
-        #todo - replace with UIA version
         def initialize(window, locators)
           super
           @hwnd = Functions.control_hwnd(@window.hwnd, @locators)
@@ -39,7 +37,6 @@ module RAutomation
           UiaDll::set_value(list, value)
         end
 
-        #todo - replace with UIA version
         def options(options = {})
           items = []
 
@@ -61,7 +58,6 @@ module RAutomation
           selected_option ? selected_option.text : ""
         end
 
-        #todo - replace with UIA version
         def option(options)
           item_count.times do |item_no|
             item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
