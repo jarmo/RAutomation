@@ -32,6 +32,22 @@ bool AutomatedComboBox::SelectByValue(const char* whichItem)
 	}
 }
 
+bool AutomatedComboBox::GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize)
+{
+	try {
+		auto selectionItem = SelectionItems[whichItem];
+		auto nameProperty = dynamic_cast<String^>(selectionItem->GetCurrentPropertyValue(AutomationElement::NameProperty));
+
+		auto unmanagedString = Marshal::StringToHGlobalAnsi(nameProperty->ToString());
+		strncpy(comboValue, (const char*)(void*)unmanagedString, comboValueSize - 1);
+		Marshal::FreeHGlobal(unmanagedString);
+		return true;
+	} catch(Exception^ e) {
+		Console::WriteLine(e->ToString());
+		return false;
+	}
+}
+
 void AutomatedComboBox::Select(AutomationElement^ itemToSelect)
 {
 	auto selectionPattern = dynamic_cast<SelectionItemPattern^>(itemToSelect->GetCurrentPattern(SelectionItemPattern::Pattern));

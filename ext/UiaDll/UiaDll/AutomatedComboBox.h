@@ -7,6 +7,7 @@ public:
 	AutomatedComboBox(const HWND windowHandle);
 	bool SelectByIndex(const int whichItem);
 	bool SelectByValue(const char* whichItem);
+	bool GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize);
 
 	property int Count {
 public:
