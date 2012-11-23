@@ -64,6 +64,12 @@ module RAutomation
                         [:long, :pointer, :int, :varargs], :void
         attach_function :menu_item_exists, :RA_MenuItemExists,
                         [:long, :varargs], :bool
+        attach_function :get_combobox_count, :RA_GetComboOptionsCount,
+                        [:long], :int
+        attach_function :get_combobox_value, :RA_GetComboValueByIndex,
+                        [:long, :int, :pointer, :int], :bool
+        attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
+                        [:long], :int
       end
     end
   end

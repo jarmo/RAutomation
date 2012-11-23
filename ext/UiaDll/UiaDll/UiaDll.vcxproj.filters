@@ -39,6 +39,9 @@
     <ClInclude Include="MenuItemSelector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UiaDll.cpp">
@@ -60,6 +63,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MenuItemSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -393,6 +393,21 @@ extern "C" {
 		return 1;
 	}
 
+	__declspec ( dllexport ) int RA_GetComboOptionsCount(const HWND windowHandle) {
+		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
+		return autoComboBox->Count;
+	}
+
+	__declspec ( dllexport ) int RA_GetSelectedComboIndex(const HWND windowHandle) {
+		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
+		return autoComboBox->SelectedIndex;
+	}
+
+	__declspec ( dllexport ) bool RA_GetComboValueByIndex(const HWND windowHandle, const int whichItem, char* comboValue, const int comboValueSize) {
+		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
+		return autoComboBox->GetValueByIndex(whichItem, comboValue, comboValueSize);
+	}
+
 	__declspec ( dllexport ) bool RA_SelectComboByIndex(const HWND windowHandle, const int whichItem) {
 		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
 		return autoComboBox->SelectByIndex(whichItem);
@@ -452,9 +467,7 @@ void SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInf
 		menuSelector->SelectMenuPath(windowHandle, menuItems);
 	} catch(Exception^ e) {
 		if( errorInfo ) {
-			auto unmanagedString = Marshal::StringToHGlobalAnsi(e->ToString());
-			strncpy(errorInfo, (const char*)(void*)unmanagedString, errorInfoSize - 1);
-			Marshal::FreeHGlobal(unmanagedString);
+			StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
 		}
 	}
 }

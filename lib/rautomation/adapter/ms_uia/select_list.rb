@@ -15,14 +15,10 @@ module RAutomation
             @index       = index
           end
 
-          #todo - replace with UIA version
           def selected?
-            selected_idx = Functions.send_message(@select_list.control_hwnd, Constants::CB_GETCURSEL, 0, nil)
-            return false if selected_idx == Constants::CB_ERR
-            @text == Functions.retrieve_combobox_item_text(@select_list.control_hwnd, selected_idx)
+            @index == UiaDll::get_combobox_selected_index(@select_list.control_hwnd)
           end
 
-          #todo - replace with UIA version
           def select
             @select_list.assert_enabled
             UiaDll::select_combo_by_index @select_list.control_hwnd, @index
@@ -31,7 +27,6 @@ module RAutomation
           alias_method :set, :select
         end
 
-        #todo - replace with UIA version
         def initialize(window, locators)
           super
           @hwnd = Functions.control_hwnd(@window.hwnd, @locators)
@@ -42,7 +37,6 @@ module RAutomation
           UiaDll::set_value(list, value)
         end
 
-        #todo - replace with UIA version
         def options(options = {})
           items = []
 
@@ -64,7 +58,6 @@ module RAutomation
           selected_option ? selected_option.text : ""
         end
 
-        #todo - replace with UIA version
         def option(options)
           item_count.times do |item_no|
             item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
@@ -110,9 +103,8 @@ module RAutomation
 
         private
 
-        #todo - replace with UIA version
         def item_count
-          Functions.send_message(@hwnd, Constants::CB_GETCOUNT, 0, nil)
+          UiaDll::get_combobox_count(@hwnd)
         end
 
       end
