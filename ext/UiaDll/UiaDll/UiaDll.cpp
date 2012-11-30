@@ -452,6 +452,12 @@ extern "C" {
 
 		return MenuItemExists(windowHandle, menuItems);
 	}
+
+	__declspec ( dllexport ) int RA_GetDataItemCount(const HWND windowHandle) {
+		auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
+		auto dataItemCondition = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
+		return automationElement->FindAll(System::Windows::Automation::TreeScope::Subtree, dataItemCondition)->Count;
+	}
 }
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)
