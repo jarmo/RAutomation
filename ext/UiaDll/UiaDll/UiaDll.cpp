@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "AutomatedComboBox.h"
+#include "AutomatedTable.h"
 #include "MenuItemSelector.h"
 #include "ToggleStateHelper.h"
 
@@ -11,6 +12,7 @@ IUIAutomation* getGlobalIUIAutomation() ;
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems);
 void SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInfoSize, std::list<const char*>& menuItems);
+int McppHowManyDataItemsFor(const HWND windowHandle);
 
 extern "C" {
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
@@ -454,9 +456,12 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) int RA_GetDataItemCount(const HWND windowHandle) {
-		auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
-		auto dataItemCondition = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
-		return automationElement->FindAll(System::Windows::Automation::TreeScope::Subtree, dataItemCondition)->Count;
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			return tableControl->RowCount;
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
 	}
 }
 
