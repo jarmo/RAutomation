@@ -49,13 +49,8 @@ module RAutomation
 #        end
 
         def select(index)
-          children = FFI::MemoryPointer.new :pointer, row_count
-
-          length = UiaDll::find_children(uia_element, children)
-
-          target_element = children.read_array_of_pointer(length)[index]
-
-          UiaDll::select(target_element)
+          hwnd = Functions.control_hwnd(@window.hwnd, @locators)
+          UiaDll::select_data_item hwnd, index - 1
         end
 
         #todo - replace with UIA version
@@ -65,7 +60,7 @@ module RAutomation
         end
 
         def row_count
-          UiaDll::find_children(uia_element, nil)
+          UiaDll::get_data_item_count Functions.control_hwnd(@window.hwnd, @locators)
         end
 
         def exist?
