@@ -472,6 +472,16 @@ extern "C" {
 			Console::WriteLine(e->ToString());
 		}
 	}
+
+	__declspec ( dllexport ) void RA_DataItemValueAt(const HWND windowHandle, const int dataRow, const int dataColumn, char *foundValue, const int foundValueLength) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			auto dataItemValue = tableControl->ValueAt(dataRow, dataColumn);
+			StringHelper::CopyToUnmanagedString(dataItemValue, foundValue, foundValueLength);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
 }
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)

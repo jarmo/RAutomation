@@ -19,3 +19,13 @@ void AutomatedTable::Select(const int dataItemIndex)
 	auto selectionItemPattern = dynamic_cast<SelectionItemPattern^>(dataItem->GetCurrentPattern(SelectionItemPattern::Pattern));
 	selectionItemPattern->Select();
 }
+
+String^ AutomatedTable::ValueAt(const int dataRow, const int dataColumn)
+{
+	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
+	auto rowProperty = gcnew PropertyCondition(TableItemPattern::RowProperty, dataRow);
+	auto columnProperty = gcnew PropertyCondition(TableItemPattern::ColumnProperty, dataColumn);
+	auto allTogetherNow = gcnew AndCondition(dataItemProperty, rowProperty, columnProperty);
+
+	return _tableControl->FindFirst(System::Windows::Automation::TreeScope::Subtree, allTogetherNow)->Current.Name;
+}
