@@ -463,6 +463,15 @@ extern "C" {
 			Console::WriteLine(e->ToString());
 		}
 	}
+
+	__declspec ( dllexport ) void RA_SelectDataItem(const HWND windowHandle, const int dataItemIndex) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			tableControl->Select(dataItemIndex);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
 }
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)
