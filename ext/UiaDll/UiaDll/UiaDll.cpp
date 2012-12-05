@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "AutomatedComboBox.h"
 #include "AutomatedTable.h"
+#include "ExpandCollapseHelper.h"
 #include "MenuItemSelector.h"
 #include "ToggleStateHelper.h"
 
@@ -468,6 +469,24 @@ extern "C" {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			tableControl->Select(dataItemIndex);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
+	__declspec ( dllexport ) void RA_ExpandItemByValue(const HWND windowHandle, const char* whichItem) {
+		try {
+			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
+			expandCollapseHelper->ExpandByValue(windowHandle, whichItem);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
+	__declspec ( dllexport ) void RA_ExpandItemByIndex(const HWND windowHandle, const int whichItemIndex) {
+		try {
+			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
+			expandCollapseHelper->ExpandByIndex(windowHandle, whichItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}

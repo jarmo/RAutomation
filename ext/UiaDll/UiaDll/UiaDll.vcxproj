@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="AutomatedComboBox.h" />
     <ClInclude Include="AutomatedTable.h" />
+    <ClInclude Include="ExpandCollapseHelper.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="MenuItemSelector.h" />
     <ClInclude Include="resource.h" />
@@ -92,6 +93,7 @@
     <ClCompile Include="AutomatedComboBox.cpp" />
     <ClCompile Include="AutomatedTable.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ExpandCollapseHelper.cpp" />
     <ClCompile Include="MenuItemSelector.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
