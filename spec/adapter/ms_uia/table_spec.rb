@@ -67,18 +67,18 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
       table.items.map(&:row).should eq [0, 1]
     end
 
-    it "has cells" do
+    it "have cells" do
       table.items[0].cells.count.should eq 3
     end
 
     context "item cells" do
       let(:cells) { table.items[0].cells }
 
-      it "has values for all of them" do
+      it "have a value" do
         cells.map(&:value).should eq ["John Doe", "12/15/1967", "FL"]
       end
 
-      it "has location information" do
+      it "have a location" do
         cells.map(&:location).should eq [ [0, 0], [0, 1], [0, 2] ]
       end
     end

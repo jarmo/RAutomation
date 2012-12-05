@@ -22,12 +22,12 @@ module RAutomation
           def cells
             cells = []
             UiaDll::get_data_item_row_count(@hwnd).times do |column|
-              cells << SubItem.new(@hwnd, @row, column)
+              cells << Cell.new(@hwnd, @row, column)
             end
             cells
           end
 
-          class SubItem
+          class Cell
             attr_reader :location
 
             def initialize(hwnd, row, column)
