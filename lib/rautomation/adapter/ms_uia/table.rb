@@ -5,11 +5,6 @@ module RAutomation
         include WaitHelper
         include Locators
 
-        def initialize(window, locators)
-          super
-          @hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-        end
-
         def strings
           rows = []
           header_columns = []
@@ -54,17 +49,17 @@ module RAutomation
 #        end
 
         def select(index)
-          UiaDll::select_data_item @hwnd, index - 1
+          UiaDll::select_data_item hwnd, index - 1
         end
 
         #todo - replace with UIA version
         def selected?(row)
-          state = Functions.get_table_row_state(Window.oleacc_module_handle, @hwnd, row)
+          state = Functions.get_table_row_state(Window.oleacc_module_handle, hwnd, row)
           state & Constants::STATE_SYSTEM_SELECTED != 0
         end
 
         def row_count
-          UiaDll::get_data_item_count @hwnd
+          UiaDll::get_data_item_count hwnd
         end
 
         def exist?
