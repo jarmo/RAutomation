@@ -8,6 +8,23 @@ module RAutomation
         class Item
           attr_reader :row
 
+          class SubItem
+            attr_reader :row
+            attr_reader :column
+
+            def initialize(hwnd, row, column)
+              @hwnd = hwnd
+              @row = row
+              @column = column
+            end
+
+            def value
+              string = FFI::MemoryPointer.new :char, 1024
+              UiaDll::cell_value_at @hwnd, @row, @column, string, 1024
+              string.read_string
+            end
+          end
+
           def initialize(hwnd, row)
             @hwnd = hwnd
             @row = row
@@ -17,6 +34,14 @@ module RAutomation
             string = FFI::MemoryPointer.new :char, 1024
             UiaDll::table_value_at @hwnd, @row, string, 1024
             string.read_string
+          end
+
+          def subitems
+            cells = []
+            UiaDll::get_data_item_row_count(@hwnd).times do |column|
+              cells << SubItem.new(@hwnd, @row, column)
+            end
+            cells
           end
         end
 

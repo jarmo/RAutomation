@@ -67,6 +67,18 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
       table.items.map(&:row).should eq [0, 1]
     end
 
+    it "has subitems" do
+      table.items[0].subitems.count.should eq 3
+    end
+
+    context "cell items" do
+      let(:subitems) { table.items[0].subitems }
+
+      it "has values for all of them" do
+        subitems.map(&:value).should eq ["John Doe", "12/15/1967", "FL"]
+      end
+    end
+
   end
 
 end
