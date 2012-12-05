@@ -464,6 +464,15 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) int RA_GetDataItemColumnCount(const HWND windowHandle) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			return tableControl->ColumnCount;
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
 	__declspec ( dllexport ) void RA_SelectDataItem(const HWND windowHandle, const int dataItemIndex) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);

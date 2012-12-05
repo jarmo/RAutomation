@@ -12,6 +12,12 @@ int AutomatedTable::RowCount::get()
 	return tablePattern->Current.RowCount;
 }
 
+int AutomatedTable::ColumnCount::get()
+{
+	auto tablePattern = dynamic_cast<TablePattern^>(_tableControl->GetCurrentPattern(TablePattern::Pattern));
+	return tablePattern->Current.ColumnCount;
+}
+
 void AutomatedTable::Select(const int dataItemIndex)
 {
 	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);

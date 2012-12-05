@@ -13,6 +13,10 @@ public:
 		int get();
 	}
 
+	property int ColumnCount {
+		int get();
+	}
+
 private:
 	AutomationElement^ _tableControl;
 };
