@@ -19,6 +19,10 @@ module RAutomation
             string.read_string
           end
 
+          def select
+            UiaDll::select_data_item @hwnd, @row
+          end
+
           def cells
             cells = []
             UiaDll::get_data_item_row_count(@hwnd).times do |column|
@@ -87,7 +91,7 @@ module RAutomation
 #        end
 
         def select(index)
-          UiaDll::select_data_item hwnd, index - 1
+          items[index - 1].select
         end
 
         #todo - replace with UIA version
