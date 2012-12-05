@@ -26,6 +26,13 @@ void AutomatedTable::Select(const int dataItemIndex)
 	selectionItemPattern->Select();
 }
 
+String^ AutomatedTable::ValueAt(const int dataRow)
+{
+	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
+	auto dataItem = _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, dataItemProperty)[dataRow];
+	return dataItem->Current.Name;
+}
+
 String^ AutomatedTable::CellValueAt(const int dataRow, const int dataColumn)
 {
 	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);

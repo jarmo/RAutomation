@@ -482,6 +482,16 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) void RA_RowValueAt(const HWND windowHandle, const int row, char *foundValue, const int foundValueLength) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			auto rowValue = tableControl->ValueAt(row);
+			StringHelper::CopyToUnmanagedString(rowValue, foundValue, foundValueLength);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
 	__declspec ( dllexport ) void RA_DataItemValueAt(const HWND windowHandle, const int dataRow, const int dataColumn, char *foundValue, const int foundValueLength) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
