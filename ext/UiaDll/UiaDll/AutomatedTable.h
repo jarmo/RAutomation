@@ -7,7 +7,7 @@ public:
 	AutomatedTable(const HWND windowHandle);
 
 	void Select(const int dataItemIndex);
-	String^ ValueAt(const int dataRow, const int dataColumn);
+	String^ CellValueAt(const int dataRow, const int dataColumn);
 
 	property int RowCount {
 		int get();

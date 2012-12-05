@@ -485,7 +485,7 @@ extern "C" {
 	__declspec ( dllexport ) void RA_DataItemValueAt(const HWND windowHandle, const int dataRow, const int dataColumn, char *foundValue, const int foundValueLength) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
-			auto dataItemValue = tableControl->ValueAt(dataRow, dataColumn);
+			auto dataItemValue = tableControl->CellValueAt(dataRow, dataColumn);
 			StringHelper::CopyToUnmanagedString(dataItemValue, foundValue, foundValueLength);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());

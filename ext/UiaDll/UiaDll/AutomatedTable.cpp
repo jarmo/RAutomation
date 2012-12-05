@@ -26,7 +26,7 @@ void AutomatedTable::Select(const int dataItemIndex)
 	selectionItemPattern->Select();
 }
 
-String^ AutomatedTable::ValueAt(const int dataRow, const int dataColumn)
+String^ AutomatedTable::CellValueAt(const int dataRow, const int dataColumn)
 {
 	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
 	auto rowProperty = gcnew PropertyCondition(TableItemPattern::RowProperty, dataRow);
