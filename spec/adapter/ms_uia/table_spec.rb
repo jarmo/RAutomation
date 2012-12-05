@@ -40,10 +40,16 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
   it "#select" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
+    table.select(1)
     table.selected?(2).should == false
 
     table.select(2)
     table.selected?(2).should == true
+  end
+
+  it "#row_count" do
+    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
+    table.row_count.should eq(2)
   end
 
 end

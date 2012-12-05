@@ -70,6 +70,10 @@ module RAutomation
                         [:long, :int, :pointer, :int], :bool
         attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
                         [:long], :int
+        attach_function :get_data_item_count, :RA_GetDataItemCount,
+                        [:long], :int
+        attach_function :select_data_item, :RA_SelectDataItem,
+                        [:long, :int], :void
       end
     end
   end

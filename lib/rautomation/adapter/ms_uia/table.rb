@@ -49,23 +49,17 @@ module RAutomation
 #        end
 
         def select(index)
-          children = FFI::MemoryPointer.new :pointer, row_count
-
-          length = UiaDll::find_children(uia_element, children)
-
-          target_element = children.read_array_of_pointer(length)[index]
-
-          UiaDll::select(target_element)
+          UiaDll::select_data_item hwnd, index - 1
         end
 
         #todo - replace with UIA version
         def selected?(row)
-          state = Functions.get_table_row_state(Window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
+          state = Functions.get_table_row_state(Window.oleacc_module_handle, hwnd, row)
           state & Constants::STATE_SYSTEM_SELECTED != 0
         end
 
         def row_count
-          UiaDll::find_children(uia_element, nil)
+          UiaDll::get_data_item_count hwnd
         end
 
         def exist?
