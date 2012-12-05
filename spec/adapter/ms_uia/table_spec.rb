@@ -52,5 +52,22 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     table.row_count.should eq(2)
   end
 
+  context "table items" do
+    let(:table) { RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView") }
+
+    it "should have all of the items" do
+      table.items.count.should eq(2)
+    end
+
+    it "have a value for all of them" do
+      table.items.map(&:value).should eq ["John Doe", "Anna Doe"]
+    end
+
+    it "have a row for all of them" do
+      table.items.map(&:row).should eq [0, 1]
+    end
+
+  end
+
 end
 
