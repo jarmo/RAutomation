@@ -28,6 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Child 1");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Grandchild 1");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Parent Two");
             this.label1 = new System.Windows.Forms.Label();
             this.aboutButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -58,6 +66,7 @@
             this.roundaboutWayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeView = new System.Windows.Forms.TreeView();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -365,21 +374,42 @@
             this.toToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem1});
             this.toToolStripMenuItem.Name = "toToolStripMenuItem";
-            this.toToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toToolStripMenuItem.Size = new System.Drawing.Size(88, 22);
             this.toToolStripMenuItem.Text = "To";
             // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem1.Text = "&About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutButton_Click);
+            // 
+            // treeView
+            // 
+            this.treeView.Location = new System.Drawing.Point(490, 285);
+            this.treeView.Name = "treeView";
+            treeNode1.Name = "Child 1";
+            treeNode1.Text = "Child 1";
+            treeNode2.Name = "Grandchild 1";
+            treeNode2.Text = "Grandchild 1";
+            treeNode3.Name = "Child 2";
+            treeNode3.Text = "Child 2";
+            treeNode4.Name = "Parent One";
+            treeNode4.Text = "Parent One";
+            treeNode5.Name = "Parent Two";
+            treeNode5.Text = "Parent Two";
+            this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
+            this.treeView.Size = new System.Drawing.Size(159, 177);
+            this.treeView.TabIndex = 16;
             // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 474);
+            this.Controls.Add(this.treeView);
             this.Controls.Add(this.FruitListBox);
             this.Controls.Add(this.textBoxDisabled);
             this.Controls.Add(this.checkBoxDisabled);
@@ -443,6 +473,7 @@
         private System.Windows.Forms.ToolStripMenuItem roundaboutWayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+        private System.Windows.Forms.TreeView treeView;
     }
 }
 
