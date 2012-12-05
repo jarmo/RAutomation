@@ -20,17 +20,13 @@ int AutomatedTable::ColumnCount::get()
 
 void AutomatedTable::Select(const int dataItemIndex)
 {
-	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
-	auto dataItem = _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, dataItemProperty)[dataItemIndex];
-	auto selectionItemPattern = dynamic_cast<SelectionItemPattern^>(dataItem->GetCurrentPattern(SelectionItemPattern::Pattern));
+	auto selectionItemPattern = dynamic_cast<SelectionItemPattern^>(DataItemAt(dataItemIndex)->GetCurrentPattern(SelectionItemPattern::Pattern));
 	selectionItemPattern->Select();
 }
 
 String^ AutomatedTable::ValueAt(const int dataRow)
 {
-	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
-	auto dataItem = _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, dataItemProperty)[dataRow];
-	return dataItem->Current.Name;
+	return DataItemAt(dataRow)->Current.Name;
 }
 
 String^ AutomatedTable::CellValueAt(const int dataRow, const int dataColumn)
@@ -41,4 +37,10 @@ String^ AutomatedTable::CellValueAt(const int dataRow, const int dataColumn)
 	auto allTogetherNow = gcnew AndCondition(dataItemProperty, rowProperty, columnProperty);
 
 	return _tableControl->FindFirst(System::Windows::Automation::TreeScope::Subtree, allTogetherNow)->Current.Name;
+}
+
+AutomationElement^ AutomatedTable::DataItemAt(const int row)
+{
+	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
+	return _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, dataItemProperty)[row];
 }

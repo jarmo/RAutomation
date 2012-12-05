@@ -20,5 +20,7 @@ public:
 
 private:
 	AutomationElement^ _tableControl;
+
+	AutomationElement^ DataItemAt(const int row);
 };
 
