@@ -5,6 +5,48 @@ module RAutomation
         include WaitHelper
         include Locators
 
+        class Item
+          attr_reader :row
+
+          def initialize(hwnd, row)
+            @hwnd = hwnd
+            @row = row
+          end
+
+          def value
+            string = FFI::MemoryPointer.new :char, 1024
+            UiaDll::table_value_at @hwnd, @row, string, 1024
+            string.read_string
+          end
+
+          def select
+            UiaDll::select_data_item @hwnd, @row
+          end
+
+          def cells
+            cells = []
+            UiaDll::get_data_item_row_count(@hwnd).times do |column|
+              cells << Cell.new(@hwnd, @row, column)
+            end
+            cells
+          end
+
+          class Cell
+            attr_reader :location
+
+            def initialize(hwnd, row, column)
+              @hwnd = hwnd
+              @location = [row, column]
+            end
+
+            def value
+              string = FFI::MemoryPointer.new :char, 1024
+              UiaDll::cell_value_at @hwnd, @location[0], @location[1], string, 1024
+              string.read_string
+            end
+          end
+        end
+
         def strings
           rows = []
           header_columns = []
@@ -49,7 +91,7 @@ module RAutomation
 #        end
 
         def select(index)
-          UiaDll::select_data_item hwnd, index - 1
+          items[index - 1].select
         end
 
         #todo - replace with UIA version
@@ -60,6 +102,14 @@ module RAutomation
 
         def row_count
           UiaDll::get_data_item_count hwnd
+        end
+
+        def items
+          table_items = []
+          row_count.times do |row|
+            table_items << Item.new(hwnd, row)
+          end
+          table_items
         end
 
         def exist?

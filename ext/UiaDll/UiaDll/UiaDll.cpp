@@ -464,10 +464,39 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) int RA_GetDataItemColumnCount(const HWND windowHandle) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			return tableControl->ColumnCount;
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
 	__declspec ( dllexport ) void RA_SelectDataItem(const HWND windowHandle, const int dataItemIndex) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			tableControl->Select(dataItemIndex);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
+	__declspec ( dllexport ) void RA_RowValueAt(const HWND windowHandle, const int row, char *foundValue, const int foundValueLength) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			auto rowValue = tableControl->ValueAt(row);
+			StringHelper::CopyToUnmanagedString(rowValue, foundValue, foundValueLength);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
+	__declspec ( dllexport ) void RA_DataItemValueAt(const HWND windowHandle, const int dataRow, const int dataColumn, char *foundValue, const int foundValueLength) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			auto dataItemValue = tableControl->CellValueAt(dataRow, dataColumn);
+			StringHelper::CopyToUnmanagedString(dataItemValue, foundValue, foundValueLength);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}

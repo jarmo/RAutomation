@@ -72,6 +72,12 @@ module RAutomation
                         [:long], :int
         attach_function :get_data_item_count, :RA_GetDataItemCount,
                         [:long], :int
+        attach_function :get_data_item_row_count, :RA_GetDataItemColumnCount,
+                        [:long], :int
+        attach_function :table_value_at, :RA_RowValueAt,
+                        [:long, :int, :pointer, :int], :void
+        attach_function :cell_value_at, :RA_DataItemValueAt,
+                        [:long, :int, :int, :pointer, :int], :void
         attach_function :select_data_item, :RA_SelectDataItem,
                         [:long, :int], :void
       end
