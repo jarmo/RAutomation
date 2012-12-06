@@ -27,6 +27,13 @@ describe "MsUia::Functions", :if => SpecHelper.adapter == :ms_uia do
       tree_view.collapse "Parent One"
       options.should eq ["Parent One", "Parent Two"]
     end
+
+    it "can be collapsed by index" do
+      tree_view.expand 0
+      options.should eq ["Parent One", "Child 1", "Child 2", "Parent Two"]
+      tree_view.collapse 0
+      options.should eq ["Parent One", "Parent Two"]
+    end
   end
 
 end
