@@ -20,6 +20,13 @@ describe "MsUia::Functions", :if => SpecHelper.adapter == :ms_uia do
       tree_view.expand 2
       options.should eq ["Parent One", "Child 1", "Child 2", "Grandchild 1", "Parent Two"]
     end
+
+    it "can be collapsed by value" do
+      tree_view.expand "Parent One"
+      options.should eq ["Parent One", "Child 1", "Child 2", "Parent Two"]
+      tree_view.collapse "Parent One"
+      options.should eq ["Parent One", "Parent Two"]
+    end
   end
 
 end

@@ -180,6 +180,10 @@ module RAutomation
           UiaDll::expand_by_index hwnd, which_item if which_item.is_a? Integer
         end
 
+        def collapse(which_item)
+          UiaDll::collapse_by_value hwnd, which_item
+        end
+
       end
     end
   end
