@@ -13,6 +13,17 @@ void ExpandCollapseHelper::ExpandByIndex(const HWND windowHandle, const int whic
 	Expand(expandableItem);
 }
 
+void ExpandCollapseHelper::CollapseByValue(const HWND windowHandle, const char* whichItem)
+{
+	Collapse(ExpandableItem(windowHandle, whichItem));
+}
+
+void ExpandCollapseHelper::CollapseByIndex(const HWND windowHandle, const int whichItemIndex)
+{
+	auto expandableItem = ExpandableItems(windowHandle)[whichItemIndex];
+	Collapse(expandableItem);
+}
+
 AutomationElementCollection^ ExpandCollapseHelper::ExpandableItems(const HWND windowHandle)
 {
 	auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
@@ -29,6 +40,11 @@ AutomationElement^ ExpandCollapseHelper::ExpandableItem(const HWND windowHandle,
 void ExpandCollapseHelper::Expand(AutomationElement^ automationElement)
 {
 	dynamic_cast<ExpandCollapsePattern^>(automationElement->GetCurrentPattern(ExpandCollapsePattern::Pattern))->Expand();
+}
+
+void ExpandCollapseHelper::Collapse(AutomationElement^ automationElement)
+{
+	dynamic_cast<ExpandCollapsePattern^>(automationElement->GetCurrentPattern(ExpandCollapsePattern::Pattern))->Collapse();
 }
 
 PropertyCondition^ ExpandCollapseHelper::IsExpandable::get()

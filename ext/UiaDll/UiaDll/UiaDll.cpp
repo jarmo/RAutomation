@@ -491,6 +491,24 @@ extern "C" {
 			Console::WriteLine(e->ToString());
 		}
 	}
+
+	__declspec ( dllexport ) void RA_CollapseItemByValue(const HWND windowHandle, const char* whichItem) {
+		try {
+			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
+			expandCollapseHelper->CollapseByValue(windowHandle, whichItem);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
+	__declspec ( dllexport ) void RA_CollapseItemByIndex(const HWND windowHandle, const int whichItemIndex) {
+		try {
+			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
+			expandCollapseHelper->CollapseByIndex(windowHandle, whichItemIndex);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
 }
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)
