@@ -78,10 +78,14 @@ module RAutomation
                         [:long, :string], :bool
         attach_function :data_item_exists_by_index, :RA_DataItemExistsByIndex,
                         [:long, :int], :bool
+                        
+        attach_function :RA_RowValueAt,
+                        [:long, :int, :pointer, :int], :void
 
-        def data_item_exists?(hwnd, which_item)
-          return data_item_exists_by_value(hwnd, which_item) if which_item.is_a? String
-          return data_item_exists_by_index(hwnd, which_item) if which_item.is_a? Integer
+        def self.row_value_at(hwnd, which_index)
+          string = FFI::MemoryPointer.new :char, 1024
+          RA_RowValueAt hwnd, which_index, string, 1024
+          string.read_string
         end
       end
     end

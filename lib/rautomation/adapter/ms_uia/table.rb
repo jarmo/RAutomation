@@ -9,6 +9,10 @@ module RAutomation
           @locators = locators
         end
 
+        def value
+          UiaDll::row_value_at @hwnd, @locators[:index]
+        end
+
         def exists?
           UiaDll::data_item_exists_by_index(@hwnd, @locators[:index])
         end
