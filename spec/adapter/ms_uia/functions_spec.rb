@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe "MsUia::Functions", :if => SpecHelper.adapter == :ms_uia do
-  let(:tree_view) { RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "treeView") }
-
-  def options
-    tree_view.options.map &:text
-  end
-
   context "working with expandable / collapsable items" do
+    let(:tree_view) { RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "treeView") }
+
+    def options
+      tree_view.options.map &:text
+    end
+
     it "can be expanded by value" do
       options.should eq ["Parent One", "Parent Two"]
       tree_view.expand "Parent One"
