@@ -74,6 +74,14 @@ module RAutomation
                         [:long], :int
         attach_function :select_data_item, :RA_SelectDataItem,
                         [:long, :int], :void
+        attach_function :expand_by_value, :RA_ExpandItemByValue,
+                        [:long, :string], :void
+        attach_function :expand_by_index, :RA_ExpandItemByIndex,
+                        [:long, :int], :void
+        attach_function :collapse_by_value, :RA_CollapseItemByValue,
+                        [:long, :string], :void
+        attach_function :collapse_by_index, :RA_CollapseItemByIndex,
+                        [:long, :int], :void
       end
     end
   end
