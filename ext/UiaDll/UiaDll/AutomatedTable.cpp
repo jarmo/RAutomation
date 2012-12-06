@@ -12,6 +12,22 @@ int AutomatedTable::RowCount::get()
 	return tablePattern->Current.RowCount;
 }
 
+bool AutomatedTable::Exists(const char* whichItem)
+{
+	return Exists(gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem)));
+}
+
+bool AutomatedTable::Exists(const int whichItemIndex)
+{
+	return Exists(gcnew PropertyCondition(TableItemPattern::RowProperty, whichItemIndex));
+}
+
+bool AutomatedTable::Exists(Condition^ condition)
+{
+	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
+	return _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(dataItemProperty, condition))->Count > 0;
+}
+
 void AutomatedTable::Select(const int dataItemIndex)
 {
 	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
