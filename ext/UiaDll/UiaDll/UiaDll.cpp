@@ -492,6 +492,16 @@ extern "C" {
 			return false;
 		}
 	}
+
+	__declspec ( dllexport ) void RA_RowValueAt(const HWND windowHandle, const int row, char *foundValue, const int foundValueLength) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			auto rowValue = tableControl->ValueAt(row);
+			StringHelper::CopyToUnmanagedString(rowValue, foundValue, foundValueLength);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
 }
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)

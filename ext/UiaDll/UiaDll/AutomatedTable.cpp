@@ -22,6 +22,18 @@ bool AutomatedTable::Exists(const int whichItemIndex)
 	return Exists(gcnew PropertyCondition(TableItemPattern::RowProperty, whichItemIndex));
 }
 
+String^ AutomatedTable::ValueAt(const int dataRow)
+{
+	return DataItemAt(dataRow)->Current.Name;
+}
+
+AutomationElement^ AutomatedTable::DataItemAt(const int whichItemIndex)
+{
+	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
+	auto indexProperty = gcnew PropertyCondition(TableItemPattern::RowProperty, whichItemIndex);
+	return _tableControl->FindFirst(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(dataItemProperty, indexProperty));
+}
+
 bool AutomatedTable::Exists(Condition^ condition)
 {
 	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
