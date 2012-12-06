@@ -176,7 +176,8 @@ module RAutomation
         end
 
         def expand(which_item)
-          UiaDll::expand_by_value hwnd, which_item
+          UiaDll::expand_by_value hwnd, which_item if which_item.is_a? String
+          UiaDll::expand_by_index hwnd, which_item if which_item.is_a? Integer
         end
 
       end

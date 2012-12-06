@@ -13,4 +13,11 @@ describe "MsUia::Functions", :if => SpecHelper.adapter == :ms_uia do
     options.should eq ["Parent One", "Child 1", "Child 2", "Parent Two"]
   end
 
+  it "can expand items by index" do
+    options.should eq ["Parent One", "Parent Two"]
+    tree_view.expand 0
+    tree_view.expand 2
+    options.should eq ["Parent One", "Child 1", "Child 2", "Grandchild 1", "Parent Two"]
+  end
+
 end
