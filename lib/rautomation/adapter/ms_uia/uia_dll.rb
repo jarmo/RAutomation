@@ -74,6 +74,15 @@ module RAutomation
                         [:long], :int
         attach_function :select_data_item, :RA_SelectDataItem,
                         [:long, :int], :void
+        attach_function :data_item_exists_by_value, :RA_DataItemExistsByValue,
+                        [:long, :string], :bool
+        attach_function :data_item_exists_by_index, :RA_DataItemExistsByIndex,
+                        [:long, :int], :bool
+
+        def data_item_exists?(hwnd, which_item)
+          return data_item_exists_by_value(hwnd, which_item) if which_item.is_a? String
+          return data_item_exists_by_index(hwnd, which_item) if which_item.is_a? Integer
+        end
       end
     end
   end

@@ -1,9 +1,25 @@
 module RAutomation
   module Adapter
     module MsUia
+      class Row
+        include Locators
+
+        def initialize(window, locators)
+          @hwnd = window.hwnd
+          @locators = locators
+        end
+
+        def exists?
+          UiaDll::data_item_exists_by_index(@hwnd, @locators[:index])
+        end
+      end
+
       class Table < Control
         include WaitHelper
         include Locators
+        extend ElementCollections
+
+        has_many :rows
 
         def strings
           rows = []

@@ -52,5 +52,13 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     table.row_count.should eq(2)
   end
 
+  context "#rows", :focus => true do
+    let(:table) { RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView") }
+
+    it "has rows" do
+      table.rows.size.should eq 2
+    end
+  end
+
 end
 
