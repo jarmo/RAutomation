@@ -6,7 +6,7 @@ module RAutomation
 
         def initialize(window, locators)
           @hwnd = window.hwnd
-          @locators = locators
+          @locators = extract(locators)
         end
 
         def value
@@ -26,6 +26,10 @@ module RAutomation
         extend ElementCollections
 
         has_many :rows
+
+        def row(locators={})
+          Row.new self, locators
+        end
 
         def strings
           rows = []

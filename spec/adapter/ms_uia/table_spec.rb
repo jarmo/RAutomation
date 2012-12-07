@@ -66,6 +66,10 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     it "values are also text" do
       table.rows.map(&:text).should eq ["John Doe", "Anna Doe"]
     end
+
+    it "can access the singular row" do
+      table.row.text.should eq "John Doe"
+    end
   end
 
 end
