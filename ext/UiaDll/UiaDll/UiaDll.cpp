@@ -502,10 +502,6 @@ extern "C" {
 			Console::WriteLine(e->ToString());
 		}
 	}
-
-	__declspec ( dllexport ) void RA_RowValueAt(const HWND windowHandle, const int row, char *foundValue, const int foundValueLength) {
-		RA_CellValueAt(windowHandle, row, 0, foundValue, foundValueLength);
-	}
 }
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)

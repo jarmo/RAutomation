@@ -3,16 +3,21 @@ module RAutomation
     module MsUia
       class Cell
         include Locators
-        attr_reader :row, :hwnd
+        attr_reader :row, :column, :hwnd
 
         def initialize(window, locators)
           @hwnd = window.hwnd
-          @row = window.row
           @locators = extract(locators)
+          @row = window.row
+          @column = @locators[:index]
         end
 
         def exists?
-          UiaDll::data_item_exists hwnd, row, @locators[:index]
+          UiaDll::data_item_exists hwnd, row, column
+        end
+
+        def value
+          UiaDll::cell_value_at hwnd, row, column
         end
       end
 
@@ -33,7 +38,7 @@ module RAutomation
         end
 
         def value
-          UiaDll::row_value_at @hwnd, @locators[:index]
+          UiaDll::cell_value_at @hwnd, @locators[:index]
         end
 
         def exists?
