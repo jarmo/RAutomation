@@ -17,9 +17,9 @@ bool AutomatedTable::Exists(const char* whichItem)
 	return Exists(gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem)));
 }
 
-bool AutomatedTable::Exists(const int whichItemIndex)
+bool AutomatedTable::Exists(const int whichItemIndex, const int whichColumnIndex)
 {
-	return Exists(gcnew PropertyCondition(TableItemPattern::RowProperty, whichItemIndex));
+	return nullptr != DataItemAt(whichItemIndex, whichColumnIndex);
 }
 
 String^ AutomatedTable::ValueAt(const int whichItemIndex, const int whichItemColumn)

@@ -18,7 +18,7 @@ module RAutomation
         end
 
         def exists?
-          UiaDll::data_item_exists_by_index(@hwnd, @locators[:index])
+          UiaDll::data_item_exists(@hwnd, @locators[:index])
         end
 
         alias_method :text, :value
