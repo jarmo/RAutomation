@@ -85,7 +85,7 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
       end
     end
 
-    context "Row#cells", :focus => true do
+    context "Row#cells" do
       let(:row) { table.row }
 
       it "has cells" do
@@ -98,6 +98,24 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
 
       it "values are also text" do
         row.cells.map(&:text).should eq ["John Doe", "12/15/1967", "FL"]
+      end
+
+      context "locators" do
+        it "can locate by text" do
+          row.cells(:text => "FL").size.should eq 1
+        end
+
+        it "can locate by regex" do
+          row.cells(:text => /[JF]/).size.should eq 2
+        end
+
+        it "can locate by index" do
+          row.cells(:index => 1).first.text.should eq "12/15/1967"
+        end
+
+        it "an index is also a column" do
+          row.cells(:column => 1).first.text.should eq "12/15/1967"
+        end
       end
     end
 
