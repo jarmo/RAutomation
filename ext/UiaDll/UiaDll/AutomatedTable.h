@@ -7,7 +7,7 @@ public:
 	AutomatedTable(const HWND windowHandle);
 	bool Exists(const char* whichItem);
 	bool Exists(const int whichItemIndex);
-	String^ ValueAt(const int whichItemIndex);
+	String^ ValueAt(const int whichItemIndex, const int whichColumnIndex);
 	void Select(const int dataItemIndex);
 
 	property int RowCount {
@@ -17,6 +17,6 @@ public:
 private:
 	AutomationElement^ _tableControl;
 	bool Exists(Condition^ condition);
-	AutomationElement^ DataItemAt(const int whichItemIndex);
+	AutomationElement^ DataItemAt(const int whichItemIndex, const int whichItemRow);
 };
 
