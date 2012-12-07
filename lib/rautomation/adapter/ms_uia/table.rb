@@ -1,9 +1,53 @@
 module RAutomation
   module Adapter
     module MsUia
+      class Row
+        include Locators
+
+        def initialize(window, locators)
+          @hwnd = window.hwnd
+          @locators = extract(locators)
+        end
+
+        def index
+          @locators[:index]
+        end
+
+        def value
+          UiaDll::row_value_at @hwnd, @locators[:index]
+        end
+
+        def exists?
+          UiaDll::data_item_exists_by_index(@hwnd, @locators[:index])
+        end
+
+        alias_method :text, :value
+        alias_method :row, :index
+      end
+
       class Table < Control
         include WaitHelper
         include Locators
+        extend ElementCollections
+
+        has_many :rows
+
+        def row(locators={})
+          rows(locators).first
+        end
+
+        def rows(locators={})
+          Rows.new(self, locators).select do |row|
+            locators_match? locators, row
+          end
+        end
+
+        def locators_match?(locators, row)
+          locators.all? do |locator, value|
+            return row.value =~ value if value.is_a? Regexp
+            return row.send(locator) == value
+          end
+        end
 
         def strings
           rows = []

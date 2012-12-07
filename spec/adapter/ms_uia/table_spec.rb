@@ -52,5 +52,49 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     table.row_count.should eq(2)
   end
 
+  context "#rows" do
+    let(:table) { RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView") }
+
+    it "has rows" do
+      table.rows.size.should eq 2
+    end
+
+    it "have values" do
+      table.rows.map(&:value).should eq ["John Doe", "Anna Doe"]
+    end
+
+    it "values are also text" do
+      table.rows.map(&:text).should eq ["John Doe", "Anna Doe"]
+    end
+
+    context "locators" do
+      it "can locate by text" do
+        table.rows(:text => "Anna Doe").size.should eq 1
+      end
+
+      it "can locate by regex" do
+        table.rows(:text => /Doe/).size.should eq 2
+      end
+
+      it "can locate by index" do
+        table.rows(:index => 1).first.text.should eq "Anna Doe"
+      end
+
+      it "an index is also a row" do
+        table.rows(:row => 1).first.text.should eq "Anna Doe"
+      end
+    end
+
+    context "singular row" do
+      it "grabs the first by default" do
+        table.row.text.should eq "John Doe"
+      end
+
+      it "can haz locators too" do
+        table.row(:text => "Anna Doe").text.should eq "Anna Doe"
+      end
+    end
+  end
+
 end
 
