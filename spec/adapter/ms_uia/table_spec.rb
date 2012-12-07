@@ -62,6 +62,10 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     it "have values" do
       table.rows.map(&:value).should eq ["John Doe", "Anna Doe"]
     end
+
+    it "values are also text" do
+      table.rows.map(&:text).should eq ["John Doe", "Anna Doe"]
+    end
   end
 
 end

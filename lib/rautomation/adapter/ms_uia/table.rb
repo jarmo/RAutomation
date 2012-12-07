@@ -16,6 +16,8 @@ module RAutomation
         def exists?
           UiaDll::data_item_exists_by_index(@hwnd, @locators[:index])
         end
+
+        alias_method :text, :value
       end
 
       class Table < Control
