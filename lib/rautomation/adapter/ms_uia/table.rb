@@ -1,8 +1,27 @@
 module RAutomation
   module Adapter
     module MsUia
+      class Cell
+        include Locators
+        attr_reader :row, :hwnd
+
+        def initialize(window, locators)
+          @hwnd = window.hwnd
+          @row = window.row
+          @locators = extract(locators)
+        end
+
+        def exists?
+          UiaDll::data_item_exists hwnd, row, @locators[:index]
+        end
+      end
+
       class Row
         include Locators
+        extend ElementCollections
+        attr_reader :hwnd
+
+        has_many :cells
 
         def initialize(window, locators)
           @hwnd = window.hwnd

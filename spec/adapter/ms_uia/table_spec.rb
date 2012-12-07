@@ -85,6 +85,14 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
       end
     end
 
+    context "Row#cells", :focus => true do
+      let(:row) { table.row }
+
+      it "has cells" do
+        row.cells.size.should eq 3
+      end
+    end
+
     context "singular row" do
       it "grabs the first by default" do
         table.row.text.should eq "John Doe"
