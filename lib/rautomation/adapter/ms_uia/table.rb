@@ -37,6 +37,10 @@ module RAutomation
           end
         end
 
+        def cell(locators={})
+          cells(locators).first
+        end
+
         def initialize(window, locators)
           @hwnd = window.hwnd
           @locators = extract(locators)

@@ -85,6 +85,16 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
       end
     end
 
+    context "singular row" do
+      it "grabs the first by default" do
+        table.row.text.should eq "John Doe"
+      end
+
+      it "can haz locators too" do
+        table.row(:text => "Anna Doe").text.should eq "Anna Doe"
+      end
+    end
+
     context "Row#cells" do
       let(:row) { table.row }
 
@@ -117,15 +127,15 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
           row.cells(:column => 1).first.text.should eq "12/15/1967"
         end
       end
-    end
 
-    context "singular row" do
-      it "grabs the first by default" do
-        table.row.text.should eq "John Doe"
-      end
+      context "singular cell" do
+        it "grabs the first by default" do
+          row.cell.text.should eq "John Doe"
+        end
 
-      it "can haz locators too" do
-        table.row(:text => "Anna Doe").text.should eq "Anna Doe"
+        it "can haz locators too" do
+          row.cell(:text => "FL").text.should eq "FL"
+        end
       end
     end
   end
