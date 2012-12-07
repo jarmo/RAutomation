@@ -12,6 +12,35 @@ int AutomatedTable::RowCount::get()
 	return tablePattern->Current.RowCount;
 }
 
+bool AutomatedTable::Exists(const char* whichItem)
+{
+	return Exists(gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem)));
+}
+
+bool AutomatedTable::Exists(const int whichItemIndex, const int whichColumnIndex)
+{
+	return nullptr != DataItemAt(whichItemIndex, whichColumnIndex);
+}
+
+String^ AutomatedTable::ValueAt(const int whichItemIndex, const int whichItemColumn)
+{
+	return DataItemAt(whichItemIndex, whichItemColumn)->Current.Name;
+}
+
+AutomationElement^ AutomatedTable::DataItemAt(const int whichItemIndex, const int whichItemColumn)
+{
+	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
+	auto indexProperty = gcnew PropertyCondition(TableItemPattern::RowProperty, whichItemIndex);
+	auto columnProperty = gcnew PropertyCondition(TableItemPattern::ColumnProperty, whichItemColumn);
+	return _tableControl->FindFirst(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(dataItemProperty, indexProperty, columnProperty));
+}
+
+bool AutomatedTable::Exists(Condition^ condition)
+{
+	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
+	return _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(dataItemProperty, condition))->Count > 0;
+}
+
 void AutomatedTable::Select(const int dataItemIndex)
 {
 	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
