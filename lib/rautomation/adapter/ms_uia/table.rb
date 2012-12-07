@@ -33,7 +33,7 @@ module RAutomation
         has_many :rows
 
         def row(locators={})
-          Row.new self, locators
+          rows(locators).first
         end
 
         def rows(locators={})

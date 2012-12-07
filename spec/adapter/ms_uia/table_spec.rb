@@ -67,10 +67,6 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
       table.rows.map(&:text).should eq ["John Doe", "Anna Doe"]
     end
 
-    it "can access the singular row" do
-      table.row.text.should eq "John Doe"
-    end
-
     context "locators" do
       it "can locate by text" do
         table.rows(:text => "Anna Doe").size.should eq 1
@@ -86,6 +82,16 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
 
       it "an index is also a row" do
         table.rows(:row => 1).first.text.should eq "Anna Doe"
+      end
+    end
+
+    context "singular row" do
+      it "grabs the first by default" do
+        table.row.text.should eq "John Doe"
+      end
+
+      it "can haz locators too" do
+        table.row(:text => "Anna Doe").text.should eq "Anna Doe"
       end
     end
   end
