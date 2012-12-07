@@ -70,6 +70,24 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     it "can access the singular row" do
       table.row.text.should eq "John Doe"
     end
+
+    context "locators" do
+      it "can locate by text" do
+        table.rows(:text => "Anna Doe").size.should eq 1
+      end
+
+      it "can locate by regex" do
+        table.rows(:text => /Doe/).size.should eq 2
+      end
+
+      it "can locate by index" do
+        table.rows(:index => 1).first.text.should eq "Anna Doe"
+      end
+
+      it "an index is also a row" do
+        table.rows(:row => 1).first.text.should eq "Anna Doe"
+      end
+    end
   end
 
 end

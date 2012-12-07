@@ -9,6 +9,10 @@ module RAutomation
           @locators = extract(locators)
         end
 
+        def index
+          @locators[:index]
+        end
+
         def value
           UiaDll::row_value_at @hwnd, @locators[:index]
         end
@@ -18,6 +22,7 @@ module RAutomation
         end
 
         alias_method :text, :value
+        alias_method :row, :index
       end
 
       class Table < Control
@@ -29,6 +34,19 @@ module RAutomation
 
         def row(locators={})
           Row.new self, locators
+        end
+
+        def rows(locators={})
+          Rows.new(self, locators).select do |row|
+            locators_match? locators, row
+          end
+        end
+
+        def locators_match?(locators, row)
+          locators.all? do |locator, value|
+            return row.value =~ value if value.is_a? Regexp
+            return row.send(locator) == value
+          end
         end
 
         def strings
