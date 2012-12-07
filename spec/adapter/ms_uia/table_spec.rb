@@ -95,6 +95,10 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
       it "cells have values" do
         row.cells.map(&:value).should eq ["John Doe", "12/15/1967", "FL"]
       end
+
+      it "values are also text" do
+        row.cells.map(&:text).should eq ["John Doe", "12/15/1967", "FL"]
+      end
     end
 
     context "singular row" do

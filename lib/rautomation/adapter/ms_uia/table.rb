@@ -19,6 +19,8 @@ module RAutomation
         def value
           UiaDll::cell_value_at hwnd, row, column
         end
+
+        alias_method :text, :value
       end
 
       class Row
