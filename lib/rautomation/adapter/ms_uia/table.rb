@@ -10,7 +10,7 @@ module RAutomation
         end
 
         def index
-          @locators[:index]
+          @locators[:index] || 0
         end
 
         def value
