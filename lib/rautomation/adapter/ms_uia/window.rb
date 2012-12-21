@@ -355,7 +355,7 @@ module RAutomation
         # @param (see Window#initialize)
         # @return [RAutomation::Window] child window, popup or regular window.
         def child(locators)
-          RAutomation::Window.new Functions.child_window_locators(hwnd, locators)
+          RAutomation::Window.new Functions.child_window_locators(hwnd, locators).merge({:adapter => :ms_uia})
         end
 
         private
