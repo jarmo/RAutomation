@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "AutomatedComboBox.h"
 #include "AutomatedTable.h"
+#include "AutomationClicker.h"
 #include "ExpandCollapseHelper.h"
 #include "MenuItemSelector.h"
 #include "ToggleStateHelper.h"
@@ -394,6 +395,17 @@ extern "C" {
 		}
 
 		return 1;
+	}
+
+	__declspec ( dllexport ) void RA_Click(const HWND windowHandle, char* errorInfo, const int errorInfoSize) {
+		try {
+			auto automationClicker = gcnew AutomationClicker(windowHandle);
+			automationClicker->Click();
+		} catch(Exception^ e) {
+			if( errorInfo ) {
+				StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
+			}
+		}
 	}
 
 	__declspec ( dllexport ) int RA_GetComboOptionsCount(const HWND windowHandle) {
