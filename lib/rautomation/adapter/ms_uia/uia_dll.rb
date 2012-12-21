@@ -84,6 +84,8 @@ module RAutomation
                         [:long, :int], :void
         attach_function :control_click, :RA_Click,
                         [:long, :pointer, :int], :void
+        attach_function :control_mouse_click, :RA_PointAndClick,
+                        [:long, :pointer, :int], :void
       end
     end
   end
