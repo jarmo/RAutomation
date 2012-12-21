@@ -82,6 +82,8 @@ module RAutomation
                         [:long, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
                         [:long, :int], :void
+        attach_function :control_click, :RA_Click,
+                        [:long, :pointer, :int], :void
       end
     end
   end
