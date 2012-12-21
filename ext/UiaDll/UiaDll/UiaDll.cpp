@@ -408,6 +408,17 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) void RA_PointAndClick(const HWND windowHandle, char* errorInfo, const int errorInfoSize) {
+		try {
+			auto automationClicker = gcnew AutomationClicker(windowHandle);
+			automationClicker->MouseClick();
+		} catch(Exception^ e) {
+			if( errorInfo ) {
+				StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
+			}
+		}
+	}
+
 	__declspec ( dllexport ) int RA_GetComboOptionsCount(const HWND windowHandle) {
 		auto autoComboBox = gcnew AutomatedComboBox(windowHandle);
 		return autoComboBox->Count;

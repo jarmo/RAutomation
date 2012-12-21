@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "AutomationClicker.h"
 
-
 AutomationClicker::AutomationClicker(const HWND windowHandle) {
 	_automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
 }
@@ -16,6 +15,14 @@ void AutomationClicker::Click() {
 	}
 
 	throw gcnew Exception(gcnew String("AutomationElement did not support the InvokePattern, TogglePattern or the SelectionItemPattern"));
+}
+
+void AutomationClicker::MouseClick() {
+	_automationElement->SetFocus();
+	auto clickablePoint = _automationElement->GetClickablePoint();
+	Cursor::Position = Point((int)clickablePoint.X, (int)clickablePoint.Y);
+	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+	mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 }
 
 bool AutomationClicker::CanInvoke() {
