@@ -71,13 +71,17 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationClient" />
     <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutomatedComboBox.h" />
     <ClInclude Include="AutomatedTable.h" />
+    <ClInclude Include="AutomationClicker.h" />
     <ClInclude Include="ExpandCollapseHelper.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="MenuItemSelector.h" />
@@ -92,6 +96,7 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="AutomatedComboBox.cpp" />
     <ClCompile Include="AutomatedTable.cpp" />
+    <ClCompile Include="AutomationClicker.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ExpandCollapseHelper.cpp" />
     <ClCompile Include="MenuItemSelector.cpp" />

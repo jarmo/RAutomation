@@ -198,7 +198,11 @@ module RAutomation
           end
 
           def control_click(control_hwnd)
-            post_message(control_hwnd, Constants::BM_CLICK, 0, nil)
+            string_buffer = FFI::MemoryPointer.new :char, 1024
+            UiaDll::control_mouse_click control_hwnd, string_buffer, 1024
+            error_info = string_buffer.read_string
+            raise error_info unless error_info.empty?
+            true
           end
 
           def set_control_focus(control_hwnd)
