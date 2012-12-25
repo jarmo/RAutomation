@@ -1,8 +1,45 @@
 module RAutomation
   module Adapter
     module MsUia
+      class Cell
+        include Locators
+        attr_reader :row, :column, :hwnd
+
+        def initialize(window, locators)
+          @hwnd = window.hwnd
+          @locators = extract(locators)
+          @row = window.row
+          @column = @locators[:index]
+        end
+
+        def exists?
+          UiaDll::data_item_exists hwnd, row, column
+        end
+
+        def value
+          UiaDll::cell_value_at hwnd, row, column
+        end
+
+        alias_method :text, :value
+        alias_method :index, :column
+      end
+
       class Row
         include Locators
+        extend ElementCollections
+        attr_reader :hwnd
+
+        has_many :cells
+
+        def cells(locators={})
+          Cells.new(self, locators).select do |cell|
+            Row.locators_match? locators, cell
+          end
+        end
+
+        def cell(locators={})
+          cells(locators).first
+        end
 
         def initialize(window, locators)
           @hwnd = window.hwnd
@@ -14,11 +51,18 @@ module RAutomation
         end
 
         def value
-          UiaDll::row_value_at @hwnd, @locators[:index]
+          UiaDll::cell_value_at @hwnd, @locators[:index]
         end
 
         def exists?
-          UiaDll::data_item_exists_by_index(@hwnd, @locators[:index])
+          UiaDll::data_item_exists(@hwnd, @locators[:index])
+        end
+
+        def self.locators_match?(locators, item)
+          locators.all? do |locator, value|
+            return item.value =~ value if value.is_a? Regexp
+            return item.send(locator) == value
+          end
         end
 
         alias_method :text, :value
@@ -38,14 +82,7 @@ module RAutomation
 
         def rows(locators={})
           Rows.new(self, locators).select do |row|
-            locators_match? locators, row
-          end
-        end
-
-        def locators_match?(locators, row)
-          locators.all? do |locator, value|
-            return row.value =~ value if value.is_a? Regexp
-            return row.send(locator) == value
+            Row.locators_match? locators, row
           end
         end
 

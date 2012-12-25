@@ -74,30 +74,22 @@ module RAutomation
                         [:long], :int
         attach_function :select_data_item, :RA_SelectDataItem,
                         [:long, :int], :void
-        attach_function :expand_by_value, :RA_ExpandItemByValue,
-                        [:long, :string], :void
-        attach_function :expand_by_index, :RA_ExpandItemByIndex,
-                        [:long, :int], :void
-        attach_function :collapse_by_value, :RA_CollapseItemByValue,
-                        [:long, :string], :void
-        attach_function :collapse_by_index, :RA_CollapseItemByIndex,
-                        [:long, :int], :void
         attach_function :data_item_exists_by_value, :RA_DataItemExistsByValue,
                         [:long, :string], :bool
         attach_function :RA_DataItemExists,
                         [:long, :int, :int], :bool
                         
-        attach_function :RA_CellValueAt,
-                        [:long, :int, :int, :pointer, :int], :void
+        attach_function :RA_RowValueAt,
+                        [:long, :int, :pointer, :int], :void
 
-        def self.cell_value_at(hwnd, row, column=0)
+        def self.row_value_at(hwnd, which_index)
           string = FFI::MemoryPointer.new :char, 1024
-          RA_CellValueAt hwnd, row, column, string, 1024
+          RA_RowValueAt hwnd, which_index, string, 1024
           string.read_string
         end
 
-        def self.data_item_exists(hwnd, row, column=0)
-          RA_DataItemExists hwnd, row, column
+        def self.data_item_exists(row, column=0)
+          RA_DataItemExists row, column
         end
       end
     end

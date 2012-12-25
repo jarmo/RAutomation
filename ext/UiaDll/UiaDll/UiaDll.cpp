@@ -475,20 +475,20 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) bool RA_DataItemExistsByIndex(const HWND windowHandle, const int whichItemIndex) {
+	__declspec ( dllexport ) bool RA_DataItemExists(const HWND windowHandle, const int whichItemIndex, const int whichColumnIndex) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
-			return tableControl->Exists(whichItemIndex);
+			return tableControl->Exists(whichItemIndex, whichColumnIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 			return false;
 		}
 	}
 
-	__declspec ( dllexport ) void RA_RowValueAt(const HWND windowHandle, const int row, char *foundValue, const int foundValueLength) {
+	__declspec ( dllexport ) void RA_CellValueAt(const HWND windowHandle, const int row, const int column, char *foundValue, const int foundValueLength) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
-			auto rowValue = tableControl->ValueAt(row);
+			auto rowValue = tableControl->ValueAt(row, column);
 			StringHelper::CopyToUnmanagedString(rowValue, foundValue, foundValueLength);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
