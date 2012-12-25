@@ -21,7 +21,7 @@ namespace :build do
 
   desc "Build WindowsForms"
   task :windows_forms do
-    sh "msbuild /property:Configuration=Release ext\\WindowsForms\\src\\WindowsForms\\WindowsForms.sln"
+    sh "msbuild /property:Configuration=Release ext\\WindowsForms\\WindowsForms.sln"
   end
 
   desc "Build all external dependencies"
