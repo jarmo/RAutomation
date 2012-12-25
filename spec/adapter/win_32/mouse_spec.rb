@@ -10,7 +10,7 @@ describe "Win32::Mouse", :if => SpecHelper.adapter == :win_32 do
 
     window.maximize
     mouse = window.mouse
-    mouse.move :x => 60, :y => 45
+    mouse.move :x => 60, :y => 65
     mouse.click
 
     RAutomation::WaitHelper.wait_until {popup.present?}
@@ -33,7 +33,7 @@ describe "Win32::Mouse", :if => SpecHelper.adapter == :win_32 do
     text_field.value.should == "start string"
 
     mouse = window.mouse
-    mouse.move :x => 146, :y => 103
+    mouse.move :x => 146, :y => 125
     mouse.press
     mouse.move :x => 194
     mouse.release
