@@ -48,6 +48,9 @@
     <ClInclude Include="ExpandCollapseHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AutomationClicker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UiaDll.cpp">
@@ -78,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ExpandCollapseHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AutomationClicker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

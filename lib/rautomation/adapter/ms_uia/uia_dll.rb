@@ -90,6 +90,11 @@ module RAutomation
         attach_function :RA_CellValueAt,
                         [:long, :int, :int, :pointer, :int], :void
 
+        attach_function :control_click, :RA_Click,
+                        [:long, :pointer, :int], :void
+        attach_function :control_mouse_click, :RA_PointAndClick,
+                        [:long, :pointer, :int], :void
+
         def self.cell_value_at(hwnd, row, column=0)
           string = FFI::MemoryPointer.new :char, 1024
           RA_CellValueAt hwnd, row, column, string, 1024
