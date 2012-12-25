@@ -1,19 +1,19 @@
 require 'spec_helper'
 
 describe RAutomation::Window do
-  it "RAutomation::Window.adapter" do
+  it ".adapter" do
     RAutomation::Window.new(:title => "random").adapter.should == (ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter)
   end
 
-  it "Window#new by full title" do
+  it "#new by full title" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]).should exist
   end
 
-  it "Window#new by regexp title" do
+  it "#new by regexp title" do
     RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should exist
   end
 
-  it "Window#new by hwnd" do
+  it "#new by hwnd" do
     hwnd = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]).hwnd
     window = RAutomation::Window.new(:hwnd => hwnd)
     window.should exist
@@ -130,5 +130,16 @@ describe RAutomation::Window do
 
     expect {RAutomation::Window.new(:title => "non-existing-window").close}.
             to_not raise_exception
+  end
+
+  it "#child", :if => [:win_32, :ms_uia].include?(SpecHelper.adapter) do
+    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title])
+    window.should exist
+
+    # buttons are windows too. so let's find the button for now
+    child = window.child(:title => /About/i)
+    child.should exist
+    child.title.should == "&About"
+    child.adapter.should == SpecHelper.adapter
   end
 end

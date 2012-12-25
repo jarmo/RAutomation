@@ -128,7 +128,7 @@ module RAutomation
                 locators.merge!(:hwnd => popup_hwnd) if locators_match?(locators, popup_properties)
               end
             end
-            locators
+            locators.merge(:adapter => :ms_uia)
           end
 
           def window_pid(hwnd)

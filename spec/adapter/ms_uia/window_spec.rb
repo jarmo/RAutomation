@@ -139,17 +139,3 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
   end
 =end
 end
-
-describe "MsUia::Window#child" do
-  let(:window) {RAutomation::Window.new(:title => /MainFormWindow/i, :adapter => :ms_uia)}
-
-  it "#child" do
-    window.should exist
-
-    # buttons are windows too. so let's find the button for now
-    child = window.child(:title => /About/i)
-    child.should exist
-    child.title.should == "&About"
-    child.adapter.should eq(:ms_uia)
-  end
-end

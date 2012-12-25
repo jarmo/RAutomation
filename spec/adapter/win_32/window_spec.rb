@@ -3,15 +3,6 @@ require "spec_helper"
 describe "Win32::Window", :if => SpecHelper.adapter == :win_32 do
   let(:window) {RAutomation::Window.new(:title => /MainFormWindow/i)}
 
-  it "#child" do
-    window.should exist
-
-    # buttons are windows too. so let's find the button for now
-    child = window.child(:title => /About/i)
-    child.should exist
-    child.title.should == "&About"
-  end
-
   context "#send_keys" do
     it "send tab keystrokes to move focus between elements" do
       window.button(:value => "&About").focus
