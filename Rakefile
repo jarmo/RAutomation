@@ -3,31 +3,30 @@ require 'bundler'
 
 Bundler::GemHelper.install_tasks
 
-task :default => "spec:all"
-
 namespace :spec do
-  require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(:spec)
-
-  RSpec::Core::RakeTask.new(:rcov) do |spec|
-    spec.rcov = true
-  end
-
   adapters = %w[win_32 autoit ms_uia]
+
   adapters.each do |adapter|
-    desc "Run specs against #{adapter} adapter"
+    desc "Run RSpec code examples against #{adapter} adapter"
     task adapter do
       ENV["RAUTOMATION_ADAPTER"] = adapter
       puts "Running specs for adapter: #{adapter}"
-      task = Rake::Task["spec:spec"]
+      task = Rake::Task["spec"]
       task.reenable
       task.invoke      
     end
   end
 
-  desc "Run specs against all adapters"
+  desc "Run RSpec code examples against all adapters"
   task :all => adapters.map {|a| "spec:#{a}"}
 end
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+
+RSpec::Core::RakeTask.new(:rcov) { |spec| spec.rcov = true }
+
 require 'yard'
 YARD::Rake::YardocTask.new
+
+task :default => "spec:all"
