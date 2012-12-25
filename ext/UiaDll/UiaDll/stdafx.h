@@ -13,7 +13,6 @@
 #include <ObjBase.h>
 #include <UIAutomation.h>
 #include <comutil.h> 
-#include <atlbase.h>
 
 #include <list>
 

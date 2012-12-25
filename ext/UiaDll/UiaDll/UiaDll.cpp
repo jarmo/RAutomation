@@ -465,6 +465,36 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) bool RA_DataItemExistsByValue(const HWND windowHandle, const char* whichItem) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			return tableControl->Exists(whichItem);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+			return false;
+		}
+	}
+
+	__declspec ( dllexport ) bool RA_DataItemExistsByIndex(const HWND windowHandle, const int whichItemIndex) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			return tableControl->Exists(whichItemIndex);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+			return false;
+		}
+	}
+
+	__declspec ( dllexport ) void RA_RowValueAt(const HWND windowHandle, const int row, char *foundValue, const int foundValueLength) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			auto rowValue = tableControl->ValueAt(row);
+			StringHelper::CopyToUnmanagedString(rowValue, foundValue, foundValueLength);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
 	__declspec ( dllexport ) void RA_SelectDataItem(const HWND windowHandle, const int dataItemIndex) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);

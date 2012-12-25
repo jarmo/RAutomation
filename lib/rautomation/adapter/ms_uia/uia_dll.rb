@@ -82,6 +82,19 @@ module RAutomation
                         [:long, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
                         [:long, :int], :void
+        attach_function :data_item_exists_by_value, :RA_DataItemExistsByValue,
+                        [:long, :string], :bool
+        attach_function :data_item_exists_by_index, :RA_DataItemExistsByIndex,
+                        [:long, :int], :bool
+                        
+        attach_function :RA_RowValueAt,
+                        [:long, :int, :pointer, :int], :void
+
+        def self.row_value_at(hwnd, which_index)
+          string = FFI::MemoryPointer.new :char, 1024
+          RA_RowValueAt hwnd, which_index, string, 1024
+          string.read_string
+        end
       end
     end
   end
