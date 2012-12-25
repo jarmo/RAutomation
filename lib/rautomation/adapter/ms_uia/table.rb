@@ -9,7 +9,7 @@ module RAutomation
           @hwnd = window.hwnd
           @locators = extract(locators)
           @row = window.row
-          @column = @locators[:index]
+          @column = @locators[:index] || 0
         end
 
         def exists?
