@@ -7,7 +7,6 @@ namespace :build do
   build_tasks = [
     {:name => :uia_dll, :path => "UiaDll"},
     {:name => :i_accessible_dll, :path => "IAccessibleDLL"},
-    {:name => :list_view_explorer, :path => "ListViewExplorer"},
     {:name => :windows_forms, :path => "WindowsForms"}
   ]
 
