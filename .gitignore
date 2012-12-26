@@ -14,15 +14,15 @@ tmtags
 *.swp
 
 ## PROJECT::GENERAL
-coverage
-rdoc
-pkg
+/coverage
+/rdoc
+/pkg
 
 ## PROJECT::SPECIFIC
-.idea/*
+/.idea/*
 
-.yardoc/
-doc/
+/.yardoc/
+/doc/
 
 ## VisualStudio
 Debug
@@ -31,6 +31,5 @@ ipch
 *.sdf
 *.suo
 *.user
-!ext/IAccessibleDLL/Release/*.dll
 *.opensdf
 _ReSharper*/
