@@ -129,8 +129,9 @@ module RAutomation
 #          Functions.select_table_row(Window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
 #        end
 
-        def select(index)
-          UiaDll::select_data_item hwnd, index - 1
+        def select(which_item)
+          UiaDll::select_data_item hwnd, which_item - 1 if which_item.is_a? Integer
+          UiaDll::select_data_item_by_value hwnd, which_item if which_item.is_a? String
         end
 
         #todo - replace with UIA version
