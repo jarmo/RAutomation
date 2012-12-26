@@ -50,6 +50,7 @@ end
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
+task :spec => :build
 
 RSpec::Core::RakeTask.new(:rcov) { |spec| spec.rcov = true }
 
