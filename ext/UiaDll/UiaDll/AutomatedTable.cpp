@@ -12,16 +12,6 @@ int AutomatedTable::RowCount::get()
 	return tablePattern->Current.RowCount;
 }
 
-bool AutomatedTable::Exists(const int whichItemIndex, const char* whichItem)
-{
-	try {
-		return nullptr != FindDataItem(gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem)))[whichItemIndex];
-	} catch(Exception^ e) {
-	}
-
-	return false;
-}
-
 bool AutomatedTable::Exists(const int whichItemIndex, const int whichColumnIndex)
 {
 	return nullptr != DataItemAt(whichItemIndex, whichColumnIndex);

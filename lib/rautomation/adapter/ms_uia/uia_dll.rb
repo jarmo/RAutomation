@@ -84,8 +84,6 @@ module RAutomation
                         [:long, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
                         [:long, :int], :void
-        attach_function :RA_DataItemExistsByIndexAndValue,
-                        [:long, :int, :string], :bool
         attach_function :RA_DataItemExists,
                         [:long, :int, :int], :bool
                         
@@ -105,10 +103,6 @@ module RAutomation
 
         def self.data_item_exists(hwnd, row, column=0)
           RA_DataItemExists hwnd, row, column
-        end
-
-        def self.data_item_exists_by_value(hwnd, value, index=0)
-          RA_DataItemExistsByIndexAndValue hwnd, index, value
         end
       end
     end
