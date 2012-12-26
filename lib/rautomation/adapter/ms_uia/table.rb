@@ -128,9 +128,9 @@ module RAutomation
         def select(which_item)
           case which_item
             when Integer
-              UiaDll::select_data_item hwnd, which_item - 1 if which_item.is_a? Integer
+              UiaDll::select_data_item hwnd, which_item - 1
             when String
-              UiaDll::select_data_item_by_value hwnd, which_item if which_item.is_a? String
+              UiaDll::select_data_item_by_value hwnd, which_item
           end
         end
 
