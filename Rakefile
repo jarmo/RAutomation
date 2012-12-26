@@ -4,28 +4,22 @@ require 'bundler'
 Bundler::GemHelper.install_tasks
 
 namespace :build do
-  desc "Build UiaDll"
-  task :uia_dll do
-    sh "msbuild /property:Configuration=Release ext\\UiaDll\\UiaDll.sln"
-  end
+  build_tasks = [
+    {:name => :uia_dll, :path => "UiaDll"},
+    {:name => :i_accessible_dll, :path => "IAccessibleDLL"},
+    {:name => :list_view_explorer, :path => "ListViewExplorer"},
+    {:name => :windows_forms, :path => "WindowsForms"}
+  ]
 
-  desc "Build IAccessibleDLL"
-  task :i_accessible_dll do
-    sh "msbuild /property:Configuration=Release ext\\IAccessibleDLL\\IAccessibleDLL.sln"
-  end
-
-  desc "Build ListViewExplorer"
-  task :list_view_explorer do
-    sh "msbuild /property:Configuration=Release ext\\ListViewExplorer\\ListViewExplorer.sln"
-  end
-
-  desc "Build WindowsForms"
-  task :windows_forms do
-    sh "msbuild /property:Configuration=Release ext\\WindowsForms\\WindowsForms.sln"
+  build_tasks.each do |build_task|
+    desc "Build #{build_task[:path]}"
+    task build_task[:name] do
+      sh "msbuild /property:Configuration=Release ext\\#{build_task[:path]}\\#{build_task[:path]}.sln"
+    end
   end
 
   desc "Build all external dependencies"
-  task :all => %w[build:uia_dll build:i_accessible_dll build:list_view_explorer build:windows_forms]
+  task :all => build_tasks.map { |t| "build:#{t[:name]}"}
 end
 
 task :build => "build:all"
