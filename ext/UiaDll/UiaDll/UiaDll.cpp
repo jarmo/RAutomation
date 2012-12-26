@@ -488,10 +488,10 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) bool RA_DataItemExistsByValue(const HWND windowHandle, const char* whichItem) {
+	__declspec ( dllexport ) bool RA_DataItemExistsByIndexAndValue(const HWND windowHandle, const int whichItemIndex, const char* whichItem) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
-			return tableControl->Exists(whichItem);
+			return tableControl->Exists(whichItemIndex, whichItem);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 			return false;
@@ -522,6 +522,15 @@ extern "C" {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			tableControl->Select(dataItemIndex);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
+	__declspec ( dllexport ) void RA_SelectDataItemByValue(const HWND windowHandle, const char* dataItemValue) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			tableControl->Select(dataItemValue);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}

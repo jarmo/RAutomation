@@ -74,6 +74,8 @@ module RAutomation
                         [:long], :int
         attach_function :select_data_item, :RA_SelectDataItem,
                         [:long, :int], :void
+        attach_function :select_data_item_by_value, :RA_SelectDataItemByValue,
+                        [:long, :string], :void
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [:long, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,
@@ -82,8 +84,8 @@ module RAutomation
                         [:long, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
                         [:long, :int], :void
-        attach_function :data_item_exists_by_value, :RA_DataItemExistsByValue,
-                        [:long, :string], :bool
+        attach_function :RA_DataItemExistsByIndexAndValue,
+                        [:long, :int, :string], :bool
         attach_function :RA_DataItemExists,
                         [:long, :int, :int], :bool
                         
@@ -103,6 +105,10 @@ module RAutomation
 
         def self.data_item_exists(hwnd, row, column=0)
           RA_DataItemExists hwnd, row, column
+        end
+
+        def self.data_item_exists_by_value(hwnd, value, index=0)
+          RA_DataItemExistsByIndexAndValue hwnd, index, value
         end
       end
     end
