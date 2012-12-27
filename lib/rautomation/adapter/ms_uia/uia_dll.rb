@@ -11,15 +11,15 @@ module RAutomation
         ffi_convention :stdcall
 
         # Select List methods
-        attach_function :get_combobox_count, :RA_GetComboOptionsCount,
+        attach_function :select_list_count, :SelectList_Count,
                         [:long], :int
-        attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
+        attach_function :select_list_selected_index, :SelectList_SelectedIndex,
                         [:long], :int
-        attach_function :get_combobox_value, :RA_GetComboValueByIndex,
+        attach_function :select_list_value_at, :SelectList_ValueAt,
                         [:long, :int, :pointer, :int], :bool
-        attach_function :select_combo_by_index, :RA_SelectComboByIndex,
+        attach_function :select_list_select_index, :SelectList_SelectIndex,
                         [:long, :int], :bool
-        attach_function :set_value, :RA_SelectComboByValue,
+        attach_function :select_list_select_value, :SelectList_SelectValue,
                         [:pointer, :pointer], :int
 
         # Table methods

@@ -228,7 +228,7 @@ module RAutomation
           def retrieve_combobox_item_text(control_hwnd, item_no)
             text_len = 1024
             string_buffer = FFI::MemoryPointer.new :char, text_len
-            UiaDll::get_combobox_value control_hwnd, item_no, string_buffer, text_len
+            UiaDll::select_list_value_at control_hwnd, item_no, string_buffer, text_len
             string_buffer.read_string
           end
 
