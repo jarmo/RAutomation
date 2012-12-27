@@ -10,6 +10,18 @@ module RAutomation
         ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
         ffi_convention :stdcall
 
+        # Select List methods
+        attach_function :get_combobox_count, :RA_GetComboOptionsCount,
+                        [:long], :int
+        attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
+                        [:long], :int
+        attach_function :get_combobox_value, :RA_GetComboValueByIndex,
+                        [:long, :int, :pointer, :int], :bool
+        attach_function :select_combo_by_index, :RA_SelectComboByIndex,
+                        [:long, :int], :bool
+        attach_function :set_value, :RA_SelectComboByValue,
+                        [:pointer, :pointer], :int
+
         # Table methods
         attach_function :table_row_count, :Table_RowCount,
                         [:long], :int
@@ -89,20 +101,10 @@ module RAutomation
                         [:int], :pointer
         attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
-        attach_function :select_combo_by_index, :RA_SelectComboByIndex,
-                        [:long, :int], :bool
-        attach_function :set_value, :RA_SelectComboByValue,
-                        [:pointer, :pointer], :int
         attach_function :select_menu_item, :RA_SelectMenuItem,
                         [:long, :pointer, :int, :varargs], :void
         attach_function :menu_item_exists, :RA_MenuItemExists,
                         [:long, :varargs], :bool
-        attach_function :get_combobox_count, :RA_GetComboOptionsCount,
-                        [:long], :int
-        attach_function :get_combobox_value, :RA_GetComboValueByIndex,
-                        [:long, :int, :pointer, :int], :bool
-        attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
-                        [:long], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [:long, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,

@@ -119,6 +119,9 @@
     <ClCompile Include="TableMethods.cpp">
       <Filter>Source Files\Table</Filter>
     </ClCompile>
+    <ClCompile Include="ComboBoxMethods.cpp">
+      <Filter>Source Files\ComboBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
