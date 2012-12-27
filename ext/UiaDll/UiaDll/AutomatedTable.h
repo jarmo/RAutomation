@@ -9,6 +9,7 @@ public:
 	String^ ValueAt(const int whichItemIndex, const int whichColumnIndex);
 	void Select(const int dataItemIndex);
 	void Select(const char* dataItemValue);
+	bool IsSelected(const int dataItemIndex);
 
 	property int RowCount {
 		int get();

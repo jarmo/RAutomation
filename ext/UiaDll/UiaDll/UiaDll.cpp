@@ -517,6 +517,15 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) bool RA_IsDataItemSelected(const HWND windowHandle, const int dataItemIndex) {
+		try {
+			auto tableControl = gcnew AutomatedTable(windowHandle);
+			return tableControl->IsSelected(dataItemIndex);
+		} catch(Exception^ e) {
+			Console::WriteLine(e->ToString());
+		}
+	}
+
 	__declspec ( dllexport ) void RA_SelectDataItemByValue(const HWND windowHandle, const char* dataItemValue) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);

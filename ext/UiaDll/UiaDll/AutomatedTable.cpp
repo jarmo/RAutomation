@@ -61,6 +61,13 @@ void AutomatedTable::Select(const int dataItemIndex)
 	}
 }
 
+bool AutomatedTable::IsSelected(const int dataItemIndex) {
+	auto selectionItem = _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, gcnew PropertyCondition(AutomationElement::IsSelectionItemPatternAvailableProperty, true))[dataItemIndex
+ ];
+	auto selectionItemPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
+	return selectionItemPattern->Current.IsSelected;
+}
+
 void AutomatedTable::Select(const char* dataItemValue)
 {
 	try {
