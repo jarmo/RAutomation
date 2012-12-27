@@ -8,9 +8,6 @@
 
 IUIAutomation* getGlobalIUIAutomation() ;
 
-
-int McppHowManyDataItemsFor(const HWND windowHandle);
-
 extern "C" {
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
 		IUIAutomationElement *pRootElement ;
