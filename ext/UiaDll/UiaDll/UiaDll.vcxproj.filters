@@ -51,6 +51,9 @@
     <ClInclude Include="AutomationClicker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AutomationFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UiaDll.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AutomationClicker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AutomationFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
