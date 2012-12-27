@@ -10,6 +10,30 @@ module RAutomation
         ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
         ffi_convention :stdcall
 
+        # Table methods
+        attach_function :get_data_item_count, :Table_RowCount,
+                        [:long], :int
+        attach_function :Table_CoordinateIsValid,
+                        [:long, :int, :int], :bool
+        attach_function :Table_ValueAt,
+                        [:long, :int, :int, :pointer, :int], :void
+        attach_function :select_data_item, :Table_SelectByIndex,
+                        [:long, :int], :void
+        attach_function :is_data_item_selected, :Table_IsSelectedByIndex,
+                        [:long, :int], :bool
+        attach_function :select_data_item_by_value, :Table_SelectByValue,
+                        [:long, :string], :void
+
+        def self.cell_value_at(hwnd, row, column=0)
+          string = FFI::MemoryPointer.new :char, 1024
+          Table_ValueAt hwnd, row, column, string, 1024
+          string.read_string
+        end
+
+        def self.data_item_exists(hwnd, row, column=0)
+          Table_CoordinateIsValid hwnd, row, column
+        end
+
         attach_function :find_window, :RA_FindWindow,
                         [:string], :pointer
         attach_function :is_offscreen, :RA_IsOffscreen,
@@ -70,14 +94,6 @@ module RAutomation
                         [:long, :int, :pointer, :int], :bool
         attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
                         [:long], :int
-        attach_function :get_data_item_count, :RA_GetDataItemCount,
-                        [:long], :int
-        attach_function :select_data_item, :RA_SelectDataItem,
-                        [:long, :int], :void
-        attach_function :select_data_item_by_value, :RA_SelectDataItemByValue,
-                        [:long, :string], :void
-        attach_function :is_data_item_selected, :RA_IsDataItemSelected,
-                        [:long, :int], :bool
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [:long, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,
@@ -86,26 +102,10 @@ module RAutomation
                         [:long, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
                         [:long, :int], :void
-        attach_function :RA_DataItemExists,
-                        [:long, :int, :int], :bool
-                        
-        attach_function :RA_CellValueAt,
-                        [:long, :int, :int, :pointer, :int], :void
-
         attach_function :control_click, :RA_Click,
                         [:long, :pointer, :int], :void
         attach_function :control_mouse_click, :RA_PointAndClick,
                         [:long, :pointer, :int], :void
-
-        def self.cell_value_at(hwnd, row, column=0)
-          string = FFI::MemoryPointer.new :char, 1024
-          RA_CellValueAt hwnd, row, column, string, 1024
-          string.read_string
-        end
-
-        def self.data_item_exists(hwnd, row, column=0)
-          RA_DataItemExists hwnd, row, column
-        end
       end
     end
   end

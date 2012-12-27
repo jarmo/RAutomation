@@ -3,7 +3,7 @@
 
 extern "C" {
 
-	__declspec ( dllexport ) int RA_GetDataItemCount(const HWND windowHandle) {
+	__declspec ( dllexport ) int Table_RowCount(const HWND windowHandle) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			return tableControl->RowCount;
@@ -12,7 +12,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) bool RA_DataItemExists(const HWND windowHandle, const int whichItemIndex, const int whichColumnIndex) {
+	__declspec ( dllexport ) bool Table_CoordinateIsValid(const HWND windowHandle, const int whichItemIndex, const int whichColumnIndex) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			return tableControl->Exists(whichItemIndex, whichColumnIndex);
@@ -22,7 +22,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_CellValueAt(const HWND windowHandle, const int row, const int column, char *foundValue, const int foundValueLength) {
+	__declspec ( dllexport ) void Table_ValueAt(const HWND windowHandle, const int row, const int column, char *foundValue, const int foundValueLength) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			auto rowValue = tableControl->ValueAt(row, column);
@@ -32,7 +32,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_SelectDataItem(const HWND windowHandle, const int dataItemIndex) {
+	__declspec ( dllexport ) void Table_SelectByIndex(const HWND windowHandle, const int dataItemIndex) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			tableControl->Select(dataItemIndex);
@@ -41,7 +41,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) bool RA_IsDataItemSelected(const HWND windowHandle, const int dataItemIndex) {
+	__declspec ( dllexport ) bool Table_IsSelectedByIndex(const HWND windowHandle, const int dataItemIndex) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			return tableControl->IsSelected(dataItemIndex);
@@ -50,7 +50,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_SelectDataItemByValue(const HWND windowHandle, const char* dataItemValue) {
+	__declspec ( dllexport ) void Table_SelectByValue(const HWND windowHandle, const char* dataItemValue) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
 			tableControl->Select(dataItemValue);
