@@ -2,11 +2,11 @@
 #include "MenuItemSelector.h"
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems);
-void SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInfoSize, std::list<const char*>& menuItems);
+void MenuSelectPath(const HWND windowHandle, char* errorInfo, const int errorInfoSize, std::list<const char*>& menuItems);
 
 extern "C" {
 
-	__declspec ( dllexport ) void RA_SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInfoSize, const char* arg0, ...) {
+	__declspec ( dllexport ) void Menu_SelectPath(const HWND windowHandle, char* errorInfo, const int errorInfoSize, const char* arg0, ...) {
 		va_list arguments;
 		va_start(arguments, arg0);			
 
@@ -19,10 +19,10 @@ extern "C" {
 		}
 		va_end(arguments);
 
-		SelectMenuItem(windowHandle, errorInfo, errorInfoSize, menuItems);
+		MenuSelectPath(windowHandle, errorInfo, errorInfoSize, menuItems);
 	}
 
-	__declspec ( dllexport ) BOOL RA_MenuItemExists(const HWND windowHandle, const char* arg0, ...) {
+	__declspec ( dllexport ) BOOL Menu_ItemExists(const HWND windowHandle, const char* arg0, ...) {
 		va_list arguments;
 		va_start(arguments, arg0);			
 
@@ -45,7 +45,7 @@ BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)
 	return menuSelector->MenuItemExists(windowHandle, menuItems);
 }
 
-void SelectMenuItem(const HWND windowHandle, char* errorInfo, const int errorInfoSize, std::list<const char*>& menuItems)
+void MenuSelectPath(const HWND windowHandle, char* errorInfo, const int errorInfoSize, std::list<const char*>& menuItems)
 {
 	try {
 		auto menuSelector = gcnew MenuItemSelector();

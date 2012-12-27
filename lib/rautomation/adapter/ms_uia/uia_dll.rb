@@ -22,6 +22,12 @@ module RAutomation
         attach_function :select_list_select_value, :SelectList_SelectValue,
                         [:pointer, :pointer], :int
 
+        # Menu methods
+        attach_function :select_menu_item, :Menu_SelectPath,
+                        [:long, :pointer, :int, :varargs], :void
+        attach_function :menu_item_exists, :Menu_ItemExists,
+                        [:long, :varargs], :bool
+
         # Table methods
         attach_function :table_row_count, :Table_RowCount,
                         [:long], :int
@@ -101,10 +107,6 @@ module RAutomation
                         [:int], :pointer
         attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
-        attach_function :select_menu_item, :RA_SelectMenuItem,
-                        [:long, :pointer, :int, :varargs], :void
-        attach_function :menu_item_exists, :RA_MenuItemExists,
-                        [:long, :varargs], :bool
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [:long, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,
