@@ -11,26 +11,35 @@ module RAutomation
         ffi_convention :stdcall
 
         # Table methods
-        attach_function :get_data_item_count, :Table_RowCount,
+        attach_function :table_row_count, :Table_RowCount,
                         [:long], :int
         attach_function :Table_CoordinateIsValid,
                         [:long, :int, :int], :bool
         attach_function :Table_ValueAt,
                         [:long, :int, :int, :pointer, :int], :void
-        attach_function :select_data_item, :Table_SelectByIndex,
+        attach_function :Table_SelectByIndex,
                         [:long, :int], :void
-        attach_function :is_data_item_selected, :Table_IsSelectedByIndex,
-                        [:long, :int], :bool
-        attach_function :select_data_item_by_value, :Table_SelectByValue,
+        attach_function :Table_SelectByValue,
                         [:long, :string], :void
+        attach_function :table_row_is_selected, :Table_IsSelectedByIndex,
+                        [:long, :int], :bool
 
-        def self.cell_value_at(hwnd, row, column=0)
+        def self.table_select(hwnd, which_item)
+          case which_item
+            when Integer
+              Table_SelectByIndex hwnd, which_item
+            when String
+              Table_SelectByValue hwnd, which_item
+          end
+        end
+
+        def self.table_value_at(hwnd, row, column=0)
           string = FFI::MemoryPointer.new :char, 1024
           Table_ValueAt hwnd, row, column, string, 1024
           string.read_string
         end
 
-        def self.data_item_exists(hwnd, row, column=0)
+        def self.table_coordinate_valid?(hwnd, row, column=0)
           Table_CoordinateIsValid hwnd, row, column
         end
 
