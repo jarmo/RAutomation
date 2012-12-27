@@ -13,11 +13,11 @@ module RAutomation
         end
 
         def exists?
-          UiaDll::data_item_exists hwnd, row, column
+          UiaDll::table_coordinate_valid? hwnd, row, column
         end
 
         def value
-          UiaDll::cell_value_at hwnd, row, column
+          UiaDll::table_value_at hwnd, row, column
         end
 
         alias_method :text, :value
@@ -51,11 +51,11 @@ module RAutomation
         end
 
         def value
-          UiaDll::cell_value_at @hwnd, @locators[:index]
+          UiaDll::table_value_at @hwnd, @locators[:index]
         end
 
         def exists?
-          UiaDll::data_item_exists(@hwnd, @locators[:index])
+          UiaDll::table_coordinate_valid?(@hwnd, @locators[:index])
         end
 
         def self.locators_match?(locators, item)
@@ -125,22 +125,16 @@ module RAutomation
           rows
         end
 
-#        def select(row)
-#          Functions.select_table_row(Window.oleacc_module_handle, Functions.control_hwnd(@window.hwnd, @locators), row)
-#        end
-
-        def select(index)
-          UiaDll::select_data_item hwnd, index - 1
+        def select(which_item)
+          UiaDll::table_select hwnd, which_item
         end
 
-        #todo - replace with UIA version
-        def selected?(row)
-          state = Functions.get_table_row_state(Window.oleacc_module_handle, hwnd, row)
-          state & Constants::STATE_SYSTEM_SELECTED != 0
+        def selected?(which_item)
+          UiaDll::table_row_is_selected hwnd, which_item
         end
 
         def row_count
-          UiaDll::get_data_item_count hwnd
+          UiaDll::table_row_count hwnd
         end
 
         def exist?

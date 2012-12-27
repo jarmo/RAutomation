@@ -10,6 +10,57 @@ module RAutomation
         ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
         ffi_convention :stdcall
 
+        # Select List methods
+        attach_function :select_list_count, :SelectList_Count,
+                        [:long], :int
+        attach_function :select_list_selected_index, :SelectList_SelectedIndex,
+                        [:long], :int
+        attach_function :select_list_value_at, :SelectList_ValueAt,
+                        [:long, :int, :pointer, :int], :bool
+        attach_function :select_list_select_index, :SelectList_SelectIndex,
+                        [:long, :int], :bool
+        attach_function :select_list_select_value, :SelectList_SelectValue,
+                        [:pointer, :pointer], :int
+
+        # Menu methods
+        attach_function :select_menu_item, :Menu_SelectPath,
+                        [:long, :pointer, :int, :varargs], :void
+        attach_function :menu_item_exists, :Menu_ItemExists,
+                        [:long, :varargs], :bool
+
+        # Table methods
+        attach_function :table_row_count, :Table_RowCount,
+                        [:long], :int
+        attach_function :Table_CoordinateIsValid,
+                        [:long, :int, :int], :bool
+        attach_function :Table_ValueAt,
+                        [:long, :int, :int, :pointer, :int], :void
+        attach_function :Table_SelectByIndex,
+                        [:long, :int], :void
+        attach_function :Table_SelectByValue,
+                        [:long, :string], :void
+        attach_function :table_row_is_selected, :Table_IsSelectedByIndex,
+                        [:long, :int], :bool
+
+        def self.table_select(hwnd, which_item)
+          case which_item
+            when Integer
+              Table_SelectByIndex hwnd, which_item
+            when String
+              Table_SelectByValue hwnd, which_item
+          end
+        end
+
+        def self.table_value_at(hwnd, row, column=0)
+          string = FFI::MemoryPointer.new :char, 1024
+          Table_ValueAt hwnd, row, column, string, 1024
+          string.read_string
+        end
+
+        def self.table_coordinate_valid?(hwnd, row, column=0)
+          Table_CoordinateIsValid hwnd, row, column
+        end
+
         attach_function :find_window, :RA_FindWindow,
                         [:string], :pointer
         attach_function :is_offscreen, :RA_IsOffscreen,
@@ -56,24 +107,6 @@ module RAutomation
                         [:int], :pointer
         attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
-        attach_function :select_combo_by_index, :RA_SelectComboByIndex,
-                        [:long, :int], :bool
-        attach_function :set_value, :RA_SelectComboByValue,
-                        [:pointer, :pointer], :int
-        attach_function :select_menu_item, :RA_SelectMenuItem,
-                        [:long, :pointer, :int, :varargs], :void
-        attach_function :menu_item_exists, :RA_MenuItemExists,
-                        [:long, :varargs], :bool
-        attach_function :get_combobox_count, :RA_GetComboOptionsCount,
-                        [:long], :int
-        attach_function :get_combobox_value, :RA_GetComboValueByIndex,
-                        [:long, :int, :pointer, :int], :bool
-        attach_function :get_combobox_selected_index, :RA_GetSelectedComboIndex,
-                        [:long], :int
-        attach_function :get_data_item_count, :RA_GetDataItemCount,
-                        [:long], :int
-        attach_function :select_data_item, :RA_SelectDataItem,
-                        [:long, :int], :void
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [:long, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,
@@ -82,28 +115,10 @@ module RAutomation
                         [:long, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
                         [:long, :int], :void
-        attach_function :data_item_exists_by_value, :RA_DataItemExistsByValue,
-                        [:long, :string], :bool
-        attach_function :RA_DataItemExists,
-                        [:long, :int, :int], :bool
-                        
-        attach_function :RA_CellValueAt,
-                        [:long, :int, :int, :pointer, :int], :void
-
         attach_function :control_click, :RA_Click,
                         [:long, :pointer, :int], :void
         attach_function :control_mouse_click, :RA_PointAndClick,
                         [:long, :pointer, :int], :void
-
-        def self.cell_value_at(hwnd, row, column=0)
-          string = FFI::MemoryPointer.new :char, 1024
-          RA_CellValueAt hwnd, row, column, string, 1024
-          string.read_string
-        end
-
-        def self.data_item_exists(hwnd, row, column=0)
-          RA_DataItemExists hwnd, row, column
-        end
       end
     end
   end

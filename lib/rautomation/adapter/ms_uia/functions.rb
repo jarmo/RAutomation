@@ -85,8 +85,6 @@ module RAutomation
                         [:long, :long, :pointer, :long, :pointer], :void
         attach_function :select_table_row, :select_table_row,
                         [:long, :long, :long], :void
-        attach_function :get_table_row_state, :get_table_row_state,
-                        [:long, :long, :long], :long
 
         class << self
 
@@ -230,7 +228,7 @@ module RAutomation
           def retrieve_combobox_item_text(control_hwnd, item_no)
             text_len = 1024
             string_buffer = FFI::MemoryPointer.new :char, text_len
-            UiaDll::get_combobox_value control_hwnd, item_no, string_buffer, text_len
+            UiaDll::select_list_value_at control_hwnd, item_no, string_buffer, text_len
             string_buffer.read_string
           end
 

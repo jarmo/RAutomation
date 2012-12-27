@@ -1,10 +1,10 @@
 #pragma once
 using namespace System::Windows::Automation;
 
-public ref class AutomatedComboBox
+public ref class AutomatedSelectList
 {
 public:
-	AutomatedComboBox(const HWND windowHandle);
+	AutomatedSelectList(const HWND windowHandle);
 	bool SelectByIndex(const int whichItem);
 	bool SelectByValue(const char* whichItem);
 	bool GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize);
@@ -18,11 +18,11 @@ public:
 	}
 
 private:
-	AutomationElement^	_comboControl;
+	AutomationElement^	_selectList;
 	void Select(AutomationElement^ itemToSelect);
 
 	property AutomationElementCollection^ SelectionItems {
-	  AutomationElementCollection^ get() { return _comboControl->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }
+	  AutomationElementCollection^ get() { return _selectList->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }
 	}
 
 	property PropertyCondition^ SelectionCondition {
