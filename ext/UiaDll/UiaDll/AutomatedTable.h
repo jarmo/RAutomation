@@ -19,9 +19,29 @@ private:
 	AutomationElement^ _tableControl;
 	bool Exists(Condition^ condition);
 	AutomationElement^ DataItemAt(const int whichItemIndex, const int whichItemRow);
-	AutomationElementCollection^ FindTableItem(Condition^ condition);
-	AutomationElementCollection^ FindDataItem();
-	AutomationElementCollection^ FindDataItem(Condition^ condition);
+	AutomationElementCollection^ Find(...array<Condition^>^	conditions);
 	void Select(AutomationElement^ dataItem);
+
+	property Condition^ IsSelectionItem {
+		Condition^ get() {
+			return gcnew PropertyCondition(AutomationElement::IsSelectionItemPatternAvailableProperty, true);
+		}
+	}
+
+	property Condition^ IsTableItem {
+		Condition^ get() {
+			return gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
+		}
+	}
+
+	property Condition^ IsDataItem {
+		Condition^ get() {
+			return gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
+		}
+	}
+
+	SelectionItemPattern^ AsSelectionItem(AutomationElement^ automationElement) {
+		return dynamic_cast<SelectionItemPattern^>(automationElement->GetCurrentPattern(SelectionItemPattern::Pattern));
+	}
 };
 
