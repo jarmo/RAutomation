@@ -40,20 +40,20 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
   it "#select by index" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
-    table.select(1)
-    table.should_not be_selected(2)
+    table.select(0)
+    table.should_not be_selected(1)
 
-    table.select(2)
-    table.should be_selected(2)
+    table.select(1)
+    table.should be_selected(1)
   end
 
   it "#select by value" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
     table.select "John Doe"
-    table.should_not be_selected(2)
+    table.should_not be_selected(1)
 
     table.select "Anna Doe"
-    table.should be_selected(2)
+    table.should be_selected(1)
   end
 
   it "#row_count" do

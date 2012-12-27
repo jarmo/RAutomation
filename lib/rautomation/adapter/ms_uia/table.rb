@@ -128,16 +128,14 @@ module RAutomation
         def select(which_item)
           case which_item
             when Integer
-              UiaDll::select_data_item hwnd, which_item - 1
+              UiaDll::select_data_item hwnd, which_item
             when String
               UiaDll::select_data_item_by_value hwnd, which_item
           end
         end
 
-        #todo - replace with UIA version
-        def selected?(row)
-          state = Functions.get_table_row_state(Window.oleacc_module_handle, hwnd, row)
-          state & Constants::STATE_SYSTEM_SELECTED != 0
+        def selected?(which_item)
+          UiaDll::is_data_item_selected hwnd, which_item
         end
 
         def row_count

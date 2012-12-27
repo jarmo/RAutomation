@@ -4,6 +4,7 @@
 AutomatedTable::AutomatedTable(const HWND windowHandle)
 {
 	_tableControl = AutomationElement::FromHandle(IntPtr(windowHandle));
+	_finder = gcnew AutomationFinder(_tableControl);
 }
 
 int AutomatedTable::RowCount::get()
@@ -24,48 +25,35 @@ String^ AutomatedTable::ValueAt(const int whichItemIndex, const int whichItemCol
 
 AutomationElement^ AutomatedTable::DataItemAt(const int whichItemIndex, const int whichItemColumn)
 {
-	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
 	auto indexProperty = gcnew PropertyCondition(TableItemPattern::RowProperty, whichItemIndex);
 	auto columnProperty = gcnew PropertyCondition(TableItemPattern::ColumnProperty, whichItemColumn);
-	return _tableControl->FindFirst(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(dataItemProperty, indexProperty, columnProperty));
+	return _finder->FindFirst(AutomationFinder::IsTableItem, indexProperty, columnProperty);
 }
 
 bool AutomatedTable::Exists(Condition^ condition)
 {
-	return FindTableItem(condition)->Count > 0;
-}
-
-AutomationElementCollection^ AutomatedTable::FindTableItem(Condition^ condition)
-{
-	auto tableItemProperty = gcnew PropertyCondition(AutomationElement::IsTableItemPatternAvailableProperty, true);
-	return _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(tableItemProperty, condition));
-}
-
-AutomationElementCollection^ AutomatedTable::FindDataItem()
-{
-	return FindDataItem(Condition::TrueCondition);
-}
-
-AutomationElementCollection^ AutomatedTable::FindDataItem(Condition^ condition)
-{
-	auto dataItemProperty = gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::DataItem);
-	return _tableControl->FindAll(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(dataItemProperty, condition));
+	return _finder->Find(AutomationFinder::IsTableItem, condition)->Count > 0;
 }
 
 void AutomatedTable::Select(const int dataItemIndex)
 {
 	try {
-		Select(FindDataItem()[dataItemIndex]);
+		Select(_finder->Find(AutomationFinder::IsDataItem)[dataItemIndex]);
 	} catch(IndexOutOfRangeException^ e) {
 		throw gcnew ArgumentException(String::Format("Table item at index {0} does not exist", dataItemIndex));
 	}
+}
+
+bool AutomatedTable::IsSelected(const int dataItemIndex) {
+	
+	return AsSelectionItem(_finder->FindAt(dataItemIndex, AutomationFinder::IsSelectionItem))->Current.IsSelected;
 }
 
 void AutomatedTable::Select(const char* dataItemValue)
 {
 	try {
 		auto nameCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(dataItemValue));
-		Select(FindDataItem(nameCondition)[0]);
+		Select(_finder->Find(AutomationFinder::IsDataItem, nameCondition)[0]);
 	} catch(IndexOutOfRangeException^ e) {
 		throw gcnew ArgumentException(String::Format("Table item with the value \"{0}\" was not found", gcnew String(dataItemValue)));
 	}
