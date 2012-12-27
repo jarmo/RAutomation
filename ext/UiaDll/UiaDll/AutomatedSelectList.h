@@ -1,10 +1,10 @@
 #pragma once
 using namespace System::Windows::Automation;
 
-public ref class AutomatedComboBox
+public ref class AutomatedSelectList
 {
 public:
-	AutomatedComboBox(const HWND windowHandle);
+	AutomatedSelectList(const HWND windowHandle);
 	bool SelectByIndex(const int whichItem);
 	bool SelectByValue(const char* whichItem);
 	bool GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize);

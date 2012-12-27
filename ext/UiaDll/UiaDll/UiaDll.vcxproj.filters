@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\ComboBox">
-      <UniqueIdentifier>{b94fabb6-af2d-4628-b91f-837e271293aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Helpers">
       <UniqueIdentifier>{235d8022-1949-4a55-b1fd-af041c36744f}</UniqueIdentifier>
     </Filter>
@@ -25,9 +22,6 @@
     <Filter Include="Header Files\Menu">
       <UniqueIdentifier>{f558a0f9-f67e-483f-86cf-a5f2ce6f1a93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ComboBox">
-      <UniqueIdentifier>{fe7c5a5a-36f1-4acb-9147-a32a4e168c5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Helpers">
       <UniqueIdentifier>{0639f7bf-9510-4ad0-8032-064ba24fed5a}</UniqueIdentifier>
     </Filter>
@@ -36,6 +30,12 @@
     </Filter>
     <Filter Include="Source Files\Table">
       <UniqueIdentifier>{9f1663a8-aadc-46f8-8b88-b50196b59645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SelectList">
+      <UniqueIdentifier>{fe7c5a5a-36f1-4acb-9147-a32a4e168c5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SelectList">
+      <UniqueIdentifier>{b94fabb6-af2d-4628-b91f-837e271293aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +63,6 @@
     <ClInclude Include="ExpandCollapseHelper.h">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="AutomatedComboBox.h">
-      <Filter>Header Files\ComboBox</Filter>
-    </ClInclude>
     <ClInclude Include="AutomatedTable.h">
       <Filter>Header Files\Table</Filter>
     </ClInclude>
@@ -77,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="MenuItemSelector.h">
       <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="AutomatedSelectList.h">
+      <Filter>Header Files\SelectList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,9 +91,6 @@
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AutomatedComboBox.cpp">
-      <Filter>Source Files\ComboBox</Filter>
     </ClCompile>
     <ClCompile Include="AutomatedTable.cpp">
       <Filter>Source Files\Table</Filter>
@@ -119,8 +116,11 @@
     <ClCompile Include="TableMethods.cpp">
       <Filter>Source Files\Table</Filter>
     </ClCompile>
-    <ClCompile Include="ComboBoxMethods.cpp">
-      <Filter>Source Files\ComboBox</Filter>
+    <ClCompile Include="AutomatedSelectList.cpp">
+      <Filter>Source Files\SelectList</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectListMethods.cpp">
+      <Filter>Source Files\SelectList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

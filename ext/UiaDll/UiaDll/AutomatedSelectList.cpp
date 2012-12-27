@@ -1,12 +1,12 @@
 #include "StdAfx.h"
-#include "AutomatedComboBox.h"
+#include "AutomatedSelectList.h"
 
-AutomatedComboBox::AutomatedComboBox(const HWND windowHandle)
+AutomatedSelectList::AutomatedSelectList(const HWND windowHandle)
 {
 	_comboControl = AutomationElement::FromHandle(IntPtr(windowHandle));
 }
 
-bool AutomatedComboBox::SelectByIndex(const int whichItem)
+bool AutomatedSelectList::SelectByIndex(const int whichItem)
 {
 	try {
 	  auto selectionItems = _comboControl->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition);
@@ -18,7 +18,7 @@ bool AutomatedComboBox::SelectByIndex(const int whichItem)
 	}
 }
 
-bool AutomatedComboBox::SelectByValue(const char* whichItem)
+bool AutomatedSelectList::SelectByValue(const char* whichItem)
 {
 	try {
 	  auto nameCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem));
@@ -32,7 +32,7 @@ bool AutomatedComboBox::SelectByValue(const char* whichItem)
 	}
 }
 
-bool AutomatedComboBox::GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize)
+bool AutomatedSelectList::GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize)
 {
 	try {
 		auto selectionItem = SelectionItems[whichItem];
@@ -46,7 +46,7 @@ bool AutomatedComboBox::GetValueByIndex(const int whichItem, char* comboValue, c
 	}
 }
 
-int AutomatedComboBox::SelectedIndex::get() {
+int AutomatedSelectList::SelectedIndex::get() {
 	int selectedIndex = 0;
 	for each(AutomationElement^ selectionItem in SelectionItems) {
 	  auto selectionPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
@@ -59,7 +59,7 @@ int AutomatedComboBox::SelectedIndex::get() {
 }
 
 
-void AutomatedComboBox::Select(AutomationElement^ itemToSelect)
+void AutomatedSelectList::Select(AutomationElement^ itemToSelect)
 {
 	auto selectionPattern = dynamic_cast<SelectionItemPattern^>(itemToSelect->GetCurrentPattern(SelectionItemPattern::Pattern));
 	selectionPattern->Select();
