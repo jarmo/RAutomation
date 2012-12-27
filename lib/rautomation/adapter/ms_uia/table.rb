@@ -13,11 +13,11 @@ module RAutomation
         end
 
         def exists?
-          UiaDll::data_item_exists hwnd, row, column
+          UiaDll::table_coordinate_valid? hwnd, row, column
         end
 
         def value
-          UiaDll::cell_value_at hwnd, row, column
+          UiaDll::table_value_at hwnd, row, column
         end
 
         alias_method :text, :value
@@ -51,11 +51,11 @@ module RAutomation
         end
 
         def value
-          UiaDll::cell_value_at @hwnd, @locators[:index]
+          UiaDll::table_value_at @hwnd, @locators[:index]
         end
 
         def exists?
-          UiaDll::data_item_exists(@hwnd, @locators[:index])
+          UiaDll::table_coordinate_valid?(@hwnd, @locators[:index])
         end
 
         def self.locators_match?(locators, item)
@@ -126,20 +126,15 @@ module RAutomation
         end
 
         def select(which_item)
-          case which_item
-            when Integer
-              UiaDll::select_data_item hwnd, which_item
-            when String
-              UiaDll::select_data_item_by_value hwnd, which_item
-          end
+          UiaDll::table_select hwnd, which_item
         end
 
         def selected?(which_item)
-          UiaDll::is_data_item_selected hwnd, which_item
+          UiaDll::table_row_is_selected hwnd, which_item
         end
 
         def row_count
-          UiaDll::get_data_item_count hwnd
+          UiaDll::table_row_count hwnd
         end
 
         def exist?

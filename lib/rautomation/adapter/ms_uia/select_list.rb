@@ -16,12 +16,12 @@ module RAutomation
           end
 
           def selected?
-            @index == UiaDll::get_combobox_selected_index(@select_list.control_hwnd)
+            @index == UiaDll::select_list_selected_index(@select_list.control_hwnd)
           end
 
           def select
             @select_list.assert_enabled
-            UiaDll::select_combo_by_index @select_list.control_hwnd, @index
+            UiaDll::select_list_select_index @select_list.control_hwnd, @index
           end
 
           alias_method :set, :select
@@ -34,7 +34,7 @@ module RAutomation
 
         def set(value)
           list      = UiaDll::element_from_handle(@hwnd)
-          UiaDll::set_value(list, value)
+          UiaDll::select_list_select_value(list, value)
         end
 
         def options(options = {})
@@ -72,7 +72,7 @@ module RAutomation
         end
 
         def select(index)
-          UiaDll::select_combo_by_index @hwnd, index
+          UiaDll::select_list_select_index @hwnd, index
         end
 
         def list_item_height
@@ -104,7 +104,7 @@ module RAutomation
         private
 
         def item_count
-          UiaDll::get_combobox_count(@hwnd)
+          UiaDll::select_list_count(@hwnd)
         end
 
       end
