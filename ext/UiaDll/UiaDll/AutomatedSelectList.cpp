@@ -3,13 +3,13 @@
 
 AutomatedSelectList::AutomatedSelectList(const HWND windowHandle)
 {
-	_comboControl = AutomationElement::FromHandle(IntPtr(windowHandle));
+	_selectList = AutomationElement::FromHandle(IntPtr(windowHandle));
 }
 
 bool AutomatedSelectList::SelectByIndex(const int whichItem)
 {
 	try {
-	  auto selectionItems = _comboControl->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition);
+	  auto selectionItems = _selectList->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition);
 	  Select(selectionItems[whichItem]);
 	  return true;
 	} catch(Exception^ e) {
@@ -24,7 +24,7 @@ bool AutomatedSelectList::SelectByValue(const char* whichItem)
 	  auto nameCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem));
 	  auto selectionAndNameCondition = gcnew AndCondition(SelectionCondition, nameCondition);
 
-	  Select(_comboControl->FindFirst(System::Windows::Automation::TreeScope::Subtree, selectionAndNameCondition));
+	  Select(_selectList->FindFirst(System::Windows::Automation::TreeScope::Subtree, selectionAndNameCondition));
 	  return true;
 	} catch(Exception^ e) {
 		Console::WriteLine(e->ToString());

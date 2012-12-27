@@ -18,11 +18,11 @@ public:
 	}
 
 private:
-	AutomationElement^	_comboControl;
+	AutomationElement^	_selectList;
 	void Select(AutomationElement^ itemToSelect);
 
 	property AutomationElementCollection^ SelectionItems {
-	  AutomationElementCollection^ get() { return _comboControl->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }
+	  AutomationElementCollection^ get() { return _selectList->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }
 	}
 
 	property PropertyCondition^ SelectionCondition {
