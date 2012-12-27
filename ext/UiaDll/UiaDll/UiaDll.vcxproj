@@ -99,6 +99,7 @@
     <ClCompile Include="AutomatedTable.cpp" />
     <ClCompile Include="AutomationClicker.cpp" />
     <ClCompile Include="AutomationFinder.cpp" />
+    <ClCompile Include="MenuMethods.cpp" />
     <ClCompile Include="SelectListMethods.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ExpandCollapseHelper.cpp" />
