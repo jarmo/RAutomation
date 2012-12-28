@@ -29,6 +29,10 @@ module RAutomation
                         [:long, :varargs], :bool
 
         # Table methods
+        attach_function :Table_GetHeaders,
+                        [:long, :pointer], :int
+        attach_function :Table_GetValues,
+                        [:long, :pointer], :int
         attach_function :table_row_count, :Table_RowCount,
                         [:long], :int
         attach_function :Table_CoordinateIsValid,
@@ -60,6 +64,18 @@ module RAutomation
         def self.table_coordinate_valid?(hwnd, row, column=0)
           Table_CoordinateIsValid hwnd, row, column
         end
+
+        def self.table_headers(hwnd)
+          strings_from :Table_GetHeaders, hwnd
+        end
+
+        def self.table_values(hwnd)
+          strings_from :Table_GetValues, hwnd
+        end
+
+        # String methods
+        attach_function :clean_up_strings, :String_CleanUp,
+                        [:pointer, :int], :void
 
         attach_function :find_window, :RA_FindWindow,
                         [:string], :pointer
@@ -119,6 +135,16 @@ module RAutomation
                         [:long, :pointer, :int], :void
         attach_function :control_mouse_click, :RA_PointAndClick,
                         [:long, :pointer, :int], :void
+
+        private
+        def self.strings_from(method, hwnd)
+          string_count = send method, hwnd, nil
+          pointer = FFI::MemoryPointer.new :pointer, string_count
+          send method, hwnd, pointer
+          strings = pointer.get_array_of_string 0, string_count
+          clean_up_strings pointer, string_count
+          strings
+        end
       end
     end
   end

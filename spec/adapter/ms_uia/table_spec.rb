@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
+  let(:table) { RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView") }
+
   before :each do
     window = RAutomation::Window.new(:title => "MainFormWindow")
     window.button(:value => "Data Entry Form").click { RAutomation::Window.new(:title => "DataEntryForm").exists? }
   end
 
   it "#table" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
     table.should exist
     
     RAutomation::Window.wait_timeout = 0.1
@@ -18,7 +19,6 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
 
   it "check for table class" do
     RAutomation::Window.new(:title => "DataEntryForm").table(:id => "deleteItemButton").should_not exist
-    RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView").should exist
   end
 
   it "#strings" do
@@ -28,7 +28,6 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
   end
 
   it "#strings with nested elements" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 
     table.strings.should == [
         ["Name", "Date of birth", "State"],
@@ -37,9 +36,17 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     ]
   end
 
-  it "#select by index" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
+  it "#headers" do
+    table.headers.should eq ["Name", "Date of birth", "State"]
+  end
 
+  it "#values" do
+    first_row = ["John Doe", "12/15/1967", "FL"]
+    second_row = ["Anna Doe", "3/4/1975", ""]
+    table.values.should eq first_row.concat(second_row)
+  end
+
+  it "#select by index" do
     table.select(0)
     table.should_not be_selected(1)
 
@@ -48,7 +55,6 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
   end
 
   it "#select by value" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
     table.select "John Doe"
     table.should_not be_selected(1)
 
@@ -57,13 +63,10 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
   end
 
   it "#row_count" do
-    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
     table.row_count.should eq(2)
   end
 
   context "#rows" do
-    let(:table) { RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView") }
-
     it "has rows" do
       table.rows.size.should eq 2
     end

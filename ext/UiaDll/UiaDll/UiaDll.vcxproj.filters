@@ -37,6 +37,12 @@
     <Filter Include="Header Files\SelectList">
       <UniqueIdentifier>{b94fabb6-af2d-4628-b91f-837e271293aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Strings">
+      <UniqueIdentifier>{568b2839-5e30-4e34-91b0-a0e67f1c1672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Strings">
+      <UniqueIdentifier>{4059b959-0144-4a0e-8900-fbdef8bbe335}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UiaDll.h">
@@ -53,9 +59,6 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StringHelper.h">
-      <Filter>Header Files\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="ToggleStateHelper.h">
       <Filter>Header Files\Helpers</Filter>
@@ -77,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="AutomatedSelectList.h">
       <Filter>Header Files\SelectList</Filter>
+    </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Header Files\Strings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,9 +113,6 @@
     <ClCompile Include="MenuItemSelector.cpp">
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="StringHelper.cpp">
-      <Filter>Source Files\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="ToggleStateHelper.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
@@ -124,6 +127,12 @@
     </ClCompile>
     <ClCompile Include="MenuMethods.cpp">
       <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Source Files\Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="StringMethods.cpp">
+      <Filter>Source Files\Strings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

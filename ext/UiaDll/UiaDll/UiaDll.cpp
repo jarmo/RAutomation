@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "AutomationClicker.h"
 #include "ExpandCollapseHelper.h"
+#include "StringHelper.h"
 #include "ToggleStateHelper.h"
 
 IUIAutomation* getGlobalIUIAutomation() ;

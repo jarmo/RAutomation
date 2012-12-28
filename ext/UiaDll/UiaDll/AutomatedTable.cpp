@@ -7,6 +7,28 @@ AutomatedTable::AutomatedTable(const HWND windowHandle)
 	_finder = gcnew AutomationFinder(_tableControl);
 }
 
+int AutomatedTable::GetHeaders(const char* headers[])
+{
+	auto headerItems = _finder->Find(AutomationFinder::IsHeaderItem);
+
+	if( NULL != headers ) {
+		StringHelper::CopyNames(headerItems, headers);
+	}
+
+	return headerItems->Count;
+}
+
+int AutomatedTable::GetValues(const char* values[])
+{
+	auto tableItems = _finder->Find(gcnew OrCondition(AutomationFinder::IsTableItem, AutomationFinder::IsListItem));
+
+	if( NULL != values ) {
+		StringHelper::CopyNames(tableItems, values);
+	}
+
+	return tableItems->Count;
+}
+
 int AutomatedTable::RowCount::get()
 {
 	auto tablePattern = dynamic_cast<TablePattern^>(_tableControl->GetCurrentPattern(TablePattern::Pattern));
