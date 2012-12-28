@@ -23,7 +23,7 @@ int AutomatedTable::GetHeaders(const char* headers[])
 
 int AutomatedTable::GetValues(const char* values[])
 {
-	auto tableItems = _finder->Find(AutomationFinder::IsTableItem);
+	auto tableItems = _finder->Find(gcnew OrCondition(AutomationFinder::IsTableItem, AutomationFinder::IsListItem));
 
 	if( NULL != values ) {
 		auto itemIndex = 0;
