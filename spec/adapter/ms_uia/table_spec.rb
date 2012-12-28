@@ -37,6 +37,11 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     ]
   end
 
+  it "#headers" do
+    table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
+    table.headers.should eq ["Name", "Date of birth", "State"]
+  end
+
   it "#select by index" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView")
 

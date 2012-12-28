@@ -76,6 +76,10 @@ module RAutomation
 
         has_many :rows
 
+        def headers
+          @headers ||= UiaDll.table_headers(hwnd)
+        end
+
         def row(locators={})
           rows(locators).first
         end
