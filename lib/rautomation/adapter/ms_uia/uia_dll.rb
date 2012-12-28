@@ -137,7 +137,7 @@ module RAutomation
                         [:long, :pointer, :int], :void
 
         private
-        def strings_from(method, hwnd)
+        def self.strings_from(method, hwnd)
           string_count = send method, hwnd, nil
           pointer = FFI::MemoryPointer.new :pointer, string_count
           send method, hwnd, pointer
