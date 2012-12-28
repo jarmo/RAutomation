@@ -29,6 +29,8 @@ module RAutomation
                         [:long, :varargs], :bool
 
         # Table methods
+        attach_function :Table_GetHeaders,
+                        [:long, :pointer], :int
         attach_function :table_row_count, :Table_RowCount,
                         [:long], :int
         attach_function :Table_CoordinateIsValid,
@@ -59,6 +61,13 @@ module RAutomation
 
         def self.table_coordinate_valid?(hwnd, row, column=0)
           Table_CoordinateIsValid hwnd, row, column
+        end
+
+        def self.table_headers(hwnd)
+          header_count = Table_GetHeaders hwnd, nil
+          headers = FFI::MemoryPointer.new :pointer, header_count
+          Table_GetHeaders hwnd, headers
+          headers.get_array_of_string 0, header_count
         end
 
         attach_function :find_window, :RA_FindWindow,
