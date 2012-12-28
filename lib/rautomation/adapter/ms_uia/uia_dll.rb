@@ -73,6 +73,10 @@ module RAutomation
           strings_from :Table_GetValues, hwnd
         end
 
+        # String methods
+        attach_function :clean_up_strings, :String_CleanUp,
+                        [:pointer, :int], :void
+
         attach_function :find_window, :RA_FindWindow,
                         [:string], :pointer
         attach_function :is_offscreen, :RA_IsOffscreen,
@@ -138,6 +142,8 @@ module RAutomation
           pointer = FFI::MemoryPointer.new :pointer, string_count
           send method, hwnd, pointer
           strings = pointer.get_array_of_string 0, string_count
+          clean_up_strings pointer, string_count
+          strings
         end
       end
     end

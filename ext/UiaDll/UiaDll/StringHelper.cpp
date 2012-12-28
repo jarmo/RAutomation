@@ -15,3 +15,10 @@ char* StringHelper::UnmanagedStringFrom(String^ source)
 	CopyToUnmanagedString(source, unmanagedString, numberOfBytes);
 	return unmanagedString;
 }
+
+void StringHelper::FreeUp(const char* unmanagedStrings[], const int numberOfStrings)
+{
+	for(auto whichString = 0; whichString < numberOfStrings; ++whichString) {
+		delete[] unmanagedStrings[whichString];
+	}
+}
