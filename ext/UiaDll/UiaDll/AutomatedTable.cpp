@@ -12,10 +12,7 @@ int AutomatedTable::GetHeaders(const char* headers[])
 	auto headerItems = _finder->Find(AutomationFinder::IsHeaderItem);
 
 	if( NULL != headers ) {
-		auto itemIndex = 0;
-		for each(AutomationElement^ header in headerItems) {
-			headers[itemIndex++] = StringHelper::UnmanagedStringFrom(header->Current.Name);
-		}
+		StringHelper::CopyNames(headerItems, headers);
 	}
 
 	return headerItems->Count;
@@ -26,10 +23,7 @@ int AutomatedTable::GetValues(const char* values[])
 	auto tableItems = _finder->Find(gcnew OrCondition(AutomationFinder::IsTableItem, AutomationFinder::IsListItem));
 
 	if( NULL != values ) {
-		auto itemIndex = 0;
-		for each(AutomationElement^ tableItem in tableItems) {
-			values[itemIndex++] = StringHelper::UnmanagedStringFrom(tableItem->Current.Name);
-		}
+		StringHelper::CopyNames(tableItems, values);
 	}
 
 	return tableItems->Count;

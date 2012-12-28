@@ -22,3 +22,11 @@ void StringHelper::FreeUp(const char* unmanagedStrings[], const int numberOfStri
 		delete[] unmanagedStrings[whichString];
 	}
 }
+
+void StringHelper::CopyNames(AutomationElementCollection^ automationElements, const char* unmanagedStrings[])
+{
+	auto whichItem = 0;
+	for each(AutomationElement^ automationElement in automationElements) {
+		unmanagedStrings[whichItem++] = UnmanagedStringFrom(automationElement->Current.Name);
+	}
+}
