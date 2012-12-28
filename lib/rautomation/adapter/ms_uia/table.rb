@@ -80,6 +80,10 @@ module RAutomation
           @headers ||= UiaDll.table_headers(hwnd)
         end
 
+        def values
+          UiaDll.table_values(hwnd)
+        end
+
         def row(locators={})
           rows(locators).first
         end
