@@ -21,6 +21,20 @@ int AutomatedTable::GetHeaders(const char* headers[])
 	return headerItems->Count;
 }
 
+int AutomatedTable::GetValues(const char* values[])
+{
+	auto tableItems = _finder->Find(AutomationFinder::IsTableItem);
+
+	if( NULL != values ) {
+		auto itemIndex = 0;
+		for each(AutomationElement^ tableItem in tableItems) {
+			values[itemIndex++] = StringHelper::UnmanagedStringFrom(tableItem->Current.Name);
+		}
+	}
+
+	return tableItems->Count;
+}
+
 int AutomatedTable::RowCount::get()
 {
 	auto tablePattern = dynamic_cast<TablePattern^>(_tableControl->GetCurrentPattern(TablePattern::Pattern));
