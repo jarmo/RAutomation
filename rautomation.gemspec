@@ -15,7 +15,12 @@ RAutomation provides:
   s.homepage = %q{http://github.com/jarmo/RAutomation}
   s.summary = %q{Automate windows and their controls through user-friendly API with Ruby}
 
-  s.files         = `git ls-files`.split("\n")
+  ext_binaries = [
+    "ext/IAccessibleDLL/Release/IAccessibleDLL.dll",
+    "ext/UiaDll/Release/UiaDll.dll",
+    "ext/WindowsForms/Release/WindowsForms.exe"
+  ]
+  s.files         = `git ls-files`.split("\n") + ext_binaries
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]  
 
