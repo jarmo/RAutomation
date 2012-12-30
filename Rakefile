@@ -51,3 +51,7 @@ require 'yard'
 YARD::Rake::YardocTask.new
 
 task :default => "spec:all"
+
+task :release => "spec:all"
+
+task :install => :build
