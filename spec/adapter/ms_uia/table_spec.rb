@@ -36,16 +36,6 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     ]
   end
 
-  it "#headers" do
-    table.headers.should eq ["Name", "Date of birth", "State"]
-  end
-
-  it "#values" do
-    first_row = ["John Doe", "12/15/1967", "FL"]
-    second_row = ["Anna Doe", "3/4/1975", ""]
-    table.values.should eq first_row.concat(second_row)
-  end
-
   it "#select by index" do
     table.select(0)
     table.should_not be_selected(1)

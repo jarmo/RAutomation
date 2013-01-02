@@ -76,14 +76,6 @@ module RAutomation
 
         has_many :rows
 
-        def headers
-          @headers ||= UiaDll.table_headers(hwnd)
-        end
-
-        def values
-          UiaDll.table_values(hwnd)
-        end
-
         def row(locators={})
           rows(locators).first
         end
@@ -95,6 +87,8 @@ module RAutomation
         end
 
         def strings
+          headers = UiaDll.table_headers(hwnd)
+          values = UiaDll.table_values(hwnd)
           return values if headers.empty?
 
           all_strings = [] << headers
