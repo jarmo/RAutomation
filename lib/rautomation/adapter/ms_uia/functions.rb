@@ -241,19 +241,6 @@ module RAutomation
             end
           end
 
-          def retrieve_table_strings_for_row(control_hwnd, row)
-            hModule = load_library("oleacc.dll") # TODO should be done only one time
-
-            strings_ptr = FFI::MemoryPointer.new :pointer
-            columns_ptr = FFI::MemoryPointer.new :pointer
-
-            get_table_row_strings(hModule, control_hwnd, strings_ptr, row, columns_ptr)
-            str_ptr = strings_ptr.read_pointer
-            columns = columns_ptr.read_long
-
-            str_ptr.get_array_of_string(0, columns)
-          end
-
           private
 
           def within_foreground_thread(hwnd)
