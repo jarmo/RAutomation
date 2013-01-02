@@ -10,17 +10,6 @@ module RAutomation
 
         has_many :controls
 
-        #todo - figure out what this is for and see if MsUia still needs it
-        class << self
-          def oleacc_module_handle
-            @oleacc_module_handle ||= begin
-              oleacc = Functions.load_library "oleacc.dll"
-              Functions.co_initialize nil
-              oleacc
-            end
-          end
-        end
-
         # Locators of the window.
         attr_reader :locators
 
