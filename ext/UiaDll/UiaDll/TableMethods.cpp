@@ -3,6 +3,16 @@
 
 extern "C" {
 
+	__declspec ( dllexport ) int Table_GetHeaders(const HWND windowHandle, const char* headers[]) {
+		auto tableControl = gcnew AutomatedTable(windowHandle);
+		return tableControl->GetHeaders(headers);
+	}
+
+	__declspec ( dllexport ) int Table_GetValues(const HWND windowHandle, const char* values[]) {
+		auto tableControl = gcnew AutomatedTable(windowHandle);
+		return tableControl->GetValues(values);
+	}
+
 	__declspec ( dllexport ) int Table_RowCount(const HWND windowHandle) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);

@@ -87,42 +87,13 @@ module RAutomation
         end
 
         def strings
-          rows = []
-          header_columns = []
+          headers = UiaDll.table_headers(hwnd)
+          values = UiaDll.table_values(hwnd)
+          return values if headers.empty?
 
-          raise "Not a list control" unless of_type_table?
-
-
-          children_count = count_children(uia_element)
-
-          children = FFI::MemoryPointer.new :pointer, children_count
-          UiaDll::find_children(uia_element, children)
-
-
-          children.read_array_of_pointer(children_count).each do |child|
-            grandchildren_count = count_children(child)
-
-            if grandchildren_count > 0
-
-              grandchildren = FFI::MemoryPointer.new :pointer, grandchildren_count
-              UiaDll::find_children(child, grandchildren)
-
-              grandchildren.read_array_of_pointer(grandchildren_count).each do |grandchild|
-                grandchild_name = FFI::MemoryPointer.new :char, UiaDll::get_name(grandchild, nil) + 1
-                UiaDll::get_name(grandchild, grandchild_name)
-                header_columns.push grandchild_name.read_string
-              end
-            else
-              grandchild_name = FFI::MemoryPointer.new :char, UiaDll::get_name(child, nil) + 1
-              UiaDll::get_name(child, grandchild_name)
-              header_columns = grandchild_name.read_string
-            end
-
-            rows.push header_columns
-            header_columns = []
-          end
-
-          rows
+          all_strings = [] << headers
+          values.each_slice(headers.count) {|r| all_strings << r }
+          all_strings
         end
 
         def select(which_item)

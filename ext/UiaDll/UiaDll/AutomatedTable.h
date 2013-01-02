@@ -1,5 +1,6 @@
 #pragma once
 #include "AutomationFinder.h"
+#include "StringHelper.h"
 
 using namespace System::Windows::Automation;
 
@@ -12,6 +13,8 @@ public:
 	void Select(const int dataItemIndex);
 	void Select(const char* dataItemValue);
 	bool IsSelected(const int dataItemIndex);
+	int GetHeaders(const char* headers[]);
+	int GetValues(const char* values[]);
 
 	property int RowCount {
 		int get();

@@ -27,6 +27,18 @@ public:
 		}
 	}
 
+	static property Condition^ IsHeaderItem {
+		Condition^ get() {
+			return gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::HeaderItem);
+		}
+	}
+
+	static property Condition^ IsListItem {
+		Condition^ get() {
+			return gcnew PropertyCondition(AutomationElement::ControlTypeProperty, ControlType::ListItem);
+		}
+	}
+
 private:
 	AutomationElement^ _automationElement;
 	Condition^ SomethingOrEverything(...array<Condition^>^ conditions);
