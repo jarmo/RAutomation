@@ -3,18 +3,31 @@ require 'bundler'
 
 Bundler::GemHelper.install_tasks
 
+def ext_dependencies(name)
+  FileList["ext/#{name}/**/*"].reject { |file| file =~ /\b(Release|Debug)\b/ }
+end
+
+def ms_build(name)
+  name = File.basename(name, File.extname(name))
+  sh "msbuild /property:Configuration=Release ext\\#{name}\\#{name}.sln"
+end
+
 namespace :build do
   build_tasks = [
-    {:name => :uia_dll, :path => "UiaDll"},
-    {:name => :i_accessible_dll, :path => "IAccessibleDLL"},
-    {:name => :windows_forms, :path => "WindowsForms"}
+    {:name => :uia_dll, :path => "UiaDll", :ext => "dll"},
+    {:name => :i_accessible_dll, :path => "IAccessibleDLL", :ext => "dll"},
+    {:name => :windows_forms, :path => "WindowsForms", :ext => "exe"}
   ]
 
   build_tasks.each do |build_task|
-    desc "Build #{build_task[:path]}"
-    task build_task[:name] do
-      sh "msbuild /property:Configuration=Release ext\\#{build_task[:path]}\\#{build_task[:path]}.sln"
+    full_ext_path = "ext/#{build_task[:path]}/Release/#{build_task[:path]}.#{build_task[:ext]}"
+
+    file full_ext_path => ext_dependencies(build_task[:path]) do |t|
+      ms_build t.name
     end
+
+    desc "Build #{build_task[:path]}"
+    task build_task[:name] => full_ext_path
   end
 
   desc "Build all external dependencies"
