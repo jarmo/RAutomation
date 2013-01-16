@@ -111,6 +111,8 @@ module RAutomation
                         [:pointer, :pointer], :int
         attach_function :get_name, :RA_GetName,
                         [:pointer, :pointer], :int
+        attach_function :get_control_name, :RA_GetControlName,
+                        [:long, :pointer, :int], :bool
         attach_function :get_class_name, :RA_GetClassName,
                         [:pointer, :pointer], :int
         attach_function :get_is_selected, :RA_GetIsSelected,
