@@ -6,7 +6,7 @@ IUIAutomation *pAutomation ;
 IUIAutomation* getGlobalIUIAutomation() {
 	if( NULL == pAutomation ) {
 		HRESULT hr ;
-		hr = CoInitialize(NULL) ;
+		hr = CoInitializeEx(NULL, COINIT_MULTITHREADED) ;
 		if (FAILED(hr)) {
 			printf("UiaDll: CoInitialize failed. hr = 0x%x", hr) ;
 			return NULL;

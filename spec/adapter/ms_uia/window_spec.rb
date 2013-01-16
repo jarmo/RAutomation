@@ -40,6 +40,12 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     end
   end
 
+  context "#control", :focus => true do
+    it "by name" do
+      window.control(:name => "checkBox").should exist
+    end
+  end
+
   context "menu items" do
     let(:about_box) { RAutomation::Window.new :title => "About" }
 
