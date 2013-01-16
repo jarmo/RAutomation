@@ -8,7 +8,6 @@ module RAutomation
       module Functions
         extend FFI::Library
 
-        # TODO once done adapt the path to the DLL (somewhere in the packaged gem)
         ffi_lib 'user32', 'kernel32', 'ole32', File.dirname(__FILE__) + '/../../../../ext/IAccessibleDLL/Release/iaccessibleDll.dll'
         ffi_convention :stdcall
 
