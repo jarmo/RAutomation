@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "AutomationClicker.h"
+#include "AutomationControl.h"
 #include "ExpandCollapseHelper.h"
 #include "StringHelper.h"
 #include "ToggleStateHelper.h"
@@ -324,6 +325,16 @@ extern "C" {
 			}
 		} else {
 			return -1;
+		}
+	}
+
+	__declspec ( dllexport ) bool RA_GetControlName(const HWND windowHandle, char* windowName, const int windowNameLength) {
+		try {
+			auto control = gcnew AutomationControl(windowHandle);
+			StringHelper::CopyToUnmanagedString(control->Name, windowName, windowNameLength);
+			return true;
+		} catch(Exception^ e) {
+			return false;
 		}
 	}
 

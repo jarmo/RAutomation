@@ -84,6 +84,9 @@
     <ClInclude Include="StringHelper.h">
       <Filter>Header Files\Strings</Filter>
     </ClInclude>
+    <ClInclude Include="AutomationControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UiaDll.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="StringMethods.cpp">
       <Filter>Source Files\Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="AutomationControl.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

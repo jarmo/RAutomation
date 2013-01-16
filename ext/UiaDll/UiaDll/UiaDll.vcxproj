@@ -82,6 +82,7 @@
     <ClInclude Include="AutomatedSelectList.h" />
     <ClInclude Include="AutomatedTable.h" />
     <ClInclude Include="AutomationClicker.h" />
+    <ClInclude Include="AutomationControl.h" />
     <ClInclude Include="AutomationFinder.h" />
     <ClInclude Include="ExpandCollapseHelper.h" />
     <ClInclude Include="globals.h" />
@@ -98,6 +99,7 @@
     <ClCompile Include="AutomatedSelectList.cpp" />
     <ClCompile Include="AutomatedTable.cpp" />
     <ClCompile Include="AutomationClicker.cpp" />
+    <ClCompile Include="AutomationControl.cpp" />
     <ClCompile Include="AutomationFinder.cpp" />
     <ClCompile Include="MenuMethods.cpp" />
     <ClCompile Include="SelectListMethods.cpp" />
