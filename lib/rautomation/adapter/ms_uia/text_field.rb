@@ -42,7 +42,7 @@ module RAutomation
         end
 
         def exist?
-          super && matches_type?(Constants::UIA_EDIT_CONTROL_TYPE)
+          super && matches_type?(Constants::UIA_EDIT_CONTROL_TYPE, Constants::UIA_DOCUMENT_CONTROL_TYPE)
         end
 
         alias_method :exists?, :exist?

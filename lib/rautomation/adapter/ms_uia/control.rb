@@ -141,8 +141,8 @@ module RAutomation
           false
         end
 
-        def matches_type?(clazz)
-          get_current_control_type == clazz
+        def matches_type?(*classes)
+          classes.include? get_current_control_type
         end
 
         def get_current_control_type

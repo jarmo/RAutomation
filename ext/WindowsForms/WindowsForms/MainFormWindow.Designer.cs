@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Child 1");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Grandchild 1");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Parent Two");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Child 1");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Grandchild 1");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
+            treeNode17});
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
+            treeNode16,
+            treeNode18});
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Parent Two");
             this.label1 = new System.Windows.Forms.Label();
             this.aboutButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -67,6 +67,7 @@
             this.toToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView = new System.Windows.Forms.TreeView();
+            this.multiLineTextField = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -388,27 +389,36 @@
             // 
             this.treeView.Location = new System.Drawing.Point(490, 285);
             this.treeView.Name = "treeView";
-            treeNode1.Name = "Child 1";
-            treeNode1.Text = "Child 1";
-            treeNode2.Name = "Grandchild 1";
-            treeNode2.Text = "Grandchild 1";
-            treeNode3.Name = "Child 2";
-            treeNode3.Text = "Child 2";
-            treeNode4.Name = "Parent One";
-            treeNode4.Text = "Parent One";
-            treeNode5.Name = "Parent Two";
-            treeNode5.Text = "Parent Two";
+            treeNode16.Name = "Child 1";
+            treeNode16.Text = "Child 1";
+            treeNode17.Name = "Grandchild 1";
+            treeNode17.Text = "Grandchild 1";
+            treeNode18.Name = "Child 2";
+            treeNode18.Text = "Child 2";
+            treeNode19.Name = "Parent One";
+            treeNode19.Text = "Parent One";
+            treeNode20.Name = "Parent Two";
+            treeNode20.Text = "Parent Two";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
+            treeNode19,
+            treeNode20});
             this.treeView.Size = new System.Drawing.Size(159, 177);
             this.treeView.TabIndex = 16;
+            // 
+            // multiLineTextField
+            // 
+            this.multiLineTextField.Location = new System.Drawing.Point(142, 339);
+            this.multiLineTextField.Multiline = true;
+            this.multiLineTextField.Name = "multiLineTextField";
+            this.multiLineTextField.Size = new System.Drawing.Size(325, 123);
+            this.multiLineTextField.TabIndex = 5;
             // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 474);
+            this.Controls.Add(this.multiLineTextField);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.FruitListBox);
             this.Controls.Add(this.textBoxDisabled);
@@ -474,6 +484,7 @@
         private System.Windows.Forms.ToolStripMenuItem toToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.TreeView treeView;
+        private System.Windows.Forms.TextBox multiLineTextField;
     }
 }
 
