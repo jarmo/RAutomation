@@ -21,4 +21,11 @@ describe "MsUia::TextField", :if => SpecHelper.adapter == :ms_uia do
     lambda { RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "textBoxDisabled").clear }.should raise_error
   end
 
+  it "considers a document control type a text field as well", :focus => true do
+    # cause the .NET framework to be loaded into the process (required to make this fail)
+    RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "treeView").expand 0
+
+    RAutomation::Window.new(:title => "MainFormWindow").text_field(:id => "multiLineTextField").should exist
+  end
+
 end
