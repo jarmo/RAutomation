@@ -40,7 +40,7 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     end
   end
 
-  context "#control", :focus => true do
+  context "#control" do
     it "by name" do
       window.control(:name => "checkBox").should exist
     end
