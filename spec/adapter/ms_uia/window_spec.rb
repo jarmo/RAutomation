@@ -27,7 +27,7 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     end
 
     it "send arbitrary characters and control keys" do
-      text_field = window.text_field(:index => 1)
+      text_field = window.text_field(:index => 2)
       text_field.focus
       window.send_keys "abc123ABChiHI!"
       text_field.value.should == "abc123ABChiHI!"

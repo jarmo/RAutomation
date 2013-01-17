@@ -13,7 +13,7 @@ describe RAutomation::TextField do
 
   it "#set" do
     window = RAutomation::Window.new(:title => "MainFormWindow")
-    window.text_field(:class => /Edit/i, :index => 1).set "hello!"
+    window.text_field(:class => /Edit/i, :index => 2).set "hello!"
 
     RAutomation::Window.wait_timeout = 0.1
     expect { window.text_field(:class => "non-existing-field").set "hello!" }.
@@ -22,7 +22,7 @@ describe RAutomation::TextField do
 
   it "#clear" do
     window = RAutomation::Window.new(:title => "MainFormWindow")
-    field  = window.text_field(:class => /Edit/i, :index => 1)
+    field  = window.text_field(:class => /Edit/i, :index => 2)
     field.set "hello!"
     field.value.should == "hello!"
     field.clear
@@ -35,7 +35,7 @@ describe RAutomation::TextField do
 
   it "#value" do
     window = RAutomation::Window.new(:title => "MainFormWindow")
-    field  = window.text_field(:class => /Edit/i, :index => 1)
+    field  = window.text_field(:class => /Edit/i, :index => 2)
     field.set "hello!"
     field.value.should == "hello!"
 
