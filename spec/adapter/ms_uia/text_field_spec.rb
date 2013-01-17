@@ -22,7 +22,7 @@ describe "MsUia::TextField", :if => SpecHelper.adapter == :ms_uia do
     lambda { main_form.text_field(:id => "textBoxDisabled").clear }.should raise_error
   end
 
-  it "considers a document control type a text field as well", :focus => true do
+  it "considers a document control type a text field as well" do
     # cause the .NET framework to be loaded into the process (required to make this fail)
     main_form.select_list(:id => "treeView").expand 0
     main_form.text_field(:id => "multiLineTextField").should exist
