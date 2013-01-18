@@ -36,31 +36,6 @@ extern "C" {
 		return NULL ;
 	}
 
-	//This doesn't work
-	__declspec( dllexport ) int RA_FindWindowByPID(int processId, IUIAutomationElement *pElement) {
-		IUIAutomationElement *pRootElement;
-
-		HRESULT hr = getGlobalIUIAutomation()->GetRootElement(&pRootElement);
-		if (SUCCEEDED(hr)) {
-			IUIAutomationCondition *pCondition;
-			VARIANT varProperty;
-
-			VariantInit(&varProperty);
-			varProperty.vt = VT_I4;
-			varProperty.intVal = (processId);
-
-			hr = getGlobalIUIAutomation()->CreatePropertyCondition(UIA_ProcessIdPropertyId, varProperty, &pCondition);
-			if (SUCCEEDED(hr)) {
-
-				hr = pRootElement->FindFirst(TreeScope_Children, pCondition, &pElement);
-				if (SUCCEEDED(hr)) {
-					return 1;
-				}
-			}
-		}
-		return 0;
-	}
-
 	__declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
 		IUIAutomationElement *pElement ;
 

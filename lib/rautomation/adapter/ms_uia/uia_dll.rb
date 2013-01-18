@@ -119,8 +119,6 @@ module RAutomation
                         [:pointer], :bool
         attach_function :select, :RA_Select,
                         [:pointer], :int
-        attach_function :find_window_by_pid, :RA_FindWindowByPID,
-                        [:int], :pointer
         attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
