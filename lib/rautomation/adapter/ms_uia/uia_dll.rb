@@ -79,8 +79,6 @@ module RAutomation
 
         attach_function :find_window, :RA_FindWindow,
                         [:string], :pointer
-        attach_function :is_offscreen, :RA_IsOffscreen,
-                        [:pointer], :bool
         attach_function :element_from_handle, :RA_ElementFromHandle,
                         [:long], :pointer
         attach_function :element_from_point, :RA_ElementFromPoint,

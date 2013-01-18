@@ -61,13 +61,6 @@ extern "C" {
 		return 0;
 	}
 
-	__declspec( dllexport ) BOOL RA_IsOffscreen(IUIAutomationElement *pElement) {
-		BOOL isOffscreen ;
-		pElement->get_CurrentIsOffscreen(&isOffscreen) ;
-
-		return isOffscreen ;
-	}
-
 	__declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
 		IUIAutomationElement *pElement ;
 
