@@ -28,7 +28,7 @@ describe "AutoIt::Mouse", :if => SpecHelper.adapter == :autoit do
     window = RAutomation::Window.new(:title => "MainFormWindow")
     window.maximize
 
-    text_field = window.text_field(:index => 1)
+    text_field = window.text_field(:index => 2)
     text_field.set("start string")
     text_field.value.should == "start string"
 
