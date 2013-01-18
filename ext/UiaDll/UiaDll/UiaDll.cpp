@@ -190,10 +190,6 @@ extern "C" {
 		return SetCursorPos(x,y);
 	}
 
-	__declspec ( dllexport ) long RA_GetDesktopHandle() {
-		return (long)GetDesktopWindow();
-	}
-
 	__declspec ( dllexport ) int RA_CurrentBoundingRectangle(IUIAutomationElement *pElement, long *rectangle) {
 		RECT boundary;
 

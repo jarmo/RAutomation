@@ -95,8 +95,6 @@ module RAutomation
                         [:pointer], :bool
         attach_function :current_control_type, :RA_GetCurrentControlType,
                         [:pointer], :int
-        attach_function :desktop_handle, :RA_GetDesktopHandle,
-                        [], :long
         attach_function :move_mouse, :RA_MoveMouse,
                         [:int,:int], :long
         attach_function :click_mouse, :RA_ClickMouse,
