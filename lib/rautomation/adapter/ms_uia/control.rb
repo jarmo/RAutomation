@@ -25,23 +25,7 @@ module RAutomation
         end
 
         def uia_element
-#          puts "finding element with #{@locators.inspect}"
-
           case
-            #Causes a bug for some reason
-#            when @locators[:value]
-#              uia_window = UiaDll::element_from_handle(@window.hwnd)
-#              begin
-#                uia_window.read_pointer
-#              rescue FFI::NullPointerError => e
-#                raise UnknownElementException, "Window with handle #{@window.hwnd} does not exist"
-#              end
-#              uia_control = UiaDll::find_child_by_name(uia_window, @locators[:value].to_s)
-#              begin
-#                uia_control.read_pointer
-#              rescue FFI::NullPointerError => e
-#                raise UnknownElementException, "#{@locators[:value]} does not exist"
-#              end
             when @locators[:focus]
               uia_control = UiaDll::get_focused_element
               begin
