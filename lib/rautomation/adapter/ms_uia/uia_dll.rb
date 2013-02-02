@@ -79,8 +79,6 @@ module RAutomation
 
         attach_function :find_window, :RA_FindWindow,
                         [:string], :pointer
-        attach_function :is_offscreen, :RA_IsOffscreen,
-                        [:pointer], :bool
         attach_function :element_from_handle, :RA_ElementFromHandle,
                         [:long], :pointer
         attach_function :element_from_point, :RA_ElementFromPoint,
@@ -97,8 +95,6 @@ module RAutomation
                         [:pointer], :bool
         attach_function :current_control_type, :RA_GetCurrentControlType,
                         [:pointer], :int
-        attach_function :desktop_handle, :RA_GetDesktopHandle,
-                        [], :long
         attach_function :move_mouse, :RA_MoveMouse,
                         [:int,:int], :long
         attach_function :click_mouse, :RA_ClickMouse,
@@ -121,8 +117,6 @@ module RAutomation
                         [:pointer], :bool
         attach_function :select, :RA_Select,
                         [:pointer], :int
-        attach_function :find_window_by_pid, :RA_FindWindowByPID,
-                        [:int], :pointer
         attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
