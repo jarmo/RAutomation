@@ -73,5 +73,15 @@ namespace WindowsForms
             SimpleElementsForm buttonForm = new SimpleElementsForm();
             buttonForm.Show();
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void automatableMonthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+
+        }
     }
 }
