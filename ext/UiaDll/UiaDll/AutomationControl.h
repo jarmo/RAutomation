@@ -18,5 +18,11 @@ public:
 
 private:
 	AutomationElement^ _control;
+
+	property ValuePattern^ AsValuePattern {
+		ValuePattern^ get() {
+			return dynamic_cast<ValuePattern^>(_control->GetCurrentPattern(ValuePattern::Pattern));
+		}
+	}
 };
 

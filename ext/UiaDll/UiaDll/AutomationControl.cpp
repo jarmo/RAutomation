@@ -8,9 +8,9 @@ AutomationControl::AutomationControl(const HWND windowHandle)
 }
 
 void AutomationControl::Value::set(String^ value) {
-	dynamic_cast<ValuePattern^>(_control->GetCurrentPattern(ValuePattern::Pattern))->SetValue(value);
+	AsValuePattern->SetValue(value);
 }
 
 String^ AutomationControl::Value::get() {
-	return dynamic_cast<ValuePattern^>(_control->GetCurrentPattern(ValuePattern::Pattern))->Current.Value;
+	return AsValuePattern->Current.Value;
 }
