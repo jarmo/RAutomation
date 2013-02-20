@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Strings">
       <UniqueIdentifier>{4059b959-0144-4a0e-8900-fbdef8bbe335}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Control">
+      <UniqueIdentifier>{07c7f544-b01e-4f38-a4bb-adafe3b91fbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Control">
+      <UniqueIdentifier>{90616ecb-ce19-48d6-88ac-a38a46e42687}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UiaDll.h">
@@ -85,7 +91,7 @@
       <Filter>Header Files\Strings</Filter>
     </ClInclude>
     <ClInclude Include="AutomationControl.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Control</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +144,10 @@
       <Filter>Source Files\Strings</Filter>
     </ClCompile>
     <ClCompile Include="AutomationControl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlMethods.cpp">
+      <Filter>Source Files\Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

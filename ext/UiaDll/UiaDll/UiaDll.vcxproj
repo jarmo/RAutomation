@@ -101,6 +101,7 @@
     <ClCompile Include="AutomationClicker.cpp" />
     <ClCompile Include="AutomationControl.cpp" />
     <ClCompile Include="AutomationFinder.cpp" />
+    <ClCompile Include="ControlMethods.cpp" />
     <ClCompile Include="MenuMethods.cpp" />
     <ClCompile Include="SelectListMethods.cpp" />
     <ClCompile Include="dllmain.cpp" />

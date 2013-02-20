@@ -11,6 +11,11 @@ public:
 		String^ get() { return _control->Current.Name; }
 	}
 
+	property String^ Value {
+		String^ get();
+		void set(String^ value);
+	}
+
 private:
 	AutomationElement^ _control;
 };
