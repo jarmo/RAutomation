@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Child 1");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Grandchild 1");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
-            treeNode17});
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
-            treeNode16,
-            treeNode18});
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Parent Two");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Child 1");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Grandchild 1");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Parent Two");
             this.label1 = new System.Windows.Forms.Label();
             this.aboutButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -68,6 +68,7 @@
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView = new System.Windows.Forms.TreeView();
             this.multiLineTextField = new System.Windows.Forms.TextBox();
+            this.automatableMonthCalendar1 = new WindowsForms.AutomatableMonthCalendar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -342,7 +343,7 @@
             this.faileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(724, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(657, 24);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -389,19 +390,19 @@
             // 
             this.treeView.Location = new System.Drawing.Point(490, 285);
             this.treeView.Name = "treeView";
-            treeNode16.Name = "Child 1";
-            treeNode16.Text = "Child 1";
-            treeNode17.Name = "Grandchild 1";
-            treeNode17.Text = "Grandchild 1";
-            treeNode18.Name = "Child 2";
-            treeNode18.Text = "Child 2";
-            treeNode19.Name = "Parent One";
-            treeNode19.Text = "Parent One";
-            treeNode20.Name = "Parent Two";
-            treeNode20.Text = "Parent Two";
+            treeNode1.Name = "Child 1";
+            treeNode1.Text = "Child 1";
+            treeNode2.Name = "Grandchild 1";
+            treeNode2.Text = "Grandchild 1";
+            treeNode3.Name = "Child 2";
+            treeNode3.Text = "Child 2";
+            treeNode4.Name = "Parent One";
+            treeNode4.Text = "Parent One";
+            treeNode5.Name = "Parent Two";
+            treeNode5.Text = "Parent Two";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode19,
-            treeNode20});
+            treeNode4,
+            treeNode5});
             this.treeView.Size = new System.Drawing.Size(159, 177);
             this.treeView.TabIndex = 16;
             // 
@@ -413,11 +414,20 @@
             this.multiLineTextField.Size = new System.Drawing.Size(325, 123);
             this.multiLineTextField.TabIndex = 5;
             // 
+            // automatableMonthCalendar1
+            // 
+            this.automatableMonthCalendar1.Location = new System.Drawing.Point(142, 474);
+            this.automatableMonthCalendar1.MaxSelectionCount = 1;
+            this.automatableMonthCalendar1.Name = "automatableMonthCalendar1";
+            this.automatableMonthCalendar1.TabIndex = 17;
+            this.automatableMonthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.automatableMonthCalendar1_DateChanged);
+            // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 474);
+            this.ClientSize = new System.Drawing.Size(657, 657);
+            this.Controls.Add(this.automatableMonthCalendar1);
             this.Controls.Add(this.multiLineTextField);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.FruitListBox);
@@ -485,6 +495,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.TextBox multiLineTextField;
+        private AutomatableMonthCalendar automatableMonthCalendar1;
     }
 }
 

@@ -10,6 +10,16 @@ module RAutomation
         ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
         ffi_convention :stdcall
 
+        # Generic Control methods
+        attach_function :Control_GetValue, [:long, :pointer, :int], :void  
+        attach_function :set_control_value, :Control_SetValue, [:long, :string], :void         
+
+        def self.get_control_value(hwnd)
+          string = FFI::MemoryPointer.new :char, 1024
+          Control_GetValue hwnd, string, 1024
+          string.read_string
+        end
+
         # Select List methods
         attach_function :select_list_count, :SelectList_Count,
                         [:long], :int

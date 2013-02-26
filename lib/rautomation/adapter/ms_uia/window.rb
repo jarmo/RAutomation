@@ -167,6 +167,10 @@ module RAutomation
           Button.new(self, locator)
         end
 
+        def value_control(locator)
+          ValueControl.new(self, locator)
+        end
+
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
         def text_field(locator)
