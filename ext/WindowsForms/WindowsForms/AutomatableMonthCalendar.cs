@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Forms;
@@ -45,12 +46,12 @@ namespace WindowsForms
 
         public void SetValue(string value)
         {
-            _control.SetDate(DateTime.Parse(value));
+            _control.SetDate(DateTime.Parse(value, new CultureInfo("en-US")));
         }
 
         public string Value
         {
-            get { return _control.SelectionStart.ToString(); }
+            get { return _control.SelectionStart.ToString(new CultureInfo("en-US")); }
         }
 
         public bool IsReadOnly { get; private set; }
