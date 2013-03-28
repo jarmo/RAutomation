@@ -7,12 +7,98 @@ module RAutomation
       module UiaDll
         extend FFI::Library
 
+        HowToFind = enum(:hwnd, 1,
+                          :id,
+                          :value,
+                          :focus,
+                          :point)
+
+
+        class FindData < FFI::Union
+          layout :string_data, [:uint8, 256],
+                 :int_data, :int,
+                 :point_data, [:int, 2]
+        end
+
+        class SearchCriteria < FFI::Struct
+          def self.from_locator(parent, locator)
+            info = SearchCriteria.new
+            info.parent_window = parent
+
+            case
+              when locator[:hwnd]
+                info.how = :hwnd
+                info.data = locator[:hwnd]
+              when locator[:id]
+                info.how = :id
+                info.data = locator[:id]
+              when locator[:value]
+                info.how = :value
+                info.data = locator[:value]
+              when locator[:point]
+                info.how = :point
+                info.data = locator[:point]
+              when locator[:focus]
+                info.how = :focus
+            end
+            info
+          end
+
+          def how
+            self[:how]
+          end
+
+          def how=(value)
+            self[:how] = value
+          end
+
+          def parent_window
+            self[:hwnd]
+          end
+
+          def parent_window=(parent)
+            self[:hwnd] = parent
+          end
+
+          def data
+            case how
+              when :hwnd
+                return self[:data][:int_data]
+              when :id, :value
+                return self[:data][:string_data].to_ptr.read_string
+              when :point
+                return self[:data][:point_data].to_ptr.read_array_of_int(2)
+              else
+                return nil
+            end
+          end
+
+          def data=(value)
+            case how
+              when :hwnd
+                self[:data][:int_data] = value
+              when :id, :value
+                self[:data][:string_data] = value
+              when :point
+                self[:data][:point_data].to_ptr.write_array_of_int(value)
+            end
+          end
+
+          layout :hwnd, :int,
+                 :how, HowToFind, :data, FindData
+        end
+
         ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
         ffi_convention :stdcall
 
         # Generic Control methods
+        attach_function :ElementExists, [SearchCriteria.by_ref], :bool
         attach_function :Control_GetValue, [:long, :pointer, :int], :void  
-        attach_function :set_control_value, :Control_SetValue, [:long, :string], :void         
+        attach_function :set_control_value, :Control_SetValue, [:long, :string], :void
+
+        def self.exists?(parent, locator)
+          ElementExists SearchCriteria.from_locator(parent, locator)
+        end
 
         def self.get_control_value(hwnd)
           string = FFI::MemoryPointer.new :char, 1024
