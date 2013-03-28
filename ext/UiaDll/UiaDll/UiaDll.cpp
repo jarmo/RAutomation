@@ -11,6 +11,12 @@
 IUIAutomation* getGlobalIUIAutomation() ;
 
 extern "C" {
+
+	__declspec ( dllexport ) bool ElementExists(const FindInformation& findInformation) {
+        auto automationElement = gcnew AutomationControl(findInformation);
+        return automationElement->Exists;
+	}
+
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
 		IUIAutomationElement *pRootElement ;
 

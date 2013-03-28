@@ -1,4 +1,5 @@
 #pragma once
+using namespace System::Windows;
 using namespace System::Windows::Automation;
 
 ref class AutomationFinder
@@ -7,6 +8,7 @@ public:
 	AutomationFinder(AutomationElement^ automationElement);
 	AutomationElementCollection^ Find(...array<Condition^>^ conditions);
 	AutomationElement^ FindFirst(...array<Condition^>^ conditions);
+	AutomationElement^ FindFirst(const FindInformation& findInformation);
 	AutomationElement^ FindAt(const int whichItem, ...array<Condition^>^ conditions);
 
 	static property Condition^ IsSelectionItem {

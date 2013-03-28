@@ -20,3 +20,21 @@
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
+
+typedef enum {
+    Handle = 1,
+    Id,
+    Value,
+    Focus,
+    ScreenPoint
+} FindMethod;
+
+typedef struct _FindInformation {
+    HWND rootWindow;
+    FindMethod  how;
+    union {
+        char stringData[256];
+        int intData;
+        int pointData[2];
+	  } data;
+} FindInformation, *LPFindInformation;
