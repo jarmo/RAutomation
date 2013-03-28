@@ -74,7 +74,7 @@ module RAutomation
 
         def exist?
           begin
-            !!uia_element
+            UiaDll::exists?(@window.hwnd, @locators) || !!hwnd
           rescue UnknownElementException
             false
           end
