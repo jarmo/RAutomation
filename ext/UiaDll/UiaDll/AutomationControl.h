@@ -6,6 +6,7 @@ ref class AutomationControl
 {
 public:
 	AutomationControl(const HWND windowHandle);
+  AutomationControl(const FindInformation& findInformation);
 
 	property String^ Name {
 		String^ get() { return _control->Current.Name; }
@@ -15,6 +16,10 @@ public:
 		String^ get();
 		void set(String^ value);
 	}
+
+  property bool Exists {
+	  bool get() { return nullptr != _control; }
+  }
 
 private:
 	AutomationElement^ _control;
