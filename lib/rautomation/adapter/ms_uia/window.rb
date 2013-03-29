@@ -189,31 +189,6 @@ module RAutomation
           Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
 
-        # MsUia adapter specific API methods
-        def element
-          case
-            when @locators[:focus]
-              uia_control = UiaDll::get_focused_element
-            when @locators[:id]
-              uia_control = UiaDll::find_window(@locators[:id].to_s)
-              raise UnknownElementException, "#{@locators[:id]} does not exist" if uia_control.nil?
-            when @locators[:point]
-              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-              raise UnknownElementException, "#{@locators[:point]} does not exist" if uia_control.nil?
-            else
-              hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
-                locators_match?(locators, control_properties(hwnd, locators))
-              end
-              raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
-              uia_control = UiaDll::element_from_handle(hwnd)
-          end
-          uia_control
-        end
-
-        def new_pid
-          UiaDll::current_process_id(uia_control())
-        end
-
         def count_children(element)
           UiaDll::find_children(element, nil)
         end
