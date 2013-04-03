@@ -17,6 +17,23 @@ extern "C" {
         return automationElement->Exists;
 	}
 
+	__declspec ( dllexport ) int BoundingRectangle(const FindInformation& findInformation, long *rectangle) {
+    try {
+      auto automationElement = gcnew AutomationControl(findInformation);
+      auto boundary = automationElement->BoundingRectangle;
+
+      rectangle[0] = boundary.Left;
+      rectangle[1] = boundary.Top;
+      rectangle[2] = boundary.Right;
+      rectangle[3] = boundary.Bottom;
+      return 1;
+    }
+    catch(Exception^ e) {
+      Console::WriteLine("BoundingRectangle:  {0}", e->Message);
+      return 0;
+    }
+	}
+
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
 		IUIAutomationElement *pRootElement ;
 
@@ -194,25 +211,6 @@ extern "C" {
 
 	__declspec ( dllexport ) long RA_MoveMouse(int x, int y) {
 		return SetCursorPos(x,y);
-	}
-
-	__declspec ( dllexport ) int RA_CurrentBoundingRectangle(IUIAutomationElement *pElement, long *rectangle) {
-		RECT boundary;
-
-		HRESULT hr = pElement->get_CurrentBoundingRectangle(&boundary) ;
-		if (SUCCEEDED(hr)) {
-
-			rectangle[0] = boundary.left;
-			rectangle[1] = boundary.top;
-			rectangle[2] = boundary.right;
-			rectangle[3] = boundary.bottom;
-
-			return 1;
-		}
-		else {
-			printf("RA_CurrentBoundingRectangle: get_CurrentBoundingRectangle failed 0x%x\r\n", hr) ;
-			return 0 ;
-		}
 	}
 
 	__declspec ( dllexport ) int RA_CurrentIsOffscreen(IUIAutomationElement *pElement, int *visible) {

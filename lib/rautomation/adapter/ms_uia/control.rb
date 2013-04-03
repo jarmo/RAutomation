@@ -101,12 +101,7 @@ module RAutomation
         end
 
         def bounding_rectangle
-          control = uia_element
-
-          boundary = FFI::MemoryPointer.new :long, 4
-          UiaDll::bounding_rectangle(control, boundary)
-
-          boundary.read_array_of_long(4)
+          UiaDll::bounding_rectangle(@window.hwnd, @locators)
         end
 
         def visible?

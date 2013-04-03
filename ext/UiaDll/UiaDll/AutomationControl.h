@@ -1,6 +1,7 @@
 #pragma once
 
 using namespace System::Windows::Automation;
+using namespace System::Windows;
 using namespace System::Diagnostics;
 
 ref class AutomationControl
@@ -12,6 +13,10 @@ public:
 	property String^ Name {
 		String^ get() { return _control->Current.Name; }
 	}
+
+  property Rect BoundingRectangle {
+    Rect get() { return _control->Current.BoundingRectangle; }
+  }
 
 	property String^ Value {
 		String^ get();
