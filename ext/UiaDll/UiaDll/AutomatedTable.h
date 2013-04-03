@@ -1,13 +1,15 @@
 #pragma once
+#include "AutomationControl.h"
 #include "AutomationFinder.h"
 #include "StringHelper.h"
 
 using namespace System::Windows::Automation;
 
-ref class AutomatedTable
+ref class AutomatedTable : AutomationControl
 {
 public:
 	AutomatedTable(const HWND windowHandle);
+	AutomatedTable(const FindInformation& finderInformation);
 	bool Exists(const int whichItemIndex, const int whichColumnIndex);
 	String^ ValueAt(const int whichItemIndex, const int whichColumnIndex);
 	void Select(const int dataItemIndex);
@@ -21,7 +23,6 @@ public:
 	}
 
 private:
-	AutomationElement^ _tableControl;
 	AutomationFinder^ _finder;
 	bool Exists(Condition^ condition);
 	AutomationElement^ DataItemAt(const int whichItemIndex, const int whichItemRow);

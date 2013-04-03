@@ -1,10 +1,14 @@
 #include "StdAfx.h"
 #include "AutomatedTable.h"
 
-AutomatedTable::AutomatedTable(const HWND windowHandle)
+AutomatedTable::AutomatedTable(const HWND windowHandle) : AutomationControl(windowHandle)
 {
-	_tableControl = AutomationElement::FromHandle(IntPtr(windowHandle));
-	_finder = gcnew AutomationFinder(_tableControl);
+	_finder = gcnew AutomationFinder(_control);
+}
+
+AutomatedTable::AutomatedTable(const FindInformation& finderInformation) : AutomationControl(finderInformation)
+{
+	_finder = gcnew AutomationFinder(_control);
 }
 
 int AutomatedTable::GetHeaders(const char* headers[])
@@ -31,7 +35,7 @@ int AutomatedTable::GetValues(const char* values[])
 
 int AutomatedTable::RowCount::get()
 {
-	auto tablePattern = dynamic_cast<TablePattern^>(_tableControl->GetCurrentPattern(TablePattern::Pattern));
+	auto tablePattern = dynamic_cast<TablePattern^>(_control->GetCurrentPattern(TablePattern::Pattern));
 	return tablePattern->Current.RowCount;
 }
 

@@ -18,6 +18,10 @@ public:
     Rect get() { return _control->Current.BoundingRectangle; }
   }
 
+  property System::Windows::Automation::ControlType^ ControlType {
+    System::Windows::Automation::ControlType^ get() { return _control->Current.ControlType; }
+  }
+
 	property String^ Value {
 		String^ get();
 		void set(String^ value);
@@ -27,9 +31,10 @@ public:
 	  bool get() { return nullptr != _control; }
   }
 
-private:
+protected:
 	AutomationElement^ _control;
 
+private:
 	property ValuePattern^ AsValuePattern {
 		ValuePattern^ get() {
 			return dynamic_cast<ValuePattern^>(_control->GetCurrentPattern(ValuePattern::Pattern));
