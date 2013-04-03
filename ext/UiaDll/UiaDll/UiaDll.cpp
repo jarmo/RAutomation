@@ -34,6 +34,16 @@ extern "C" {
     }
 	}
 
+	__declspec ( dllexport ) int ControlType(const FindInformation& findInformation) {
+    try {
+      auto automationElement = gcnew AutomationControl(findInformation);
+      return automationElement->ControlType->Id;
+    } catch(Exception^ e) {
+      Console::WriteLine("ControlType:  {0}", e->Message);
+      return 0;
+    }
+	}
+
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
 		IUIAutomationElement *pRootElement ;
 

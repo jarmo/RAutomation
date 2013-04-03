@@ -33,6 +33,8 @@ AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation
       return AutomationElement::FocusedElement;
     case FindMethod::ScreenPoint:
 			return AutomationElement::FromPoint(Point(findInformation.data.pointData[0], findInformation.data.pointData[1]));
+    case FindMethod::Handle:
+      return AutomationElement::FromHandle(IntPtr(findInformation.data.intData));
 	}
 
   return nullptr;

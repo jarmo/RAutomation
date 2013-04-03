@@ -13,6 +13,11 @@ extern "C" {
 		return tableControl->GetValues(values);
 	}
 
+  __declspec ( dllexport ) int Table_FindValues(const FindInformation& findInformation, const char* values[]) {
+		auto tableControl = gcnew AutomatedTable(findInformation);
+		return tableControl->GetValues(values);
+  }
+
 	__declspec ( dllexport ) int Table_RowCount(const HWND windowHandle) {
 		try {
 			auto tableControl = gcnew AutomatedTable(windowHandle);
