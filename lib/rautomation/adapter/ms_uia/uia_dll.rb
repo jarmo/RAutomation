@@ -105,9 +105,16 @@ module RAutomation
         attach_function :ElementExists, [SearchCriteria.by_ref], :bool
         attach_function :Control_GetValue, [:long, :pointer, :int], :void  
         attach_function :set_control_value, :Control_SetValue, [:long, :string], :void
+        attach_function :BoundingRectangle, [SearchCriteria.by_ref, :pointer], :int
 
         def self.exists?(parent, locator)
           ElementExists SearchCriteria.from_locator(parent, locator)
+        end
+
+        def self.bounding_rectangle(parent, locator)
+          boundary = FFI::MemoryPointer.new :long, 4
+          BoundingRectangle SearchCriteria.from_locator(parent, locator), boundary
+          boundary.read_array_of_long(4)
         end
 
         def self.get_control_value(hwnd)
@@ -205,8 +212,6 @@ module RAutomation
                         [:int,:int], :long
         attach_function :click_mouse, :RA_ClickMouse,
                         [], :long
-        attach_function :bounding_rectangle, :RA_CurrentBoundingRectangle,
-                        [:pointer, :pointer], :int
         attach_function :is_offscreen, :RA_CurrentIsOffscreen,
                         [:pointer, :pointer], :int
         attach_function :find_children, :RA_FindChildren,
