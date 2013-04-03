@@ -1,6 +1,7 @@
 #pragma once
 
 using namespace System::Windows::Automation;
+using namespace System::Diagnostics;
 
 ref class AutomationControl
 {

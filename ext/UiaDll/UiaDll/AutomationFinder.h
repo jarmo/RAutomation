@@ -7,8 +7,8 @@ ref class AutomationFinder
 public:
 	AutomationFinder(AutomationElement^ automationElement);
 	AutomationElementCollection^ Find(...array<Condition^>^ conditions);
+	AutomationElement^ Find(const FindInformation& findInformation);
 	AutomationElement^ FindFirst(...array<Condition^>^ conditions);
-	AutomationElement^ FindFirst(const FindInformation& findInformation);
 	AutomationElement^ FindAt(const int whichItem, ...array<Condition^>^ conditions);
 
 	static property Condition^ IsSelectionItem {

@@ -24,6 +24,7 @@ module RAutomation
           def self.from_locator(parent, locator)
             info = SearchCriteria.new
             info.parent_window = parent
+            info.index = locator[:index] || 0
 
             case
               when locator[:hwnd]
@@ -50,6 +51,14 @@ module RAutomation
 
           def how=(value)
             self[:how] = value
+          end
+
+          def index
+            self[:index]
+          end
+
+          def index=(value)
+            self[:index] = value
           end
 
           def parent_window
@@ -85,6 +94,7 @@ module RAutomation
           end
 
           layout :hwnd, :int,
+                 :index, :int,
                  :how, HowToFind, :data, FindData
         end
 
