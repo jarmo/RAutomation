@@ -12,10 +12,10 @@ AutomationControl::AutomationControl(const FindInformation& findInformation)
 	try {
 		auto rootElement = AutomationElement::FromHandle(IntPtr(findInformation.rootWindow));
 		auto finder = gcnew AutomationFinder(rootElement);
-		_control = finder->FindFirst(findInformation);
+		_control = finder->Find(findInformation);
 	}
 	catch(Exception^ e) {
-		Console::WriteLine("AutomationControl error:  {0}", e->Message);
+		Debug::WriteLine("AutomationControl error:  {0}", e->Message);
 	}
 }
 

@@ -31,6 +31,7 @@ typedef enum {
 
 typedef struct _FindInformation {
     HWND rootWindow;
+    int index;
     FindMethod  how;
     union {
         char stringData[256];

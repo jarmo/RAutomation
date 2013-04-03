@@ -16,18 +16,18 @@ AutomationElement^ AutomationFinder::FindFirst(...array<Condition^>^ conditions)
 	return _automationElement->FindFirst(System::Windows::Automation::TreeScope::Subtree, SomethingOrEverything(conditions));
 }
 
-AutomationElement^ AutomationFinder::FindFirst(const FindInformation& findInformation)
+AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation)
 {
   switch(findInformation.how) {
     case FindMethod::Id:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::AutomationIdProperty, gcnew String(findInformation.data.stringData));
-      return FindFirst(searchCondition);
+      return FindAt(findInformation.index, searchCondition);
 		}
     case FindMethod::Value:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(findInformation.data.stringData));
-      return FindFirst(searchCondition);
+      return FindAt(findInformation.index, searchCondition);
 		}
     case FindMethod::Focus:
       return AutomationElement::FocusedElement;
