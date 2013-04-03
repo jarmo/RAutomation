@@ -106,6 +106,7 @@ module RAutomation
         attach_function :Control_GetValue, [:long, :pointer, :int], :void  
         attach_function :set_control_value, :Control_SetValue, [:long, :string], :void
         attach_function :BoundingRectangle, [SearchCriteria.by_ref, :pointer], :int
+        attach_function :current_control_type, :ControlType, [SearchCriteria.by_ref], :int
 
         def self.exists?(parent, locator)
           ElementExists SearchCriteria.from_locator(parent, locator)
@@ -146,6 +147,8 @@ module RAutomation
                         [:long, :pointer], :int
         attach_function :Table_GetValues,
                         [:long, :pointer], :int
+        attach_function :Table_FindValues,
+                        [SearchCriteria.by_ref, :pointer], :int
         attach_function :table_row_count, :Table_RowCount,
                         [:long], :int
         attach_function :Table_CoordinateIsValid,
@@ -186,6 +189,10 @@ module RAutomation
           strings_from :Table_GetValues, hwnd
         end
 
+        def self.find_table_values(parent, locator)
+          strings_from :Table_FindValues, SearchCriteria.from_locator(parent, locator)
+        end
+
         # String methods
         attach_function :clean_up_strings, :String_CleanUp,
                         [:pointer, :int], :void
@@ -206,8 +213,6 @@ module RAutomation
                         [:pointer], :long
         attach_function :set_focus, :RA_SetFocus,
                         [:pointer], :bool
-        attach_function :current_control_type, :RA_GetCurrentControlType,
-                        [:pointer], :int
         attach_function :move_mouse, :RA_MoveMouse,
                         [:int,:int], :long
         attach_function :click_mouse, :RA_ClickMouse,

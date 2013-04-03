@@ -24,6 +24,15 @@ module RAutomation
           Functions.control_hwnd(@window.hwnd, @locators)
         end
 
+        def search_information
+          info = UiaDll::SearchCriteria.from_locator(@window.hwnd, @locators)
+          if info.how == 0
+            info.how = :hwnd
+            info.data = hwnd
+          end
+          info
+        end
+
         def uia_element
           case
             when @locators[:focus]
@@ -125,7 +134,7 @@ module RAutomation
         end
 
         def get_current_control_type
-          UiaDll::current_control_type(uia_element)
+          UiaDll::current_control_type(search_information)
         end
 
         def new_pid

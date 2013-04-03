@@ -11,19 +11,9 @@ module RAutomation
         end
 
         def items
-          list_items = []
-          children = FFI::MemoryPointer.new :pointer, self.count
-          length = UiaDll::find_children(uia_element, children)
-
-          children.read_array_of_pointer(length).each do |child|
-            if (UiaDll::current_control_type(child) == Constants::UIA_LIST_ITEM_CONTROL_TYPE) or (UiaDll::current_control_type(child) == Constants::UIA_DATA_ITEM_CONTROL_TYPE)
-              child_name = FFI::MemoryPointer.new :char, UiaDll::get_name(child, nil) + 1
-              UiaDll::get_name(child, child_name)
-              list_items.push(@window.list_item(:value => child_name.read_string))
-            end
+          UiaDll::find_table_values(@window.hwnd, @locators).map do |list_item|
+            @window.list_item(:value => list_item)
           end
-
-          list_items
         end
 
         def strings
