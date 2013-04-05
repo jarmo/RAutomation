@@ -66,9 +66,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ToggleStateHelper.h">
-      <Filter>Header Files\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="ExpandCollapseHelper.h">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
@@ -91,6 +88,9 @@
       <Filter>Header Files\Strings</Filter>
     </ClInclude>
     <ClInclude Include="AutomationControl.h">
+      <Filter>Header Files\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Toggle.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
   </ItemGroup>
@@ -122,9 +122,6 @@
     <ClCompile Include="MenuItemSelector.cpp">
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="ToggleStateHelper.cpp">
-      <Filter>Source Files\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="TableMethods.cpp">
       <Filter>Source Files\Table</Filter>
     </ClCompile>
@@ -147,6 +144,9 @@
       <Filter>Source Files\Control</Filter>
     </ClCompile>
     <ClCompile Include="ControlMethods.cpp">
+      <Filter>Source Files\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Toggle.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
   </ItemGroup>

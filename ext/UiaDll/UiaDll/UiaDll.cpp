@@ -7,7 +7,7 @@
 #include "AutomationFinder.h"
 #include "ExpandCollapseHelper.h"
 #include "StringHelper.h"
-#include "ToggleStateHelper.h"
+#include "Toggle.h"
 
 IUIAutomation* getGlobalIUIAutomation() ;
 
@@ -320,9 +320,15 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) BOOL RA_GetIsSet(IUIAutomationElement *pElement) {
-		return ToggleStateHelper().IsSet(pElement);
-	}
+  __declspec ( dllexport ) bool IsSet(const FindInformation& findInformation) {
+    try {
+      auto toggle = gcnew Toggle(findInformation);
+      return toggle->IsSet;
+    } catch(Exception^ e) {
+      Debug::WriteLine("IsSet:  {0}", e->Message);
+      return false;
+    }
+  }
 
 	__declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement) {
 		ISelectionItemProvider *pSelectionPattern ;

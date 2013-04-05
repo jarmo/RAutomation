@@ -91,7 +91,7 @@
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="ToggleStateHelper.h" />
+    <ClInclude Include="Toggle.h" />
     <ClInclude Include="UiaDll.h" />
   </ItemGroup>
   <ItemGroup>
@@ -114,7 +114,7 @@
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="StringMethods.cpp" />
     <ClCompile Include="TableMethods.cpp" />
-    <ClCompile Include="ToggleStateHelper.cpp" />
+    <ClCompile Include="Toggle.cpp" />
     <ClCompile Include="UiaDll.cpp" />
   </ItemGroup>
   <ItemGroup>

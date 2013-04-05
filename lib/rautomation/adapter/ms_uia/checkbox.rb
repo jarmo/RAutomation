@@ -11,7 +11,7 @@ module RAutomation
         end
 
         def set?
-          UiaDll::get_is_set(uia_element)
+          UiaDll::is_set(search_information)
         end
 
         alias_method :exists?, :exist?
