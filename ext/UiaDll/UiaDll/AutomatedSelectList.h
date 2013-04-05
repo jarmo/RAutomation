@@ -1,12 +1,14 @@
 #pragma once
+#include "AutomationControl.h"
 #include "StringHelper.h"
 
 using namespace System::Windows::Automation;
 
-public ref class AutomatedSelectList
+ref class AutomatedSelectList : public AutomationControl
 {
 public:
 	AutomatedSelectList(const HWND windowHandle);
+	AutomatedSelectList(const FindInformation& findInformation);
 	bool SelectByIndex(const int whichItem);
 	bool SelectByValue(const char* whichItem);
 	bool GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize);
@@ -20,11 +22,10 @@ public:
 	}
 
 private:
-	AutomationElement^	_selectList;
 	void Select(AutomationElement^ itemToSelect);
 
 	property AutomationElementCollection^ SelectionItems {
-	  AutomationElementCollection^ get() { return _selectList->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }
+	  AutomationElementCollection^ get() { return _control->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }
 	}
 
 	property PropertyCondition^ SelectionCondition {

@@ -21,7 +21,7 @@ module RAutomation
 
           def select
             @select_list.assert_enabled
-            UiaDll::select_list_select_index @select_list.control_hwnd, @index
+            UiaDll::select_list_select_index @select_list.search_information, @index
           end
 
           alias_method :set, :select
@@ -33,8 +33,7 @@ module RAutomation
         end
 
         def set(value)
-          list      = UiaDll::element_from_handle(@hwnd)
-          UiaDll::select_list_select_value(list, value)
+          UiaDll::select_list_select_value(search_information, value)
         end
 
         def options(options = {})
@@ -72,7 +71,7 @@ module RAutomation
         end
 
         def select(index)
-          UiaDll::select_list_select_index @hwnd, index
+          UiaDll::select_list_select_index search_information, index
         end
 
         def list_item_height
@@ -104,7 +103,7 @@ module RAutomation
         private
 
         def item_count
-          UiaDll::select_list_count(@hwnd)
+          UiaDll::select_list_count(search_information)
         end
 
       end

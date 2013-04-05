@@ -1,15 +1,16 @@
 #include "StdAfx.h"
 #include "AutomatedSelectList.h"
 
-AutomatedSelectList::AutomatedSelectList(const HWND windowHandle)
-{
-	_selectList = AutomationElement::FromHandle(IntPtr(windowHandle));
-}
+AutomatedSelectList::AutomatedSelectList(const HWND windowHandle) : AutomationControl(windowHandle)
+{ }
+
+AutomatedSelectList::AutomatedSelectList(const FindInformation& findInformation) : AutomationControl(findInformation)
+{ }
 
 bool AutomatedSelectList::SelectByIndex(const int whichItem)
 {
 	try {
-	  auto selectionItems = _selectList->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition);
+	  auto selectionItems = _control->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition);
 	  Select(selectionItems[whichItem]);
 	  return true;
 	} catch(Exception^ e) {
@@ -24,7 +25,7 @@ bool AutomatedSelectList::SelectByValue(const char* whichItem)
 	  auto nameCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem));
 	  auto selectionAndNameCondition = gcnew AndCondition(SelectionCondition, nameCondition);
 
-	  Select(_selectList->FindFirst(System::Windows::Automation::TreeScope::Subtree, selectionAndNameCondition));
+	  Select(_control->FindFirst(System::Windows::Automation::TreeScope::Subtree, selectionAndNameCondition));
 	  return true;
 	} catch(Exception^ e) {
 		Console::WriteLine(e->ToString());
