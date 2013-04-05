@@ -33,39 +33,6 @@ module RAutomation
           info
         end
 
-        def uia_element
-          case
-            when @locators[:focus]
-              uia_control = UiaDll::get_focused_element
-              begin
-                uia_control.read_pointer
-              rescue FFI::NullPointerError => e
-                raise UnknownElementException, "Focused element does not exist"
-              end
-            when @locators[:id]
-              uia_window = UiaDll::element_from_handle(@window.hwnd)
-              uia_control = UiaDll::find_child_by_id(uia_window, @locators[:id].to_s)
-              begin
-                uia_control.read_pointer
-              rescue FFI::NullPointerError => e
-                raise UnknownElementException, "#{@locators[:id]} does not exist"
-              end
-            when @locators[:point]
-              uia_control = UiaDll::element_from_point(@locators[:point][0], @locators[:point][1])
-              begin
-                uia_control.read_pointer
-              rescue FFI::NullPointerError => e
-                raise UnknownElementException, "#{@locators[:point]} does not exist"
-              end
-            else
-              handle= hwnd
-              raise UnknownElementException, "Element with #{@locators.inspect} does not exist" if (handle == 0) or (handle == nil)
-              uia_control = UiaDll::element_from_handle(handle)
-          end
-          uia_control
-        end
-
-
         #todo - replace with UIA version
         def click
           assert_enabled
