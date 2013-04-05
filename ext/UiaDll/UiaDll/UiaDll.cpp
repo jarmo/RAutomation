@@ -87,31 +87,6 @@ extern "C" {
     return allChildren->Count;
   }
 
-	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
-		IUIAutomationElement *pRootElement ;
-
-		HRESULT hr = getGlobalIUIAutomation()->GetRootElement(&pRootElement) ;
-		if (SUCCEEDED(hr)) {
-			IUIAutomationCondition *pCondition ;
-			VARIANT varProperty ;
-
-			VariantInit(&varProperty) ;
-			varProperty.vt = VT_BSTR ;
-			varProperty.bstrVal = _bstr_t(pszAutomationId) ;
-
-			hr = getGlobalIUIAutomation()->CreatePropertyCondition(UIA_AutomationIdPropertyId, varProperty, &pCondition) ;
-			if (SUCCEEDED(hr)) {
-				IUIAutomationElement *pFound ;
-
-				hr = pRootElement->FindFirst(TreeScope_Children, pCondition, &pFound) ;
-				if (SUCCEEDED(hr)) {
-					return pFound ;
-				}
-			}
-		}
-		return NULL ;
-	}
-
 	__declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
 		IUIAutomationElement *pElement ;
 
@@ -121,19 +96,6 @@ extern "C" {
 		else {
 			printf("RA_ElementFromHandle: Cannot find element from handle 0x%x. HRESULT was 0x%x\r\n", hwnd, hr) ;
 			return NULL ;
-		}
-	}
-
-	__declspec ( dllexport ) IUIAutomationElement *RA_GetFocusedElement() {
-		IUIAutomationElement *pelement;
-
-		HRESULT hr = getGlobalIUIAutomation()->GetFocusedElement(&pelement);
-
-		if (SUCCEEDED(hr))
-			return pelement;
-		else {
-			printf("RA_GetFocusedElement: Cannot find element from focus. HRESULT was 0x%x\r\n", hr) ;
-			return false ;
 		}
 	}
 
@@ -177,34 +139,6 @@ extern "C" {
 			}
 		} else {
 			printf("RA_FindChildById: Cannot create search condition. hr = 0x%x\r\n", hr) ;
-			return NULL ;
-		}
-	}
-
-	__declspec ( dllexport ) IUIAutomationElement *RA_FindChildByName(IUIAutomationElement *pElement, char *elementName) {
-		IUIAutomationCondition *pCondition ;
-		VARIANT varProperty ;
-
-		VariantInit(&varProperty) ;
-		varProperty.vt = VT_BSTR ;
-		varProperty.bstrVal = _bstr_t(elementName) ;
-
-		HRESULT hr = getGlobalIUIAutomation()->CreatePropertyCondition(UIA_NamePropertyId, varProperty, &pCondition) ;
-		if (SUCCEEDED(hr)) {
-			IUIAutomationElement *pFound ;
-
-			hr = pElement->FindFirst(TreeScope_Descendants, pCondition, &pFound) ;
-			if (SUCCEEDED(hr)) {
-				if (pFound == NULL)
-					printf("RA_FindChildByName: Element with automation name %s was not found\r\n", elementName) ;
-				//printf("RA_FindChildByName: success with value %s\r\n", elementName) ;
-				return pFound ;
-			} else {
-				printf("RA_FindChildByName: FindFirst for children looking for %s failed. hr = 0x%x\r\n", elementName, hr) ;
-				return NULL ;
-			}
-		} else {
-			printf("RA_FindChildByName: Cannot create search condition. hr = 0x%x\r\n", hr) ;
 			return NULL ;
 		}
 	}

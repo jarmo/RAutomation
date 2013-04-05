@@ -224,17 +224,11 @@ module RAutomation
         attach_function :clean_up_strings, :String_CleanUp,
                         [:pointer, :int], :void
 
-        attach_function :find_window, :RA_FindWindow,
-                        [:string], :pointer
         attach_function :element_from_handle, :RA_ElementFromHandle,
                         [:long], :pointer
         attach_function :element_from_point, :RA_ElementFromPoint,
                         [:int, :int], :pointer
-        attach_function :get_focused_element, :RA_GetFocusedElement,
-                        [], :pointer
         attach_function :find_child_by_id, :RA_FindChildById,
-                        [:pointer, :string], :pointer
-        attach_function :find_child_by_name, :RA_FindChildByName,
                         [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
                         [:pointer], :long
