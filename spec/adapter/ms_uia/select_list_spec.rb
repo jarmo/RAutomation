@@ -98,25 +98,4 @@ describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
     select_list.option(:text => "Orange").should be_selected
     label.value.should == "Orange"
   end
-
-#  it "control by focus" do
-#    window      = RAutomation::Window.new(:title => /MainFormWindow/i)
-#
-#    button = window.button(:value => "Reset")
-#    button.set_focus
-#
-#    element = window.get_focused_element
-#    type =button.get_current_control_type(element)
-#    puts "type :#{type}"
-
-#    box1 = another_button.bounding_rectangle
-#        box2 =   button.bounding_rectangle
-#
-#
-#    puts "#{box1}"
-#    puts "#{box2}"
-#
-#    sleep 10
-#    box1.should == box2
-#  end
 end
