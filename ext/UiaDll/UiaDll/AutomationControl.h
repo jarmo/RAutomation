@@ -10,8 +10,16 @@ public:
 	AutomationControl(const HWND windowHandle);
   AutomationControl(const FindInformation& findInformation);
 
+  property AutomationElement^ Element {
+    AutomationElement^ get() { return _control; }
+  }
+
 	property String^ Name {
 		String^ get() { return _control->Current.Name; }
+	}
+
+	property String^ ClassName {
+		String^ get() { return _control->Current.ClassName; }
 	}
 
   property Rect BoundingRectangle {

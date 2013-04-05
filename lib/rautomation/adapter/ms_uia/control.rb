@@ -146,11 +146,7 @@ module RAutomation
         end
 
         def control_class
-          uia_control = uia_element
-          element_class = FFI::MemoryPointer.new :char, UiaDll::get_class_name(uia_control, nil) + 1
-
-          UiaDll::get_class_name(uia_control, element_class)
-          element_class.read_string
+          UiaDll::class_name(search_information)
         end
 
         alias_method :exists?, :exist?

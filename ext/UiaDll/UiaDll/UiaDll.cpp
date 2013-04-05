@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "AutomationClicker.h"
 #include "AutomationControl.h"
+#include "AutomationFinder.h"
 #include "ExpandCollapseHelper.h"
 #include "StringHelper.h"
 #include "ToggleStateHelper.h"
@@ -59,8 +60,30 @@ extern "C" {
 			auto control = gcnew AutomationControl(findInformation);
 			StringHelper::CopyToUnmanagedString(control->Name, name, nameLength);
 		} catch(Exception^ e) {
-      Console::WriteLine("ControlType:  {0}", e->Message);
+      Console::WriteLine("Name:  {0}", e->Message);
 		}
+  }
+
+  __declspec ( dllexport ) void ClassName(const FindInformation& findInformation, char* className, const int classNameLength) {
+		try {
+			auto control = gcnew AutomationControl(findInformation);
+			StringHelper::CopyToUnmanagedString(control->ClassName, className, classNameLength);
+		} catch(Exception^ e) {
+      Console::WriteLine("ClassName:  {0}", e->Message);
+		}
+  }
+
+  __declspec ( dllexport ) int GetClassNames(const FindInformation& findInformation, const char* classNames[]) {
+    auto control = gcnew AutomationControl(findInformation);
+    auto finder = gcnew AutomationFinder(control->Element);
+
+    auto allChildren = finder->Find();
+
+    if( NULL != classNames ) {
+      StringHelper::CopyClassNames(allChildren, classNames);
+    }
+
+    return allChildren->Count;
   }
 
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
@@ -294,29 +317,6 @@ extern "C" {
 			return true;
 		} catch(Exception^ e) {
 			return false;
-		}
-	}
-
-	__declspec ( dllexport ) int RA_GetClassName(IUIAutomationElement *pElement, char *pClass) {
-		BSTR bstrClass ;
-		HRESULT hr = pElement->get_CurrentClassName(&bstrClass) ;
-
-		if (FAILED(hr)) {
-			printf("RA_GetName: get_CurrentClassName failed 0x%x\r\n", hr) ;
-			return -1 ;
-		}
-
-		char *pszClass = _com_util::ConvertBSTRToString(bstrClass) ;
-
-		if (pszClass != NULL){
-			if (pClass == NULL) {
-				return strlen(pszClass) ;
-			} else {
-				strcpy(pClass, pszClass) ;
-				return strlen(pszClass) ;
-			}
-		} else {
-			return -1;
 		}
 	}
 
