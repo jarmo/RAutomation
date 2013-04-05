@@ -7,7 +7,7 @@ module RAutomation
         include Locators
 
         def count
-          UiaDll::find_children(uia_element, nil)
+          UiaDll::select_list_count search_information
         end
 
         def items
@@ -45,13 +45,7 @@ module RAutomation
         end
 
         def select(index)
-          children = FFI::MemoryPointer.new :pointer, self.count
-
-          length = UiaDll::find_children(uia_element, children)
-
-          target_element = children.read_array_of_pointer(length)[index]
-
-          UiaDll::select(target_element)
+          UiaDll::select_list_select_index search_information, index
         end
 
         def list_boundary

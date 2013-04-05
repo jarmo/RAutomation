@@ -153,15 +153,15 @@ module RAutomation
 
         # Select List methods
         attach_function :select_list_count, :SelectList_Count,
-                        [:long], :int
+                        [SearchCriteria.by_ref], :int
         attach_function :select_list_selected_index, :SelectList_SelectedIndex,
                         [:long], :int
         attach_function :select_list_value_at, :SelectList_ValueAt,
                         [:long, :int, :pointer, :int], :bool
         attach_function :select_list_select_index, :SelectList_SelectIndex,
-                        [:long, :int], :bool
+                        [SearchCriteria.by_ref, :int], :bool
         attach_function :select_list_select_value, :SelectList_SelectValue,
-                        [:pointer, :pointer], :int
+                        [SearchCriteria.by_ref, :pointer], :int
 
         # Menu methods
         attach_function :select_menu_item, :Menu_SelectPath,
