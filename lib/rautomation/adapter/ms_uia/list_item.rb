@@ -31,7 +31,7 @@ module RAutomation
         end
 
         def selected?
-          UiaDll::get_is_selected(uia_element)
+          UiaDll::is_selected(search_information)
         end
 
         alias_method :exists?, :exist?

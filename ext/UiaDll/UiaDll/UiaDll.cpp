@@ -7,6 +7,7 @@
 #include "AutomationFinder.h"
 #include "ExpandCollapseHelper.h"
 #include "StringHelper.h"
+#include "SelectionItem.h"
 #include "Toggle.h"
 
 IUIAutomation* getGlobalIUIAutomation() ;
@@ -330,24 +331,15 @@ extern "C" {
     }
   }
 
-	__declspec ( dllexport ) BOOL RA_GetIsSelected(IUIAutomationElement *pElement) {
-		ISelectionItemProvider *pSelectionPattern ;
-		HRESULT hr = pElement->GetCurrentPattern(UIA_SelectionItemPatternId, (IUnknown**)&pSelectionPattern) ;
-
-		if (FAILED(hr)) {
-			printf("RA_GetIsSelected: getCurrentPattern failed 0x%x\r\n") ;
-			return FALSE ;
-		}
-
-		BOOL RetVal ;
-		hr = pSelectionPattern->get_IsSelected(&RetVal) ;
-		if (FAILED(hr)) {
-			printf("RA_GetIsSelected: get_IsSelected failed 0x%x\r\n", hr) ;
-			return FALSE ;
-		} else {
-			return RetVal ;
-		}
-	}
+  __declspec ( dllexport ) bool IsSelected(const FindInformation& findInformation) {
+    try {
+      auto selectionItem = gcnew SelectionItem(findInformation);
+      return selectionItem->IsSelected;
+    } catch(Exception^ e) {
+      Debug::WriteLine("IsSelected:  {0}", e->Message);
+      return false;
+    }
+  }
 
 	__declspec ( dllexport ) int RA_Select(IUIAutomationElement *pElement) {
 		ISelectionItemProvider *pSelectionPattern ;

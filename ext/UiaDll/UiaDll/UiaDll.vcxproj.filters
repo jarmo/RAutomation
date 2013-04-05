@@ -93,6 +93,9 @@
     <ClInclude Include="Toggle.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
+    <ClInclude Include="SelectionItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UiaDll.cpp">
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="Toggle.cpp">
       <Filter>Source Files\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionItem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -88,6 +88,7 @@
     <ClInclude Include="globals.h" />
     <ClInclude Include="MenuItemSelector.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SelectionItem.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="targetver.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="AutomationFinder.cpp" />
     <ClCompile Include="ControlMethods.cpp" />
     <ClCompile Include="MenuMethods.cpp" />
+    <ClCompile Include="SelectionItem.cpp" />
     <ClCompile Include="SelectListMethods.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ExpandCollapseHelper.cpp" />
