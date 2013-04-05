@@ -8,5 +8,6 @@ public:
 	static char* UnmanagedStringFrom(String^ source);
 	static void FreeUp(const char* unmanagedStrings[], const int numberOfStrings);
 	static void CopyNames(AutomationElementCollection^ automationElements, const char* unmanagedStrings[]);
+	static void CopyClassNames(AutomationElementCollection^ automationElements, const char* unmanagedStrings[]);
 };
 

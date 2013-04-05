@@ -53,15 +53,8 @@ module RAutomation
 
         # @see RAutomation::Window#class_names
         def class_names
-          root_element = UiaDll::element_from_handle(hwnd)
-
-          root_class = FFI::MemoryPointer.new :char, UiaDll::get_class_name(root_element, nil) + 1
-          UiaDll::get_class_name(root_element, root_class)
-
-          classes = gather_children_classes(root_element)
-          classes = classes.flatten
-          classes.delete("")
-          classes.sort
+          classes = UiaDll::children_class_names(UiaDll::SearchCriteria.from_locator(hwnd, :hwnd => hwnd))
+          classes.delete_if(&:empty?).sort
         end
 
         # @see RAutomation::Window#activate

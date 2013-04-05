@@ -30,3 +30,11 @@ void StringHelper::CopyNames(AutomationElementCollection^ automationElements, co
 		unmanagedStrings[whichItem++] = UnmanagedStringFrom(automationElement->Current.Name);
 	}
 }
+
+void StringHelper::CopyClassNames(AutomationElementCollection^ automationElements, const char* unmanagedStrings[])
+{
+	auto whichItem = 0;
+	for each(AutomationElement^ automationElement in automationElements) {
+		unmanagedStrings[whichItem++] = UnmanagedStringFrom(automationElement->Current.ClassName);
+	}
+}
