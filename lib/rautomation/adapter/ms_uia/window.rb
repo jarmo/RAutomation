@@ -186,10 +186,6 @@ module RAutomation
           UiaDll::find_children(element, nil)
         end
 
-        def get_focused_element
-          UiaDll::get_focused_element()
-        end
-
         def bounding_rectangle
           window = UiaDll::element_from_handle(hwnd)
 
