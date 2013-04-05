@@ -148,6 +148,9 @@ module RAutomation
         # Toggle methods
         attach_function :is_set, :IsSet, [SearchCriteria.by_ref], :bool
 
+        # Selection Item methods
+        attach_function :is_selected, :IsSelected, [SearchCriteria.by_ref], :bool
+
         # Select List methods
         attach_function :select_list_count, :SelectList_Count,
                         [:long], :int
@@ -247,8 +250,6 @@ module RAutomation
                         [:pointer, :pointer], :int
         attach_function :get_control_name, :RA_GetControlName,
                         [:long, :pointer, :int], :bool
-        attach_function :get_is_selected, :RA_GetIsSelected,
-                        [:pointer], :bool
         attach_function :select, :RA_Select,
                         [:pointer], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
