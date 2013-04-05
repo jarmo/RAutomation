@@ -138,7 +138,7 @@ module RAutomation
         end
 
         def new_pid
-          UiaDll::current_process_id(uia_element)
+          UiaDll::process_id(search_information)
         end
 
         def control_name

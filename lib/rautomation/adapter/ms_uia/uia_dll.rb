@@ -103,7 +103,8 @@ module RAutomation
 
         # Generic Control methods
         attach_function :ElementExists, [SearchCriteria.by_ref], :bool
-        attach_function :Control_GetValue, [:long, :pointer, :int], :void  
+        attach_function :process_id, :ProcessId, [SearchCriteria.by_ref], :int
+        attach_function :Control_GetValue, [:long, :pointer, :int], :void
         attach_function :set_control_value, :Control_SetValue, [:long, :string], :void
         attach_function :BoundingRectangle, [SearchCriteria.by_ref, :pointer], :int
         attach_function :current_control_type, :ControlType, [SearchCriteria.by_ref], :int
@@ -232,8 +233,6 @@ module RAutomation
         attach_function :get_is_set, :RA_GetIsSet,
                         [:pointer], :bool
         attach_function :select, :RA_Select,
-                        [:pointer], :int
-        attach_function :current_process_id, :RA_GetCurrentProcessId,
                         [:pointer], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [:long, :string], :void

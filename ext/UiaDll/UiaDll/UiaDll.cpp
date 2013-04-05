@@ -44,6 +44,16 @@ extern "C" {
     }
 	}
 
+  __declspec ( dllexport ) int ProcessId(const FindInformation& findInformation) {
+    try {
+      auto automationElement = gcnew AutomationControl(findInformation);
+      return automationElement->ProcessId;
+    } catch(Exception^ e) {
+      Console::WriteLine("ControlType:  {0}", e->Message);
+      return 0;
+    }
+  }
+
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
 		IUIAutomationElement *pRootElement ;
 
@@ -176,21 +186,6 @@ extern "C" {
 
 		pElement->get_CurrentNativeWindowHandle(&uia_hwnd) ;
 		return (HWND)uia_hwnd ;
-	}
-
-	__declspec ( dllexport ) int RA_GetCurrentProcessId(IUIAutomationElement *pElement) {
-		HRESULT hr;
-		int process_id;
-
-		hr = pElement->get_CurrentProcessId(&process_id);
-
-		if  (SUCCEEDED(hr)){
-			return process_id;
-		}
-		else {
-			printf("RA_GetCurrentProcessId: get_CurrentProcessId returned 0x%x\r\n", hr) ;
-			return 0 ;
-		}
 	}
 
 	__declspec ( dllexport ) BOOL RA_SetFocus(IUIAutomationElement *pElement) {
