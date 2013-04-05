@@ -145,6 +145,9 @@ module RAutomation
           strings_from :GetClassNames, search_information
         end
 
+        # Toggle methods
+        attach_function :is_set, :IsSet, [SearchCriteria.by_ref], :bool
+
         # Select List methods
         attach_function :select_list_count, :SelectList_Count,
                         [:long], :int
@@ -245,8 +248,6 @@ module RAutomation
         attach_function :get_control_name, :RA_GetControlName,
                         [:long, :pointer, :int], :bool
         attach_function :get_is_selected, :RA_GetIsSelected,
-                        [:pointer], :bool
-        attach_function :get_is_set, :RA_GetIsSet,
                         [:pointer], :bool
         attach_function :select, :RA_Select,
                         [:pointer], :int
