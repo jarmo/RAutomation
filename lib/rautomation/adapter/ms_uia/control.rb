@@ -142,11 +142,7 @@ module RAutomation
         end
 
         def control_name
-          uia_control = uia_element
-          element_name = FFI::MemoryPointer.new :char, UiaDll::get_name(uia_control, nil) + 1
-
-          UiaDll::get_name(uia_control, element_name)
-          element_name.read_string
+          UiaDll::name(search_information)
         end
 
         def control_class
