@@ -108,6 +108,7 @@ module RAutomation
         attach_function :set_control_value, :Control_SetValue, [:long, :string], :void
         attach_function :BoundingRectangle, [SearchCriteria.by_ref, :pointer], :int
         attach_function :current_control_type, :ControlType, [SearchCriteria.by_ref], :int
+        attach_function :Name, [SearchCriteria.by_ref, :pointer, :int], :void
 
         def self.exists?(parent, locator)
           ElementExists SearchCriteria.from_locator(parent, locator)
@@ -123,6 +124,12 @@ module RAutomation
           string = FFI::MemoryPointer.new :char, 1024
           Control_GetValue hwnd, string, 1024
           string.read_string
+        end
+
+        def self.name(search_information)
+          name = FFI::MemoryPointer.new :char, 1024
+          Name search_information, name, 1024
+          name.read_string
         end
 
         # Select List methods
@@ -221,8 +228,6 @@ module RAutomation
         attach_function :is_offscreen, :RA_CurrentIsOffscreen,
                         [:pointer, :pointer], :int
         attach_function :find_children, :RA_FindChildren,
-                        [:pointer, :pointer], :int
-        attach_function :get_name, :RA_GetName,
                         [:pointer, :pointer], :int
         attach_function :get_control_name, :RA_GetControlName,
                         [:long, :pointer, :int], :bool

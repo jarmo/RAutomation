@@ -49,9 +49,18 @@ extern "C" {
       auto automationElement = gcnew AutomationControl(findInformation);
       return automationElement->ProcessId;
     } catch(Exception^ e) {
-      Console::WriteLine("ControlType:  {0}", e->Message);
+      Console::WriteLine("ProcessId:  {0}", e->Message);
       return 0;
     }
+  }
+
+  __declspec ( dllexport ) void Name(const FindInformation& findInformation, char* name, const int nameLength) {
+		try {
+			auto control = gcnew AutomationControl(findInformation);
+			StringHelper::CopyToUnmanagedString(control->Name, name, nameLength);
+		} catch(Exception^ e) {
+      Console::WriteLine("ControlType:  {0}", e->Message);
+		}
   }
 
 	__declspec( dllexport ) IUIAutomationElement *RA_FindWindow(char *pszAutomationId) {
@@ -276,29 +285,6 @@ extern "C" {
 		}
 
 		return element_count ;
-	}
-
-	__declspec ( dllexport ) int RA_GetName(IUIAutomationElement *pElement, char *pName) {
-		BSTR bstrName ;
-		HRESULT hr = pElement->get_CurrentName(&bstrName) ;
-
-		if (FAILED(hr)) {
-			printf("RA_GetName: get_CurrentName failed 0x%x\r\n", hr) ;
-			return -1 ;
-		}
-
-		char *pszName = _com_util::ConvertBSTRToString(bstrName) ;
-
-		if (pszName != NULL){
-			if (pName == NULL) {
-				return strlen(pszName) ;
-			} else {
-				strcpy(pName, pszName) ;
-				return strlen(pszName) ;
-			}
-		} else {
-			return -1;
-		}
 	}
 
 	__declspec ( dllexport ) bool RA_GetControlName(const HWND windowHandle, char* windowName, const int windowNameLength) {

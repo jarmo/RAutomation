@@ -26,13 +26,6 @@ module RAutomation
           end
         end
 
-        def value
-          list_item = uia_element
-          item_value = FFI::MemoryPointer.new :char, UiaDll::get_name(list_item, nil) + 1
-          UiaDll::get_name(list_item, item_value)
-          item_value.read_string
-        end
-
         def exist?
           super && matches_type?(Constants::UIA_LIST_ITEM_CONTROL_TYPE)
         end
@@ -42,6 +35,7 @@ module RAutomation
         end
 
         alias_method :exists?, :exist?
+        alias_method :value, :control_name
 
       end
     end
