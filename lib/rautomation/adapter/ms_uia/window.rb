@@ -186,29 +186,6 @@ module RAutomation
           UiaDll::find_children(element, nil)
         end
 
-        def gather_children_classes(root_element)
-          element_tree = []
-
-          child_count = count_children(root_element)
-          children = FFI::MemoryPointer.new :pointer, child_count
-          UiaDll::find_children(root_element, children)
-
-          children.read_array_of_pointer(child_count).each do |child|
-            child_name = FFI::MemoryPointer.new :char, UiaDll::get_class_name(child, nil) + 1
-            UiaDll::get_class_name(child, child_name)
-
-            grandchild_count = count_children(child)
-
-            if grandchild_count > 0
-              element_tree << [child_name.read_string, gather_children_classes(child)]
-            else
-              element_tree << child_name.read_string
-            end
-          end
-
-          element_tree
-        end
-
         def get_focused_element
           UiaDll::get_focused_element()
         end
