@@ -22,6 +22,10 @@ public:
     System::Windows::Automation::ControlType^ get() { return _control->Current.ControlType; }
   }
 
+  property int ProcessId {
+    int get() { return _control->Current.ProcessId; }
+  }
+
 	property String^ Value {
 		String^ get();
 		void set(String^ value);
