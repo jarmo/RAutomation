@@ -13,6 +13,10 @@ public:
 	bool SelectByValue(const char* whichItem);
 	bool GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize);
 
+  property array<String^>^ Selection {
+    array<String^>^ get();
+  }
+
 	property int Count {
 		int get() { return SelectionItems->Count; }
 	}
@@ -23,6 +27,12 @@ public:
 
 private:
 	void Select(AutomationElement^ itemToSelect);
+
+	property SelectionPattern^ AsSelectionPattern {
+		SelectionPattern^ get() {
+			return dynamic_cast<SelectionPattern^>(_control->GetCurrentPattern(SelectionPattern::Pattern));
+		}
+	}
 
 	property AutomationElementCollection^ SelectionItems {
 	  AutomationElementCollection^ get() { return _control->FindAll(System::Windows::Automation::TreeScope::Subtree, SelectionCondition); }

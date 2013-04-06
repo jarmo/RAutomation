@@ -113,32 +113,26 @@ module RAutomation
         attach_function :GetClassNames,
                         [SearchCriteria.by_ref, :pointer], :int
 
-        def self.exists?(parent, locator)
-          ElementExists SearchCriteria.from_locator(parent, locator)
+        def self.exists?(search_information)
+          ElementExists search_information
         end
 
-        def self.bounding_rectangle(parent, locator)
+        def self.bounding_rectangle(search_information)
           boundary = FFI::MemoryPointer.new :long, 4
-          BoundingRectangle SearchCriteria.from_locator(parent, locator), boundary
+          BoundingRectangle search_information, boundary
           boundary.read_array_of_long(4)
         end
 
         def self.get_control_value(hwnd)
-          string = FFI::MemoryPointer.new :char, 1024
-          Control_GetValue hwnd, string, 1024
-          string.read_string
+          string_from(:Control_GetValue, hwnd)
         end
 
         def self.name(search_information)
-          name = FFI::MemoryPointer.new :char, 1024
-          Name search_information, name, 1024
-          name.read_string
+          string_from(:Name, search_information)
         end
 
         def self.class_name(search_information)
-          class_name = FFI::MemoryPointer.new :char, 1024
-          ClassName search_information, class_name, 1024
-          class_name.read_string
+          string_from(:ClassName, search_information)
         end
 
         def self.children_class_names(search_information)
@@ -152,6 +146,8 @@ module RAutomation
         attach_function :is_selected, :IsSelected, [SearchCriteria.by_ref], :bool
 
         # Select List methods
+        attach_function :SelectList_Selection,
+                        [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :select_list_count, :SelectList_Count,
                         [SearchCriteria.by_ref], :int
         attach_function :select_list_selected_index, :SelectList_SelectedIndex,
@@ -162,6 +158,10 @@ module RAutomation
                         [SearchCriteria.by_ref, :int], :bool
         attach_function :select_list_select_value, :SelectList_SelectValue,
                         [SearchCriteria.by_ref, :pointer], :int
+
+        def self.selection(search_information)
+          string_from(:SelectList_Selection, search_information)
+        end
 
         # Menu methods
         attach_function :select_menu_item, :Menu_SelectPath,
@@ -199,9 +199,7 @@ module RAutomation
         end
 
         def self.table_value_at(hwnd, row, column=0)
-          string = FFI::MemoryPointer.new :char, 1024
-          Table_ValueAt hwnd, row, column, string, 1024
-          string.read_string
+          string_from(:Table_ValueAt, hwnd, row, column)
         end
 
         def self.table_coordinate_valid?(hwnd, row, column=0)
@@ -216,8 +214,8 @@ module RAutomation
           strings_from :Table_GetValues, hwnd
         end
 
-        def self.find_table_values(parent, locator)
-          strings_from :Table_FindValues, SearchCriteria.from_locator(parent, locator)
+        def self.find_table_values(search_information)
+          strings_from :Table_FindValues, search_information
         end
 
         # String methods
@@ -267,6 +265,12 @@ module RAutomation
           strings = pointer.get_array_of_string 0, string_count
           clean_up_strings pointer, string_count
           strings
+        end
+
+        def self.string_from(method, *args)
+          pointer = FFI::MemoryPointer.new :pointer, 1024
+          send method, *(args << pointer << 1024)
+          pointer.read_string
         end
       end
     end

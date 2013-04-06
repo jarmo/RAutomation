@@ -13,6 +13,13 @@ extern "C" {
 		return autoSelectList->SelectedIndex;
 	}
 
+  __declspec ( dllexport ) void SelectList_Selection(const FindInformation& findInformation, char* selection, const int selectionLength) {
+    auto selectList = gcnew AutomatedSelectList(findInformation);
+    auto currentSelections = selectList->Selection;
+    auto firstSelection = currentSelections.Length == 0 ? "" : currentSelections[0];
+    StringHelper::CopyToUnmanagedString(firstSelection, selection, selectionLength);
+  }
+
 	__declspec ( dllexport ) bool SelectList_ValueAt(const HWND windowHandle, const int whichItem, char* comboValue, const int comboValueSize) {
 		auto autoSelectList = gcnew AutomatedSelectList(windowHandle);
 		return autoSelectList->GetValueByIndex(whichItem, comboValue, comboValueSize);

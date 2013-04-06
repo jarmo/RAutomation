@@ -11,7 +11,7 @@ module RAutomation
         end
 
         def items
-          UiaDll::find_table_values(@window.hwnd, @locators).map do |list_item|
+          UiaDll::find_table_values(search_information).map do |list_item|
             @window.list_item(:value => list_item)
           end
         end
@@ -21,13 +21,7 @@ module RAutomation
         end
 
         def value
-          count.times do |index|
-            if selected?(index)
-              return strings[index]
-            end
-          end
-
-          ""
+          UiaDll::selection search_information
         end
 
         def exist?

@@ -7,6 +7,16 @@ AutomatedSelectList::AutomatedSelectList(const HWND windowHandle) : AutomationCo
 AutomatedSelectList::AutomatedSelectList(const FindInformation& findInformation) : AutomationControl(findInformation)
 { }
 
+array<String^>^ AutomatedSelectList::Selection::get() {
+  auto selectedElements = AsSelectionPattern->Current.GetSelection();
+  auto selections = gcnew array<String^>(selectedElements.Length);
+  auto whichOne = 0;
+  for each(auto element in selectedElements) {
+    selections[whichOne++] = element->Current.Name;
+  }
+  return selections;
+}
+
 bool AutomatedSelectList::SelectByIndex(const int whichItem)
 {
 	try {
