@@ -21,13 +21,7 @@ module RAutomation
         end
 
         def value
-          count.times do |index|
-            if selected?(index)
-              return strings[index]
-            end
-          end
-
-          ""
+          UiaDll::selection search_information
         end
 
         def exist?

@@ -152,6 +152,8 @@ module RAutomation
         attach_function :is_selected, :IsSelected, [SearchCriteria.by_ref], :bool
 
         # Select List methods
+        attach_function :SelectList_Selection,
+                        [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :select_list_count, :SelectList_Count,
                         [SearchCriteria.by_ref], :int
         attach_function :select_list_selected_index, :SelectList_SelectedIndex,
@@ -162,6 +164,12 @@ module RAutomation
                         [SearchCriteria.by_ref, :int], :bool
         attach_function :select_list_select_value, :SelectList_SelectValue,
                         [SearchCriteria.by_ref, :pointer], :int
+
+        def self.selection(search_information)
+          selection_value = FFI::MemoryPointer.new 1024
+          SelectList_Selection search_information, selection_value, 1024
+          selection_value.read_string
+        end
 
         # Menu methods
         attach_function :select_menu_item, :Menu_SelectPath,
