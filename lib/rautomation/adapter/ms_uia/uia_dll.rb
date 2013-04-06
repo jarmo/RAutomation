@@ -124,21 +124,15 @@ module RAutomation
         end
 
         def self.get_control_value(hwnd)
-          string = FFI::MemoryPointer.new :char, 1024
-          Control_GetValue hwnd, string, 1024
-          string.read_string
+          string_from(:Control_GetValue, hwnd)
         end
 
         def self.name(search_information)
-          name = FFI::MemoryPointer.new :char, 1024
-          Name search_information, name, 1024
-          name.read_string
+          string_from(:Name, search_information)
         end
 
         def self.class_name(search_information)
-          class_name = FFI::MemoryPointer.new :char, 1024
-          ClassName search_information, class_name, 1024
-          class_name.read_string
+          string_from(:ClassName, search_information)
         end
 
         def self.children_class_names(search_information)
@@ -166,9 +160,7 @@ module RAutomation
                         [SearchCriteria.by_ref, :pointer], :int
 
         def self.selection(search_information)
-          selection_value = FFI::MemoryPointer.new 1024
-          SelectList_Selection search_information, selection_value, 1024
-          selection_value.read_string
+          string_from(:SelectList_Selection, search_information)
         end
 
         # Menu methods
@@ -207,9 +199,7 @@ module RAutomation
         end
 
         def self.table_value_at(hwnd, row, column=0)
-          string = FFI::MemoryPointer.new :char, 1024
-          Table_ValueAt hwnd, row, column, string, 1024
-          string.read_string
+          string_from(:Table_ValueAt, hwnd, row, column)
         end
 
         def self.table_coordinate_valid?(hwnd, row, column=0)
@@ -275,6 +265,12 @@ module RAutomation
           strings = pointer.get_array_of_string 0, string_count
           clean_up_strings pointer, string_count
           strings
+        end
+
+        def self.string_from(method, *args)
+          pointer = FFI::MemoryPointer.new :pointer, 1024
+          send method, *(args << pointer << 1024)
+          pointer.read_string
         end
       end
     end
