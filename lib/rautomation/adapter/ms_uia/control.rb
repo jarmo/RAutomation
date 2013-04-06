@@ -50,7 +50,7 @@ module RAutomation
 
         def exist?
           begin
-            UiaDll::exists?(@window.hwnd, @locators) || !!hwnd
+            UiaDll::exists?(search_information) || !!hwnd
           rescue UnknownElementException
             false
           end
@@ -77,7 +77,7 @@ module RAutomation
         end
 
         def bounding_rectangle
-          UiaDll::bounding_rectangle(@window.hwnd, @locators)
+          UiaDll::bounding_rectangle(search_information)
         end
 
         def visible?

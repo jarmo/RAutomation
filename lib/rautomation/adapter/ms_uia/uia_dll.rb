@@ -113,13 +113,13 @@ module RAutomation
         attach_function :GetClassNames,
                         [SearchCriteria.by_ref, :pointer], :int
 
-        def self.exists?(parent, locator)
-          ElementExists SearchCriteria.from_locator(parent, locator)
+        def self.exists?(search_information)
+          ElementExists search_information
         end
 
-        def self.bounding_rectangle(parent, locator)
+        def self.bounding_rectangle(search_information)
           boundary = FFI::MemoryPointer.new :long, 4
-          BoundingRectangle SearchCriteria.from_locator(parent, locator), boundary
+          BoundingRectangle search_information, boundary
           boundary.read_array_of_long(4)
         end
 
@@ -214,8 +214,8 @@ module RAutomation
           strings_from :Table_GetValues, hwnd
         end
 
-        def self.find_table_values(parent, locator)
-          strings_from :Table_FindValues, SearchCriteria.from_locator(parent, locator)
+        def self.find_table_values(search_information)
+          strings_from :Table_FindValues, search_information
         end
 
         # String methods
