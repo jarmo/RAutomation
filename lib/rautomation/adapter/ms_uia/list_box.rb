@@ -17,7 +17,7 @@ module RAutomation
         end
 
         def strings
-          items.collect { |item| item.value}
+          UiaDll::find_table_values(search_information)
         end
 
         def value
@@ -31,11 +31,8 @@ module RAutomation
         alias_method :exists?, :exist?
 
         def selected?(index)
-          if items[index]
-            return items[index].selected?
-          end
-
-          false
+          item = items[index]
+          return item && item.selected?
         end
 
         def select(index)
