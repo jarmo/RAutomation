@@ -171,47 +171,47 @@ module RAutomation
 
         # Table methods
         attach_function :Table_GetHeaders,
-                        [:long, :pointer], :int
+                        [SearchCriteria.by_ref, :pointer], :int
         attach_function :Table_GetValues,
-                        [:long, :pointer], :int
+                        [SearchCriteria.by_ref, :pointer], :int
         attach_function :Table_FindValues,
                         [SearchCriteria.by_ref, :pointer], :int
         attach_function :table_row_count, :Table_RowCount,
-                        [:long], :int
+                        [SearchCriteria.by_ref], :int
         attach_function :Table_CoordinateIsValid,
-                        [:long, :int, :int], :bool
+                        [SearchCriteria.by_ref, :int, :int], :bool
         attach_function :Table_ValueAt,
-                        [:long, :int, :int, :pointer, :int], :void
+                        [SearchCriteria.by_ref, :int, :int, :pointer, :int], :void
         attach_function :Table_SelectByIndex,
-                        [:long, :int], :void
+                        [SearchCriteria.by_ref, :int], :void
         attach_function :Table_SelectByValue,
-                        [:long, :string], :void
+                        [SearchCriteria.by_ref, :string], :void
         attach_function :table_row_is_selected, :Table_IsSelectedByIndex,
-                        [:long, :int], :bool
+                        [SearchCriteria.by_ref, :int], :bool
 
-        def self.table_select(hwnd, which_item)
+        def self.table_select(search_information, which_item)
           case which_item
             when Integer
-              Table_SelectByIndex hwnd, which_item
+              Table_SelectByIndex search_information, which_item
             when String
-              Table_SelectByValue hwnd, which_item
+              Table_SelectByValue search_information, which_item
           end
         end
 
-        def self.table_value_at(hwnd, row, column=0)
-          string_from(:Table_ValueAt, hwnd, row, column)
+        def self.table_value_at(search_information, row, column=0)
+          string_from(:Table_ValueAt, search_information, row, column)
         end
 
-        def self.table_coordinate_valid?(hwnd, row, column=0)
-          Table_CoordinateIsValid hwnd, row, column
+        def self.table_coordinate_valid?(search_information, row, column=0)
+          Table_CoordinateIsValid search_information, row, column
         end
 
-        def self.table_headers(hwnd)
-          strings_from :Table_GetHeaders, hwnd
+        def self.table_headers(search_information)
+          strings_from :Table_GetHeaders, search_information
         end
 
-        def self.table_values(hwnd)
-          strings_from :Table_GetValues, hwnd
+        def self.table_values(search_information)
+          strings_from :Table_GetValues, search_information
         end
 
         def self.find_table_values(search_information)

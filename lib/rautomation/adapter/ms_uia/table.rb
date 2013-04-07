@@ -3,21 +3,21 @@ module RAutomation
     module MsUia
       class Cell
         include Locators
-        attr_reader :row, :column, :hwnd
+        attr_reader :row, :column, :search_information
 
         def initialize(window, locators)
-          @hwnd = window.hwnd
+          @search_information = window.search_information
           @locators = extract(locators)
           @row = window.row
           @column = @locators[:index] || 0
         end
 
         def exists?
-          UiaDll::table_coordinate_valid? hwnd, row, column
+          UiaDll::table_coordinate_valid? search_information, row, column
         end
 
         def value
-          UiaDll::table_value_at hwnd, row, column
+          UiaDll::table_value_at search_information, row, column
         end
 
         alias_method :text, :value
@@ -27,7 +27,7 @@ module RAutomation
       class Row
         include Locators
         extend ElementCollections
-        attr_reader :hwnd
+        attr_reader :search_information
 
         has_many :cells
 
@@ -42,7 +42,7 @@ module RAutomation
         end
 
         def initialize(window, locators)
-          @hwnd = window.hwnd
+          @search_information = window.search_information
           @locators = extract(locators)
         end
 
@@ -51,11 +51,11 @@ module RAutomation
         end
 
         def value
-          UiaDll::table_value_at @hwnd, @locators[:index]
+          UiaDll::table_value_at search_information, @locators[:index]
         end
 
         def exists?
-          UiaDll::table_coordinate_valid?(@hwnd, @locators[:index])
+          UiaDll::table_coordinate_valid?(search_information, @locators[:index])
         end
 
         def self.locators_match?(locators, item)
@@ -87,8 +87,8 @@ module RAutomation
         end
 
         def strings
-          headers = UiaDll.table_headers(hwnd)
-          values = UiaDll.table_values(hwnd)
+          headers = UiaDll.table_headers(search_information)
+          values = UiaDll.table_values(search_information)
           return values if headers.empty?
 
           all_strings = [] << headers
@@ -97,15 +97,15 @@ module RAutomation
         end
 
         def select(which_item)
-          UiaDll::table_select hwnd, which_item
+          UiaDll::table_select search_information, which_item
         end
 
         def selected?(which_item)
-          UiaDll::table_row_is_selected hwnd, which_item
+          UiaDll::table_row_is_selected search_information, which_item
         end
 
         def row_count
-          UiaDll::table_row_count hwnd
+          UiaDll::table_row_count search_information
         end
 
         def exist?
@@ -117,13 +117,6 @@ module RAutomation
         end
 
         alias_method :exists?, :exist?
-
-        private
-
-        def count_children(element)
-          UiaDll::find_children(element, nil)
-        end
-
       end
     end
   end
