@@ -1,3 +1,20 @@
+== 0.9.0 / 2013-04-22
+
+=== MsUia adapter
+
+  * Add support for :name locator.
+  * Add support for Window#value_control.
+  * Add Table#headers.
+  * Add Table#values.
+  * Control#exists? uses now uia code.
+  * ControlType.Document is also considered as a TextField.
+  * Table#select and Table#selected? use 0-based indexing.
+  * Table#select supports value too. 
+
+=== Win32 adapter
+
+  * Add support for "[", "]" and "'" characters when using Window#send_keys. Fixes #61.
+
 == 0.8.0 / 2012-12-26
 
 === MsUia adapter
