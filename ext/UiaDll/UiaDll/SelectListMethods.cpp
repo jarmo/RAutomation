@@ -8,8 +8,8 @@ extern "C" {
 		return autoSelectList->Count;
 	}
 
-	__declspec ( dllexport ) int SelectList_SelectedIndex(const HWND windowHandle) {
-		auto autoSelectList = gcnew AutomatedSelectList(windowHandle);
+	__declspec ( dllexport ) int SelectList_SelectedIndex(const FindInformation& findInformation) {
+		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
 		return autoSelectList->SelectedIndex;
 	}
 
@@ -20,8 +20,8 @@ extern "C" {
     StringHelper::CopyToUnmanagedString(firstSelection, selection, selectionLength);
   }
 
-	__declspec ( dllexport ) bool SelectList_ValueAt(const HWND windowHandle, const int whichItem, char* comboValue, const int comboValueSize) {
-		auto autoSelectList = gcnew AutomatedSelectList(windowHandle);
+	__declspec ( dllexport ) bool SelectList_ValueAt(const FindInformation& findInformation, const int whichItem, char* comboValue, const int comboValueSize) {
+		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
 		return autoSelectList->GetValueByIndex(whichItem, comboValue, comboValueSize);
 	}
 

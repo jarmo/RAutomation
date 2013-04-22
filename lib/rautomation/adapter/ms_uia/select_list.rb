@@ -7,7 +7,7 @@ module RAutomation
         include Locators
 
         class SelectListOption
-          attr_accessor :text, :index, :control_hwnd
+          attr_accessor :text, :index
 
           def initialize(select_list, text, index)
             @select_list = select_list
@@ -16,7 +16,7 @@ module RAutomation
           end
 
           def selected?
-            @index == UiaDll::select_list_selected_index(@select_list.control_hwnd)
+            @index == UiaDll::select_list_selected_index(@select_list.search_information)
           end
 
           def select
@@ -40,7 +40,7 @@ module RAutomation
           items = []
 
           item_count.times do |item_no|
-            item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
+            item = Functions.retrieve_combobox_item_text(search_information, item_no)
 
             if options[:text]
               items.push(SelectListOption.new(self, item, item_no)) if options[:text] == item
@@ -59,7 +59,7 @@ module RAutomation
 
         def option(options)
           item_count.times do |item_no|
-            item = Functions.retrieve_combobox_item_text(@hwnd, item_no)
+            item = Functions.retrieve_combobox_item_text(search_information, item_no)
             return SelectListOption.new(self, item, item_no) if options[:text] == item
           end
 
