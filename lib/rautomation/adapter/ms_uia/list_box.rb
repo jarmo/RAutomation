@@ -39,26 +39,6 @@ module RAutomation
           UiaDll::select_list_select_index search_information, index
         end
 
-        def list_boundary
-          boundary = FFI::MemoryPointer.new :long, 4
-
-          Functions.send_message(hwnd, Constants::LB_GETITEMRECT, 0 ,boundary)
-
-          boundary.read_array_of_long(4)
-        end
-
-        def get_top_index
-          Functions.send_message(hwnd, Constants::LB_GETTOPINDEX, 0 ,nil)
-        end
-
-        def list_item_height
-          Functions.send_message(hwnd, Constants::LB_GETITEMHEIGHT, 0 ,nil)
-        end
-
-        def scroll_to_item(row)
-          Functions.send_message(hwnd, Constants::LB_SETTOPINDEX, row ,nil)
-        end
-
       end
     end
   end
