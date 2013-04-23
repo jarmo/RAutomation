@@ -27,11 +27,6 @@ module RAutomation
           alias_method :set, :select
         end
 
-        def initialize(window, locators)
-          super
-          @hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-        end
-
         def set(value)
           UiaDll::select_list_select_value(search_information, value)
         end
@@ -64,10 +59,6 @@ module RAutomation
           end
 
           nil
-        end
-
-        def control_hwnd
-          @hwnd
         end
 
         def select(index)
