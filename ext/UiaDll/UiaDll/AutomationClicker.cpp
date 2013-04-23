@@ -1,10 +1,6 @@
 #include "StdAfx.h"
 #include "AutomationClicker.h"
 
-AutomationClicker::AutomationClicker(const HWND windowHandle) {
-	_automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
-}
-
 void AutomationClicker::Click() {
 	if( CanInvoke() ) {
 		return Invoke();
@@ -18,33 +14,33 @@ void AutomationClicker::Click() {
 }
 
 void AutomationClicker::MouseClick() {
-	_automationElement->SetFocus();
-	auto clickablePoint = _automationElement->GetClickablePoint();
-	Cursor::Position = Point((int)clickablePoint.X, (int)clickablePoint.Y);
+	_control->SetFocus();
+	auto clickablePoint = _control->GetClickablePoint();
+	Cursor::Position = System::Drawing::Point((int)clickablePoint.X, (int)clickablePoint.Y);
 	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 	mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 }
 
 bool AutomationClicker::CanInvoke() {
-	return (bool)(_automationElement->GetCurrentPropertyValue(AutomationElement::IsInvokePatternAvailableProperty));
+	return (bool)(_control->GetCurrentPropertyValue(AutomationElement::IsInvokePatternAvailableProperty));
 }
 
 void AutomationClicker::Invoke() {
-	dynamic_cast<InvokePattern^>(_automationElement->GetCurrentPattern(InvokePattern::Pattern))->Invoke();
+	dynamic_cast<InvokePattern^>(_control->GetCurrentPattern(InvokePattern::Pattern))->Invoke();
 }
 
 bool AutomationClicker::CanToggle() {
-	return (bool)(_automationElement->GetCurrentPropertyValue(AutomationElement::IsTogglePatternAvailableProperty));
+	return (bool)(_control->GetCurrentPropertyValue(AutomationElement::IsTogglePatternAvailableProperty));
 }
 
 void AutomationClicker::Toggle() {
-	dynamic_cast<TogglePattern^>(_automationElement->GetCurrentPattern(TogglePattern::Pattern))->Toggle();
+	dynamic_cast<TogglePattern^>(_control->GetCurrentPattern(TogglePattern::Pattern))->Toggle();
 }
 
 bool AutomationClicker::CanSelect() {
-	return (bool)(_automationElement->GetCurrentPropertyValue(AutomationElement::IsSelectionItemPatternAvailableProperty));
+	return (bool)(_control->GetCurrentPropertyValue(AutomationElement::IsSelectionItemPatternAvailableProperty));
 }
 
 void AutomationClicker::Select() {
-	dynamic_cast<SelectionItemPattern^>(_automationElement->GetCurrentPattern(SelectionItemPattern::Pattern))->Select();
+	dynamic_cast<SelectionItemPattern^>(_control->GetCurrentPattern(SelectionItemPattern::Pattern))->Select();
 }

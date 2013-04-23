@@ -3,16 +3,17 @@ using namespace System::Windows::Automation;
 using namespace System::Windows::Forms;
 using namespace System::Drawing;
 
-ref class AutomationClicker
+#include "AutomationControl.h"
+
+ref class AutomationClicker : AutomationControl
 {
 public:
-	AutomationClicker(const HWND windowHandle);
+  AutomationClicker(const HWND windowHandle) : AutomationControl(windowHandle) {}
+  AutomationClicker(const FindInformation& findInformation) : AutomationControl(findInformation) {}
 	void Click();
 	void MouseClick();
 
 private:
-	AutomationElement^	_automationElement;
-
 	bool CanInvoke();
 	void Invoke();
 

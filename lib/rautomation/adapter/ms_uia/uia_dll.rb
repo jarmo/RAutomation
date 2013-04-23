@@ -252,10 +252,14 @@ module RAutomation
                         [SearchCriteria.by_ref, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
                         [SearchCriteria.by_ref, :int], :void
-        attach_function :control_click, :RA_Click,
-                        [:long, :pointer, :int], :void
+        attach_function :RA_Click,
+                        [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :control_mouse_click, :RA_PointAndClick,
                         [:long, :pointer, :int], :void
+
+        def self.control_click(search_information)
+          can_throw(:RA_Click, search_information)
+        end
 
         private
         def self.strings_from(method, hwnd)
@@ -271,6 +275,14 @@ module RAutomation
           pointer = FFI::MemoryPointer.new :pointer, 1024
           send method, *(args << pointer << 1024)
           pointer.read_string
+        end
+
+        def self.can_throw(method, *args)
+          string_buffer = FFI::MemoryPointer.new :char, 1024
+          send method, *(args << string_buffer << 1024)
+          error_info = string_buffer.read_string
+          raise error_info unless error_info.empty?
+          true
         end
       end
     end

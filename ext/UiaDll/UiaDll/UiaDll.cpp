@@ -292,9 +292,9 @@ extern "C" {
 		return 1;
 	}
 
-	__declspec ( dllexport ) void RA_Click(const HWND windowHandle, char* errorInfo, const int errorInfoSize) {
+	__declspec ( dllexport ) void RA_Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
 		try {
-			auto automationClicker = gcnew AutomationClicker(windowHandle);
+			auto automationClicker = gcnew AutomationClicker(findInformation);
 			automationClicker->Click();
 		} catch(Exception^ e) {
 			if( errorInfo ) {

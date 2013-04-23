@@ -40,8 +40,7 @@ module RAutomation
           wait_until do
             @window.activate
             @window.active? &&
-                Functions.set_control_focus(hwnd) &&
-                Functions.control_click(hwnd) &&
+                UiaDll::control_click(search_information) &&
                 clicked = true # is clicked at least once
 
             block_given? ? yield : clicked && !exist?
