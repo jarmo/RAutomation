@@ -8,6 +8,11 @@ extern "C" {
 		return autoSelectList->Count;
 	}
 
+  __declspec ( dllexport ) int SelectList_Options(const FindInformation& findInformation, const char* options[]) {
+    auto selectList = gcnew AutomatedSelectList(findInformation);
+    return selectList->GetOptions(options);
+  }
+
 	__declspec ( dllexport ) int SelectList_SelectedIndex(const FindInformation& findInformation) {
 		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
 		return autoSelectList->SelectedIndex;

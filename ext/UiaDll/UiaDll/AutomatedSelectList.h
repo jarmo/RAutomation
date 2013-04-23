@@ -12,6 +12,7 @@ public:
 	bool SelectByIndex(const int whichItem);
 	bool SelectByValue(const char* whichItem);
 	bool GetValueByIndex(const int whichItem, char* comboValue, const int comboValueSize);
+  int GetOptions(const char* options[]);
 
   property array<String^>^ Selection {
     array<String^>^ get();

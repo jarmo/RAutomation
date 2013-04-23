@@ -17,6 +17,16 @@ array<String^>^ AutomatedSelectList::Selection::get() {
   return selections;
 }
 
+int AutomatedSelectList::GetOptions(const char* options[]) {
+  auto selectionItems = SelectionItems;
+
+	if( NULL != options ) {
+		StringHelper::CopyNames(selectionItems, options);
+	}
+
+	return selectionItems->Count;
+}
+
 bool AutomatedSelectList::SelectByIndex(const int whichItem)
 {
 	try {

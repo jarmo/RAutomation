@@ -151,6 +151,8 @@ module RAutomation
         # Select List methods
         attach_function :SelectList_Selection,
                         [SearchCriteria.by_ref, :pointer, :int], :void
+        attach_function :SelectList_Options,
+                        [SearchCriteria.by_ref, :pointer], :int
         attach_function :select_list_count, :SelectList_Count,
                         [SearchCriteria.by_ref], :int
         attach_function :select_list_selected_index, :SelectList_SelectedIndex,
@@ -161,6 +163,10 @@ module RAutomation
                         [SearchCriteria.by_ref, :int], :bool
         attach_function :select_list_select_value, :SelectList_SelectValue,
                         [SearchCriteria.by_ref, :pointer], :int
+
+        def self.select_options(search_information)
+          strings_from(:SelectList_Options, search_information)
+        end
 
         def self.selection(search_information)
           string_from(:SelectList_Selection, search_information)
