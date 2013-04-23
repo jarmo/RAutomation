@@ -123,13 +123,13 @@ module RAutomation
         end
 
         def expand(which_item)
-          UiaDll::expand_by_value hwnd, which_item if which_item.is_a? String
-          UiaDll::expand_by_index hwnd, which_item if which_item.is_a? Integer
+          UiaDll::expand_by_value search_information, which_item if which_item.is_a? String
+          UiaDll::expand_by_index search_information, which_item if which_item.is_a? Integer
         end
 
         def collapse(which_item)
-          UiaDll::collapse_by_value hwnd, which_item if which_item.is_a? String
-          UiaDll::collapse_by_index hwnd, which_item if which_item.is_a? Integer
+          UiaDll::collapse_by_value search_information, which_item if which_item.is_a? String
+          UiaDll::collapse_by_index search_information, which_item if which_item.is_a? Integer
         end
 
       end

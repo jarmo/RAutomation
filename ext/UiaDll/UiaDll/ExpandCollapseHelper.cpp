@@ -2,37 +2,37 @@
 #include "ExpandCollapseHelper.h"
 
 
-void ExpandCollapseHelper::ExpandByValue(const HWND windowHandle, const char* whichItem)
+void ExpandCollapseHelper::ExpandByValue(const FindInformation& findInformation, const char* whichItem)
 {
-	Expand(ExpandableItem(windowHandle, whichItem));
+	Expand(ExpandableItem(findInformation, whichItem));
 }
 
-void ExpandCollapseHelper::ExpandByIndex(const HWND windowHandle, const int whichItemIndex)
+void ExpandCollapseHelper::ExpandByIndex(const FindInformation& findInformation, const int whichItemIndex)
 {
-	auto expandableItem = ExpandableItems(windowHandle)[whichItemIndex];
+	auto expandableItem = ExpandableItems(findInformation)[whichItemIndex];
 	Expand(expandableItem);
 }
 
-void ExpandCollapseHelper::CollapseByValue(const HWND windowHandle, const char* whichItem)
+void ExpandCollapseHelper::CollapseByValue(const FindInformation& findInformation, const char* whichItem)
 {
-	Collapse(ExpandableItem(windowHandle, whichItem));
+	Collapse(ExpandableItem(findInformation, whichItem));
 }
 
-void ExpandCollapseHelper::CollapseByIndex(const HWND windowHandle, const int whichItemIndex)
+void ExpandCollapseHelper::CollapseByIndex(const FindInformation& findInformation, const int whichItemIndex)
 {
-	auto expandableItem = ExpandableItems(windowHandle)[whichItemIndex];
+	auto expandableItem = ExpandableItems(findInformation)[whichItemIndex];
 	Collapse(expandableItem);
 }
 
-AutomationElementCollection^ ExpandCollapseHelper::ExpandableItems(const HWND windowHandle)
+AutomationElementCollection^ ExpandCollapseHelper::ExpandableItems(const FindInformation& findInformation)
 {
-	auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
+	auto automationElement = (gcnew AutomationControl(findInformation))->Element;
 	return automationElement->FindAll(System::Windows::Automation::TreeScope::Subtree, IsExpandable);
 }
 
-AutomationElement^ ExpandCollapseHelper::ExpandableItem(const HWND windowHandle, const char* whichItem)
+AutomationElement^ ExpandCollapseHelper::ExpandableItem(const FindInformation& findInformation, const char* whichItem)
 {
-	auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
+	auto automationElement = (gcnew AutomationControl(findInformation))->Element;
 	auto andTheNameMatches = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(whichItem));
 	return automationElement->FindFirst(System::Windows::Automation::TreeScope::Subtree, gcnew AndCondition(IsExpandable, andTheNameMatches));
 }

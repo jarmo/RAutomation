@@ -314,37 +314,37 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_ExpandItemByValue(const HWND windowHandle, const char* whichItem) {
+	__declspec ( dllexport ) void RA_ExpandItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
 			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->ExpandByValue(windowHandle, whichItem);
+			expandCollapseHelper->ExpandByValue(findInformation, whichItem);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}
 	}
 
-	__declspec ( dllexport ) void RA_ExpandItemByIndex(const HWND windowHandle, const int whichItemIndex) {
+	__declspec ( dllexport ) void RA_ExpandItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
 			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->ExpandByIndex(windowHandle, whichItemIndex);
+			expandCollapseHelper->ExpandByIndex(findInformation, whichItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}
 	}
 
-	__declspec ( dllexport ) void RA_CollapseItemByValue(const HWND windowHandle, const char* whichItem) {
+	__declspec ( dllexport ) void RA_CollapseItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
 			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->CollapseByValue(windowHandle, whichItem);
+			expandCollapseHelper->CollapseByValue(findInformation, whichItem);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}
 	}
 
-	__declspec ( dllexport ) void RA_CollapseItemByIndex(const HWND windowHandle, const int whichItemIndex) {
+	__declspec ( dllexport ) void RA_CollapseItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
 			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->CollapseByIndex(windowHandle, whichItemIndex);
+			expandCollapseHelper->CollapseByIndex(findInformation, whichItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}

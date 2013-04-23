@@ -245,13 +245,13 @@ module RAutomation
         attach_function :select, :RA_Select,
                         [:pointer], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
-                        [:long, :string], :void
+                        [SearchCriteria.by_ref, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,
-                        [:long, :int], :void
+                        [SearchCriteria.by_ref, :int], :void
         attach_function :collapse_by_value, :RA_CollapseItemByValue,
-                        [:long, :string], :void
+                        [SearchCriteria.by_ref, :string], :void
         attach_function :collapse_by_index, :RA_CollapseItemByIndex,
-                        [:long, :int], :void
+                        [SearchCriteria.by_ref, :int], :void
         attach_function :control_click, :RA_Click,
                         [:long, :pointer, :int], :void
         attach_function :control_mouse_click, :RA_PointAndClick,
