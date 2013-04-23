@@ -111,6 +111,8 @@ module RAutomation
         attach_function :Name, [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :ClassName, [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :is_enabled, :IsEnabled, [SearchCriteria.by_ref], :bool
+        attach_function :is_focused, :IsFocused, [SearchCriteria.by_ref], :bool
+        attach_function :set_focus, :SetControlFocus, [SearchCriteria.by_ref], :bool
         attach_function :GetClassNames,
                         [SearchCriteria.by_ref, :pointer], :int
 
@@ -231,8 +233,6 @@ module RAutomation
                         [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
                         [:pointer], :long
-        attach_function :set_focus, :RA_SetFocus,
-                        [:pointer], :bool
         attach_function :move_mouse, :RA_MoveMouse,
                         [:int,:int], :long
         attach_function :click_mouse, :RA_ClickMouse,

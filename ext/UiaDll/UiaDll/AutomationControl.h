@@ -26,6 +26,10 @@ public:
     bool get() { return _control->Current.IsEnabled; }
   }
 
+  property bool IsFocused {
+    bool get() { return _control->Current.HasKeyboardFocus; }
+  }
+
   property Rect BoundingRectangle {
     Rect get() { return _control->Current.BoundingRectangle; }
   }

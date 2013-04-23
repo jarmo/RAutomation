@@ -17,8 +17,8 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
 
   context "#send_keys" do
     it "send tab keystrokes to move focus between elements" do
-      window.button(:value => "&About").focus
-      window.button(:value => "&About").should be_focused
+      window.button(:value => "About").focus
+      window.button(:value => "About").should be_focused
 
       window.send_keys(:tab, :tab, :tab)
       button = window.button(:value => "Close")

@@ -83,6 +83,25 @@ extern "C" {
     }
   }
 
+  __declspec ( dllexport ) bool IsFocused(const FindInformation& findInformation) {
+    try {
+      return (gcnew AutomationControl(findInformation))->IsFocused;
+    } catch(Exception^ e) {
+      Console::WriteLine("IsFocused:  {0}", e->Message);
+      return false;
+    }
+  }
+
+  __declspec ( dllexport ) bool SetControlFocus(const FindInformation& findInformation) {
+    try {
+      (gcnew AutomationControl(findInformation))->Element->SetFocus();
+      return true;
+    } catch(Exception^ e) {
+      Console::WriteLine("IsFocused:  {0}", e->Message);
+      return false;
+    }
+  }
+
   __declspec ( dllexport ) int GetClassNames(const FindInformation& findInformation, const char* classNames[]) {
     auto control = gcnew AutomationControl(findInformation);
     auto finder = gcnew AutomationFinder(control->Element);
@@ -162,14 +181,6 @@ extern "C" {
 
 		pElement->get_CurrentNativeWindowHandle(&uia_hwnd) ;
 		return (HWND)uia_hwnd ;
-	}
-
-	__declspec ( dllexport ) BOOL RA_SetFocus(IUIAutomationElement *pElement) {
-		HRESULT hr = pElement->SetFocus() ;
-		if (hr != S_OK)
-			printf("RA_SetFocus: SetFocus on element returned 0x%x\r\n", hr) ;
-
-		return SUCCEEDED(hr) ;
 	}
 
 	__declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationElement *pElement) {
