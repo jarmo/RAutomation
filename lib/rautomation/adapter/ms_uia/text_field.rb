@@ -12,15 +12,7 @@ module RAutomation
         # @see RAutomation::TextField#set
         def set(text)
           raise "Cannot set value on a disabled text field" if disabled?
-
-          wait_until do
-            hwnd = Functions.control_hwnd(@window.hwnd, @locators)
-            @window.activate
-            @window.active? &&
-                    Functions.set_control_focus(hwnd) &&
-                    Functions.set_control_text(hwnd, text) &&
-                    value == text
-          end
+          UiaDll::set_control_value(search_information, text)
         end
 
         # @see RAutomation::TextField#clear
@@ -32,13 +24,7 @@ module RAutomation
         #todo - replace with UIA version
         # @see RAutomation::TextField#value
         def value
-          Functions.control_value(hwnd)
-        end
-
-        #todo - replace with UIA version
-        # @see RAutomation::TextField#hwnd
-        def hwnd
-          Functions.control_hwnd(@window.hwnd, @locators)
+          UiaDll::get_control_value(search_information)
         end
 
         def exist?
