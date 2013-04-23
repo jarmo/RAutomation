@@ -208,10 +208,6 @@ module RAutomation
             end
           end
 
-          def set_control_text(control_hwnd, text)
-            send_message(control_hwnd, Constants::WM_SETTEXT, 0, text)
-          end
-
           def control_set?(control_hwnd)
             get_button_state(control_hwnd) & Constants::STATE_SYSTEM_CHECKED != 0
           end
