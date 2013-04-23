@@ -74,6 +74,15 @@ extern "C" {
 		}
   }
 
+  __declspec ( dllexport ) bool IsEnabled(const FindInformation& findInformation) {
+    try {
+      return (gcnew AutomationControl(findInformation))->IsEnabled;
+    } catch(Exception^ e) {
+      Console::WriteLine("IsEnabled:  {0}", e->Message);
+      return false;
+    }
+  }
+
   __declspec ( dllexport ) int GetClassNames(const FindInformation& findInformation, const char* classNames[]) {
     auto control = gcnew AutomationControl(findInformation);
     auto finder = gcnew AutomationFinder(control->Element);

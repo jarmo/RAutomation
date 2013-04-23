@@ -22,6 +22,10 @@ public:
 		String^ get() { return _control->Current.ClassName; }
 	}
 
+  property bool IsEnabled {
+    bool get() { return _control->Current.IsEnabled; }
+  }
+
   property Rect BoundingRectangle {
     Rect get() { return _control->Current.BoundingRectangle; }
   }

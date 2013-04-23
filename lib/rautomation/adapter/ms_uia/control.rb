@@ -56,12 +56,11 @@ module RAutomation
         end
 
         def enabled?
-          !disabled?
+          UiaDll::is_enabled(search_information)
         end
 
-        #todo - replace with UIA version
         def disabled?
-          Functions.unavailable?(hwnd)
+          !enabled?
         end
 
         #todo - replace with UIA version

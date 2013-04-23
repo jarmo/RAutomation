@@ -110,6 +110,7 @@ module RAutomation
         attach_function :current_control_type, :ControlType, [SearchCriteria.by_ref], :int
         attach_function :Name, [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :ClassName, [SearchCriteria.by_ref, :pointer, :int], :void
+        attach_function :is_enabled, :IsEnabled, [SearchCriteria.by_ref], :bool
         attach_function :GetClassNames,
                         [SearchCriteria.by_ref, :pointer], :int
 
