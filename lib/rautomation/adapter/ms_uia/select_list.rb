@@ -48,8 +48,7 @@ module RAutomation
         end
 
         def value
-          selected_option = options.find { |option| option.selected? }
-          selected_option ? selected_option.text : ""
+          UiaDll::selection(search_information)
         end
 
         def option(options)
