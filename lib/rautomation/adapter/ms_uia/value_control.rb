@@ -6,11 +6,11 @@ module RAutomation
         include Locators
 
         def value
-          UiaDll::get_control_value(hwnd)
+          UiaDll::get_control_value(search_information)
         end
 
         def set(value)
-          UiaDll::set_control_value(hwnd, value)
+          UiaDll::set_control_value(search_information, value)
         end
 
         alias_method :exists?, :exist?

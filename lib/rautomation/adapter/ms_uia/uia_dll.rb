@@ -104,8 +104,8 @@ module RAutomation
         # Generic Control methods
         attach_function :ElementExists, [SearchCriteria.by_ref], :bool
         attach_function :process_id, :ProcessId, [SearchCriteria.by_ref], :int
-        attach_function :Control_GetValue, [:long, :pointer, :int], :void
-        attach_function :set_control_value, :Control_SetValue, [:long, :string], :void
+        attach_function :Control_GetValue, [SearchCriteria.by_ref, :pointer, :int], :void
+        attach_function :set_control_value, :Control_SetValue, [SearchCriteria.by_ref, :string], :void
         attach_function :BoundingRectangle, [SearchCriteria.by_ref, :pointer], :int
         attach_function :current_control_type, :ControlType, [SearchCriteria.by_ref], :int
         attach_function :Name, [SearchCriteria.by_ref, :pointer, :int], :void
@@ -123,8 +123,8 @@ module RAutomation
           boundary.read_array_of_long(4)
         end
 
-        def self.get_control_value(hwnd)
-          string_from(:Control_GetValue, hwnd)
+        def self.get_control_value(search_information)
+          string_from(:Control_GetValue, search_information)
         end
 
         def self.name(search_information)
