@@ -208,18 +208,6 @@ module RAutomation
             end
           end
 
-          def control_set?(control_hwnd)
-            get_button_state(control_hwnd) & Constants::STATE_SYSTEM_CHECKED != 0
-          end
-
-          def has_focus?(control_hwnd)
-            get_button_state(control_hwnd) & Constants::STATE_SYSTEM_FOCUSED != 0
-          end
-
-          def unavailable?(control_hwnd)
-            get_button_state(control_hwnd) & Constants::STATE_SYSTEM_UNAVAILABLE != 0
-          end
-
           def retrieve_combobox_item_text(control_hwnd, item_no)
             text_len = 1024
             string_buffer = FFI::MemoryPointer.new :char, text_len
