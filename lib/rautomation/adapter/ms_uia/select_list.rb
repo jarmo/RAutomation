@@ -51,8 +51,7 @@ module RAutomation
         end
 
         def option(options)
-          item_count.times do |item_no|
-            item = Functions.retrieve_combobox_item_text(search_information, item_no)
+          UiaDll::select_options(search_information).each_with_index do |item, item_no|
             return SelectListOption.new(self, item, item_no) if options[:text] == item
           end
 
