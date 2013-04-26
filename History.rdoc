@@ -1,7 +1,7 @@
 == 0.9.1
 
 === MsUia adapter
-  * Ability to interact with controls that do not have native window handles
+  * Ability to interact with controls that do not have native window handles (for example WPF applications).
 
 == 0.9.0 / 2013-04-22
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rautomation (0.9.0)
+    rautomation (0.9.1)
       ffi
 
 GEM
