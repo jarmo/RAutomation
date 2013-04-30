@@ -19,8 +19,9 @@ module RAutomation
           extract(locators)
         end
 
-        def uia_hwnd
-          @uia_hwnd ||= UiaDll::uia_hwnd(UiaDll::SearchCriteria.from_locator(@window.hwnd, @locators))
+        def cached_hwnd
+          @cached_hwnd ||= UiaDll::cached_hwnd(UiaDll::SearchCriteria.from_locator(@window.hwnd, @locators))
+          @cached_hwnd == 0 ? nil : @cached_hwnd
         end
 
         #todo - replace with UIA version
@@ -30,14 +31,9 @@ module RAutomation
 
         def search_information
           info = UiaDll::SearchCriteria.from_locator(@window.hwnd, @locators)
-          if info.how == 0
+          if info.how == 0 or cached_hwnd
             info.how = :hwnd
-            info.data = hwnd
-          end
-
-          unless uia_hwnd == 0
-            info.how = :hwnd
-            info.data = uia_hwnd
+            info.data = cached_hwnd || hwnd
           end
 
           info
