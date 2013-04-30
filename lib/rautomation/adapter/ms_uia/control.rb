@@ -19,6 +19,10 @@ module RAutomation
           extract(locators)
         end
 
+        def uia_hwnd
+          @uia_hwnd ||= UiaDll::uia_hwnd(UiaDll::SearchCriteria.from_locator(@window.hwnd, @locators))
+        end
+
         #todo - replace with UIA version
         def hwnd
           Functions.control_hwnd(@window.hwnd, @locators)
@@ -30,6 +34,12 @@ module RAutomation
             info.how = :hwnd
             info.data = hwnd
           end
+
+          unless uia_hwnd == 0
+            info.how = :hwnd
+            info.data = uia_hwnd
+          end
+
           info
         end
 
