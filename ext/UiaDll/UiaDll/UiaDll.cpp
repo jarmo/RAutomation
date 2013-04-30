@@ -19,6 +19,11 @@ extern "C" {
     return automationElement->Exists;
   }
 
+  __declspec ( dllexport ) int NativeWindowHandle(const FindInformation& findInformation) { 
+    auto automationElement = gcnew AutomationControl(findInformation);
+    return automationElement->Exists ? automationElement->Element->Current.NativeWindowHandle : 0;
+  }
+
   __declspec ( dllexport ) int BoundingRectangle(const FindInformation& findInformation, long *rectangle) {
     try {
       auto automationElement = gcnew AutomationControl(findInformation);

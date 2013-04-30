@@ -102,6 +102,7 @@ module RAutomation
         ffi_convention :stdcall
 
         # Generic Control methods
+        attach_function :uia_hwnd, :NativeWindowHandle, [SearchCriteria.by_ref], :long
         attach_function :ElementExists, [SearchCriteria.by_ref], :bool
         attach_function :process_id, :ProcessId, [SearchCriteria.by_ref], :int
         attach_function :Control_GetValue, [SearchCriteria.by_ref, :pointer, :int], :void
