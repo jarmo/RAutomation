@@ -51,6 +51,10 @@ public:
 	  bool get() { return nullptr != _control; }
   }
 
+  property bool IsValuePattern {
+    bool get();
+  }
+
 protected:
 	AutomationElement^ _control;
 

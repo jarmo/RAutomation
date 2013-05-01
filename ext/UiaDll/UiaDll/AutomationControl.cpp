@@ -26,3 +26,11 @@ void AutomationControl::Value::set(String^ value) {
 String^ AutomationControl::Value::get() {
 	return AsValuePattern->Current.Value;
 }
+
+bool AutomationControl::IsValuePattern::get() {
+  try {
+    return nullptr != AsValuePattern;
+  } catch(Exception^ e) {
+    return false;
+  }
+}

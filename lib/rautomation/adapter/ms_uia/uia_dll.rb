@@ -106,6 +106,8 @@ module RAutomation
         attach_function :process_id, :ProcessId, [SearchCriteria.by_ref], :int
         attach_function :Control_GetValue, [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :set_control_value, :Control_SetValue, [SearchCriteria.by_ref, :string], :void
+        attach_function :Text_GetValue, [SearchCriteria.by_ref, :pointer, :int], :void
+        attach_function :set_text, :Text_SetValue, [SearchCriteria.by_ref, :string], :void
         attach_function :BoundingRectangle, [SearchCriteria.by_ref, :pointer], :int
         attach_function :current_control_type, :ControlType, [SearchCriteria.by_ref], :int
         attach_function :Name, [SearchCriteria.by_ref, :pointer, :int], :void
@@ -128,6 +130,10 @@ module RAutomation
 
         def self.get_control_value(search_information)
           string_from(:Control_GetValue, search_information)
+        end
+
+        def self.get_text(search_information)
+          string_from(:Text_GetValue, search_information)
         end
 
         def self.name(search_information)
