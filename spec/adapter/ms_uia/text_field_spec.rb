@@ -30,8 +30,14 @@ describe "MsUia::TextField", :if => SpecHelper.adapter == :ms_uia do
 
   it "can set the value of a multi line text field" do
     text_field = main_form.text_field(:id => "multiLineTextField")
+
+    # initial
     text_field.set "some dater'"
     text_field.value.should eq("some dater'")
+
+    # overwrite
+    text_field.set "overwrite with this dater'"
+    text_field.value.should eq("overwrite with this dater'")
   end
 
 end

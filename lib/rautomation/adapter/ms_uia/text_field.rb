@@ -12,7 +12,7 @@ module RAutomation
         # @see RAutomation::TextField#set
         def set(text)
           raise "Cannot set value on a disabled text field" if disabled?
-          UiaDll::set_control_value(search_information, text)
+          UiaDll::set_text(search_information, text)
         end
 
         # @see RAutomation::TextField#clear
@@ -24,7 +24,7 @@ module RAutomation
         #todo - replace with UIA version
         # @see RAutomation::TextField#value
         def value
-          UiaDll::get_control_value(search_information)
+          UiaDll::get_text(search_information)
         end
 
         def exist?
