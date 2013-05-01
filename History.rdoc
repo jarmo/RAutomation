@@ -1,3 +1,8 @@
+== 0.9.2
+
+=== MsUia adapter
+  * Ability to get an set the text of a multi-line text control that only supports the TextPattern
+
 == 0.9.1 / 2013-04-26
 
 === MsUia adapter
