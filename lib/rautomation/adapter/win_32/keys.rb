@@ -68,6 +68,9 @@ module RAutomation
           :f10           => 0x79,
           :f11           => 0x7A,
           :f12           => 0x7B,
+          :dash          => 0xBD,
+          :slash         => 0x6F,
+          :backslash     => 0xDC
         }            
 
         SPECIAL_KEYS = {
