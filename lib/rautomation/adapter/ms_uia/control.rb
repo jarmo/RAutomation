@@ -31,7 +31,7 @@ module RAutomation
 
         def search_information
           info = UiaDll::SearchCriteria.from_locator(@window.hwnd, @locators)
-          if info.how == 0 or cached_hwnd
+          if info.how == 0 || cached_hwnd
             info.how = :hwnd
             info.data = cached_hwnd || hwnd
           end
