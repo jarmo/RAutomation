@@ -1,14 +1,21 @@
 #include "StdAfx.h"
 #include "AutomationClicker.h"
 
-void AutomationClicker::Click() {
-	if( CanInvoke() ) {
-		return Invoke();
-	} else if( CanToggle() ) {
-		return Toggle();
-	} else if( CanSelect() ) {
-		return Select();
-	}
+bool AutomationClicker::Click() {
+  try {
+    if( CanInvoke() ) {
+      Invoke();
+    } else if( CanToggle() ) {
+      Toggle();
+    } else if( CanSelect() ) {
+      Select();
+    }
+
+    return true;
+  } catch(Exception^ e) {
+    Console::WriteLine("AutomationClicker::Click - {0}", e->Message);
+    return false;
+  }
 
 	throw gcnew Exception(gcnew String("AutomationElement did not support the InvokePattern, TogglePattern or the SelectionItemPattern"));
 }

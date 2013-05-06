@@ -312,13 +312,14 @@ extern "C" {
     return 1;
   }
 
-  __declspec ( dllexport ) void RA_Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
+  __declspec ( dllexport ) bool RA_Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
     try {
       auto automationClicker = gcnew AutomationClicker(findInformation);
-      automationClicker->Click();
+      return automationClicker->Click();
     } catch(Exception^ e) {
       if( errorInfo ) {
         StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
+        return false;
       }
     }
   }

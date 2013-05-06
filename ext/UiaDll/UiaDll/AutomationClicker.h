@@ -10,7 +10,7 @@ ref class AutomationClicker : AutomationControl
 public:
   AutomationClicker(const HWND windowHandle) : AutomationControl(windowHandle) {}
   AutomationClicker(const FindInformation& findInformation) : AutomationControl(findInformation) {}
-	void Click();
+	bool Click();
 	void MouseClick();
 
 private:
