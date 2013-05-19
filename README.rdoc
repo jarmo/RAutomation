@@ -57,8 +57,8 @@ Check out the documentation for other possible usages!
 
 Available adapters:
 * :win_32 - uses Windows API directly with FFI (default)
-* :autoit - uses AutoIt for automation
 * :ms_uia - an experimental adapter
+* :autoit - uses AutoIt for automation (DEPRECATED)
 
 When using AutoIt adapter:
 You might need administrative privileges if running for the first time and you haven't installed AutoIt before!
