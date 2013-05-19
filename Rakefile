@@ -37,7 +37,7 @@ end
 task :build => "build:all"
 
 namespace :spec do
-  adapters = %w[win_32 autoit ms_uia]
+  adapters = %w[win_32 ms_uia]
 
   adapters.each do |adapter|
     desc "Run RSpec code examples against #{adapter} adapter"
