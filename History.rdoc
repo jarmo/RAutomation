@@ -10,6 +10,10 @@
   * Add some caching to speed up locating controls.
   * Fix issue #67 that happens when clicking on controls.
 
+=== AutoIt adapter
+
+  * Add deprecation warning.
+
 == 0.9.1 / 2013-04-26
 
 === MsUia adapter
