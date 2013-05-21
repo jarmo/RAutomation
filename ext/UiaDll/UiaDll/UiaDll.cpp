@@ -14,6 +14,16 @@ IUIAutomation* getGlobalIUIAutomation() ;
 
 extern "C" {
 
+  __declspec ( dllexport ) void SendKeys(const FindInformation& findInformation, const char* theKeys, char* errorInfo, const int errorInfoSize) {
+    try {
+      (gcnew AutomationControl(findInformation))->SendKeys(gcnew String(theKeys));
+    } catch(Exception^ e) {
+      if( errorInfo ) {
+        StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
+      }
+    }
+  }
+
   __declspec ( dllexport ) bool ElementExists(const FindInformation& findInformation) {
     auto automationElement = gcnew AutomationControl(findInformation);
     return automationElement->Exists;

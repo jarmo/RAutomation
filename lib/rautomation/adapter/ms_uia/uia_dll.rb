@@ -102,6 +102,7 @@ module RAutomation
         ffi_convention :stdcall
 
         # Generic Control methods
+        attach_function :SendKeys, [SearchCriteria.by_ref, :string, :pointer, :long], :void
         attach_function :cached_hwnd, :NativeWindowHandle, [SearchCriteria.by_ref], :long
         attach_function :ElementExists, [SearchCriteria.by_ref], :bool
         attach_function :process_id, :ProcessId, [SearchCriteria.by_ref], :int
@@ -118,6 +119,10 @@ module RAutomation
         attach_function :set_focus, :SetControlFocus, [SearchCriteria.by_ref], :bool
         attach_function :GetClassNames,
                         [SearchCriteria.by_ref, :pointer], :int
+
+        def self.send_keys(search_information, keys)
+          can_throw(:SendKeys, search_information, keys)
+        end
 
         def self.exists?(search_information)
           ElementExists search_information

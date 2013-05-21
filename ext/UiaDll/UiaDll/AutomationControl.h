@@ -2,6 +2,7 @@
 
 using namespace System::Windows::Automation;
 using namespace System::Windows;
+using namespace System::Windows::Forms;
 using namespace System::Diagnostics;
 
 ref class AutomationControl
@@ -53,6 +54,11 @@ public:
 
   property bool IsValuePattern {
     bool get();
+  }
+
+  void SendKeys(String^ theKeys) {
+    _control->SetFocus();
+    SendKeys::SendWait(theKeys);
   }
 
 protected:
