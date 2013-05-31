@@ -1,3 +1,8 @@
+== 0.9.3
+
+=== MsUia adapter
+  * Added the ability to limit the scope to children only when looking for a control
+
 == 0.9.2 / 2013-05-19
 
 === Win32 adapter

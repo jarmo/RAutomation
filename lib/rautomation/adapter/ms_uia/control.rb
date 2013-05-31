@@ -13,6 +13,7 @@ module RAutomation
         # @option locators [String, Regexp] :class Internal class name of the button
         # @option locators [String, Fixnum] :id Internal ID of the button
         # @option locators [String, Fixnum] :index 0-based index to specify n-th button if all other criteria match
+        # @option locators [String, Boolean] :children_only limit the scope of the search to children only
         # @see RAutomation::Window#button
         def initialize(window, locators)
           @window = window
