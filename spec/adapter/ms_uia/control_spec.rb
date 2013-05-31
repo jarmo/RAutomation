@@ -16,7 +16,7 @@ describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
 
   it "has a class" do
     control = window.control(:id => "radioButtonReset")
-    control.control_class.should =~ /WindowsForms10.BUTTON.app.0.2bf8098_r1[0-9]_ad1/
+    control.control_class.should =~ /WindowsForms10.BUTTON.*/
   end
 
   it "can limit the search depth" do
