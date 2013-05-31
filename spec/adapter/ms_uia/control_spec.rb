@@ -19,6 +19,16 @@ describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
     control.control_class.should =~ /WindowsForms10.BUTTON.app.0.2bf8098_r1[0-9]_ad1/
   end
 
+  it "can limit the search depth" do
+    window.button(:id => 'buttonDataGridView').click { true }
+    data_grid_window = RAutomation::Window.new(:title => /DataGridView/i)
+
+    start = Time.new
+    data_grid_window.button(:id => 'buttonClose', :children_only => true).exist?
+    elapsed_time = Time.new - start
+    elapsed_time.should be < 2
+  end
+
   context RAutomation::Adapter::MsUia::UiaDll::SearchCriteria, :pure_unit => true do
     let(:window) { double('RAutomation Window').as_null_object }
     let(:locator) { {:id => 'someId'} }
