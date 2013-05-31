@@ -83,5 +83,10 @@ namespace WindowsForms
         {
 
         }
+
+        private void buttonDataGridView_Click(object sender, EventArgs e)
+        {
+            new DataGridView().Show();
+        }
     }
 }

@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Child 1");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Grandchild 1");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Parent Two");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Child 1");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Grandchild 1");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
+            treeNode12});
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
+            treeNode11,
+            treeNode13});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Parent Two");
             this.label1 = new System.Windows.Forms.Label();
             this.aboutButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -69,6 +69,7 @@
             this.treeView = new System.Windows.Forms.TreeView();
             this.multiLineTextField = new System.Windows.Forms.TextBox();
             this.automatableMonthCalendar1 = new WindowsForms.AutomatableMonthCalendar();
+            this.buttonDataGridView = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -390,19 +391,19 @@
             // 
             this.treeView.Location = new System.Drawing.Point(490, 285);
             this.treeView.Name = "treeView";
-            treeNode1.Name = "Child 1";
-            treeNode1.Text = "Child 1";
-            treeNode2.Name = "Grandchild 1";
-            treeNode2.Text = "Grandchild 1";
-            treeNode3.Name = "Child 2";
-            treeNode3.Text = "Child 2";
-            treeNode4.Name = "Parent One";
-            treeNode4.Text = "Parent One";
-            treeNode5.Name = "Parent Two";
-            treeNode5.Text = "Parent Two";
+            treeNode11.Name = "Child 1";
+            treeNode11.Text = "Child 1";
+            treeNode12.Name = "Grandchild 1";
+            treeNode12.Text = "Grandchild 1";
+            treeNode13.Name = "Child 2";
+            treeNode13.Text = "Child 2";
+            treeNode14.Name = "Parent One";
+            treeNode14.Text = "Parent One";
+            treeNode15.Name = "Parent Two";
+            treeNode15.Text = "Parent Two";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
+            treeNode14,
+            treeNode15});
             this.treeView.Size = new System.Drawing.Size(159, 177);
             this.treeView.TabIndex = 16;
             // 
@@ -422,11 +423,22 @@
             this.automatableMonthCalendar1.TabIndex = 17;
             this.automatableMonthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.automatableMonthCalendar1_DateChanged);
             // 
+            // buttonDataGridView
+            // 
+            this.buttonDataGridView.Location = new System.Drawing.Point(12, 152);
+            this.buttonDataGridView.Name = "buttonDataGridView";
+            this.buttonDataGridView.Size = new System.Drawing.Size(95, 23);
+            this.buttonDataGridView.TabIndex = 18;
+            this.buttonDataGridView.Text = "Data Grid View";
+            this.buttonDataGridView.UseVisualStyleBackColor = true;
+            this.buttonDataGridView.Click += new System.EventHandler(this.buttonDataGridView_Click);
+            // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(657, 657);
+            this.Controls.Add(this.buttonDataGridView);
             this.Controls.Add(this.automatableMonthCalendar1);
             this.Controls.Add(this.multiLineTextField);
             this.Controls.Add(this.treeView);
@@ -496,6 +508,7 @@
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.TextBox multiLineTextField;
         private AutomatableMonthCalendar automatableMonthCalendar1;
+        private System.Windows.Forms.Button buttonDataGridView;
     }
 }
 
