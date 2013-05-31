@@ -8,26 +8,38 @@ AutomationFinder::AutomationFinder(AutomationElement^ automationElement)
 
 AutomationElementCollection^ AutomationFinder::Find(...array<Condition^>^ conditions)
 {
-	return _automationElement->FindAll(System::Windows::Automation::TreeScope::Subtree, SomethingOrEverything(conditions));
+  return Find(Subtree, conditions);
+}
+
+AutomationElementCollection^ AutomationFinder::Find(const UIAutomation::TreeScope scope, ...array<Condition^>^ conditions)
+{
+	return _automationElement->FindAll(scope, SomethingOrEverything(conditions));
 }
 
 AutomationElement^ AutomationFinder::FindFirst(...array<Condition^>^ conditions)
 {
-	return _automationElement->FindFirst(System::Windows::Automation::TreeScope::Subtree, SomethingOrEverything(conditions));
+  return FindFirst(Subtree, conditions);
+}
+
+AutomationElement^ AutomationFinder::FindFirst(const UIAutomation::TreeScope scope, ...array<Condition^>^ conditions)
+{
+	return _automationElement->FindFirst(scope, SomethingOrEverything(conditions));
 }
 
 AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation)
 {
+  auto scope = findInformation.onlySearchChildren ? Children : Subtree;
+
   switch(findInformation.how) {
     case FindMethod::Id:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::AutomationIdProperty, gcnew String(findInformation.data.stringData));
-      return FindAt(findInformation.index, searchCondition);
+      return FindAt(scope, findInformation.index, searchCondition);
 		}
     case FindMethod::Value:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(findInformation.data.stringData));
-      return FindAt(findInformation.index, searchCondition);
+      return FindAt(scope, findInformation.index, searchCondition);
 		}
     case FindMethod::Focus:
       return AutomationElement::FocusedElement;
@@ -42,7 +54,12 @@ AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation
 
 AutomationElement^ AutomationFinder::FindAt(const int whichItem, ...array<Condition^>^ conditions)
 {
-	return Find(conditions)[whichItem];
+  return FindAt(Subtree, whichItem, conditions);
+}
+
+AutomationElement^ AutomationFinder::FindAt(const UIAutomation::TreeScope scope, const int whichItem, ...array<Condition^>^ conditions)
+{
+	return Find(scope, conditions)[whichItem];
 }
 
 Condition^ AutomationFinder::SomethingOrEverything(...array<Condition^>^ conditions)

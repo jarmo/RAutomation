@@ -6,10 +6,13 @@ ref class AutomationFinder
 {
 public:
 	AutomationFinder(AutomationElement^ automationElement);
-	AutomationElementCollection^ Find(...array<Condition^>^ conditions);
 	AutomationElement^ Find(const FindInformation& findInformation);
+	AutomationElementCollection^ Find(...array<Condition^>^ conditions);
+	AutomationElementCollection^ Find(const UIAutomation::TreeScope scope, ...array<Condition^>^ conditions);
 	AutomationElement^ FindFirst(...array<Condition^>^ conditions);
+	AutomationElement^ FindFirst(const UIAutomation::TreeScope scope, ...array<Condition^>^ conditions);
 	AutomationElement^ FindAt(const int whichItem, ...array<Condition^>^ conditions);
+	AutomationElement^ FindAt(const UIAutomation::TreeScope scope, const int whichItem, ...array<Condition^>^ conditions);
 
 	static property Condition^ IsSelectionItem {
 		Condition^ get() {
@@ -42,6 +45,8 @@ public:
 	}
 
 private:
+  static UIAutomation::TreeScope Subtree = UIAutomation::TreeScope::Subtree;
+  static UIAutomation::TreeScope Children = UIAutomation::TreeScope::Children;
 	AutomationElement^ _automationElement;
 	Condition^ SomethingOrEverything(...array<Condition^>^ conditions);
 };

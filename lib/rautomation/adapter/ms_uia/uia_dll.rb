@@ -25,6 +25,7 @@ module RAutomation
             info = SearchCriteria.new
             info.parent_window = parent
             info.index = locator[:index] || 0
+            info.children_only = locator[:children_only]
 
             case
               when locator[:hwnd]
@@ -61,6 +62,14 @@ module RAutomation
             self[:index] = value
           end
 
+          def children_only?
+            self[:children_only]
+          end
+
+          def children_only=(yes_or_no)
+            self[:children_only] = yes_or_no
+          end
+
           def parent_window
             self[:hwnd]
           end
@@ -95,6 +104,7 @@ module RAutomation
 
           layout :hwnd, :int,
                  :index, :int,
+                 :children_only, :bool,
                  :how, HowToFind, :data, FindData
         end
 
