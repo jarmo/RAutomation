@@ -34,11 +34,20 @@ AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation
     case FindMethod::Id:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::AutomationIdProperty, gcnew String(findInformation.data.stringData));
+      if( 0 == findInformation.index ) {
+        return FindFirst(scope, searchCondition);
+      }
+
       return FindAt(scope, findInformation.index, searchCondition);
 		}
     case FindMethod::Value:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(findInformation.data.stringData));
+
+      if( 0 == findInformation.index ) {
+        return FindFirst(scope, searchCondition);
+      }
+
       return FindAt(scope, findInformation.index, searchCondition);
 		}
     case FindMethod::Focus:
