@@ -83,5 +83,11 @@ int AutomatedSelectList::SelectedIndex::get() {
 void AutomatedSelectList::Select(AutomationElement^ itemToSelect)
 {
   auto selectionPattern = dynamic_cast<SelectionItemPattern^>(itemToSelect->GetCurrentPattern(SelectionItemPattern::Pattern));
-  selectionPattern->Select();
+
+  try {
+    AutomationClicker::MouseClickOn(itemToSelect);
+  } catch(Exception^) {}
+
+  if( !selectionPattern->Current.IsSelected )
+    selectionPattern->Select();
 }

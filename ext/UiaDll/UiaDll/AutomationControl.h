@@ -9,6 +9,7 @@ ref class AutomationControl
 public:
 	AutomationControl(const HWND windowHandle);
   AutomationControl(const FindInformation& findInformation);
+  AutomationControl(AutomationElement^ automationElement);
 
   property AutomationElement^ Element {
     AutomationElement^ get() { return _control; }
