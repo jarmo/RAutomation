@@ -14,6 +14,7 @@ RAutomation provides:
   supported platforms or technologies}
   s.homepage = %q{http://github.com/jarmo/RAutomation}
   s.summary = %q{Automate windows and their controls through user-friendly API with Ruby}
+  s.license = "MIT"
 
   ext_binaries = [
     "ext/IAccessibleDLL/Release/IAccessibleDLL.dll",

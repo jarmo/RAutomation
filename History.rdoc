@@ -1,4 +1,8 @@
-== 0.9.3
+== 0.9.4 / 2013-07-23
+
+  * Add license part of gemspec. Closes #70.
+  
+== 0.9.3 / 2013-07-23
 
 === MsUia adapter
   * Added the ability to limit the scope to children only when looking for a control
