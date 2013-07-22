@@ -68,6 +68,7 @@
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView = new System.Windows.Forms.TreeView();
             this.multiLineTextField = new System.Windows.Forms.TextBox();
+            this.buttonDataGridView = new System.Windows.Forms.Button();
             this.automatableMonthCalendar1 = new WindowsForms.AutomatableMonthCalendar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -336,6 +337,7 @@
             this.FruitListBox.Name = "FruitListBox";
             this.FruitListBox.Size = new System.Drawing.Size(159, 95);
             this.FruitListBox.TabIndex = 14;
+            this.FruitListBox.SelectedIndexChanged += new System.EventHandler(this.FruitListBox_SelectedIndexChanged);
             // 
             // menuStrip1
             // 
@@ -414,19 +416,29 @@
             this.multiLineTextField.Size = new System.Drawing.Size(325, 123);
             this.multiLineTextField.TabIndex = 5;
             // 
+            // buttonDataGridView
+            // 
+            this.buttonDataGridView.Location = new System.Drawing.Point(12, 152);
+            this.buttonDataGridView.Name = "buttonDataGridView";
+            this.buttonDataGridView.Size = new System.Drawing.Size(95, 23);
+            this.buttonDataGridView.TabIndex = 18;
+            this.buttonDataGridView.Text = "Data Grid View";
+            this.buttonDataGridView.UseVisualStyleBackColor = true;
+            this.buttonDataGridView.Click += new System.EventHandler(this.buttonDataGridView_Click);
+            // 
             // automatableMonthCalendar1
             // 
             this.automatableMonthCalendar1.Location = new System.Drawing.Point(142, 474);
             this.automatableMonthCalendar1.MaxSelectionCount = 1;
             this.automatableMonthCalendar1.Name = "automatableMonthCalendar1";
             this.automatableMonthCalendar1.TabIndex = 17;
-            this.automatableMonthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.automatableMonthCalendar1_DateChanged);
             // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(657, 657);
+            this.Controls.Add(this.buttonDataGridView);
             this.Controls.Add(this.automatableMonthCalendar1);
             this.Controls.Add(this.multiLineTextField);
             this.Controls.Add(this.treeView);
@@ -496,6 +508,7 @@
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.TextBox multiLineTextField;
         private AutomatableMonthCalendar automatableMonthCalendar1;
+        private System.Windows.Forms.Button buttonDataGridView;
     }
 }
 

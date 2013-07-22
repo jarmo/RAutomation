@@ -1,27 +1,32 @@
 require "spec_helper"
 
 describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
+  let(:window) { RAutomation::Window.new(:title => /MainFormWindow/i) }
 
   it "control coordinates", :special => false do
-    window = RAutomation::Window.new(:title => /MainFormWindow/i)
-
     window.maximize
     control = window.control(:id => "radioButtonReset")
     control.bounding_rectangle.should be_all {|coord| coord.between?(200, 400)}
   end
 
    it "control process id", :special => true do
-    window = RAutomation::Window.new(:title => /MainFormWindow/i)
-
     control = window.control(:id => "radioButtonReset")
     control.new_pid.should == @pid1
    end
 
   it "has a class" do
-    window = RAutomation::Window.new(:title => /MainFormWindow/i)
-
     control = window.control(:id => "radioButtonReset")
-    control.control_class.should =~ /WindowsForms10.BUTTON.app.0.2bf8098_r1[0-9]_ad1/
+    control.control_class.should =~ /WindowsForms10.BUTTON.*/
+  end
+
+  it "can limit the search depth" do
+    window.button(:id => 'buttonDataGridView').click { true }
+    data_grid_window = RAutomation::Window.new(:title => /DataGridView/i)
+
+    start = Time.new
+    data_grid_window.button(:id => 'buttonClose', :children_only => true).exist?
+    elapsed_time = Time.new - start
+    elapsed_time.should be < 2
   end
 
   context RAutomation::Adapter::MsUia::UiaDll::SearchCriteria, :pure_unit => true do

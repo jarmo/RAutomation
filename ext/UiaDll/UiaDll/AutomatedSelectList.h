@@ -1,5 +1,6 @@
 #pragma once
 #include "AutomationControl.h"
+#include "AutomationClicker.h"
 #include "StringHelper.h"
 
 using namespace System::Windows::Automation;

@@ -98,6 +98,7 @@
             this.personListView.TabIndex = 0;
             this.personListView.UseCompatibleStateImageBehavior = false;
             this.personListView.View = System.Windows.Forms.View.Details;
+            this.personListView.SelectedIndexChanged += new System.EventHandler(this.personListView_SelectedIndexChanged);
             // 
             // columnName
             // 

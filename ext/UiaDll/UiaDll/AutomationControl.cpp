@@ -19,6 +19,10 @@ AutomationControl::AutomationControl(const FindInformation& findInformation)
 	}
 }
 
+AutomationControl::AutomationControl(AutomationElement^ automationElement) {
+  _control = automationElement;
+}
+
 void AutomationControl::Value::set(String^ value) {
 	AsValuePattern->SetValue(value);
 }

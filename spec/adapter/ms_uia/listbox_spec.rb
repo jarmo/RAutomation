@@ -62,4 +62,14 @@ describe "MsUia::ListBox", :if => SpecHelper.adapter == :ms_uia do
 
     list_box.strings.should == ["Apple", "Orange", "Mango"]
   end
+
+  it "fires events when the index changes" do
+    list_box = RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox")
+    label = RAutomation::Window.new(:title => "MainFormWindow").label(:id => "fruitsLabel")
+
+    ['Apple', 'Orange', 'Mango'].each_with_index do |value, index|
+      list_box.select index
+      label.value.should eq(value)
+    end
+  end
 end

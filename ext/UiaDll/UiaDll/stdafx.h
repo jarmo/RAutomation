@@ -20,6 +20,7 @@
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
+namespace UIAutomation = System::Windows::Automation;
 
 typedef enum {
     Handle = 1,
@@ -32,6 +33,7 @@ typedef enum {
 typedef struct _FindInformation {
     HWND rootWindow;
     int index;
+    bool onlySearchChildren;
     FindMethod  how;
     union {
         char stringData[256];
