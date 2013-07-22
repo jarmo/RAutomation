@@ -33,7 +33,7 @@ describe "Win32::Window", :if => SpecHelper.adapter == :win_32 do
   end
 
   it "#controls" do
-    window.controls(:class => /button/i).size.should == 12
+    window.controls(:class => /button/i).size.should == 13
   end
 
   context "#move" do
