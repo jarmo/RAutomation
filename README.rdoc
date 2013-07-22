@@ -114,4 +114,4 @@ In case of any problems, feel free to contact me.
 
 == Copyright
 
-Copyright (c) 2010-2012 Jarmo Pertman. See LICENSE for details.
+Copyright (c) 2010-2013 Jarmo Pertman. See LICENSE for details.
