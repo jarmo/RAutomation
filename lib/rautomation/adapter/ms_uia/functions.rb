@@ -168,9 +168,7 @@ module RAutomation
           def control_hwnd(window_hwnd, locators)
             case
               when locators[:id]
-                uia_window = UiaDll::element_from_handle(window_hwnd) # finds IUIAutomationElement for given parent window
-                uia_control = UiaDll::find_child_by_id(uia_window, locators[:id].to_s)
-                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+                hwnd = UiaDll.cached_hwnd(UiaDll::SearchCriteria.from_locator(window_hwnd, locators))
                 raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
                 hwnd
               when locators[:point]

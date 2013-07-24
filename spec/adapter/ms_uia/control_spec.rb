@@ -3,6 +3,14 @@ require "spec_helper"
 describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
   let(:window) { RAutomation::Window.new(:title => /MainFormWindow/i) }
 
+  context '#click' do
+    it 'stops trying after the window goes away' do
+      window.button(:value => 'About').click { true }
+
+      RAutomation::Window.new(:title => 'About').button(:id => 'button1').click
+    end
+  end
+
   it "control coordinates", :special => false do
     window.maximize
     control = window.control(:id => "radioButtonReset")
