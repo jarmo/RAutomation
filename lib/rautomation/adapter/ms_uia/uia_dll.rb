@@ -252,8 +252,6 @@ module RAutomation
                         [:long], :pointer
         attach_function :element_from_point, :RA_ElementFromPoint,
                         [:int, :int], :pointer
-        attach_function :find_child_by_id, :RA_FindChildById,
-                        [:pointer, :string], :pointer
         attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
                         [:pointer], :long
         attach_function :move_mouse, :RA_MoveMouse,
