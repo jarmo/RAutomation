@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutomatedSelectList.h" />
+    <ClInclude Include="AutomatedTabControl.h" />
     <ClInclude Include="AutomatedTable.h" />
     <ClInclude Include="AutomationClicker.h" />
     <ClInclude Include="AutomationControl.h" />
@@ -99,6 +100,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="AutomatedSelectList.cpp" />
+    <ClCompile Include="AutomatedTabControl.cpp" />
     <ClCompile Include="AutomatedTable.cpp" />
     <ClCompile Include="AutomationClicker.cpp" />
     <ClCompile Include="AutomationControl.cpp" />
@@ -116,6 +118,7 @@
     </ClCompile>
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="StringMethods.cpp" />
+    <ClCompile Include="TabControlMethods.cpp" />
     <ClCompile Include="TableMethods.cpp" />
     <ClCompile Include="AutomatedText.cpp" />
     <ClCompile Include="TextMethods.cpp" />

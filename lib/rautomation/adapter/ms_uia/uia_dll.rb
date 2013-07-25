@@ -189,6 +189,14 @@ module RAutomation
           string_from(:SelectList_Selection, search_information)
         end
 
+        # Tab Control methods
+        attach_function :TabControl_Items,
+                        [SearchCriteria.by_ref, :pointer], :int
+
+        def self.tab_items(search_information)
+          strings_from(:TabControl_Items, search_information)
+        end
+
         # Menu methods
         attach_function :select_menu_item, :Menu_SelectPath,
                         [:long, :pointer, :int, :varargs], :void

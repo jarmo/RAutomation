@@ -3,6 +3,9 @@ module RAutomation
     module MsUia
 
       class TabControl < Control
+        def items
+          UiaDll::tab_items(search_information)
+        end
       end
 
     end

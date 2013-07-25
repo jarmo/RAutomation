@@ -55,6 +55,9 @@
     <Filter Include="Header Files\Text">
       <UniqueIdentifier>{3b3c2b83-e423-4619-991a-ffd7f324ae62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TabControl">
+      <UniqueIdentifier>{c8cf5521-2447-48f8-a48b-a4bf3909b00a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UiaDll.h">
@@ -104,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="AutomatedText.h">
       <Filter>Header Files\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="AutomatedTabControl.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="AutomatedText.cpp">
       <Filter>Source Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="TabControlMethods.cpp">
+      <Filter>Source Files\TabControl</Filter>
+    </ClCompile>
+    <ClCompile Include="AutomatedTabControl.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
