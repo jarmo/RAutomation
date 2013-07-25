@@ -16,4 +16,14 @@ describe MsUia::TabControl do
   it 'has tab items' do
     subject.items.count.should eq(2)
   end
+
+  context('#items') do
+    it 'has text' do
+      subject.items.map(&:text).should eq(['Info', 'More Info'])
+    end
+
+    it 'has indices' do
+      subject.items.map(&:index).should eq([0, 1])
+    end
+  end
 end
