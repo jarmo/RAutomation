@@ -164,6 +164,11 @@ module RAutomation
           ValueControl.new(self, locator)
         end
 
+        # @see TabControl#initialize
+        def tab_control(locator)
+          TabControl.new(self, locator)
+        end
+
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
         def text_field(locator)

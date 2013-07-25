@@ -27,14 +27,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.infoTab = new System.Windows.Forms.TabPage();
+            this.moreInfo = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tabControl.SuspendLayout();
+            this.infoTab.SuspendLayout();
+            this.moreInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(6, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(303, 13);
             this.label1.TabIndex = 0;
@@ -42,7 +50,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(141, 80);
+            this.button1.Location = new System.Drawing.Point(12, 277);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -50,13 +58,54 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.infoTab);
+            this.tabControl.Controls.Add(this.moreInfo);
+            this.tabControl.Location = new System.Drawing.Point(12, 12);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(551, 253);
+            this.tabControl.TabIndex = 2;
+            // 
+            // infoTab
+            // 
+            this.infoTab.Controls.Add(this.label1);
+            this.infoTab.Location = new System.Drawing.Point(4, 22);
+            this.infoTab.Name = "infoTab";
+            this.infoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.infoTab.Size = new System.Drawing.Size(543, 227);
+            this.infoTab.TabIndex = 0;
+            this.infoTab.Text = "Info";
+            this.infoTab.UseVisualStyleBackColor = true;
+            // 
+            // moreInfo
+            // 
+            this.moreInfo.Controls.Add(this.textBox1);
+            this.moreInfo.Location = new System.Drawing.Point(4, 22);
+            this.moreInfo.Name = "moreInfo";
+            this.moreInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.moreInfo.Size = new System.Drawing.Size(543, 227);
+            this.moreInfo.TabIndex = 1;
+            this.moreInfo.Text = "More Info";
+            this.moreInfo.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 3);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(531, 218);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
+            // 
             // AboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(339, 115);
+            this.ClientSize = new System.Drawing.Size(575, 312);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -66,8 +115,12 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
+            this.tabControl.ResumeLayout(false);
+            this.infoTab.ResumeLayout(false);
+            this.infoTab.PerformLayout();
+            this.moreInfo.ResumeLayout(false);
+            this.moreInfo.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -75,6 +128,10 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage infoTab;
+        private System.Windows.Forms.TabPage moreInfo;
+        private System.Windows.Forms.TextBox textBox1;
 
     }
 }
