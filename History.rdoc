@@ -1,7 +1,9 @@
 == 0.9.5
 
 === MsUia adapter
+
   * Fixed an issue with trying to interact with a button after it goes away
+  * Add support for Window#tab_control
 
 == 0.9.4 / 2013-07-23
 
