@@ -11,6 +11,10 @@ public:
   
   int GetTabItems(const char* options[]);
 
+  property String^ Selection {
+      String^ get();
+  }
+
 private:
 	property AutomationElementCollection^ TabItems {
 		AutomationElementCollection^ get() { return _control->FindAll(UIA::TreeScope::Subtree, TabItemCondition); }

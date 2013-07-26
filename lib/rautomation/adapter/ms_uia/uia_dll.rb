@@ -192,9 +192,15 @@ module RAutomation
         # Tab Control methods
         attach_function :TabControl_Items,
                         [SearchCriteria.by_ref, :pointer], :int
+        attach_function :TabControl_Selection,
+                        [SearchCriteria.by_ref, :pointer, :int], :void
 
         def self.tab_items(search_information)
           strings_from(:TabControl_Items, search_information)
+        end
+
+        def self.tab_selection(search_information)
+          string_from(:TabControl_Selection, search_information)
         end
 
         # Menu methods

@@ -17,6 +17,10 @@ describe MsUia::TabControl do
     subject.items.count.should eq(2)
   end
 
+  it 'knows the current tab' do
+    subject.value.should eq('Info')
+  end
+
   context('#items') do
     it 'has text' do
       subject.items.map(&:text).should eq(['Info', 'More Info'])

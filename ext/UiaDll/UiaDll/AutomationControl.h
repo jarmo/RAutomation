@@ -59,10 +59,16 @@ public:
 protected:
 	AutomationElement^ _control;
 
-private:
+protected:
 	property ValuePattern^ AsValuePattern {
 		ValuePattern^ get() {
 			return dynamic_cast<ValuePattern^>(_control->GetCurrentPattern(ValuePattern::Pattern));
+		}
+	}
+
+	property SelectionPattern^ AsSelectionPattern {
+		SelectionPattern^ get() {
+			return dynamic_cast<SelectionPattern^>(_control->GetCurrentPattern(SelectionPattern::Pattern));
 		}
 	}
 };

@@ -4,6 +4,11 @@
 AutomatedTabControl::AutomatedTabControl(const FindInformation& findInformation) : AutomationControl(findInformation)
 {}
 
+String^ AutomatedTabControl::Selection::get()
+{
+	auto theSelection = AsSelectionPattern->Current.GetSelection()[0];
+	return theSelection->Current.Name;
+}
 
 int AutomatedTabControl::GetTabItems(const char* options[])
 {
