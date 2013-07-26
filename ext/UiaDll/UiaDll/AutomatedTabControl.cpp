@@ -10,6 +10,11 @@ String^ AutomatedTabControl::Selection::get()
 	return theSelection->Current.Name;
 }
 
+void AutomatedTabControl::SelectedIndex::set(int selectedIndex)
+{
+	dynamic_cast<SelectionItemPattern^>(TabItems[selectedIndex]->GetCurrentPattern(SelectionItemPattern::Pattern))->Select();
+}
+
 int AutomatedTabControl::GetTabItems(const char* options[])
 {
 	auto tabItems = TabItems;

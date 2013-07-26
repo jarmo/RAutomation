@@ -6,13 +6,17 @@ module RAutomation
         class TabItem
           attr_reader :text, :index
 
-          def initialize(text, index)
-            @text, @index = text, index
+          def initialize(tab_control, text, index)
+            @tab_control, @text, @index = tab_control, text, index
+          end
+
+          def select
+            UiaDll::select_tab_by_index(@tab_control.search_information, index)
           end
         end
 
         def items
-          values.each_with_index.map(&TabItem.method(:new))
+          values.each_with_index.map {|value, index| TabItem.new(self, value, index) }
         end
 
         def value

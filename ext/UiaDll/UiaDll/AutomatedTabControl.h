@@ -15,6 +15,10 @@ public:
       String^ get();
   }
 
+  property int SelectedIndex {
+      void set(int);
+  }
+
 private:
 	property AutomationElementCollection^ TabItems {
 		AutomationElementCollection^ get() { return _control->FindAll(UIA::TreeScope::Subtree, TabItemCondition); }

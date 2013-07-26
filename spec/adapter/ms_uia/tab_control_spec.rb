@@ -29,5 +29,10 @@ describe MsUia::TabControl do
     it 'has indices' do
       subject.items.map(&:index).should eq([0, 1])
     end
+
+    it 'can be selected' do
+      subject.items.find {|t| t.text == 'More Info'}.select
+      subject.value.should eq('More Info')
+    end
   end
 end
