@@ -10,31 +10,36 @@ String^ AutomatedTabControl::Selection::get()
 	return theSelection->Current.Name;
 }
 
+void AutomatedTabControl::Selection::set(String^ value)
+{
+	Select(_control->FindFirst(UIA::TreeScope::Subtree, GetNamedTabItemCondition(value)));
+}
+
 void AutomatedTabControl::SelectedIndex::set(int selectedIndex)
 {
-	dynamic_cast<SelectionItemPattern^>(TabItems[selectedIndex]->GetCurrentPattern(SelectionItemPattern::Pattern))->Select();
+	Select(TabItems[selectedIndex]);
 }
 
 int AutomatedTabControl::SelectedIndex::get()
 {
-  int selectedIndex = 0;
-  for each(AutomationElement^ selectionItem in TabItems) {
-    auto selectionPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
-    if( selectionPattern->Current.IsSelected ) {
-      return selectedIndex;
-    }
-    ++selectedIndex;
-  }
-  return -1;
+	int selectedIndex = 0;
+	for each(AutomationElement^ selectionItem in TabItems) {
+		auto selectionPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
+		if( selectionPattern->Current.IsSelected ) {
+			return selectedIndex;
+		}
+		++selectedIndex;
+	}
+	return -1;
 }
 
 int AutomatedTabControl::GetTabItems(const char* options[])
 {
 	auto tabItems = TabItems;
 
-  if( NULL != options ) {
-	  StringHelper::CopyNames(tabItems, options);
-  }
+	if( NULL != options ) {
+		StringHelper::CopyNames(tabItems, options);
+	}
 
-  return tabItems->Count;
+	return tabItems->Count;
 }

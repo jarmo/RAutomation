@@ -16,12 +16,22 @@ extern "C" {
 		try {
 			auto tabControl = gcnew AutomatedTabControl(findInformation);
 			tabControl->SelectedIndex = index;
-		} catch(Exception^ e) {
-			StringHelper::CopyToUnmanagedString(e->Message + e->StackTrace, errorInfo, errorInfoLength);
+		} catch(Exception^) {
+			_snprintf(errorInfo, errorInfoLength, "A tab with index %d was not found", index);
 		}
 	}
+
 	__declspec(dllexport) int TabControl_SelectedIndex(const FindInformation& findInformation) {
 		auto tabControl = gcnew AutomatedTabControl(findInformation);
 		return tabControl->SelectedIndex;
+	}
+
+	__declspec(dllexport) void TabControl_SelectByValue(const FindInformation& findInformation, const char* value, char* errorInfo, const int errorInfoLength) {
+		try {
+			auto tabControl = gcnew AutomatedTabControl(findInformation);
+			tabControl->Selection = gcnew String(value);
+		} catch(Exception^) {
+			_snprintf(errorInfo, errorInfoLength, "A tab with the value %s was not found", value);
+		}
 	}
 }

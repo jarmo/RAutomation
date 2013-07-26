@@ -13,6 +13,16 @@ describe MsUia::TabControl do
 
   it { should exist }
 
+  it '#select' do
+    subject.select(1)
+    subject.value.should eq('More Info')
+  end
+
+  it '#set' do
+    subject.set 'More Info'
+    subject.value.should eq('More Info')
+  end
+
   it 'has tab items' do
     subject.items.count.should eq(2)
   end

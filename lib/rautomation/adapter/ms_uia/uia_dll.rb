@@ -196,6 +196,8 @@ module RAutomation
                         [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :TabControl_SelectByIndex,
                         [SearchCriteria.by_ref, :int, :pointer, :int], :void
+        attach_function :TabControl_SelectByValue,
+                        [SearchCriteria.by_ref, :string, :pointer, :int], :void
         attach_function :tab_control_selected_index, :TabControl_SelectedIndex, [SearchCriteria.by_ref], :int
 
         def self.tab_items(search_information)
@@ -206,8 +208,13 @@ module RAutomation
           string_from(:TabControl_Selection, search_information)
         end
 
-        def self.select_tab_by_index(search_information, index)
-          can_throw(:TabControl_SelectByIndex, search_information, index)
+        def self.select_tab(search_information, which)
+          case which
+            when Fixnum
+              can_throw(:TabControl_SelectByIndex, search_information, which)
+            when String
+              can_throw(:TabControl_SelectByValue, search_information, which)
+          end
         end
 
         # Menu methods

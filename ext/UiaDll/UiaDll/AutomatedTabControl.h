@@ -13,6 +13,7 @@ public:
 
   property String^ Selection {
       String^ get();
+      void set(String^);
   }
 
   property int SelectedIndex {
@@ -27,6 +28,14 @@ private:
 
   property Condition^ TabItemCondition {
 	  Condition^ get() { return gcnew PropertyCondition(AutomationElement::ControlTypeProperty, UIA::ControlType::TabItem); }
+  }
+
+  Condition^ GetNamedTabItemCondition(String^ name) {
+	  return gcnew AndCondition(TabItemCondition, gcnew PropertyCondition(AutomationElement::NameProperty, name));
+  }
+
+  void Select(AutomationElement^ tabItem) {
+    dynamic_cast<SelectionItemPattern^>(tabItem->GetCurrentPattern(SelectionItemPattern::Pattern))->Select();
   }
 };
 

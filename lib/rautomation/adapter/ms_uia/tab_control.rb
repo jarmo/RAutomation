@@ -11,12 +11,20 @@ module RAutomation
           end
 
           def select
-            UiaDll::select_tab_by_index(@tab_control.search_information, index)
+            UiaDll::select_tab(@tab_control.search_information, index)
           end
 
           def selected?
             @index == UiaDll::tab_control_selected_index(@tab_control.search_information)
           end
+        end
+
+        def select(index)
+          UiaDll::select_tab(search_information, index)
+        end
+
+        def set(value)
+          UiaDll::select_tab(search_information, value)
         end
 
         def items
