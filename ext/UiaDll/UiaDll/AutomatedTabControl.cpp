@@ -15,6 +15,19 @@ void AutomatedTabControl::SelectedIndex::set(int selectedIndex)
 	dynamic_cast<SelectionItemPattern^>(TabItems[selectedIndex]->GetCurrentPattern(SelectionItemPattern::Pattern))->Select();
 }
 
+int AutomatedTabControl::SelectedIndex::get()
+{
+  int selectedIndex = 0;
+  for each(AutomationElement^ selectionItem in TabItems) {
+    auto selectionPattern = dynamic_cast<SelectionItemPattern^>(selectionItem->GetCurrentPattern(SelectionItemPattern::Pattern));
+    if( selectionPattern->Current.IsSelected ) {
+      return selectedIndex;
+    }
+    ++selectedIndex;
+  }
+  return -1;
+}
+
 int AutomatedTabControl::GetTabItems(const char* options[])
 {
 	auto tabItems = TabItems;

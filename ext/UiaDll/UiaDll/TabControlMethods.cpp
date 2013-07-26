@@ -20,4 +20,8 @@ extern "C" {
 			StringHelper::CopyToUnmanagedString(e->Message + e->StackTrace, errorInfo, errorInfoLength);
 		}
 	}
+	__declspec(dllexport) int TabControl_SelectedIndex(const FindInformation& findInformation) {
+		auto tabControl = gcnew AutomatedTabControl(findInformation);
+		return tabControl->SelectedIndex;
+	}
 }

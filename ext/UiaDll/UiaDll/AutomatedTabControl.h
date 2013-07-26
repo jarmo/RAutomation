@@ -16,6 +16,7 @@ public:
   }
 
   property int SelectedIndex {
+      int get();
       void set(int);
   }
 

@@ -196,6 +196,7 @@ module RAutomation
                         [SearchCriteria.by_ref, :pointer, :int], :void
         attach_function :TabControl_SelectByIndex,
                         [SearchCriteria.by_ref, :int, :pointer, :int], :void
+        attach_function :tab_control_selected_index, :TabControl_SelectedIndex, [SearchCriteria.by_ref], :int
 
         def self.tab_items(search_information)
           strings_from(:TabControl_Items, search_information)

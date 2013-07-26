@@ -34,5 +34,10 @@ describe MsUia::TabControl do
       subject.items.find {|t| t.text == 'More Info'}.select
       subject.value.should eq('More Info')
     end
+
+    it 'knows if it is selected' do
+      subject.items.first.should be_selected
+      subject.items.last.should_not be_selected
+    end
   end
 end
