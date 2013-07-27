@@ -94,7 +94,6 @@
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="AutomatedText.h" />
-    <ClInclude Include="Toggle.h" />
     <ClInclude Include="UiaDll.h" />
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +120,6 @@
     <ClCompile Include="TableMethods.cpp" />
     <ClCompile Include="AutomatedText.cpp" />
     <ClCompile Include="TextMethods.cpp" />
-    <ClCompile Include="Toggle.cpp" />
     <ClCompile Include="UiaDll.cpp" />
   </ItemGroup>
   <ItemGroup>

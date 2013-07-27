@@ -32,6 +32,16 @@ namespace RAutomation.UIA.Extensions
             return (SelectionItemPattern)automationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
         }
 
+        public static TogglePattern AsTogglePattern(this AutomationElement automationElement)
+        {
+            return (TogglePattern)automationElement.GetCurrentPattern(TogglePattern.Pattern);
+        }
+
+        public static bool IsToggled(this AutomationElement automationElement)
+        {
+            return automationElement.AsTogglePattern().Current.ToggleState == ToggleState.On;
+        }
+
         public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> trueCondition)
         {
             var foundIndex = 0;

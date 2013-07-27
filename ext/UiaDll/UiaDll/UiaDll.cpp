@@ -9,9 +9,10 @@
 #include "ExpandCollapseHelper.h"
 #include "StringHelper.h"
 #include "SelectionItem.h"
-#include "Toggle.h"
 
 IUIAutomation* getGlobalIUIAutomation() ;
+
+using namespace RAutomation::UIA::Extensions;
 
 extern "C" {
 	__declspec(dllexport) void initialize(char* privateAssemblyDirectory) {
@@ -258,8 +259,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsSet(const FindInformation& findInformation) {
 		try {
-			auto toggle = gcnew Toggle(findInformation);
-			return toggle->IsSet;
+			return AutomationExtensions::IsToggled(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Debug::WriteLine("IsSet:  {0}", e->Message);
 			return false;
