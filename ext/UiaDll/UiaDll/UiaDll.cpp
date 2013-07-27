@@ -8,7 +8,6 @@
 #include "DynamicAssemblyResolver.h"
 #include "ExpandCollapseHelper.h"
 #include "StringHelper.h"
-#include "SelectionItem.h"
 
 IUIAutomation* getGlobalIUIAutomation() ;
 
@@ -268,8 +267,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsSelected(const FindInformation& findInformation) {
 		try {
-			auto selectionItem = gcnew SelectionItem(findInformation);
-			return selectionItem->IsSelected;
+			return AutomationExtensions::IsSelected(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Debug::WriteLine("IsSelected:  {0}", e->Message);
 			return false;

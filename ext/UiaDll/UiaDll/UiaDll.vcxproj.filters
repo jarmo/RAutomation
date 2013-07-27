@@ -93,9 +93,6 @@
     <ClInclude Include="AutomationControl.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
-    <ClInclude Include="SelectionItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AutomatedText.h">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
@@ -151,9 +148,6 @@
     </ClCompile>
     <ClCompile Include="ControlMethods.cpp">
       <Filter>Source Files\Control</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectionItem.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextMethods.cpp">
       <Filter>Source Files\Text</Filter>
