@@ -24,6 +24,7 @@ extern "C" {
 			return tableControl->RowCount;
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
+      return 0;
 		}
 	}
 
@@ -62,6 +63,7 @@ extern "C" {
 			return tableControl->IsSelected(dataItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
+      return false;
 		}
 	}
 

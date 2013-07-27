@@ -37,7 +37,7 @@ AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation
   auto scope = findInformation.onlySearchChildren ? Children : Subtree;
 
   switch(findInformation.how) {
-    case FindMethod::Id:
+    case Id:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::AutomationIdProperty, gcnew String(findInformation.data.stringData));
       if( 0 == findInformation.index ) {
@@ -46,7 +46,7 @@ AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation
 
       return FindAt(scope, findInformation.index, searchCondition);
 		}
-    case FindMethod::Value:
+    case Value:
 		{
       auto searchCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(findInformation.data.stringData));
 
@@ -56,11 +56,11 @@ AutomationElement^ AutomationFinder::Find(const FindInformation& findInformation
 
       return FindAt(scope, findInformation.index, searchCondition);
 		}
-    case FindMethod::Focus:
+    case Focus:
       return AutomationElement::FocusedElement;
-    case FindMethod::ScreenPoint:
+    case ScreenPoint:
 			return AutomationElement::FromPoint(Point(findInformation.data.pointData[0], findInformation.data.pointData[1]));
-    case FindMethod::Handle:
+    case Handle:
       return AutomationElement::FromHandle(IntPtr(findInformation.data.intData));
 	}
 

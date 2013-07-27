@@ -4,7 +4,7 @@
 void StringHelper::CopyToUnmanagedString(String^ source, char* destination, const int destinationSize)
 {
 	auto unmanagedString = Marshal::StringToHGlobalAnsi(source);
-	strncpy(destination, (const char*)(void*)unmanagedString, destinationSize);
+	strncpy_s(destination, destinationSize, (const char*)(void*)unmanagedString,  _TRUNCATE);
 	Marshal::FreeHGlobal(unmanagedString);
 }
 

@@ -34,7 +34,7 @@ String^ AutomationControl::Value::get() {
 bool AutomationControl::IsValuePattern::get() {
   try {
     return nullptr != AsValuePattern;
-  } catch(Exception^ e) {
+  } catch(Exception^) {
     return false;
   }
 }

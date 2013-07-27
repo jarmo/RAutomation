@@ -33,10 +33,10 @@ extern "C" {
 			auto automationElement = gcnew AutomationControl(findInformation);
 			auto boundary = automationElement->BoundingRectangle;
 
-			rectangle[0] = boundary.Left;
-			rectangle[1] = boundary.Top;
-			rectangle[2] = boundary.Right;
-			rectangle[3] = boundary.Bottom;
+			rectangle[0] = (long)boundary.Left;
+			rectangle[1] = (long)boundary.Top;
+			rectangle[2] = (long)boundary.Right;
+			rectangle[3] = (long)boundary.Bottom;
 			return 1;
 		}
 		catch(Exception^ e) {
@@ -251,7 +251,7 @@ extern "C" {
 			auto control = gcnew AutomationControl(windowHandle);
 			StringHelper::CopyToUnmanagedString(control->Name, windowName, windowNameLength);
 			return true;
-		} catch(Exception^ e) {
+		} catch(Exception^) {
 			return false;
 		}
 	}
@@ -300,8 +300,9 @@ extern "C" {
 		} catch(Exception^ e) {
 			if( errorInfo ) {
 				StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
-				return false;
 			}
+
+      return false;
 		}
 	}
 

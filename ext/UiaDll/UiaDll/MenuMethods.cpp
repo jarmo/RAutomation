@@ -6,6 +6,7 @@ void MenuSelectPath(const HWND windowHandle, char* errorInfo, const int errorInf
 
 extern "C" {
 
+  #pragma managed(push, off)
 	__declspec ( dllexport ) void Menu_SelectPath(const HWND windowHandle, char* errorInfo, const int errorInfoSize, const char* arg0, ...) {
 		va_list arguments;
 		va_start(arguments, arg0);			
@@ -21,7 +22,9 @@ extern "C" {
 
 		MenuSelectPath(windowHandle, errorInfo, errorInfoSize, menuItems);
 	}
+  #pragma managed(pop)
 
+  #pragma managed(push, off)
 	__declspec ( dllexport ) BOOL Menu_ItemExists(const HWND windowHandle, const char* arg0, ...) {
 		va_list arguments;
 		va_start(arguments, arg0);			
@@ -37,6 +40,7 @@ extern "C" {
 
 		return MenuItemExists(windowHandle, menuItems);
 	}
+  #pragma managed(pop)
 }
 
 BOOL MenuItemExists(const HWND windowHandle, std::list<const char*>& menuItems)

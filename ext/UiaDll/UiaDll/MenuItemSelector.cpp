@@ -16,7 +16,7 @@ BOOL MenuItemSelector::MenuItemExists(const HWND windowHandle, list<const char*>
 	try {
 		auto automationElement = AutomationElement::FromHandle(IntPtr(windowHandle));
 		return FindMenuItem(automationElement, menuItems) != nullptr;
-	} catch(Exception^ e) {
+	} catch(Exception^) {
 		return FALSE;
 	}
 }
@@ -54,7 +54,7 @@ ExpandCollapsePattern^ MenuItemSelector::AsExpandCollapse(AutomationElement^ fou
 	{
 		return dynamic_cast<ExpandCollapsePattern^>(foundMenuItem->GetCurrentPattern(ExpandCollapsePattern::Pattern));
 	}
-	catch(Exception^ e)
+	catch(Exception^)
 	{
 		return nullptr;
 	}
@@ -68,7 +68,7 @@ void MenuItemSelector::TryToExpand(ExpandCollapsePattern^ expandCollapsePattern)
 	{
 		expandCollapsePattern->Expand();
 	}
-	catch(Exception^ e)
+	catch(Exception^)
 	{
 		expandCollapsePattern->Expand();
 	}

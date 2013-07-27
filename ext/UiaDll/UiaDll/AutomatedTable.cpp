@@ -65,7 +65,7 @@ void AutomatedTable::Select(const int dataItemIndex)
 {
 	try {
 		Select(_finder->Find(AutomationFinder::IsDataItem)[dataItemIndex]);
-	} catch(IndexOutOfRangeException^ e) {
+	} catch(IndexOutOfRangeException^) {
 		throw gcnew ArgumentException(String::Format("Table item at index {0} does not exist", dataItemIndex));
 	}
 }
@@ -80,7 +80,7 @@ void AutomatedTable::Select(const char* dataItemValue)
 	try {
 		auto nameCondition = gcnew PropertyCondition(AutomationElement::NameProperty, gcnew String(dataItemValue));
 		Select(_finder->Find(AutomationFinder::IsDataItem, nameCondition)[0]);
-	} catch(IndexOutOfRangeException^ e) {
+	} catch(IndexOutOfRangeException^) {
 		throw gcnew ArgumentException(String::Format("Table item with the value \"{0}\" was not found", gcnew String(dataItemValue)));
 	}
 }
