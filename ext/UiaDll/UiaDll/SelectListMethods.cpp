@@ -1,5 +1,8 @@
 #include "stdafx.h"
+#include "AutomationFinder.h"
 #include "AutomatedSelectList.h"
+
+using namespace RAutomation::UIA::Controls;
 
 extern "C" {
 
@@ -9,13 +12,13 @@ extern "C" {
 	}
 
   __declspec ( dllexport ) int SelectList_Options(const FindInformation& findInformation, const char* options[]) {
-    auto selectList = gcnew AutomatedSelectList(findInformation);
-    return selectList->GetOptions(options);
+    auto selectList = gcnew SelectList(AutomationFinder::FindFor(findInformation));
+    return StringHelper::Copy(selectList->Options, options);
   }
 
 	__declspec ( dllexport ) int SelectList_SelectedIndex(const FindInformation& findInformation) {
-		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
-		return autoSelectList->SelectedIndex;
+    auto selectList = gcnew SelectList(AutomationFinder::FindFor(findInformation));
+		return selectList->SelectedIndex;
 	}
 
   __declspec ( dllexport ) void SelectList_Selection(const FindInformation& findInformation, char* selection, const int selectionLength) {
