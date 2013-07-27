@@ -19,19 +19,16 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) bool ElementExists(const FindInformation& findInformation) {
-		auto automationElement = gcnew AutomationControl(findInformation);
-		return automationElement->Exists;
+    return Element::Exists(AutomationFinder::FindFor(findInformation));
 	}
 
 	__declspec ( dllexport ) int NativeWindowHandle(const FindInformation& findInformation) { 
-		auto automationElement = gcnew AutomationControl(findInformation);
-		return automationElement->Exists ? automationElement->Element->Current.NativeWindowHandle : 0;
+    return Element::NativeWindowHandle(AutomationFinder::FindFor(findInformation));
 	}
 
 	__declspec ( dllexport ) int BoundingRectangle(const FindInformation& findInformation, long *rectangle) {
 		try {
-			auto automationElement = gcnew AutomationControl(findInformation);
-			auto boundary = automationElement->BoundingRectangle;
+			auto boundary = Element::BoundingRectangle(AutomationFinder::FindFor(findInformation));
 
 			rectangle[0] = (long)boundary.Left;
 			rectangle[1] = (long)boundary.Top;
@@ -47,8 +44,7 @@ extern "C" {
 
 	__declspec ( dllexport ) int ControlType(const FindInformation& findInformation) {
 		try {
-			auto automationElement = gcnew AutomationControl(findInformation);
-			return automationElement->ControlType->Id;
+      return Element::ControlType(AutomationFinder::FindFor(findInformation))->Id;
 		} catch(Exception^ e) {
 			Console::WriteLine("ControlType:  {0}", e->Message);
 			return 0;
@@ -57,8 +53,7 @@ extern "C" {
 
 	__declspec ( dllexport ) int ProcessId(const FindInformation& findInformation) {
 		try {
-			auto automationElement = gcnew AutomationControl(findInformation);
-			return automationElement->ProcessId;
+      return Element::ProcessId(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Console::WriteLine("ProcessId:  {0}", e->Message);
 			return 0;
@@ -67,8 +62,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void Name(const FindInformation& findInformation, char* name, const int nameLength) {
 		try {
-			auto control = gcnew AutomationControl(findInformation);
-			StringHelper::CopyToUnmanagedString(control->Name, name, nameLength);
+      auto currentName = Element::Name(AutomationFinder::FindFor(findInformation));
+	  StringHelper::CopyToUnmanagedString(currentName, name, nameLength);
 		} catch(Exception^ e) {
 			Console::WriteLine("Name:  {0}", e->Message);
 		}
@@ -76,8 +71,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void ClassName(const FindInformation& findInformation, char* className, const int classNameLength) {
 		try {
-			auto control = gcnew AutomationControl(findInformation);
-			StringHelper::CopyToUnmanagedString(control->ClassName, className, classNameLength);
+      auto currentClassName = Element::ClassName(AutomationFinder::FindFor(findInformation));
+			StringHelper::CopyToUnmanagedString(currentClassName, className, classNameLength);
 		} catch(Exception^ e) {
 			Console::WriteLine("ClassName:  {0}", e->Message);
 		}
@@ -85,7 +80,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsEnabled(const FindInformation& findInformation) {
 		try {
-			return (gcnew AutomationControl(findInformation))->IsEnabled;
+			return Element::IsEnabled(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Console::WriteLine("IsEnabled:  {0}", e->Message);
 			return false;
@@ -94,7 +89,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsFocused(const FindInformation& findInformation) {
 		try {
-			return (gcnew AutomationControl(findInformation))->IsFocused;
+			return Element::IsFocused(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Console::WriteLine("IsFocused:  {0}", e->Message);
 			return false;
@@ -103,7 +98,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool SetControlFocus(const FindInformation& findInformation) {
 		try {
-			(gcnew AutomationControl(findInformation))->Element->SetFocus();
+			AutomationFinder::FindFor(findInformation)->SetFocus();
 			return true;
 		} catch(Exception^ e) {
 			Console::WriteLine("IsFocused:  {0}", e->Message);
