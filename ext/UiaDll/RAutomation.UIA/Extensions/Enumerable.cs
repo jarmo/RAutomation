@@ -5,7 +5,7 @@ using System.Windows.Automation;
 
 namespace RAutomation.UIA.Extensions
 {
-    public static class AutomationExtensions
+    public static class Enumerable
     {
         public static IEnumerable<AutomationElement> Find(this AutomationElement automationElement, Condition condition)
         {
@@ -24,27 +24,7 @@ namespace RAutomation.UIA.Extensions
 
         public static IEnumerable<SelectionItemPattern> AsSelectionItems(this IEnumerable<AutomationElement> automationElements)
         {
-            return automationElements.Select(AsSelectionItem);
-        }
-
-        public static SelectionItemPattern AsSelectionItem(this AutomationElement automationElement)
-        {
-            return (SelectionItemPattern)automationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
-        }
-
-        public static bool IsSelected(this AutomationElement automationElement)
-        {
-            return automationElement.AsSelectionItem().Current.IsSelected;
-        }
-
-        public static TogglePattern AsTogglePattern(this AutomationElement automationElement)
-        {
-            return (TogglePattern)automationElement.GetCurrentPattern(TogglePattern.Pattern);
-        }
-
-        public static bool IsToggled(this AutomationElement automationElement)
-        {
-            return automationElement.AsTogglePattern().Current.ToggleState == ToggleState.On;
+            return automationElements.Select(Element.AsSelectionItem);
         }
 
         public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> trueCondition)

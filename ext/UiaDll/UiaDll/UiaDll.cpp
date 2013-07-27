@@ -258,7 +258,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsSet(const FindInformation& findInformation) {
 		try {
-			return AutomationExtensions::IsToggled(AutomationFinder::FindFor(findInformation));
+			return Element::IsToggled(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Debug::WriteLine("IsSet:  {0}", e->Message);
 			return false;
@@ -267,7 +267,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsSelected(const FindInformation& findInformation) {
 		try {
-			return AutomationExtensions::IsSelected(AutomationFinder::FindFor(findInformation));
+			return Element::IsSelected(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Debug::WriteLine("IsSelected:  {0}", e->Message);
 			return false;
