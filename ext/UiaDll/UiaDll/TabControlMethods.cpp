@@ -2,7 +2,7 @@
 #include "AutomationFinder.h"
 #include "StringHelper.h"
 
-using namespace RAutomation::UIA;
+using namespace RAutomation::UIA::Controls;
 
 extern "C" {
 	__declspec(dllexport) int TabControl_Items(const FindInformation& findInformation, const char* options[]) {

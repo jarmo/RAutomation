@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Automation;
 
-namespace RAutomation.UIA
+namespace RAutomation.UIA.Controls
 {
     public class TabControl
     {
