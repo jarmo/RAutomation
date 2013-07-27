@@ -6,6 +6,12 @@ AutomationFinder::AutomationFinder(AutomationElement^ automationElement)
 	_automationElement = automationElement;
 }
 
+AutomationElement^ AutomationFinder::FindFor(const FindInformation& findInformation)
+{
+		auto finder = gcnew AutomationFinder(AutomationElement::FromHandle(IntPtr(findInformation.rootWindow)));
+		return finder->Find(findInformation);
+}
+
 AutomationElementCollection^ AutomationFinder::Find(...array<Condition^>^ conditions)
 {
   return Find(Subtree, conditions);

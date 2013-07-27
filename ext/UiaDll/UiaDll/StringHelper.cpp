@@ -23,6 +23,18 @@ void StringHelper::FreeUp(const char* unmanagedStrings[], const int numberOfStri
 	}
 }
 
+int StringHelper::Copy(array<String^>^ strings, const char* unmanagedStrings[])
+{
+	if( NULL != unmanagedStrings ) {
+    auto whichItem = 0;
+    for each(String^ theString in strings) {
+      unmanagedStrings[whichItem++] = UnmanagedStringFrom(theString);
+    }
+	}
+
+	return strings->Length;
+}
+
 void StringHelper::CopyNames(AutomationElementCollection^ automationElements, const char* unmanagedStrings[])
 {
 	auto whichItem = 0;

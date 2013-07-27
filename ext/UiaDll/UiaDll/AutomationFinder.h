@@ -5,6 +5,8 @@ using namespace System::Windows::Automation;
 ref class AutomationFinder
 {
 public:
+	static AutomationElement^ FindFor(const FindInformation& findInformation);
+
 	AutomationFinder(AutomationElement^ automationElement);
 	AutomationElement^ Find(const FindInformation& findInformation);
 	AutomationElementCollection^ Find(...array<Condition^>^ conditions);

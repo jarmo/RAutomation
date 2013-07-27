@@ -70,6 +70,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -80,11 +81,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutomatedSelectList.h" />
-    <ClInclude Include="AutomatedTabControl.h" />
     <ClInclude Include="AutomatedTable.h" />
     <ClInclude Include="AutomationClicker.h" />
     <ClInclude Include="AutomationControl.h" />
     <ClInclude Include="AutomationFinder.h" />
+    <ClInclude Include="DynamicAssemblyResolver.h" />
     <ClInclude Include="ExpandCollapseHelper.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="MenuItemSelector.h" />
@@ -100,12 +101,12 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="AutomatedSelectList.cpp" />
-    <ClCompile Include="AutomatedTabControl.cpp" />
     <ClCompile Include="AutomatedTable.cpp" />
     <ClCompile Include="AutomationClicker.cpp" />
     <ClCompile Include="AutomationControl.cpp" />
     <ClCompile Include="AutomationFinder.cpp" />
     <ClCompile Include="ControlMethods.cpp" />
+    <ClCompile Include="DynamicAssemblyResolver.cpp" />
     <ClCompile Include="MenuMethods.cpp" />
     <ClCompile Include="SelectionItem.cpp" />
     <ClCompile Include="SelectListMethods.cpp" />
@@ -131,6 +132,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RAutomation.UIA\RAutomation.UIA.csproj">
+      <Project>{0834d9ae-b1aa-422b-b3b2-796c1c346301}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

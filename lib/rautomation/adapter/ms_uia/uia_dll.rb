@@ -108,8 +108,16 @@ module RAutomation
                  :how, HowToFind, :data, FindData
         end
 
-        ffi_lib File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release/UiaDll.dll'
+        def self.uia_dll_directory
+          File.dirname(__FILE__) + '/../../../../ext/UiaDll/Release'
+        end
+
+
+        ffi_lib File.join(uia_dll_directory, 'UiaDll.dll')
         ffi_convention :stdcall
+
+        attach_function :init, :initialize, [:string], :void
+        init(uia_dll_directory)
 
         # Generic Control methods
         attach_function :cached_hwnd, :NativeWindowHandle, [SearchCriteria.by_ref], :long

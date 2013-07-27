@@ -108,7 +108,7 @@
     <ClInclude Include="AutomatedText.h">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
-    <ClInclude Include="AutomatedTabControl.h">
+    <ClInclude Include="DynamicAssemblyResolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -179,7 +179,7 @@
     <ClCompile Include="TabControlMethods.cpp">
       <Filter>Source Files\TabControl</Filter>
     </ClCompile>
-    <ClCompile Include="AutomatedTabControl.cpp">
+    <ClCompile Include="DynamicAssemblyResolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
