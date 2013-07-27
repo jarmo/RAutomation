@@ -8,8 +8,12 @@ AutomationFinder::AutomationFinder(AutomationElement^ automationElement)
 
 AutomationElement^ AutomationFinder::FindFor(const FindInformation& findInformation)
 {
+	try {
 		auto finder = gcnew AutomationFinder(AutomationElement::FromHandle(IntPtr(findInformation.rootWindow)));
 		return finder->Find(findInformation);
+	} catch(Exception^) {
+		return nullptr;
+	}
 }
 
 AutomationElementCollection^ AutomationFinder::Find(...array<Condition^>^ conditions)
