@@ -24,7 +24,7 @@ namespace RAutomation.UIA
 
         public static IEnumerable<SelectionItemPattern> AsSelectionItems(this IEnumerable<AutomationElement> automationElements)
         {
-            return automationElements.Select(x => x.AsSelectionItem());
+            return automationElements.Select(AsSelectionItem);
         }
 
         public static SelectionItemPattern AsSelectionItem(this AutomationElement automationElement)
@@ -47,17 +47,6 @@ namespace RAutomation.UIA
         public static IEnumerable<AutomationElement> AsEnumerable(this AutomationElementCollection automationElements)
         {
             return automationElements.Cast<AutomationElement>();
-        }
-
-        public static void ForEach(this AutomationElementCollection automationElements, Action<AutomationElement> action)
-        {
-            automationElements.AsEnumerable().ForEach(action);
-        }
-
-        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
-        {
-            foreach (var item in items)
-                action(item);
         }
     }
 }
