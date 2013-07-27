@@ -20,14 +20,19 @@ namespace RAutomation.UIA
 
         public string Selection
         {
-            get { return TabItems.First(x => x.AsSelectionItem().Current.IsSelected).Current.Name; }
+            get { return TabItems.First(IsSelected).Current.Name; }
             set { TabItems.First(x => x.Current.Name == value).AsSelectionItem().Select(); }
         }
 
         public int SelectedIndex
         {
-            get { return SelectionItems.IndexOf(x => x.Current.IsSelected); }
+            get { return TabItems.IndexOf(IsSelected); }
             set { SelectionItems.ElementAt(value).Select(); }
+        }
+
+        private static bool IsSelected(AutomationElement tabItem)
+        {
+            return tabItem.AsSelectionItem().Current.IsSelected;
         }
 
         private IEnumerable<AutomationElement> TabItems
