@@ -34,9 +34,6 @@
     <Filter Include="Source Files\SelectList">
       <UniqueIdentifier>{fe7c5a5a-36f1-4acb-9147-a32a4e168c5a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SelectList">
-      <UniqueIdentifier>{b94fabb6-af2d-4628-b91f-837e271293aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Strings">
       <UniqueIdentifier>{568b2839-5e30-4e34-91b0-a0e67f1c1672}</UniqueIdentifier>
     </Filter>
@@ -90,9 +87,6 @@
     <ClInclude Include="MenuItemSelector.h">
       <Filter>Header Files\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="AutomatedSelectList.h">
-      <Filter>Header Files\SelectList</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.h">
       <Filter>Header Files\Strings</Filter>
     </ClInclude>
@@ -142,9 +136,6 @@
     </ClCompile>
     <ClCompile Include="TableMethods.cpp">
       <Filter>Source Files\Table</Filter>
-    </ClCompile>
-    <ClCompile Include="AutomatedSelectList.cpp">
-      <Filter>Source Files\SelectList</Filter>
     </ClCompile>
     <ClCompile Include="SelectListMethods.cpp">
       <Filter>Source Files\SelectList</Filter>

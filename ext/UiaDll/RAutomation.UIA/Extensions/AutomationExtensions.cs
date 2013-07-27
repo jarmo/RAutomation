@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Automation;
 
-namespace RAutomation.UIA
+namespace RAutomation.UIA.Extensions
 {
-    static class AutomationExtensions
+    public static class AutomationExtensions
     {
         public static IEnumerable<AutomationElement> Find(this AutomationElement automationElement, Condition condition)
         {
@@ -29,7 +29,7 @@ namespace RAutomation.UIA
 
         public static SelectionItemPattern AsSelectionItem(this AutomationElement automationElement)
         {
-            return (SelectionItemPattern) automationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
+            return (SelectionItemPattern)automationElement.GetCurrentPattern(SelectionItemPattern.Pattern);
         }
 
         public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> trueCondition)
@@ -42,7 +42,7 @@ namespace RAutomation.UIA
             }
 
             return -1;
-        } 
+        }
 
         public static IEnumerable<AutomationElement> AsEnumerable(this AutomationElementCollection automationElements)
         {

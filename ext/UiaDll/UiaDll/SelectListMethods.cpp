@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "AutomationFinder.h"
-#include "AutomatedSelectList.h"
+#include "StringHelper.h"
 
 using namespace RAutomation::UIA::Controls;
 
 extern "C" {
 
 	__declspec ( dllexport ) int SelectList_Count(const FindInformation& findInformation) {
-		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
-		return autoSelectList->Count;
+		auto selectList = gcnew SelectList(AutomationFinder::FindFor(findInformation));
+		return selectList->Count;
 	}
 
 	__declspec ( dllexport ) int SelectList_Options(const FindInformation& findInformation, const char* options[]) {
@@ -22,24 +22,40 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) void SelectList_Selection(const FindInformation& findInformation, char* selection, const int selectionLength) {
-		auto selectList = gcnew AutomatedSelectList(findInformation);
-		auto currentSelections = selectList->Selection;
-		auto firstSelection = currentSelections.Length == 0 ? "" : currentSelections[0];
-		StringHelper::CopyToUnmanagedString(firstSelection, selection, selectionLength);
+		auto selectList = gcnew SelectList(AutomationFinder::FindFor(findInformation));
+		StringHelper::CopyToUnmanagedString(selectList->Selection, selection, selectionLength);
 	}
 
 	__declspec ( dllexport ) bool SelectList_ValueAt(const FindInformation& findInformation, const int whichItem, char* comboValue, const int comboValueSize) {
-		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
-		return autoSelectList->GetValueByIndex(whichItem, comboValue, comboValueSize);
+		try {
+			auto selectList = gcnew SelectList(AutomationFinder::FindFor(findInformation));
+			StringHelper::CopyToUnmanagedString(selectList->At(whichItem), comboValue, comboValueSize);
+			return true;
+		} catch(Exception^ e) {
+			Console::WriteLine(e);
+			return false;
+		}
 	}
 
 	__declspec ( dllexport ) bool SelectList_SelectIndex(const FindInformation& findInformation, const int whichItem) {
-		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
-		return autoSelectList->SelectByIndex(whichItem);
+		try {
+			auto selectList = gcnew SelectList(AutomationFinder::FindFor(findInformation));
+			selectList->SelectedIndex = whichItem;
+			return true;
+		} catch(Exception^ e) {
+			Console::WriteLine(e);
+			return false;
+		}
 	}
 
 	__declspec ( dllexport ) int SelectList_SelectValue(const FindInformation& findInformation, char *pValue) {
-		auto autoSelectList = gcnew AutomatedSelectList(findInformation);
-		return autoSelectList->SelectByValue(pValue);
+		try {
+			auto selectList = gcnew SelectList(AutomationFinder::FindFor(findInformation));
+			selectList->Selection = gcnew String(pValue);
+			return true;
+		} catch(Exception^ e) {
+			Console::WriteLine(e);
+			return false;
+		}
 	}
 }

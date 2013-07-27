@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Automation;
+using RAutomation.UIA.Extensions;
 
 namespace RAutomation.UIA.Controls
 {
