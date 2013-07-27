@@ -19,6 +19,7 @@ RAutomation provides:
   ext_binaries = [
     "ext/IAccessibleDLL/Release/IAccessibleDLL.dll",
     "ext/UiaDll/Release/UiaDll.dll",
+    "ext/UiaDll/Release/RAutomation.UIA.dll",
     "ext/WindowsForms/Release/WindowsForms.exe"
   ]
   s.files         = `git ls-files`.split("\n") + ext_binaries
