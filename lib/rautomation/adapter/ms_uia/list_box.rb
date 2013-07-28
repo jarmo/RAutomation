@@ -11,13 +11,13 @@ module RAutomation
         end
 
         def items
-          UiaDll::find_table_values(search_information).map do |list_item|
+          UiaDll::table_values(search_information).map do |list_item|
             @window.list_item(:value => list_item)
           end
         end
 
         def strings
-          UiaDll::find_table_values(search_information)
+          UiaDll::table_values(search_information)
         end
 
         def value

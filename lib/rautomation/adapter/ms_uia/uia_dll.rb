@@ -236,8 +236,6 @@ module RAutomation
                         [SearchCriteria.by_ref, :pointer], :int
         attach_function :Table_GetValues,
                         [SearchCriteria.by_ref, :pointer], :int
-        attach_function :Table_FindValues,
-                        [SearchCriteria.by_ref, :pointer], :int
         attach_function :table_row_count, :Table_RowCount,
                         [SearchCriteria.by_ref], :int
         attach_function :Table_CoordinateIsValid,
@@ -274,10 +272,6 @@ module RAutomation
 
         def self.table_values(search_information)
           strings_from :Table_GetValues, search_information
-        end
-
-        def self.find_table_values(search_information)
-          strings_from :Table_FindValues, search_information
         end
 
         # String methods

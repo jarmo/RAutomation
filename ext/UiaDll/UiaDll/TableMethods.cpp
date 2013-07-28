@@ -16,11 +16,6 @@ extern "C" {
 		return StringHelper::Copy(tableControl->Values, values);
 	}
 
-  __declspec ( dllexport ) int Table_FindValues(const FindInformation& findInformation, const char* values[]) {
-		auto tableControl = gcnew AutomatedTable(findInformation);
-		return tableControl->GetValues(values);
-  }
-
 	__declspec ( dllexport ) int Table_RowCount(const FindInformation& findInformation) {
 		try {
 			auto tableControl = gcnew AutomatedTable(findInformation);
