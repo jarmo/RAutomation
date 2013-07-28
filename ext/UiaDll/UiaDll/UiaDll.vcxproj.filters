@@ -16,9 +16,6 @@
     <Filter Include="Header Files\Helpers">
       <UniqueIdentifier>{235d8022-1949-4a55-b1fd-af041c36744f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Table">
-      <UniqueIdentifier>{1d8355de-7c5c-4443-b063-cdb96cd03444}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Menu">
       <UniqueIdentifier>{f558a0f9-f67e-483f-86cf-a5f2ce6f1a93}</UniqueIdentifier>
     </Filter>
@@ -72,9 +69,6 @@
     <ClInclude Include="ExpandCollapseHelper.h">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="AutomatedTable.h">
-      <Filter>Header Files\Table</Filter>
-    </ClInclude>
     <ClInclude Include="AutomationClicker.h">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
@@ -106,9 +100,6 @@
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AutomatedTable.cpp">
-      <Filter>Source Files\Table</Filter>
     </ClCompile>
     <ClCompile Include="AutomationClicker.cpp">
       <Filter>Source Files\Helpers</Filter>

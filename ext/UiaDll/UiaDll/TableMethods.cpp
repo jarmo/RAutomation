@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "AutomatedTable.h"
+#include "AutomationFinder.h"
 #include "StringHelper.h"
 
 using namespace RAutomation::UIA::Controls;
@@ -66,8 +66,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void Table_SelectByValue(const FindInformation& findInformation, const char* dataItemValue) {
 		try {
-			auto tableControl = gcnew AutomatedTable(findInformation);
-			tableControl->Select(dataItemValue);
+			auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
+			tableControl->Value = gcnew String(dataItemValue);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}

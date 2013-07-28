@@ -26,6 +26,11 @@ namespace RAutomation.UIA.Controls
             set { SelectionItems.ElementAt(value).Select(); }
         }
 
+        public string Value
+        {
+            set { SelectionElements.First(x => x.Current.Name == value).AsSelectionItem().Select(); }
+        }
+
         public bool Exists(int row, int column)
         {
             return At(row, column).Exists();
@@ -53,7 +58,12 @@ namespace RAutomation.UIA.Controls
 
         private IEnumerable<SelectionItemPattern> SelectionItems
         {
-            get { return _element.Find(AutomationProperties.IsSelectionItem).Select(x => x.As<SelectionItemPattern>(SelectionItemPattern.Pattern)); }
+            get { return SelectionElements.Select(x => x.As<SelectionItemPattern>(SelectionItemPattern.Pattern)); }
+        }
+
+        private IEnumerable<AutomationElement> SelectionElements
+        {
+            get { return _element.Find(AutomationProperties.IsSelectionItem); }
         }
 
         private IEnumerable<AutomationElement> TableOrListItems

@@ -80,7 +80,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutomatedTable.h" />
     <ClInclude Include="AutomationClicker.h" />
     <ClInclude Include="AutomationControl.h" />
     <ClInclude Include="AutomationFinder.h" />
@@ -96,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="AutomatedTable.cpp" />
     <ClCompile Include="AutomationClicker.cpp" />
     <ClCompile Include="AutomationControl.cpp" />
     <ClCompile Include="AutomationFinder.cpp" />
