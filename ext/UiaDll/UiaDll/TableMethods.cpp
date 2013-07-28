@@ -47,8 +47,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void Table_SelectByIndex(const FindInformation& findInformation, const int dataItemIndex) {
 		try {
-			auto tableControl = gcnew AutomatedTable(findInformation);
-			tableControl->Select(dataItemIndex);
+			auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
+			tableControl->SelectedIndex = dataItemIndex;
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}
@@ -56,8 +56,8 @@ extern "C" {
 
 	__declspec ( dllexport ) bool Table_IsSelectedByIndex(const FindInformation& findInformation, const int dataItemIndex) {
 		try {
-			auto tableControl = gcnew AutomatedTable(findInformation);
-			return tableControl->IsSelected(dataItemIndex);
+			auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
+			return tableControl->SelectedIndex == dataItemIndex;
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
       return false;

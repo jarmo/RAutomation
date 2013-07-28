@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Automation;
 using RAutomation.UIA.Extensions;
+using RAutomation.UIA.Properties;
 
 namespace RAutomation.UIA.Controls
 {
@@ -17,6 +18,12 @@ namespace RAutomation.UIA.Controls
         public int RowCount
         {
             get { return _element.As<TablePattern>(TablePattern.Pattern).Current.RowCount; }
+        }
+
+        public int SelectedIndex
+        {
+            get { return SelectionItems.IndexOf(x => x.Current.IsSelected); }
+            set { SelectionItems.ElementAt(value).Select(); }
         }
 
         public bool Exists(int row, int column)
@@ -42,6 +49,11 @@ namespace RAutomation.UIA.Controls
         public string[] Values
         {
             get { return TableOrListItems.Select(x => x.Current.Name).ToArray(); }
+        }
+
+        private IEnumerable<SelectionItemPattern> SelectionItems
+        {
+            get { return _element.Find(AutomationProperties.IsSelectionItem).Select(x => x.As<SelectionItemPattern>(SelectionItemPattern.Pattern)); }
         }
 
         private IEnumerable<AutomationElement> TableOrListItems
