@@ -18,7 +18,7 @@ extern "C" {
 
 	__declspec ( dllexport ) int Table_RowCount(const FindInformation& findInformation) {
 		try {
-			auto tableControl = gcnew AutomatedTable(findInformation);
+			auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
 			return tableControl->RowCount;
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());

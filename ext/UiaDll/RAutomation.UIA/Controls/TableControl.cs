@@ -14,6 +14,11 @@ namespace RAutomation.UIA.Controls
             _element = element;
         }
 
+        public int RowCount
+        {
+            get { return _element.As<TablePattern>(TablePattern.Pattern).Current.RowCount; }
+        }
+
         public string[] Headers
         {
             get { return _element.Find(ControlType.HeaderItem.Condition()).Select(x => x.Current.Name).ToArray(); }

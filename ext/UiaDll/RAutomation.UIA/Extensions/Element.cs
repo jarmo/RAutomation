@@ -85,5 +85,9 @@ namespace RAutomation.UIA.Extensions
             return (TextPattern) automationElement.GetCurrentPattern(TextPattern.Pattern);
         }
 
+        public static T As<T>(this AutomationElement automationElement, AutomationPattern pattern)
+        {
+            return (T) automationElement.GetCurrentPattern(pattern);
+        }
     }
 }
