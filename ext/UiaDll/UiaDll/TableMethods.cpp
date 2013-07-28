@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "AutomatedTable.h"
+#include "StringHelper.h"
+
+using namespace RAutomation::UIA::Controls;
 
 extern "C" {
 
 	__declspec ( dllexport ) int Table_GetHeaders(const FindInformation& findInformation, const char* headers[]) {
-		auto tableControl = gcnew AutomatedTable(findInformation);
-		return tableControl->GetHeaders(headers);
+		auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
+		return StringHelper::Copy(tableControl->Headers, headers);
 	}
 
 	__declspec ( dllexport ) int Table_GetValues(const FindInformation& findInformation, const char* values[]) {

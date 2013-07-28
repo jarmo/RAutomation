@@ -47,7 +47,9 @@
     <Compile Include="Controls\Clicker.cs" />
     <Compile Include="Controls\SelectList.cs" />
     <Compile Include="Controls\TabControl.cs" />
+    <Compile Include="Controls\TableControl.cs" />
     <Compile Include="Controls\TextControl.cs" />
+    <Compile Include="Extensions\ControlTypeExtensions.cs" />
     <Compile Include="Extensions\Enumerable.cs" />
     <Compile Include="Extensions\Element.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
