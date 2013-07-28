@@ -2,11 +2,16 @@
 
 namespace RAutomation.UIA.Extensions
 {
-    public static class ControlTypeExtensions
+    public static class Property
     {
         public static Condition Condition(this ControlType controlType)
         {
             return new PropertyCondition(AutomationElement.ControlTypeProperty, controlType);
+        }
+
+        public static Condition TrueCondition(this AutomationProperty property)
+        {
+            return new PropertyCondition(property, true);
         }
     }
 }

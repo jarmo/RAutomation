@@ -18,6 +18,11 @@ namespace RAutomation.UIA.Extensions
             return automationElement.FindAll(TreeScope.Subtree, new AndCondition(conditions)).AsEnumerable();
         }
 
+        public static IEnumerable<AutomationElement> FindAny(this AutomationElement automationElement, params Condition[] conditions)
+        {
+            return automationElement.FindAll(TreeScope.Subtree, new OrCondition(conditions)).AsEnumerable();
+        }
+
         public static IEnumerable<string> Names(this IEnumerable<AutomationElement> automationElements)
         {
             return automationElements.Select(x => x.Current.Name);

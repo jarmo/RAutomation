@@ -12,8 +12,8 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) int Table_GetValues(const FindInformation& findInformation, const char* values[]) {
-		auto tableControl = gcnew AutomatedTable(findInformation);
-		return tableControl->GetValues(values);
+		auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
+		return StringHelper::Copy(tableControl->Values, values);
 	}
 
   __declspec ( dllexport ) int Table_FindValues(const FindInformation& findInformation, const char* values[]) {
