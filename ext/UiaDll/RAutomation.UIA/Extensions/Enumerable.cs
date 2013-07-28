@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Automation;
+using System.Windows.Forms.VisualStyles;
 
 namespace RAutomation.UIA.Extensions
 {
@@ -37,6 +38,12 @@ namespace RAutomation.UIA.Extensions
             }
 
             return -1;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> doIt)
+        {
+            foreach (var item in items)
+                doIt(item);
         }
 
         public static IEnumerable<AutomationElement> AsEnumerable(this AutomationElementCollection automationElements)

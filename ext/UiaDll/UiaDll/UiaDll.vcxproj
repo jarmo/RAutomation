@@ -92,7 +92,6 @@
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="AutomatedText.h" />
     <ClInclude Include="UiaDll.h" />
   </ItemGroup>
   <ItemGroup>
@@ -116,7 +115,6 @@
     <ClCompile Include="StringMethods.cpp" />
     <ClCompile Include="TabControlMethods.cpp" />
     <ClCompile Include="TableMethods.cpp" />
-    <ClCompile Include="AutomatedText.cpp" />
     <ClCompile Include="TextMethods.cpp" />
     <ClCompile Include="UiaDll.cpp" />
   </ItemGroup>
