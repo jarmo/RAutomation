@@ -28,7 +28,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool Table_CoordinateIsValid(const FindInformation& findInformation, const int whichItemIndex, const int whichColumnIndex) {
 		try {
-			auto tableControl = gcnew AutomatedTable(findInformation);
+			auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
 			return tableControl->Exists(whichItemIndex, whichColumnIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
@@ -38,9 +38,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void Table_ValueAt(const FindInformation& findInformation, const int row, const int column, char *foundValue, const int foundValueLength) {
 		try {
-			auto tableControl = gcnew AutomatedTable(findInformation);
-			auto rowValue = tableControl->ValueAt(row, column);
-			StringHelper::CopyToUnmanagedString(rowValue, foundValue, foundValueLength);
+			auto tableControl = gcnew TableControl(AutomationFinder::FindFor(findInformation));
+			StringHelper::CopyToUnmanagedString(tableControl->ValueAt(row, column), foundValue, foundValueLength);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}

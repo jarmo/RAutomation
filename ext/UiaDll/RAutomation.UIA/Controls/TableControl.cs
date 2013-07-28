@@ -19,6 +19,21 @@ namespace RAutomation.UIA.Controls
             get { return _element.As<TablePattern>(TablePattern.Pattern).Current.RowCount; }
         }
 
+        public bool Exists(int row, int column)
+        {
+            return At(row, column).Exists();
+        }
+
+        public string ValueAt(int row, int column)
+        {
+            return At(row, column).Current.Name;
+        }
+
+        public AutomationElement At(int row, int column)
+        {
+            return _element.FindOne(IsTableItem, GridItemPattern.ColumnProperty.Is(column), GridItemPattern.RowProperty.Is(row));
+        }
+
         public string[] Headers
         {
             get { return _element.Find(ControlType.HeaderItem.Condition()).Select(x => x.Current.Name).ToArray(); }
@@ -31,7 +46,12 @@ namespace RAutomation.UIA.Controls
 
         private IEnumerable<AutomationElement> TableOrListItems
         {
-            get { return _element.FindAny(AutomationElement.IsTableItemPatternAvailableProperty.TrueCondition(), ControlType.ListItem.Condition()); }
+            get { return _element.FindAny(IsTableItem, ControlType.ListItem.Condition()); }
+        }
+
+        private static Condition IsTableItem
+        {
+            get { return AutomationElement.IsTableItemPatternAvailableProperty.TrueCondition(); }
         }
     }
 }

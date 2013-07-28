@@ -23,6 +23,11 @@ namespace RAutomation.UIA.Extensions
             return automationElement.FindAll(TreeScope.Subtree, new OrCondition(conditions)).AsEnumerable();
         }
 
+        public static AutomationElement FindOne(this AutomationElement automationElement, params Condition[] conditions)
+        {
+            return automationElement.FindFirst(TreeScope.Subtree, new AndCondition(conditions));
+        }
+
         public static IEnumerable<string> Names(this IEnumerable<AutomationElement> automationElements)
         {
             return automationElements.Select(x => x.Current.Name);

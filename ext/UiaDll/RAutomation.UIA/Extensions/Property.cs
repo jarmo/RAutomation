@@ -13,5 +13,10 @@ namespace RAutomation.UIA.Extensions
         {
             return new PropertyCondition(property, true);
         }
+
+        public static Condition Is(this AutomationProperty property, object value)
+        {
+            return new PropertyCondition(property, value);
+        }
     }
 }
