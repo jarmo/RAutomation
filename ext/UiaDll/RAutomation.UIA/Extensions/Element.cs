@@ -70,6 +70,16 @@ namespace RAutomation.UIA.Extensions
             return automationElement.AsTogglePattern().Current.ToggleState == ToggleState.On;
         }
 
+        public static string Value(this AutomationElement automationElement)
+        {
+            return automationElement.AsValuePattern().Current.Value;
+        }
+
+        public static void SetValue(this AutomationElement automationElement, string value)
+        {
+            automationElement.AsValuePattern().SetValue(value);
+        }
+
         public static bool IsValuePattern(this AutomationElement automationElement)
         {
             return (bool) automationElement.GetCurrentPropertyValue(AutomationElement.IsValuePatternAvailableProperty);

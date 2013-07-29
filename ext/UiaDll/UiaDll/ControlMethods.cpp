@@ -1,15 +1,16 @@
 #include "stdafx.h"
-#include "AutomationControl.h"
+#include "AutomationFinder.h"
 #include "StringHelper.h"
+
+using namespace RAutomation::UIA::Extensions;
 
 extern "C" {
 	__declspec ( dllexport ) void Control_GetValue(const FindInformation& findInformation, char* theValue, const int maximumLength) {
-		auto control = gcnew AutomationControl(findInformation);
-		StringHelper::CopyToUnmanagedString(control->Value, theValue, maximumLength);
+		auto value = Element::Value(AutomationFinder::FindFor(findInformation));
+		StringHelper::CopyToUnmanagedString(value, theValue, maximumLength);
 	}
 
 	__declspec ( dllexport ) void Control_SetValue(const FindInformation& findInformation, const char* theValue) {
-		auto control = gcnew AutomationControl(findInformation);
-		control->Value = gcnew String(theValue);
+		Element::SetValue(AutomationFinder::FindFor(findInformation), gcnew String(theValue));
 	}
 }
