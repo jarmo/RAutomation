@@ -6,11 +6,11 @@
 #include "AutomationControl.h"
 #include "AutomationFinder.h"
 #include "DynamicAssemblyResolver.h"
-#include "ExpandCollapseHelper.h"
 #include "StringHelper.h"
 
 IUIAutomation* getGlobalIUIAutomation() ;
 
+using namespace RAutomation::UIA;
 using namespace RAutomation::UIA::Extensions;
 
 extern "C" {
@@ -312,8 +312,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_ExpandItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
-			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->ExpandByValue(findInformation, whichItem);
+			auto expander = gcnew Expander(AutomationFinder::FindFor(findInformation));
+      expander->Expand(gcnew String(whichItem));
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}
@@ -321,8 +321,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_ExpandItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
-			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->ExpandByIndex(findInformation, whichItemIndex);
+			auto expander = gcnew Expander(AutomationFinder::FindFor(findInformation));
+			expander->Expand(whichItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}
@@ -330,8 +330,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_CollapseItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
-			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->CollapseByValue(findInformation, whichItem);
+			auto collapser = gcnew Collapser(AutomationFinder::FindFor(findInformation));
+			collapser->Collapse(gcnew String(whichItem));
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}
@@ -339,8 +339,8 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_CollapseItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
-			auto expandCollapseHelper = gcnew ExpandCollapseHelper();
-			expandCollapseHelper->CollapseByIndex(findInformation, whichItemIndex);
+			auto collapser = gcnew Collapser(AutomationFinder::FindFor(findInformation));
+			collapser->Collapse(whichItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
 		}

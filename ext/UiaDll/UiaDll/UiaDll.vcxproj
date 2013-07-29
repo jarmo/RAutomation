@@ -84,7 +84,6 @@
     <ClInclude Include="AutomationControl.h" />
     <ClInclude Include="AutomationFinder.h" />
     <ClInclude Include="DynamicAssemblyResolver.h" />
-    <ClInclude Include="ExpandCollapseHelper.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="MenuItemSelector.h" />
     <ClInclude Include="resource.h" />
@@ -103,7 +102,6 @@
     <ClCompile Include="MenuMethods.cpp" />
     <ClCompile Include="SelectListMethods.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="ExpandCollapseHelper.cpp" />
     <ClCompile Include="MenuItemSelector.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
