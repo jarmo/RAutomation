@@ -213,15 +213,6 @@ module RAutomation
             string_buffer.read_string
           end
 
-          def control_name(control_hwnd)
-            string_buffer = FFI::MemoryPointer.new :char, 255
-            if (UiaDll::get_control_name(control_hwnd, string_buffer, 255))
-              string_buffer.read_string
-            else
-              fail "Cannot get name for control with HWND 0x" + control_hwnd.to_s(16)
-            end
-          end
-
           private
 
           def within_foreground_thread(hwnd)

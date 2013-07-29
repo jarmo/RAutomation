@@ -241,16 +241,6 @@ extern "C" {
 		return element_count ;
 	}
 
-	__declspec ( dllexport ) bool RA_GetControlName(const HWND windowHandle, char* windowName, const int windowNameLength) {
-		try {
-			auto control = gcnew AutomationControl(windowHandle);
-			StringHelper::CopyToUnmanagedString(control->Name, windowName, windowNameLength);
-			return true;
-		} catch(Exception^) {
-			return false;
-		}
-	}
-
 	__declspec ( dllexport ) bool IsSet(const FindInformation& findInformation) {
 		try {
 			return Element::IsToggled(AutomationFinder::FindFor(findInformation));

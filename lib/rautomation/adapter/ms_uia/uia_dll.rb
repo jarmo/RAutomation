@@ -292,8 +292,6 @@ module RAutomation
                         [:pointer, :pointer], :int
         attach_function :find_children, :RA_FindChildren,
                         [:pointer, :pointer], :int
-        attach_function :get_control_name, :RA_GetControlName,
-                        [:long, :pointer, :int], :bool
         attach_function :select, :RA_Select,
                         [:pointer], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
