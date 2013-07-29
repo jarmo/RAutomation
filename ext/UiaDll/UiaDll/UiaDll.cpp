@@ -107,10 +107,7 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) int GetClassNames(const FindInformation& findInformation, const char* classNames[]) {
-		auto control = gcnew AutomationControl(findInformation);
-		auto finder = gcnew AutomationFinder(control->Element);
-
-		auto allChildren = finder->Find();
+		auto allChildren = AutomationFinder::FindFor(findInformation)->FindAll(System::Windows::Automation::TreeScope::Subtree, Condition::TrueCondition);
 
 		if( NULL != classNames ) {
 			StringHelper::CopyClassNames(allChildren, classNames);
