@@ -13,39 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Helpers">
-      <UniqueIdentifier>{235d8022-1949-4a55-b1fd-af041c36744f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Menu">
-      <UniqueIdentifier>{f558a0f9-f67e-483f-86cf-a5f2ce6f1a93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Helpers">
-      <UniqueIdentifier>{0639f7bf-9510-4ad0-8032-064ba24fed5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menu">
-      <UniqueIdentifier>{ca87cbd9-97d0-41c0-b1d3-e0b4c6a3de8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Table">
-      <UniqueIdentifier>{9f1663a8-aadc-46f8-8b88-b50196b59645}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SelectList">
-      <UniqueIdentifier>{fe7c5a5a-36f1-4acb-9147-a32a4e168c5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Strings">
-      <UniqueIdentifier>{568b2839-5e30-4e34-91b0-a0e67f1c1672}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Strings">
-      <UniqueIdentifier>{4059b959-0144-4a0e-8900-fbdef8bbe335}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Control">
-      <UniqueIdentifier>{07c7f544-b01e-4f38-a4bb-adafe3b91fbd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Text">
-      <UniqueIdentifier>{15a04b2b-04c7-44f4-8fdb-d83019eb3917}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\TabControl">
-      <UniqueIdentifier>{c8cf5521-2447-48f8-a48b-a4bf3909b00a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UiaDll.h">
@@ -60,17 +27,17 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuItemSelector.h">
-      <Filter>Header Files\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="StringHelper.h">
-      <Filter>Header Files\Strings</Filter>
-    </ClInclude>
     <ClInclude Include="DynamicAssemblyResolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Locator.h">
-      <Filter>Header Files\Helpers</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItemSelector.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,38 +53,38 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MenuItemSelector.cpp">
-      <Filter>Source Files\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="TableMethods.cpp">
-      <Filter>Source Files\Table</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectListMethods.cpp">
-      <Filter>Source Files\SelectList</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuMethods.cpp">
-      <Filter>Source Files\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="StringHelper.cpp">
-      <Filter>Source Files\Strings</Filter>
-    </ClCompile>
-    <ClCompile Include="StringMethods.cpp">
-      <Filter>Source Files\Strings</Filter>
-    </ClCompile>
-    <ClCompile Include="ControlMethods.cpp">
-      <Filter>Source Files\Control</Filter>
-    </ClCompile>
-    <ClCompile Include="TextMethods.cpp">
-      <Filter>Source Files\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="TabControlMethods.cpp">
-      <Filter>Source Files\TabControl</Filter>
-    </ClCompile>
     <ClCompile Include="DynamicAssemblyResolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ControlMethods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Locator.cpp">
-      <Filter>Source Files\Helpers</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuItemSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuMethods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectListMethods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringMethods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TabControlMethods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TableMethods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextMethods.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
