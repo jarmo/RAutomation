@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "AutomationFinder.h"
+#include "Locator.h"
 #include "DynamicAssemblyResolver.h"
 #include "StringHelper.h"
 
@@ -20,16 +20,16 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) bool ElementExists(const FindInformation& findInformation) {
-    return Element::Exists(AutomationFinder::FindFor(findInformation));
+    return Element::Exists(Locator::FindFor(findInformation));
 	}
 
 	__declspec ( dllexport ) int NativeWindowHandle(const FindInformation& findInformation) { 
-    return Element::NativeWindowHandle(AutomationFinder::FindFor(findInformation));
+    return Element::NativeWindowHandle(Locator::FindFor(findInformation));
 	}
 
 	__declspec ( dllexport ) int BoundingRectangle(const FindInformation& findInformation, long *rectangle) {
 		try {
-			auto boundary = Element::BoundingRectangle(AutomationFinder::FindFor(findInformation));
+			auto boundary = Element::BoundingRectangle(Locator::FindFor(findInformation));
 
 			rectangle[0] = (long)boundary.Left;
 			rectangle[1] = (long)boundary.Top;
@@ -45,7 +45,7 @@ extern "C" {
 
 	__declspec ( dllexport ) int ControlType(const FindInformation& findInformation) {
 		try {
-      return Element::ControlType(AutomationFinder::FindFor(findInformation))->Id;
+      return Element::ControlType(Locator::FindFor(findInformation))->Id;
 		} catch(Exception^ e) {
 			Console::WriteLine("ControlType:  {0}", e->Message);
 			return 0;
@@ -54,7 +54,7 @@ extern "C" {
 
 	__declspec ( dllexport ) int ProcessId(const FindInformation& findInformation) {
 		try {
-      return Element::ProcessId(AutomationFinder::FindFor(findInformation));
+      return Element::ProcessId(Locator::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Console::WriteLine("ProcessId:  {0}", e->Message);
 			return 0;
@@ -63,7 +63,7 @@ extern "C" {
 
 	__declspec ( dllexport ) void Name(const FindInformation& findInformation, char* name, const int nameLength) {
 		try {
-      auto currentName = Element::Name(AutomationFinder::FindFor(findInformation));
+      auto currentName = Element::Name(Locator::FindFor(findInformation));
 	  StringHelper::CopyToUnmanagedString(currentName, name, nameLength);
 		} catch(Exception^ e) {
 			Console::WriteLine("Name:  {0}", e->Message);
@@ -72,7 +72,7 @@ extern "C" {
 
 	__declspec ( dllexport ) void ClassName(const FindInformation& findInformation, char* className, const int classNameLength) {
 		try {
-      auto currentClassName = Element::ClassName(AutomationFinder::FindFor(findInformation));
+      auto currentClassName = Element::ClassName(Locator::FindFor(findInformation));
 			StringHelper::CopyToUnmanagedString(currentClassName, className, classNameLength);
 		} catch(Exception^ e) {
 			Console::WriteLine("ClassName:  {0}", e->Message);
@@ -81,7 +81,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsEnabled(const FindInformation& findInformation) {
 		try {
-			return Element::IsEnabled(AutomationFinder::FindFor(findInformation));
+			return Element::IsEnabled(Locator::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Console::WriteLine("IsEnabled:  {0}", e->Message);
 			return false;
@@ -90,7 +90,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsFocused(const FindInformation& findInformation) {
 		try {
-			return Element::IsFocused(AutomationFinder::FindFor(findInformation));
+			return Element::IsFocused(Locator::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Console::WriteLine("IsFocused:  {0}", e->Message);
 			return false;
@@ -99,7 +99,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool SetControlFocus(const FindInformation& findInformation) {
 		try {
-			AutomationFinder::FindFor(findInformation)->SetFocus();
+			Locator::FindFor(findInformation)->SetFocus();
 			return true;
 		} catch(Exception^ e) {
 			Console::WriteLine("IsFocused:  {0}", e->Message);
@@ -108,7 +108,7 @@ extern "C" {
 	}
 
 	__declspec ( dllexport ) int GetClassNames(const FindInformation& findInformation, const char* classNames[]) {
-		auto allChildren = AutomationFinder::FindFor(findInformation)->FindAll(System::Windows::Automation::TreeScope::Subtree, Condition::TrueCondition);
+		auto allChildren = Locator::FindFor(findInformation)->FindAll(System::Windows::Automation::TreeScope::Subtree, Condition::TrueCondition);
 
 		if( NULL != classNames ) {
 			StringHelper::CopyClassNames(allChildren, classNames);
@@ -241,7 +241,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsSet(const FindInformation& findInformation) {
 		try {
-			return Element::IsToggled(AutomationFinder::FindFor(findInformation));
+			return Element::IsToggled(Locator::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Debug::WriteLine("IsSet:  {0}", e->Message);
 			return false;
@@ -250,7 +250,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool IsSelected(const FindInformation& findInformation) {
 		try {
-			return Element::IsSelected(AutomationFinder::FindFor(findInformation));
+			return Element::IsSelected(Locator::FindFor(findInformation));
 		} catch(Exception^ e) {
 			Debug::WriteLine("IsSelected:  {0}", e->Message);
 			return false;
@@ -276,7 +276,7 @@ extern "C" {
 
 	__declspec ( dllexport ) bool RA_Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
 		try {
-			return Clicker::Click(AutomationFinder::FindFor(findInformation));
+			return Clicker::Click(Locator::FindFor(findInformation));
 		} catch(Exception^ e) {
 			if( errorInfo ) {
 				StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
@@ -288,7 +288,7 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_ExpandItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
-			auto expander = gcnew Expander(AutomationFinder::FindFor(findInformation));
+			auto expander = gcnew Expander(Locator::FindFor(findInformation));
       expander->Expand(gcnew String(whichItem));
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
@@ -297,7 +297,7 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_ExpandItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
-			auto expander = gcnew Expander(AutomationFinder::FindFor(findInformation));
+			auto expander = gcnew Expander(Locator::FindFor(findInformation));
 			expander->Expand(whichItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
@@ -306,7 +306,7 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_CollapseItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
-			auto collapser = gcnew Collapser(AutomationFinder::FindFor(findInformation));
+			auto collapser = gcnew Collapser(Locator::FindFor(findInformation));
 			collapser->Collapse(gcnew String(whichItem));
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
@@ -315,7 +315,7 @@ extern "C" {
 
 	__declspec ( dllexport ) void RA_CollapseItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
-			auto collapser = gcnew Collapser(AutomationFinder::FindFor(findInformation));
+			auto collapser = gcnew Collapser(Locator::FindFor(findInformation));
 			collapser->Collapse(whichItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
