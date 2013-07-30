@@ -134,18 +134,6 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationElement *pElement) {
-		CONTROLTYPEID control_type ;
-
-		HRESULT hr = pElement->get_CurrentControlType(&control_type) ;
-		if (SUCCEEDED(hr))
-			return control_type ;
-		else {
-			printf("RA_GetCurrentControlType: CurrentControlType returned 0x%x\r\n", hr) ;
-			return 0 ;
-		}
-	}
-
 	__declspec ( dllexport ) long RA_ClickMouse() {
 		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
