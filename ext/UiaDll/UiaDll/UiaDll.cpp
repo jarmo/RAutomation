@@ -134,16 +134,6 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) long RA_ClickMouse() {
-		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-		return 0;
-	}
-
-	__declspec ( dllexport ) long RA_MoveMouse(int x, int y) {
-		return SetCursorPos(x,y);
-	}
-
 	__declspec ( dllexport ) int RA_CurrentIsOffscreen(IUIAutomationElement *pElement, int *visible) {
 		BOOL offscreen;
 
