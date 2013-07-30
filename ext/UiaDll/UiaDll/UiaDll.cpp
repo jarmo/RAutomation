@@ -1,12 +1,7 @@
-// UiaDll.cpp : Defines the exported functions for the DLL application.
-//
-
 #include "stdafx.h"
 #include "Locator.h"
 #include "DynamicAssemblyResolver.h"
 #include "StringHelper.h"
-
-IUIAutomation* getGlobalIUIAutomation() ;
 
 using namespace RAutomation::UIA;
 using namespace RAutomation::UIA::Controls;

@@ -82,7 +82,6 @@
   <ItemGroup>
     <ClInclude Include="Locator.h" />
     <ClInclude Include="DynamicAssemblyResolver.h" />
-    <ClInclude Include="globals.h" />
     <ClInclude Include="MenuItemSelector.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />

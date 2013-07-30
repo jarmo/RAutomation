@@ -16,8 +16,6 @@
 
 #include <list>
 
-#include "globals.h"
-
 using namespace System;
 using namespace System::Runtime::InteropServices;
 namespace UIAutomation = System::Windows::Automation;
