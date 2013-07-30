@@ -2,10 +2,11 @@
 using System.Runtime.InteropServices;
 using System.Windows.Automation;
 using System.Windows.Forms;
+using RAutomation.UIA.Extensions;
 
 namespace RAutomation.UIA.Controls
 {
-    internal class Clicker
+    public class Clicker
     {
         [DllImport("user32.dll")]
         static extern void mouse_event(uint flags, uint x, uint y, uint data, int extraInfo);
@@ -19,6 +20,32 @@ namespace RAutomation.UIA.Controls
 
         private const uint MOUSEEVENTLF_LEFTDOWN = 0x2;
         private const uint MOUSEEVENTLF_LEFTUP = 0x4;
+
+        public static bool Click(AutomationElement element)
+        {
+            try
+            {
+                if (AutomationElement.IsInvokePatternAvailableProperty.In(element))
+                {
+                    element.As<InvokePattern>(InvokePattern.Pattern).Invoke();
+                }
+                else if (AutomationElement.IsTogglePatternAvailableProperty.In(element))
+                {
+                    element.AsTogglePattern().Toggle();
+                }
+                else if (AutomationElement.IsSelectionItemPatternAvailableProperty.In(element))
+                {
+                    element.AsSelectionItem().Select();
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
 
         public static void MouseClick(AutomationElement element)
         {

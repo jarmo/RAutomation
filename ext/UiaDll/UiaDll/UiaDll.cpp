@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include "AutomationClicker.h"
 #include "AutomationControl.h"
 #include "AutomationFinder.h"
 #include "DynamicAssemblyResolver.h"
@@ -11,6 +10,7 @@
 IUIAutomation* getGlobalIUIAutomation() ;
 
 using namespace RAutomation::UIA;
+using namespace RAutomation::UIA::Controls;
 using namespace RAutomation::UIA::Extensions;
 
 extern "C" {
@@ -275,25 +275,13 @@ extern "C" {
 
 	__declspec ( dllexport ) bool RA_Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
 		try {
-			auto automationClicker = gcnew AutomationClicker(findInformation);
-			return automationClicker->Click();
+			return Clicker::Click(AutomationFinder::FindFor(findInformation));
 		} catch(Exception^ e) {
 			if( errorInfo ) {
 				StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
 			}
 
       return false;
-		}
-	}
-
-	__declspec ( dllexport ) void RA_PointAndClick(const HWND windowHandle, char* errorInfo, const int errorInfoSize) {
-		try {
-			auto automationClicker = gcnew AutomationClicker(windowHandle);
-			automationClicker->MouseClick();
-		} catch(Exception^ e) {
-			if( errorInfo ) {
-				StringHelper::CopyToUnmanagedString(e->ToString(), errorInfo, errorInfoSize);
-			}
 		}
 	}
 

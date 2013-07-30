@@ -304,8 +304,6 @@ module RAutomation
                         [SearchCriteria.by_ref, :int], :void
         attach_function :RA_Click,
                         [SearchCriteria.by_ref, :pointer, :int], :bool
-        attach_function :control_mouse_click, :RA_PointAndClick,
-                        [:long, :pointer, :int], :void
 
         def self.control_click(search_information)
           can_throw(:RA_Click, search_information)

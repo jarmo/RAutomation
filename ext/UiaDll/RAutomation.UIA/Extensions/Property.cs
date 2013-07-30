@@ -18,5 +18,10 @@ namespace RAutomation.UIA.Extensions
         {
             return new PropertyCondition(property, value);
         }
+
+        public static bool In(this AutomationProperty property, AutomationElement element)
+        {
+            return (bool) element.GetCurrentPropertyValue(property);
+        }
     }
 }
