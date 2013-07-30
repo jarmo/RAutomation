@@ -222,23 +222,6 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) int RA_Select(IUIAutomationElement *pElement) {
-		ISelectionItemProvider *pSelectionPattern ;
-		HRESULT hr = pElement->GetCurrentPattern(UIA_SelectionItemPatternId, (IUnknown**)&pSelectionPattern) ;
-		if (FAILED(hr)) {
-			printf("RA_GetIsSelected: getCurrentPattern failed 0x%x\r\n") ;
-			return FALSE ;
-		}
-
-		hr = pSelectionPattern->Select();
-		if (FAILED(hr)) {
-			printf("RA_Select: Select failed 0x%x\r\n", hr) ;
-			return 0 ;
-		}
-
-		return 1;
-	}
-
 	__declspec ( dllexport ) bool RA_Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
 		try {
 			return Clicker::Click(Locator::FindFor(findInformation));
