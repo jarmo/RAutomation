@@ -121,13 +121,13 @@ extern "C" {
 		return allChildren->Count;
 	}
 
-	__declspec ( dllexport ) long RA_ClickMouse() {
+	__declspec ( dllexport ) long ClickMouse() {
 		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 		return 0;
 	}
 
-	__declspec ( dllexport ) long RA_MoveMouse(int x, int y) {
+	__declspec ( dllexport ) long MoveMouse(int x, int y) {
 		return SetCursorPos(x,y);
 	}
 
@@ -149,7 +149,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) bool RA_Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
+	__declspec ( dllexport ) bool Click(const FindInformation& findInformation, char* errorInfo, const int errorInfoSize) {
 		try {
 			return Clicker::Click(Locator::FindFor(findInformation));
 		} catch(Exception^ e) {
@@ -161,7 +161,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_ExpandItemByValue(const FindInformation& findInformation, const char* whichItem) {
+	__declspec ( dllexport ) void ExpandItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
 			auto expander = gcnew Expander(Locator::FindFor(findInformation));
       expander->Expand(gcnew String(whichItem));
@@ -170,7 +170,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_ExpandItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
+	__declspec ( dllexport ) void ExpandItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
 			auto expander = gcnew Expander(Locator::FindFor(findInformation));
 			expander->Expand(whichItemIndex);
@@ -179,7 +179,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_CollapseItemByValue(const FindInformation& findInformation, const char* whichItem) {
+	__declspec ( dllexport ) void CollapseItemByValue(const FindInformation& findInformation, const char* whichItem) {
 		try {
 			auto collapser = gcnew Collapser(Locator::FindFor(findInformation));
 			collapser->Collapse(gcnew String(whichItem));
@@ -188,7 +188,7 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void RA_CollapseItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
+	__declspec ( dllexport ) void CollapseItemByIndex(const FindInformation& findInformation, const int whichItemIndex) {
 		try {
 			auto collapser = gcnew Collapser(Locator::FindFor(findInformation));
 			collapser->Collapse(whichItemIndex);

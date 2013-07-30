@@ -280,25 +280,25 @@ module RAutomation
 
         attach_function :handle_from_point, :HandleFromPoint,
                         [:int, :int], :long
-        attach_function :move_mouse, :RA_MoveMouse,
+        attach_function :move_mouse, :MoveMouse,
                         [:int,:int], :long
-        attach_function :click_mouse, :RA_ClickMouse,
+        attach_function :click_mouse, :ClickMouse,
                         [], :long
         attach_function :is_offscreen, :IsOffscreen,
                         [SearchCriteria.by_ref], :bool
-        attach_function :expand_by_value, :RA_ExpandItemByValue,
+        attach_function :expand_by_value, :ExpandItemByValue,
                         [SearchCriteria.by_ref, :string], :void
-        attach_function :expand_by_index, :RA_ExpandItemByIndex,
+        attach_function :expand_by_index, :ExpandItemByIndex,
                         [SearchCriteria.by_ref, :int], :void
-        attach_function :collapse_by_value, :RA_CollapseItemByValue,
+        attach_function :collapse_by_value, :CollapseItemByValue,
                         [SearchCriteria.by_ref, :string], :void
-        attach_function :collapse_by_index, :RA_CollapseItemByIndex,
+        attach_function :collapse_by_index, :CollapseItemByIndex,
                         [SearchCriteria.by_ref, :int], :void
-        attach_function :RA_Click,
+        attach_function :Click,
                         [SearchCriteria.by_ref, :pointer, :int], :bool
 
         def self.control_click(search_information)
-          can_throw(:RA_Click, search_information)
+          can_throw(:Click, search_information)
         end
 
         private
