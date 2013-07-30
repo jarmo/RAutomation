@@ -27,6 +27,11 @@ extern "C" {
     return Element::NativeWindowHandle(Locator::FindFor(findInformation));
 	}
 
+	__declspec ( dllexport ) int HandleFromPoint(int xCoord, int yCoord) {
+		auto element = AutomationElement::FromPoint(Point((double)xCoord, (double)yCoord));
+		return Element::NativeWindowHandle(element);
+	}
+
 	__declspec ( dllexport ) int BoundingRectangle(const FindInformation& findInformation, long *rectangle) {
 		try {
 			auto boundary = Element::BoundingRectangle(Locator::FindFor(findInformation));
@@ -125,22 +130,6 @@ extern "C" {
 			return pElement ;
 		else {
 			printf("RA_ElementFromHandle: Cannot find element from handle 0x%x. HRESULT was 0x%x\r\n", hwnd, hr) ;
-			return NULL ;
-		}
-	}
-
-	__declspec ( dllexport ) IUIAutomationElement *RA_ElementFromPoint(int xCoord, int yCoord) {
-		IUIAutomationElement *pElement ;
-		POINT point;
-
-		point.x = xCoord;
-		point.y = yCoord;
-
-		HRESULT hr = getGlobalIUIAutomation()->ElementFromPoint(point, &pElement) ;
-		if (SUCCEEDED(hr))
-			return pElement ;
-		else {
-			printf("RA_ElementFromPoint: Cannot find element from point %d , %d. HRESULT was 0x%x\r\n", xCoord, yCoord, hr) ;
 			return NULL ;
 		}
 	}

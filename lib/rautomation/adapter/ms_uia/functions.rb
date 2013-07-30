@@ -172,8 +172,7 @@ module RAutomation
                 raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
                 hwnd
               when locators[:point]
-                uia_control = UiaDll::element_from_point(locators[:point][0], locators[:point][1])
-                hwnd = UiaDll::current_native_window_handle(uia_control) # return HWND of UIA element
+                hwnd = UiaDll::handle_from_point(*locators[:point])
                 raise UnknownElementException, "#{locators[:point]} does not exist" if hwnd == 0
                 hwnd
               else
