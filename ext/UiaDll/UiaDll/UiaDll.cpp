@@ -48,6 +48,10 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) bool IsOffscreen(const FindInformation& findInformation) {
+		return Element::IsOffscreen(Locator::FindFor(findInformation));
+	}
+
 	__declspec ( dllexport ) int ControlType(const FindInformation& findInformation) {
 		try {
       return Element::ControlType(Locator::FindFor(findInformation))->Id;
@@ -122,18 +126,6 @@ extern "C" {
 		return allChildren->Count;
 	}
 
-	__declspec ( dllexport ) IUIAutomationElement *RA_ElementFromHandle(HWND hwnd) {
-		IUIAutomationElement *pElement ;
-
-		HRESULT hr = getGlobalIUIAutomation()->ElementFromHandle(hwnd, &pElement) ;
-		if (SUCCEEDED(hr))
-			return pElement ;
-		else {
-			printf("RA_ElementFromHandle: Cannot find element from handle 0x%x. HRESULT was 0x%x\r\n", hwnd, hr) ;
-			return NULL ;
-		}
-	}
-
 	__declspec ( dllexport ) long RA_ClickMouse() {
 		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
@@ -142,26 +134,6 @@ extern "C" {
 
 	__declspec ( dllexport ) long RA_MoveMouse(int x, int y) {
 		return SetCursorPos(x,y);
-	}
-
-	__declspec ( dllexport ) int RA_CurrentIsOffscreen(IUIAutomationElement *pElement, int *visible) {
-		BOOL offscreen;
-
-		HRESULT hr = pElement->get_CurrentIsOffscreen(&offscreen) ;
-		if (SUCCEEDED(hr)) {
-			if(offscreen){
-				*visible = 1;
-			}
-			else
-			{
-				*visible = 0;
-			}
-			return 1;
-		}
-		else {
-			printf("RA_CurrentIsOffscreen: get_CurrentIsOffscreen failed 0x%x\r\n", hr) ;
-			return 0 ;
-		}
 	}
 
 	__declspec ( dllexport ) bool IsSet(const FindInformation& findInformation) {

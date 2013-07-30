@@ -60,6 +60,11 @@ namespace RAutomation.UIA.Extensions
             return automationElement.AsSelectionItem().Current.IsSelected;
         }
 
+        public static bool IsOffscreen(this AutomationElement automationElement)
+        {
+            return automationElement.Current.IsOffscreen;
+        }
+
         public static TogglePattern AsTogglePattern(this AutomationElement automationElement)
         {
             return (TogglePattern)automationElement.GetCurrentPattern(TogglePattern.Pattern);

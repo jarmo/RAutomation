@@ -85,19 +85,7 @@ module RAutomation
         end
 
         def visible?
-          element = UiaDll::element_from_handle(hwnd)
-
-          off_screen = FFI::MemoryPointer.new :int
-
-          if UiaDll::is_offscreen(element, off_screen) == 0
-            fail "Could not check element"
-          end
-
-#          puts "return #{off_screen.read_int}"
-          if off_screen.read_int == 0
-            return true
-          end
-          false
+          !UiaDll::is_offscreen(search_information)
         end
 
         def matches_type?(*classes)

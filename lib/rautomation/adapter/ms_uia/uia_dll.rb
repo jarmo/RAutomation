@@ -278,16 +278,14 @@ module RAutomation
         attach_function :clean_up_strings, :String_CleanUp,
                         [:pointer, :int], :void
 
-        attach_function :element_from_handle, :RA_ElementFromHandle,
-                        [:long], :pointer
         attach_function :handle_from_point, :HandleFromPoint,
                         [:int, :int], :long
         attach_function :move_mouse, :RA_MoveMouse,
                         [:int,:int], :long
         attach_function :click_mouse, :RA_ClickMouse,
                         [], :long
-        attach_function :is_offscreen, :RA_CurrentIsOffscreen,
-                        [:pointer, :pointer], :int
+        attach_function :is_offscreen, :IsOffscreen,
+                        [SearchCriteria.by_ref], :bool
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [SearchCriteria.by_ref, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,
