@@ -164,46 +164,6 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) int RA_FindChildren(IUIAutomationElement *pElement, IUIAutomationElement *pChildren[]) {
-		IUIAutomationCondition *pTrueCondition ;
-		IUIAutomationElementArray *pElementArray ;
-		int element_count ;
-
-		HRESULT hr = getGlobalIUIAutomation()->CreateTrueCondition(&pTrueCondition) ;
-		if (FAILED(hr)) {
-			printf("RA_FindChildren: Could not create true condition 0x%x\r\n", hr) ;
-			return 0 ;
-		}
-
-		hr = pElement->FindAll(TreeScope_Children, pTrueCondition, &pElementArray) ;
-		if (FAILED(hr)) {
-			printf("RA_FindChildren: FindAll failed 0x%x\r\n", hr) ;
-			return 0 ;
-		}
-
-		hr = pElementArray->get_Length(&element_count) ;
-		if (FAILED(hr)) {
-			printf("RA_FindChildren: get_length failed 0x%x\r\n", hr) ;
-			return 0 ;
-		}
-
-		if (pChildren != NULL) {
-			// given some memory get the details
-			for (int index = 0; index < element_count; index++) {
-				IUIAutomationElement *pElement ;
-
-				hr = pElementArray->GetElement(index, &pElement) ;
-				if (FAILED(hr)) {
-					printf("RA_FindChildren: GetElement failed 0x%x\r\n", hr) ;
-				} else {
-					pChildren[index] = pElement ;
-				}
-			}
-		}
-
-		return element_count ;
-	}
-
 	__declspec ( dllexport ) bool IsSet(const FindInformation& findInformation) {
 		try {
 			return Element::IsToggled(Locator::FindFor(findInformation));

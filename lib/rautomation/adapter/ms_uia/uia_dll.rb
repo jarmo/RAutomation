@@ -288,8 +288,6 @@ module RAutomation
                         [], :long
         attach_function :is_offscreen, :RA_CurrentIsOffscreen,
                         [:pointer, :pointer], :int
-        attach_function :find_children, :RA_FindChildren,
-                        [:pointer, :pointer], :int
         attach_function :expand_by_value, :RA_ExpandItemByValue,
                         [SearchCriteria.by_ref, :string], :void
         attach_function :expand_by_index, :RA_ExpandItemByIndex,

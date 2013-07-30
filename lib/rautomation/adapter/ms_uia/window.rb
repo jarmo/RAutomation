@@ -187,10 +187,6 @@ module RAutomation
           Functions.respond_to?(name) ? Functions.send(name, *args) : super
         end
 
-        def count_children(element)
-          UiaDll::find_children(element, nil)
-        end
-
         def bounding_rectangle
           window = UiaDll::element_from_handle(hwnd)
 
