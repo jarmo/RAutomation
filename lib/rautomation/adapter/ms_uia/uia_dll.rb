@@ -282,8 +282,6 @@ module RAutomation
                         [:long], :pointer
         attach_function :handle_from_point, :HandleFromPoint,
                         [:int, :int], :long
-        attach_function :current_native_window_handle, :RA_CurrentNativeWindowHandle,
-                        [:pointer], :long
         attach_function :move_mouse, :RA_MoveMouse,
                         [:int,:int], :long
         attach_function :click_mouse, :RA_ClickMouse,

@@ -134,18 +134,6 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) HWND RA_CurrentNativeWindowHandle(IUIAutomationElement *pElement) {
-		UIA_HWND uia_hwnd ;
-
-		if (pElement == NULL) {
-			printf("RA_CurrentNativeWindowHandle: Cannot operate on NULL element\r\n") ;
-			return (HWND)0 ;
-		}
-
-		pElement->get_CurrentNativeWindowHandle(&uia_hwnd) ;
-		return (HWND)uia_hwnd ;
-	}
-
 	__declspec ( dllexport ) int RA_GetCurrentControlType(IUIAutomationElement *pElement) {
 		CONTROLTYPEID control_type ;
 
