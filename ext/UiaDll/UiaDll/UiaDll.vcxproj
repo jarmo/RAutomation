@@ -80,7 +80,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutomationControl.h" />
     <ClInclude Include="AutomationFinder.h" />
     <ClInclude Include="DynamicAssemblyResolver.h" />
     <ClInclude Include="globals.h" />
@@ -93,7 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="AutomationControl.cpp" />
     <ClCompile Include="AutomationFinder.cpp" />
     <ClCompile Include="ControlMethods.cpp" />
     <ClCompile Include="DynamicAssemblyResolver.cpp" />

@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include "AutomationControl.h"
 #include "AutomationFinder.h"
 #include "DynamicAssemblyResolver.h"
 #include "StringHelper.h"
@@ -12,6 +11,8 @@ IUIAutomation* getGlobalIUIAutomation() ;
 using namespace RAutomation::UIA;
 using namespace RAutomation::UIA::Controls;
 using namespace RAutomation::UIA::Extensions;
+
+using namespace System::Diagnostics;
 
 extern "C" {
 	__declspec(dllexport) void initialize(char* privateAssemblyDirectory) {

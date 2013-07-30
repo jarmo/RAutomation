@@ -40,9 +40,6 @@
     <Filter Include="Source Files\Control">
       <UniqueIdentifier>{07c7f544-b01e-4f38-a4bb-adafe3b91fbd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Control">
-      <UniqueIdentifier>{90616ecb-ce19-48d6-88ac-a38a46e42687}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Text">
       <UniqueIdentifier>{15a04b2b-04c7-44f4-8fdb-d83019eb3917}</UniqueIdentifier>
     </Filter>
@@ -74,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="StringHelper.h">
       <Filter>Header Files\Strings</Filter>
-    </ClInclude>
-    <ClInclude Include="AutomationControl.h">
-      <Filter>Header Files\Control</Filter>
     </ClInclude>
     <ClInclude Include="DynamicAssemblyResolver.h">
       <Filter>Header Files</Filter>
@@ -115,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="StringMethods.cpp">
       <Filter>Source Files\Strings</Filter>
-    </ClCompile>
-    <ClCompile Include="AutomationControl.cpp">
-      <Filter>Source Files\Control</Filter>
     </ClCompile>
     <ClCompile Include="ControlMethods.cpp">
       <Filter>Source Files\Control</Filter>
