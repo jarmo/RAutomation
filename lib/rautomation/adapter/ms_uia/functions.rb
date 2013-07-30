@@ -205,6 +205,10 @@ module RAutomation
             string_buffer.read_string
           end
 
+          def control_name(control_hwnd)
+            UiaDll::name(UiaDll::SearchCriteria.from_locator(control_hwnd, :hwnd => control_hwnd))
+          end
+
           private
 
           def within_foreground_thread(hwnd)
