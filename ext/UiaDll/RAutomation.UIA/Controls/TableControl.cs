@@ -23,7 +23,7 @@ namespace RAutomation.UIA.Controls
         public int SelectedIndex
         {
             get { return SelectionItems.IndexOf(x => x.Current.IsSelected); }
-            set { SelectionItems.ElementAt(value).Select(); }
+            set { DataItems.ElementAt(value).AsSelectionItem().Select(); }
         }
 
         public string Value
@@ -59,6 +59,14 @@ namespace RAutomation.UIA.Controls
         private IEnumerable<SelectionItemPattern> SelectionItems
         {
             get { return SelectionElements.Select(x => x.As<SelectionItemPattern>(SelectionItemPattern.Pattern)); }
+        }
+
+        private IEnumerable<AutomationElement> DataItems
+        {
+            get
+            {
+                return _element.Find(AutomationProperties.IsDataItem);
+            }
         }
 
         private IEnumerable<AutomationElement> SelectionElements
