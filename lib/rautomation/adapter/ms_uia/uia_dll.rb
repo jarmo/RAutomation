@@ -197,6 +197,20 @@ module RAutomation
           string_from(:SelectList_Selection, search_information)
         end
 
+        # Spinner methods
+        attach_function :Spinner_GetValue,
+                        [SearchCriteria.by_ref, :pointer, :int], :double
+        attach_function :Spinner_SetValue,
+                        [SearchCriteria.by_ref, :double, :pointer, :int], :void
+
+        def self.spinner_value(search_information)
+          can_throw(:Spinner_GetValue, search_information)
+        end
+
+        def self.set_spinner_value(search_information, value)
+          can_throw(:Spinner_SetValue, search_information, value)
+        end
+
         # Tab Control methods
         attach_function :TabControl_Items,
                         [SearchCriteria.by_ref, :pointer], :int

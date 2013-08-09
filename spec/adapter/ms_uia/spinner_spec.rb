@@ -7,4 +7,9 @@ describe MsUia::Spinner do
   subject { window.spinner(:id => 'numericUpDown1') }
 
   it { should exist }
+
+  it '#set' do
+    subject.set 4.0
+    subject.value.should eq(4.0)
+  end
 end
