@@ -18,6 +18,16 @@ namespace RAutomation.UIA.Controls
             set { RangeValue.SetValue(value); }
         }
 
+        public double Increment()
+        {
+            return Value += RangeValue.Current.SmallChange;
+        }
+
+        public double Decrement()
+        {
+            return Value -= RangeValue.Current.SmallChange;
+        }
+
         private RangeValuePattern RangeValue
         {
             get { return _element.As<RangeValuePattern>(RangeValuePattern.Pattern); }
