@@ -20,6 +20,14 @@ describe MsUia::Spinner, :if => SpecHelper.adapter == :ms_uia  do
     subject.value.should eq(4.0)
   end
 
+  it '#minimum' do
+    subject.minimum.should eq(-100.0)
+  end
+
+  it '#maximum' do
+    subject.maximum.should eq(100.0)
+  end
+
   it 'likes for values to be within range' do
     lambda { subject.set(1000.0) }.should raise_error
   end

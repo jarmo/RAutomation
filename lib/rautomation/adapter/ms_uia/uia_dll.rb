@@ -202,6 +202,10 @@ module RAutomation
                         [SearchCriteria.by_ref, :pointer, :int], :double
         attach_function :Spinner_SetValue,
                         [SearchCriteria.by_ref, :double, :pointer, :int], :void
+        attach_function :Spinner_Minimum,
+                        [SearchCriteria.by_ref, :pointer, :int], :double
+        attach_function :Spinner_Maximum,
+                        [SearchCriteria.by_ref, :pointer, :int], :double
         attach_function :Spinner_Increment,
                         [SearchCriteria.by_ref, :pointer, :int], :double
         attach_function :Spinner_Decrement,
@@ -213,6 +217,14 @@ module RAutomation
 
         def self.set_spinner_value(search_information, value)
           can_throw(:Spinner_SetValue, search_information, value)
+        end
+
+        def self.spinner_min(search_information)
+          can_throw(:Spinner_Minimum, search_information)
+        end
+
+        def self.spinner_max(search_information)
+          can_throw(:Spinner_Maximum, search_information)
         end
 
         def self.increment_spinner(search_information)
