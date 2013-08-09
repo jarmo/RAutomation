@@ -12,4 +12,8 @@ describe MsUia::Spinner do
     subject.set 4.0
     subject.value.should eq(4.0)
   end
+
+  it 'likes for values to be within range' do
+    lambda { subject.set(1000.0) }.should raise_error
+  end
 end
