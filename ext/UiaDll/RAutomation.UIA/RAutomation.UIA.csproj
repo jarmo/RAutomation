@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Controls\Clicker.cs" />
     <Compile Include="Controls\SelectList.cs" />
+    <Compile Include="Controls\Spinner.cs" />
     <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Controls\TableControl.cs" />
     <Compile Include="Controls\TextControl.cs" />
