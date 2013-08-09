@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using UIA.Extensions;
 
 namespace WindowsForms
 {
@@ -8,6 +9,7 @@ namespace WindowsForms
         public MainFormWindow()
         {
             InitializeComponent();
+            automatableMonthCalendar1.AsValueControl<ValueMonthCalendar>();
         }
 
         private void label1_Click(object sender, EventArgs e)

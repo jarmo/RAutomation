@@ -69,7 +69,7 @@
             this.treeView = new System.Windows.Forms.TreeView();
             this.multiLineTextField = new System.Windows.Forms.TextBox();
             this.buttonDataGridView = new System.Windows.Forms.Button();
-            this.automatableMonthCalendar1 = new WindowsForms.AutomatableMonthCalendar();
+            this.automatableMonthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -428,18 +428,17 @@
             // 
             // automatableMonthCalendar1
             // 
-            this.automatableMonthCalendar1.Location = new System.Drawing.Point(142, 474);
-            this.automatableMonthCalendar1.MaxSelectionCount = 1;
+            this.automatableMonthCalendar1.Location = new System.Drawing.Point(142, 477);
             this.automatableMonthCalendar1.Name = "automatableMonthCalendar1";
-            this.automatableMonthCalendar1.TabIndex = 17;
+            this.automatableMonthCalendar1.TabIndex = 19;
             // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(657, 657);
-            this.Controls.Add(this.buttonDataGridView);
             this.Controls.Add(this.automatableMonthCalendar1);
+            this.Controls.Add(this.buttonDataGridView);
             this.Controls.Add(this.multiLineTextField);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.FruitListBox);
@@ -507,8 +506,8 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.TextBox multiLineTextField;
-        private AutomatableMonthCalendar automatableMonthCalendar1;
         private System.Windows.Forms.Button buttonDataGridView;
+        private System.Windows.Forms.MonthCalendar automatableMonthCalendar1;
     }
 }
 
