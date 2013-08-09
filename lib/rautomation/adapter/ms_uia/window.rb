@@ -169,6 +169,11 @@ module RAutomation
           TabControl.new(self, locator)
         end
 
+        # @see Spinner#initialize
+        def spinner(locator)
+          Spinner.new(self, locator)
+        end
+
         # @see TextField#initialize
         # @see RAutomation::Window#text_field
         def text_field(locator)
