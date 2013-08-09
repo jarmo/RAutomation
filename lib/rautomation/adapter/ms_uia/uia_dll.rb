@@ -202,6 +202,10 @@ module RAutomation
                         [SearchCriteria.by_ref, :pointer, :int], :double
         attach_function :Spinner_SetValue,
                         [SearchCriteria.by_ref, :double, :pointer, :int], :void
+        attach_function :Spinner_Increment,
+                        [SearchCriteria.by_ref, :pointer, :int], :double
+        attach_function :Spinner_Decrement,
+                        [SearchCriteria.by_ref, :pointer, :int], :double
 
         def self.spinner_value(search_information)
           can_throw(:Spinner_GetValue, search_information)
@@ -209,6 +213,14 @@ module RAutomation
 
         def self.set_spinner_value(search_information, value)
           can_throw(:Spinner_SetValue, search_information, value)
+        end
+
+        def self.increment_spinner(search_information)
+          can_throw(:Spinner_Increment, search_information)
+        end
+
+        def self.decrement_spinner(search_information)
+          can_throw(:Spinner_Decrement, search_information)
         end
 
         # Tab Control methods

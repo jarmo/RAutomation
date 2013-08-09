@@ -9,6 +9,14 @@ module RAutomation
         def value
           UiaDll::spinner_value(search_information)
         end
+
+        def increment
+          UiaDll::increment_spinner(search_information)
+        end
+
+        def decrement
+          UiaDll::decrement_spinner(search_information)
+        end
       end
     end
   end
