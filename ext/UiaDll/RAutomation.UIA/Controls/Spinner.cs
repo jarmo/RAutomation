@@ -18,6 +18,16 @@ namespace RAutomation.UIA.Controls
             set { RangeValue.SetValue(value); }
         }
 
+        public double Minimum
+        {
+            get { return RangeValue.Current.Minimum; }
+        }
+
+        public double Maximum
+        {
+            get { return RangeValue.Current.Maximum; }
+        }
+
         public double Increment()
         {
             return Value += RangeValue.Current.SmallChange;

@@ -23,6 +23,24 @@ extern "C" {
 		}
 	}
 
+	__declspec (dllexport) double Spinner_Minimum(const FindInformation& findInformation, char* errorInfo, const int errorInfoLength) {
+		try {
+			auto spinner = gcnew Spinner(Locator::FindFor(findInformation));
+      return spinner->Minimum;
+		} catch(Exception^ e) {
+			StringHelper::CopyToUnmanagedString(e->Message, errorInfo, errorInfoLength);
+		}
+	}
+
+	__declspec (dllexport) double Spinner_Maximum(const FindInformation& findInformation, char* errorInfo, const int errorInfoLength) {
+		try {
+			auto spinner = gcnew Spinner(Locator::FindFor(findInformation));
+      return spinner->Maximum;
+		} catch(Exception^ e) {
+			StringHelper::CopyToUnmanagedString(e->Message, errorInfo, errorInfoLength);
+		}
+	}
+
 	__declspec (dllexport) double Spinner_Increment(const FindInformation& findInformation, char* errorInfo, const int errorInfoLength) {
 		try {
 			auto spinner = gcnew Spinner(Locator::FindFor(findInformation));
