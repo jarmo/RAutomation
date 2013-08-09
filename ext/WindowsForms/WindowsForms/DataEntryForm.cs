@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using UIA.Extensions;
 
 namespace WindowsForms
 {
@@ -14,6 +9,7 @@ namespace WindowsForms
         public DataEntryForm()
         {
             InitializeComponent();
+            numericUpDown1.AsRangeValue();
         }
 
         private void closeDataEntryFormButton_Click(object sender, EventArgs e)

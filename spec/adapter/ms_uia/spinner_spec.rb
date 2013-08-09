@@ -2,9 +2,16 @@ require 'spec_helper'
 
 include RAutomation::Adapter
 
-describe MsUia::Spinner do
-  let(:window) { RAutomation::Window.new(:title => 'MainFormWindow') }
+describe MsUia::Spinner, :if => SpecHelper.adapter == :ms_uia  do
+  let(:main_window) { RAutomation::Window.new(:title => 'MainFormWindow') }
+  let(:data_entry) { main_window.button(:value => 'Data Entry Form').click { window.exist? } }
+  let(:window) { RAutomation::Window.new(:title => 'DataEntryForm') }
+
   subject { window.spinner(:id => 'numericUpDown1') }
+
+  before(:each) do
+    data_entry
+  end
 
   it { should exist }
 

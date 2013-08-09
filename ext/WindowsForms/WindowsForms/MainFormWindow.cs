@@ -10,7 +10,6 @@ namespace WindowsForms
         {
             InitializeComponent();
             automatableMonthCalendar1.AsValueControl<ValueMonthCalendar>();
-            numericUpDown1.AsRangeValue();
         }
 
         private void label1_Click(object sender, EventArgs e)
