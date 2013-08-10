@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using UIA.Extensions.AutomationProviders.Interfaces;
 
@@ -15,8 +16,13 @@ namespace WindowsForms
 
         public override string Value
         {
-            get { return _monthCalendar.SelectionStart.ToShortDateString(); }
-            set { _monthCalendar.SetDate(DateTime.Parse(value)); }
+            get { return _monthCalendar.SelectionStart.ToString("d", EnglishCulture); }
+            set { _monthCalendar.SetDate(DateTime.Parse(value, EnglishCulture)); }
+        }
+
+        private static CultureInfo EnglishCulture
+        {
+            get { return new CultureInfo("en-US"); }
         }
     }
 }
