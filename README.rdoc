@@ -4,8 +4,6 @@
 * Web: http://www.github.com/jarmo/RAutomation
 * Author: Jarmo Pertman (mailto:jarmo.p[at]gmail.com)
 
-{<img alt='Click here to lend your support to: RAutomation and make a donation at www.pledgie.com !' src='https://pledgie.com/campaigns/16196.png?skin_name=chrome' />}[https://pledgie.com/campaigns/16196]
-
 RAutomation is a small and easy to use library for helping out to automate windows and their controls
 for automated testing.
 
@@ -100,6 +98,11 @@ In case of any problems, feel free to contact me.
 * Levi Wilson - https://github.com/leviwilson
 * Eric Kessler - https://github.com/enkessler
 * Stephan Schwab - https://github.com/snscaimito
+
+== Libraries Using RAutomation
+
+* watir-classic[https://github.com/watir/watir-classic]
+* mohawk[https://github.com/leviwilson/mohawk]
 
 == Note on Patches/Pull Requests
 
