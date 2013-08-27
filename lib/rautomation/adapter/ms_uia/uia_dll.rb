@@ -134,8 +134,8 @@ module RAutomation
         attach_function :is_enabled, :IsEnabled, [SearchCriteria.by_ref], :bool
         attach_function :is_focused, :IsFocused, [SearchCriteria.by_ref], :bool
         attach_function :set_focus, :SetControlFocus, [SearchCriteria.by_ref], :bool
-        attach_function :GetClassNames,
-                        [SearchCriteria.by_ref, :pointer], :int
+        attach_function :GetClassNames, [SearchCriteria.by_ref, :pointer], :int
+        attach_function :HelpText, [SearchCriteria.by_ref, :pointer, :int], :void
 
         def self.exists?(search_information)
           ElementExists search_information
@@ -153,6 +153,10 @@ module RAutomation
 
         def self.get_text(search_information)
           string_from(:Text_GetValue, search_information)
+        end
+
+        def self.help_text(search_information)
+          string_from(:HelpText, search_information)
         end
 
         def self.name(search_information)

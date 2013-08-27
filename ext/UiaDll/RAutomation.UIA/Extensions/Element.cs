@@ -35,6 +35,11 @@ namespace RAutomation.UIA.Extensions
             return automationElement.Current.HasKeyboardFocus;
         }
 
+        public static string HelpText(this AutomationElement automationElement)
+        {
+            return automationElement.Current.HelpText;
+        }
+
         public static int NativeWindowHandle(this AutomationElement automationElement)
         {
             return automationElement.Exists() ? automationElement.Current.NativeWindowHandle : 0;
@@ -87,22 +92,22 @@ namespace RAutomation.UIA.Extensions
 
         public static bool IsValuePattern(this AutomationElement automationElement)
         {
-            return (bool) automationElement.GetCurrentPropertyValue(AutomationElement.IsValuePatternAvailableProperty);
+            return (bool)automationElement.GetCurrentPropertyValue(AutomationElement.IsValuePatternAvailableProperty);
         }
 
         public static ValuePattern AsValuePattern(this AutomationElement automationElement)
         {
-            return (ValuePattern) automationElement.GetCurrentPattern(ValuePattern.Pattern);
+            return (ValuePattern)automationElement.GetCurrentPattern(ValuePattern.Pattern);
         }
 
         public static TextPattern AsTextPattern(this AutomationElement automationElement)
         {
-            return (TextPattern) automationElement.GetCurrentPattern(TextPattern.Pattern);
+            return (TextPattern)automationElement.GetCurrentPattern(TextPattern.Pattern);
         }
 
         public static T As<T>(this AutomationElement automationElement, AutomationPattern pattern)
         {
-            return (T) automationElement.GetCurrentPattern(pattern);
+            return (T)automationElement.GetCurrentPattern(pattern);
         }
     }
 }
