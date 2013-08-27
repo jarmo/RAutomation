@@ -104,6 +104,10 @@ module RAutomation
           UiaDll::name(search_information)
         end
 
+        def help_text
+          UiaDll::help_text(search_information)
+        end
+
         def control_class
           UiaDll::class_name(search_information)
         end

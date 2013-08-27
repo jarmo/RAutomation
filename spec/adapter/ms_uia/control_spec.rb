@@ -27,6 +27,11 @@ describe "MsUia::Control", :if => SpecHelper.adapter == :ms_uia do
     control.control_class.should =~ /WindowsForms10.BUTTON.*/
   end
 
+  it "can get tooltip information" do
+    control = window.button(:value => 'Reset')
+    control.help_text.should eq 'Some help text'
+  end
+
   it "can limit the search depth" do
     window.button(:id => 'buttonDataGridView').click { true }
     data_grid_window = RAutomation::Window.new(:title => /DataGridView/i)

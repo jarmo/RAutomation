@@ -111,6 +111,15 @@ extern "C" {
 		}
 	}
 
+	__declspec ( dllexport ) void HelpText(const FindInformation& findInformation, char* helpText, const int helpTextLength) {
+		try {
+			auto helpTextProperty = Element::HelpText(Locator::FindFor(findInformation));
+			StringHelper::CopyToUnmanagedString(helpTextProperty, helpText, helpTextLength);
+		} catch(Exception^ e) {
+			Console::WriteLine("HelpText: {0}", e->Message);
+		}
+	}
+
 	__declspec ( dllexport ) int GetClassNames(const FindInformation& findInformation, const char* classNames[]) {
 		auto allChildren = Locator::FindFor(findInformation)->FindAll(System::Windows::Automation::TreeScope::Subtree, Condition::TrueCondition);
 
