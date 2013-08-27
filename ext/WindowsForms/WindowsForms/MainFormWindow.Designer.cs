@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Child 1");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Grandchild 1");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Parent Two");
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Child 1");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Grandchild 1");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Child 2", new System.Windows.Forms.TreeNode[] {
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Parent One", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Parent Two");
             this.label1 = new System.Windows.Forms.Label();
             this.aboutButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -70,6 +71,7 @@
             this.multiLineTextField = new System.Windows.Forms.TextBox();
             this.buttonDataGridView = new System.Windows.Forms.Button();
             this.automatableMonthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -167,6 +169,7 @@
             this.radioButtonReset.Size = new System.Drawing.Size(75, 23);
             this.radioButtonReset.TabIndex = 9;
             this.radioButtonReset.Text = "Reset";
+            this.toolTip1.SetToolTip(this.radioButtonReset, "Some help text");
             this.radioButtonReset.UseVisualStyleBackColor = true;
             this.radioButtonReset.Click += new System.EventHandler(this.radioButtonReset_Click);
             // 
@@ -392,19 +395,19 @@
             // 
             this.treeView.Location = new System.Drawing.Point(490, 285);
             this.treeView.Name = "treeView";
-            treeNode1.Name = "Child 1";
-            treeNode1.Text = "Child 1";
-            treeNode2.Name = "Grandchild 1";
-            treeNode2.Text = "Grandchild 1";
-            treeNode3.Name = "Child 2";
-            treeNode3.Text = "Child 2";
-            treeNode4.Name = "Parent One";
-            treeNode4.Text = "Parent One";
-            treeNode5.Name = "Parent Two";
-            treeNode5.Text = "Parent Two";
+            treeNode6.Name = "Child 1";
+            treeNode6.Text = "Child 1";
+            treeNode7.Name = "Grandchild 1";
+            treeNode7.Text = "Grandchild 1";
+            treeNode8.Name = "Child 2";
+            treeNode8.Text = "Child 2";
+            treeNode9.Name = "Parent One";
+            treeNode9.Text = "Parent One";
+            treeNode10.Name = "Parent Two";
+            treeNode10.Text = "Parent Two";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
+            treeNode9,
+            treeNode10});
             this.treeView.Size = new System.Drawing.Size(159, 177);
             this.treeView.TabIndex = 16;
             // 
@@ -508,6 +511,7 @@
         private System.Windows.Forms.TextBox multiLineTextField;
         private System.Windows.Forms.Button buttonDataGridView;
         private System.Windows.Forms.MonthCalendar automatableMonthCalendar1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
