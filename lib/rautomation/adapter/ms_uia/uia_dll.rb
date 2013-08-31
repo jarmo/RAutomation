@@ -136,6 +136,7 @@ module RAutomation
         attach_function :set_focus, :SetControlFocus, [SearchCriteria.by_ref], :bool
         attach_function :GetClassNames, [SearchCriteria.by_ref, :pointer], :int
         attach_function :HelpText, [SearchCriteria.by_ref, :pointer, :int], :void
+        attach_function :SendKeys, [SearchCriteria.by_ref, :string, :pointer, :int], :void
 
         def self.exists?(search_information)
           ElementExists search_information
@@ -169,6 +170,10 @@ module RAutomation
 
         def self.children_class_names(search_information)
           strings_from :GetClassNames, search_information
+        end
+
+        def self.send_keys(search_information, keys_to_send)
+          can_throw(:SendKeys, search_information, keys_to_send)
         end
 
         # Toggle methods
