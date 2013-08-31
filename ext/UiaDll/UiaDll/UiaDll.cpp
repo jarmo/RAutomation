@@ -111,6 +111,14 @@ extern "C" {
 		}
 	}
 
+    __declspec (dllexport) void SendKeys(const FindInformation& findInformation, const char* keysToSend, char* errorInfo, const long errorInfoLength) {
+        try {
+            Element::SendKeys(Locator::FindFor(findInformation), gcnew String(keysToSend));
+        } catch(Exception^ e) {
+            StringHelper::CopyToUnmanagedString(e->Message, errorInfo, errorInfoLength);
+        }
+    }
+
 	__declspec ( dllexport ) void HelpText(const FindInformation& findInformation, char* helpText, const int helpTextLength) {
 		try {
 			auto helpTextProperty = Element::HelpText(Locator::FindFor(findInformation));

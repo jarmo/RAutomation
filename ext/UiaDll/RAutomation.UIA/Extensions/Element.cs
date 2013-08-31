@@ -85,6 +85,12 @@ namespace RAutomation.UIA.Extensions
             return automationElement.AsValuePattern().Current.Value;
         }
 
+        public static void SendKeys(this AutomationElement automationElement, string keysToSend)
+        {
+            automationElement.SetFocus();
+            System.Windows.Forms.SendKeys.SendWait(keysToSend);
+        }
+
         public static void SetValue(this AutomationElement automationElement, string value)
         {
             automationElement.AsValuePattern().SetValue(value);
