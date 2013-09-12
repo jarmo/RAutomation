@@ -1,4 +1,10 @@
-== 0.12.0
+== 0.13.0
+
+=== MsUia adapter
+
+  * Added multi-select support for SelectList controls
+
+== 0.12.0 / 2013-09-05
 
 === MsUia adapter
 
