@@ -8,6 +8,11 @@ void StringHelper::CopyToUnmanagedString(String^ source, char* destination, cons
 	Marshal::FreeHGlobal(unmanagedString);
 }
 
+void StringHelper::Write(Exception^ error, char* destination, const int destinationSize)
+{
+    StringHelper::CopyToUnmanagedString(error->Message, destination, destinationSize);
+}
+
 char* StringHelper::UnmanagedStringFrom(String^ source)
 {
 	const int numberOfBytes = source->Length + 1;
