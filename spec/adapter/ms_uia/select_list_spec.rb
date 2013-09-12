@@ -66,6 +66,8 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
 
     fruits_list.add('Mango')
     fruit_label.value.should eq('Apple,Orange,Mango')
+
+    lambda { fruits_list.add(100) }.should raise_error
   end
 
   it '#remove' do
@@ -76,6 +78,8 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
 
     fruits_list.remove(0) # => 'Apple'
     fruits_list.values.should eq(['Mango'])
+
+    lambda { fruits_list.remove(-100) }.should raise_error
   end
 
   it '#values' do
