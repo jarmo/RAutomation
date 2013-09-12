@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
+  let(:window) { RAutomation::Window.new(:title => 'MainFormWindow') }
+  let(:fruits_list) { window.select_list(:id => 'FruitListBox') }
+  let(:fruit_label) { window.label(:id => 'fruitsLabel') }
+
   it "#select_list" do
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox").should exist
 
@@ -56,6 +60,14 @@ describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
 
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "comboBoxDisabled").should_not be_enabled
     RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "comboBoxDisabled").should be_disabled
+  end
+
+  it "#add" do
+    fruits_list.add(0, 1)
+    fruit_label.value.should eq('Apple,Orange')
+
+    fruits_list.add('Mango')
+    fruit_label.value.should eq('Apple,Orange,Mango')
   end
 
   it "#option" do

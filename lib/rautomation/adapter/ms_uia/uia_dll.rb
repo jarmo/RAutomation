@@ -197,6 +197,19 @@ module RAutomation
                         [SearchCriteria.by_ref, :int], :bool
         attach_function :select_list_select_value, :SelectList_SelectValue,
                         [SearchCriteria.by_ref, :pointer], :int
+        attach_function :SelectList_AddIndex,
+                        [SearchCriteria.by_ref, :int, :pointer, :int], :void
+        attach_function :SelectList_AddValue,
+                        [SearchCriteria.by_ref, :string, :pointer, :int], :void
+
+        def self.add_to_selection(search_information, which_item)
+          case which_item
+            when Fixnum
+              can_throw(:SelectList_AddIndex, search_information, which_item)
+            when String
+              can_throw(:SelectList_AddValue, search_information, which_item)
+          end
+        end
 
         def self.select_options(search_information)
           strings_from(:SelectList_Options, search_information)

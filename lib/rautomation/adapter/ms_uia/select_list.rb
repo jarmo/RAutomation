@@ -31,6 +31,10 @@ module RAutomation
           UiaDll::select_list_select_value(search_information, value)
         end
 
+        def add(*items)
+          items.each {|item| UiaDll::add_to_selection(search_information, item) }
+        end
+
         def options(options = {})
           items = []
 
