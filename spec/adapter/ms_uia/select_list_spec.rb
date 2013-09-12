@@ -70,6 +70,16 @@ describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
     fruit_label.value.should eq('Apple,Orange,Mango')
   end
 
+  it "#remove" do
+    fruits_list.add('Apple', 'Orange', 'Mango')
+
+    fruits_list.remove('Orange')
+    fruits_list.values.should eq(['Apple', 'Mango'])
+
+    fruits_list.remove(0) # => 'Apple'
+    fruits_list.values.should eq(['Mango'])
+  end
+
   it "#values" do
     fruits_list.add('Apple', 'Mango')
     fruits_list.values.should eq(['Apple', 'Mango'])

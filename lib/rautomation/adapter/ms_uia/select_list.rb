@@ -35,6 +35,10 @@ module RAutomation
           items.each {|item| UiaDll::add_to_selection(search_information, item) }
         end
 
+        def remove(*items)
+          items.each {|item| UiaDll::remove_from_selection(search_information, item) }
+        end
+
         def options(options = {})
           items = []
 
