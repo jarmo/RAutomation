@@ -54,6 +54,10 @@ module RAutomation
           UiaDll::selection(search_information)
         end
 
+        def values
+          UiaDll::selections(search_information)
+        end
+
         def option(options)
           UiaDll::select_options(search_information).each_with_index do |item, item_no|
             return SelectListOption.new(self, item, item_no) if options[:text] == item

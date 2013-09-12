@@ -70,6 +70,11 @@ describe "MsUia::SelectList", :if => SpecHelper.adapter == :ms_uia do
     fruit_label.value.should eq('Apple,Orange,Mango')
   end
 
+  it "#values" do
+    fruits_list.add('Apple', 'Mango')
+    fruits_list.values.should eq(['Apple', 'Mango'])
+  end
+
   it "#option" do
     select_list = RAutomation::Window.new(:title => "MainFormWindow").select_list(:id => "FruitsComboBox")
 

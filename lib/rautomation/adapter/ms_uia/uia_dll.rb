@@ -185,6 +185,8 @@ module RAutomation
         # Select List methods
         attach_function :SelectList_Selection,
                         [SearchCriteria.by_ref, :pointer, :int], :void
+        attach_function :SelectList_Selections,
+                        [SearchCriteria.by_ref, :pointer], :int
         attach_function :SelectList_Options,
                         [SearchCriteria.by_ref, :pointer], :int
         attach_function :select_list_count, :SelectList_Count,
@@ -202,6 +204,18 @@ module RAutomation
         attach_function :SelectList_AddValue,
                         [SearchCriteria.by_ref, :string, :pointer, :int], :void
 
+        def self.select_options(search_information)
+          strings_from(:SelectList_Options, search_information)
+        end
+
+        def self.selection(search_information)
+          string_from(:SelectList_Selection, search_information)
+        end
+
+        def self.selections(search_information)
+          strings_from(:SelectList_Selections, search_information)
+        end
+
         def self.add_to_selection(search_information, which_item)
           case which_item
             when Fixnum
@@ -209,14 +223,6 @@ module RAutomation
             when String
               can_throw(:SelectList_AddValue, search_information, which_item)
           end
-        end
-
-        def self.select_options(search_information)
-          strings_from(:SelectList_Options, search_information)
-        end
-
-        def self.selection(search_information)
-          string_from(:SelectList_Selection, search_information)
         end
 
         # Spinner methods
