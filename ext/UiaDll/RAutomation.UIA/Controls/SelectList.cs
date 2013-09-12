@@ -49,6 +49,26 @@ namespace RAutomation.UIA.Controls
             }
         }
 
+        public void Add(int index)
+        {
+            SelectionItems.ElementAt(index).AsSelectionItem().AddToSelection();
+        }
+
+        public void Add(string value)
+        {
+            SelectionNamed(value).AddToSelection();
+        }
+
+        public void Remove(int index)
+        {
+            SelectionItems.ElementAt(index).AsSelectionItem().RemoveFromSelection();
+        }
+
+        public void Remove(string value)
+        {
+            SelectionNamed(value).RemoveFromSelection();
+        }
+
         private static void Select(AutomationElement element)
         {
             var selectionItem = element.AsSelectionItem();
@@ -61,6 +81,11 @@ namespace RAutomation.UIA.Controls
 
             if (!selectionItem.Current.IsSelected)
                 selectionItem.Select();
+        }
+
+        private SelectionItemPattern SelectionNamed(string value)
+        {
+            return SelectionItems.First(x => x.Current.Name == value).AsSelectionItem();
         }
 
         private static bool IsSelected(AutomationElement element)
