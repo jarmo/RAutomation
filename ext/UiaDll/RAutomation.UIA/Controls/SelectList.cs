@@ -49,6 +49,11 @@ namespace RAutomation.UIA.Controls
             }
         }
 
+        public string[] Selections
+        {
+            get { return SelectionPattern.GetSelection().Select(x => x.Current.Name).ToArray(); }
+        }
+
         public void Add(int index)
         {
             SelectionItems.ElementAt(index).AsSelectionItem().AddToSelection();
@@ -81,6 +86,11 @@ namespace RAutomation.UIA.Controls
 
             if (!selectionItem.Current.IsSelected)
                 selectionItem.Select();
+        }
+
+        private SelectionPattern.SelectionPatternInformation SelectionPattern
+        {
+            get { return _element.As<SelectionPattern>(System.Windows.Automation.SelectionPattern.Pattern).Current; }
         }
 
         private SelectionItemPattern SelectionNamed(string value)

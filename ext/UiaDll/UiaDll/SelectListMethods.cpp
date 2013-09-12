@@ -26,6 +26,11 @@ extern "C" {
 		StringHelper::CopyToUnmanagedString(selectList->Selection, selection, selectionLength);
 	}
 
+  __declspec ( dllexport ) int SelectList_Selections(const FindInformation& findInformation, const char* selections[]) {
+		auto selectList = gcnew SelectList(Locator::FindFor(findInformation));
+    return StringHelper::Copy(selectList->Selections, selections);
+  }
+
 	__declspec ( dllexport ) bool SelectList_ValueAt(const FindInformation& findInformation, const int whichItem, char* comboValue, const int comboValueSize) {
 		try {
 			auto selectList = gcnew SelectList(Locator::FindFor(findInformation));
