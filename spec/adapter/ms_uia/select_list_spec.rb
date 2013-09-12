@@ -79,6 +79,8 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
   end
 
   it '#values' do
+    fruits_list.values.should eq([]) # => empty state
+
     fruits_list.add('Apple', 'Mango')
     fruits_list.values.should eq(['Apple', 'Mango'])
   end
