@@ -338,6 +338,7 @@
             "Mango"});
             this.FruitListBox.Location = new System.Drawing.Point(490, 163);
             this.FruitListBox.Name = "FruitListBox";
+            this.FruitListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.FruitListBox.Size = new System.Drawing.Size(159, 95);
             this.FruitListBox.TabIndex = 14;
             this.FruitListBox.SelectedIndexChanged += new System.EventHandler(this.FruitListBox_SelectedIndexChanged);

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using UIA.Extensions;
 
@@ -74,7 +76,8 @@ namespace WindowsForms
 
         private void FruitListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fruitsLabel.Text = (string) FruitListBox.SelectedItem;
+            var selectedFruits = (FruitListBox.SelectedItems.Cast<object>().Select(item => item.ToString()));
+            fruitsLabel.Text = String.Join(",", selectedFruits);
         }
     }
 }
