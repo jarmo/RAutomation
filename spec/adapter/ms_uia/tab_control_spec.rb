@@ -24,7 +24,7 @@ describe MsUia::TabControl, :if => SpecHelper.adapter == :ms_uia do
   end
 
   it 'has tab items' do
-    subject.items.count.should eq(2)
+    subject.items.count.should eq(3)
   end
 
   it 'knows the current tab' do
@@ -33,11 +33,11 @@ describe MsUia::TabControl, :if => SpecHelper.adapter == :ms_uia do
 
   context('#items') do
     it 'has text' do
-      subject.items.map(&:text).should eq(['Info', 'More Info'])
+      subject.items.map(&:text).should eq(['Info', 'More Info', 'Multi-Select ListBox'])
     end
 
     it 'has indices' do
-      subject.items.map(&:index).should eq([0, 1])
+      subject.items.map(&:index).should eq([0, 1, 2])
     end
 
     it 'can be selected' do
