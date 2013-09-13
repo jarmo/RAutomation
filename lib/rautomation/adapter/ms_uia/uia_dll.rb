@@ -322,9 +322,9 @@ module RAutomation
         attach_function :Table_ValueAt,
                         [SearchCriteria.by_ref, :int, :int, :pointer, :int], :void
         attach_function :Table_SelectByIndex,
-                        [SearchCriteria.by_ref, :int], :void
+                        [SearchCriteria.by_ref, :int, :pointer, :int], :void
         attach_function :Table_SelectByValue,
-                        [SearchCriteria.by_ref, :string], :void
+                        [SearchCriteria.by_ref, :string, :pointer, :int], :void
         attach_function :table_row_is_selected, :Table_IsSelectedByIndex,
                         [SearchCriteria.by_ref, :int], :bool
         attach_function :Table_AddRowByIndex,
@@ -339,9 +339,9 @@ module RAutomation
         def self.table_select(search_information, which_item)
           case which_item
             when Integer
-              Table_SelectByIndex search_information, which_item
+              can_throw(:Table_SelectByIndex, search_information, which_item)
             when String
-              Table_SelectByValue search_information, which_item
+              can_throw(:Table_SelectByValue, search_information, which_item)
           end
         end
 

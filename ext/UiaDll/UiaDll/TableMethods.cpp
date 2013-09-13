@@ -45,12 +45,12 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void Table_SelectByIndex(const FindInformation& findInformation, const int dataItemIndex) {
+	__declspec ( dllexport ) void Table_SelectByIndex(const FindInformation& findInformation, const int dataItemIndex, char* errorInfo, const int errorInfoLength) {
 		try {
 			auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
 			tableControl->SelectedIndex = dataItemIndex;
 		} catch(Exception^ e) {
-			Console::WriteLine(e->ToString());
+      StringHelper::Write(e, errorInfo, errorInfoLength);
 		}
 	}
 
@@ -100,12 +100,12 @@ extern "C" {
 		}
 	}
 
-	__declspec ( dllexport ) void Table_SelectByValue(const FindInformation& findInformation, const char* dataItemValue) {
+	__declspec ( dllexport ) void Table_SelectByValue(const FindInformation& findInformation, const char* dataItemValue, char* errorInfo, const int errorInfoLength) {
 		try {
 			auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
 			tableControl->Value = gcnew String(dataItemValue);
 		} catch(Exception^ e) {
-			Console::WriteLine(e->ToString());
+      StringHelper::Write(e, errorInfo, errorInfoLength);
 		}
 	}
 }

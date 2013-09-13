@@ -97,16 +97,17 @@ module RAutomation
         end
 
         def select(which_item)
-          UiaDll::table_select search_information, which_item
-        end
-
-        def add_to_selection(*which_items)
-          which_items.each do |which_item|
-            UiaDll::table_add_to_selection search_information, which_item
+          case which_item
+            when Fixnum, String
+              UiaDll::table_select search_information, which_item
+            when Array
+              which_item.each do |item|
+                UiaDll::table_add_to_selection search_information, item
+              end
           end
         end
 
-        def remove_from_selection(*which_items)
+        def clear(which_items)
           which_items.each do |which_item|
             UiaDll::table_remove_from_selection search_information, which_item
           end
