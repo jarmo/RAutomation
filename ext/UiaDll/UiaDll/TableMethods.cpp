@@ -54,10 +54,46 @@ extern "C" {
 		}
 	}
 
+  __declspec ( dllexport ) void Table_AddRowByIndex(const FindInformation& findInformation, const int dataItemIndex, char* errorInfo, const int errorInfoLength) {
+    try {
+      auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
+      tableControl->Add(dataItemIndex);
+    } catch(Exception^ e) {
+      StringHelper::Write(e, errorInfo, errorInfoLength);
+    }
+  }
+
+  __declspec ( dllexport ) void Table_AddRowByValue(const FindInformation& findInformation, const char* dataItemValue, char* errorInfo, const int errorInfoLength) {
+    try {
+      auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
+      tableControl->Add(gcnew String(dataItemValue));
+    } catch(Exception^ e) {
+      StringHelper::Write(e, errorInfo, errorInfoLength);
+    }
+  }
+
+  __declspec ( dllexport ) void Table_RemoveRowByIndex(const FindInformation& findInformation, const int dataItemIndex, char* errorInfo, const int errorInfoLength) {
+    try {
+      auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
+      tableControl->Remove(dataItemIndex);
+    } catch(Exception^ e) {
+      StringHelper::Write(e, errorInfo, errorInfoLength);
+    }
+  }
+
+  __declspec ( dllexport ) void Table_RemoveRowByValue(const FindInformation& findInformation, const char* dataItemValue, char* errorInfo, const int errorInfoLength) {
+    try {
+      auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
+      tableControl->Remove(gcnew String(dataItemValue));
+    } catch(Exception^ e) {
+      StringHelper::Write(e, errorInfo, errorInfoLength);
+    }
+  }
+
 	__declspec ( dllexport ) bool Table_IsSelectedByIndex(const FindInformation& findInformation, const int dataItemIndex) {
 		try {
 			auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
-			return tableControl->SelectedIndex == dataItemIndex;
+      return tableControl->IsRowSelected(dataItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
       return false;

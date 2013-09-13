@@ -52,6 +52,28 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     table.should be_selected(1)
   end
 
+  it "#add_to_selection" do
+    table.add_to_selection "John Doe"
+    table.should be_selected(0)
+
+    table.add_to_selection 1
+    table.should be_selected(1)
+
+    lambda { table.add_to_selection 1000 }.should raise_error
+  end
+
+  it "#remove_from_selection" do
+    table.add_to_selection 'John Doe', 1
+    table.should be_selected(0)
+    table.should be_selected(1)
+
+    table.remove_from_selection 0, 'Anna Doe'
+    table.should_not be_selected(0)
+    table.should_not be_selected(1)
+
+    lambda { table.remove_from_selection 'Should Not Exist' }.should raise_error
+  end
+
   it "#row_count" do
     table.row_count.should eq(2)
   end

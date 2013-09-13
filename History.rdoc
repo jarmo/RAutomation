@@ -3,6 +3,7 @@
 === MsUia adapter
 
   * Added multi-select support for SelectList controls
+  * Added multi-select support for Table rows
 
 == 0.12.0 / 2013-09-05
 
