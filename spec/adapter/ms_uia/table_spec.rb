@@ -60,6 +60,16 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     table.should be_selected(1)
   end
 
+  it "#remove_from_selection" do
+    table.add_to_selection 'John Doe', 1
+    table.should be_selected(0)
+    table.should be_selected(1)
+
+    table.remove_from_selection 0, 'Anna Doe'
+    table.should_not be_selected(0)
+    table.should_not be_selected(1)
+  end
+
   it "#row_count" do
     table.row_count.should eq(2)
   end

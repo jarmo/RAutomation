@@ -331,6 +331,10 @@ module RAutomation
                         [SearchCriteria.by_ref, :int, :pointer, :int], :void
         attach_function :Table_AddRowByValue,
                         [SearchCriteria.by_ref, :string, :pointer, :int], :void
+        attach_function :Table_RemoveRowByIndex,
+                        [SearchCriteria.by_ref, :int, :pointer, :int], :void
+        attach_function :Table_RemoveRowByValue,
+                        [SearchCriteria.by_ref, :string, :pointer, :int], :void
 
         def self.table_select(search_information, which_item)
           case which_item
@@ -363,6 +367,15 @@ module RAutomation
               can_throw(:Table_AddRowByIndex, search_information, which_row)
             when String
               can_throw(:Table_AddRowByValue, search_information, which_row)
+          end
+        end
+
+        def self.table_remove_from_selection(search_information, which_row)
+          case which_row
+            when Fixnum
+              can_throw(:Table_RemoveRowByIndex, search_information, which_row)
+            when String
+              can_throw(:Table_RemoveRowByValue, search_information, which_row)
           end
         end
 
