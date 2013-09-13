@@ -26,6 +26,11 @@ namespace RAutomation.UIA.Controls
             set { DataItems.ElementAt(value).AsSelectionItem().Select(); }
         }
 
+        public bool IsRowSelected(int dataItemIndex)
+        {
+            return DataItems.ElementAt(dataItemIndex).AsSelectionItem().Current.IsSelected;
+        }
+
         public void Add(int dataItemIndex)
         {
             DataItems.ElementAt(dataItemIndex).AsSelectionItem().AddToSelection();

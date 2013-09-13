@@ -93,7 +93,7 @@ extern "C" {
 	__declspec ( dllexport ) bool Table_IsSelectedByIndex(const FindInformation& findInformation, const int dataItemIndex) {
 		try {
 			auto tableControl = gcnew TableControl(Locator::FindFor(findInformation));
-			return tableControl->SelectedIndex == dataItemIndex;
+      return tableControl->IsRowSelected(dataItemIndex);
 		} catch(Exception^ e) {
 			Console::WriteLine(e->ToString());
       return false;
