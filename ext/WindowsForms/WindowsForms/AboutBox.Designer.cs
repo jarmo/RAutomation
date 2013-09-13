@@ -34,9 +34,12 @@
             this.infoTab = new System.Windows.Forms.TabPage();
             this.moreInfo = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.multiFruitListBox = new System.Windows.Forms.ListBox();
             this.tabControl.SuspendLayout();
             this.infoTab.SuspendLayout();
             this.moreInfo.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -62,6 +65,7 @@
             // 
             this.tabControl.Controls.Add(this.infoTab);
             this.tabControl.Controls.Add(this.moreInfo);
+            this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Location = new System.Drawing.Point(12, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -99,6 +103,30 @@
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.multiFruitListBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(543, 227);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Multi-Select ListBox";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // multiFruitListBox
+            // 
+            this.multiFruitListBox.FormattingEnabled = true;
+            this.multiFruitListBox.Items.AddRange(new object[] {
+            "Apple",
+            "Orange",
+            "Mango"});
+            this.multiFruitListBox.Location = new System.Drawing.Point(6, 6);
+            this.multiFruitListBox.Name = "multiFruitListBox";
+            this.multiFruitListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.multiFruitListBox.Size = new System.Drawing.Size(159, 95);
+            this.multiFruitListBox.TabIndex = 15;
+            // 
             // AboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -120,6 +148,7 @@
             this.infoTab.PerformLayout();
             this.moreInfo.ResumeLayout(false);
             this.moreInfo.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -132,6 +161,8 @@
         private System.Windows.Forms.TabPage infoTab;
         private System.Windows.Forms.TabPage moreInfo;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ListBox multiFruitListBox;
 
     }
 }

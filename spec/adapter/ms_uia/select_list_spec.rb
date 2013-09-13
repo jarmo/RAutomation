@@ -6,6 +6,14 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
   let(:fruits_list) { window.select_list(:id => 'FruitListBox') }
   let(:fruit_label) { window.label(:id => 'fruitsLabel') }
   let(:disabled_combo) { window.select_list(:id => 'comboBoxDisabled') }
+  let(:about) do
+    window.button(:value => 'About').click { true }
+    about = RAutomation::Window.new(:title => 'About')
+  end
+  let(:multi_fruits) do
+    about.tab_control(:id => 'tabControl').set 'Multi-Select ListBox'
+    about.select_list(:id => 'multiFruitListBox')
+  end
 
   it '#fruits_combo' do
     fruits_combo.should exist
@@ -61,32 +69,32 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
   end
 
   it '#add' do
-    fruits_list.add(0, 1)
-    fruit_label.value.should eq('Apple,Orange')
+    multi_fruits.add(0, 1)
+    multi_fruits.values.should eq(['Apple', 'Orange'])
 
-    fruits_list.add('Mango')
-    fruit_label.value.should eq('Apple,Orange,Mango')
+    multi_fruits.add('Mango')
+    multi_fruits.values.should eq(['Apple', 'Orange', 'Mango'])
 
-    lambda { fruits_list.add(100) }.should raise_error
+    lambda { multi_fruits.add(100) }.should raise_error
   end
 
   it '#remove' do
-    fruits_list.add('Apple', 'Orange', 'Mango')
+    multi_fruits.add('Apple', 'Orange', 'Mango')
 
-    fruits_list.remove('Orange')
-    fruits_list.values.should eq(['Apple', 'Mango'])
+    multi_fruits.remove('Orange')
+    multi_fruits.values.should eq(['Apple', 'Mango'])
 
-    fruits_list.remove(0) # => 'Apple'
-    fruits_list.values.should eq(['Mango'])
+    multi_fruits.remove(0) # => 'Apple'
+    multi_fruits.values.should eq(['Mango'])
 
-    lambda { fruits_list.remove(-100) }.should raise_error
+    lambda { multi_fruits.remove(-100) }.should raise_error
   end
 
   it '#values' do
-    fruits_list.values.should eq([]) # => empty state
+    multi_fruits.values.should eq([]) # => empty state
 
-    fruits_list.add('Apple', 'Mango')
-    fruits_list.values.should eq(['Apple', 'Mango'])
+    multi_fruits.add('Apple', 'Mango')
+    multi_fruits.values.should eq(['Apple', 'Mango'])
   end
 
   it '#option' do
