@@ -28,14 +28,17 @@ module RAutomation
         end
 
         def set(value)
-          UiaDll::select_list_select_value(search_information, value)
+          case value
+            when String
+              UiaDll::select_list_select_value(search_information, value)
+            when Array
+              value.each do |item|
+                UiaDll::add_to_selection(search_information, item)
+              end
+          end
         end
 
-        def add(*items)
-          items.each {|item| UiaDll::add_to_selection(search_information, item) }
-        end
-
-        def remove(*items)
+        def clear(items)
           items.each {|item| UiaDll::remove_from_selection(search_information, item) }
         end
 
@@ -70,8 +73,15 @@ module RAutomation
           nil
         end
 
-        def select(index)
-          UiaDll::select_list_select_index search_information, index
+        def select(which_item)
+          case which_item
+            when Fixnum
+              UiaDll::select_list_select_index search_information, which_item
+            when Array
+              which_item.each do |item|
+                UiaDll::add_to_selection(search_information, item)
+              end
+          end
         end
 
         def exist?

@@ -69,31 +69,31 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
   end
 
   it '#add' do
-    multi_fruits.add(0, 1)
+    multi_fruits.select [0, 1]
     multi_fruits.values.should eq(['Apple', 'Orange'])
 
-    multi_fruits.add('Mango')
+    multi_fruits.set ['Mango']
     multi_fruits.values.should eq(['Apple', 'Orange', 'Mango'])
 
-    lambda { multi_fruits.add(100) }.should raise_error
+    lambda { multi_fruits.select [1000] }.should raise_error
   end
 
   it '#remove' do
-    multi_fruits.add('Apple', 'Orange', 'Mango')
+    multi_fruits.set ['Apple', 'Orange', 'Mango']
 
-    multi_fruits.remove('Orange')
+    multi_fruits.clear ['Orange']
     multi_fruits.values.should eq(['Apple', 'Mango'])
 
-    multi_fruits.remove(0) # => 'Apple'
+    multi_fruits.clear [0] # => 'Apple'
     multi_fruits.values.should eq(['Mango'])
 
-    lambda { multi_fruits.remove(-100) }.should raise_error
+    lambda { multi_fruits.clear [-100] }.should raise_error
   end
 
   it '#values' do
     multi_fruits.values.should eq([]) # => empty state
 
-    multi_fruits.add('Apple', 'Mango')
+    multi_fruits.set ['Apple', 'Mango']
     multi_fruits.values.should eq(['Apple', 'Mango'])
   end
 
