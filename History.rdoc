@@ -2,8 +2,10 @@
 
 === MsUia adapter
 
-  * Added multi-select support for SelectList controls
-  * Added multi-select support for Table rows
+  * Updated SelectList#set and SelectList#select to support multiple values
+  * Added SelectList#clear to remove values from a selection
+  * Updated Table#select to support multiple values
+  * Added Table#clear to remove rows from a selection
 
 == 0.12.0 / 2013-09-05
 
