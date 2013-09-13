@@ -100,6 +100,10 @@ module RAutomation
           UiaDll::table_select search_information, which_item
         end
 
+        def add_to_selection(which_item)
+          UiaDll::table_add_to_selection search_information, which_item
+        end
+
         def selected?(which_item)
           UiaDll::table_row_is_selected search_information, which_item
         end
