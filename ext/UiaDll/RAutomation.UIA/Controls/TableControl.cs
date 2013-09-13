@@ -26,6 +26,26 @@ namespace RAutomation.UIA.Controls
             set { DataItems.ElementAt(value).AsSelectionItem().Select(); }
         }
 
+        public void Add(int dataItemIndex)
+        {
+            DataItems.ElementAt(dataItemIndex).AsSelectionItem().AddToSelection();
+        }
+
+        public void Add(string dataItemValue)
+        {
+            DataItems.FirstOrDefault(x => x.Current.Name == dataItemValue).AsSelectionItem().AddToSelection();
+        }
+
+        public void Remove(int dataItemIndex)
+        {
+            DataItems.ElementAt(dataItemIndex).AsSelectionItem().RemoveFromSelection();
+        }
+
+        public void Remove(string dataItemValue)
+        {
+            DataItems.FirstOrDefault(x => x.Current.Name == dataItemValue).AsSelectionItem().RemoveFromSelection();
+        }
+
         public string Value
         {
             set { SelectionElements.First(x => x.Current.Name == value).AsSelectionItem().Select(); }
