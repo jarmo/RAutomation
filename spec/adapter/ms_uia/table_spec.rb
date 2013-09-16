@@ -36,42 +36,6 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     ]
   end
 
-  it "#select by index" do
-    table.select(0)
-    table.should_not be_selected(1)
-
-    table.select(1)
-    table.should be_selected(1)
-  end
-
-  it "#select by value" do
-    table.select "John Doe"
-    table.should_not be_selected(1)
-
-    table.select "Anna Doe"
-    table.should be_selected(1)
-  end
-
-  it "selecting multiple rows" do
-    table.select ['John Doe', 1]
-    table.should be_selected(0)
-    table.should be_selected(1)
-
-    lambda { table.select 1000 }.should raise_error
-  end
-
-  it "removing rows" do
-    table.select [0, 1]
-    table.should be_selected(0)
-    table.should be_selected(1)
-
-    table.clear [0, 'Anna Doe']
-    table.should_not be_selected(0)
-    table.should_not be_selected(1)
-
-    lambda { table.clear ['Should Not Exist'] }.should raise_error
-  end
-
   it "#row_count" do
     table.row_count.should eq(2)
   end
@@ -87,6 +51,25 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
 
     it "values are also text" do
       table.rows.map(&:text).should eq ["John Doe", "Anna Doe"]
+    end
+
+    it "can be selected" do
+      row = table.row(:index => 1)
+      row.select
+      row.should be_selected
+    end
+
+    it "can be cleared" do
+      row = table.row(:index => 1)
+      row.select
+
+      row.clear
+      row.should_not be_selected
+    end
+
+    it "can select multiple rows" do
+      table.rows.each(&:select)
+      table.rows.all?(&:selected?).should be_true
     end
 
     context "locators" do
