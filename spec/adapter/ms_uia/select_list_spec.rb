@@ -42,12 +42,6 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     fruits_combo.options(:text => 'Apple')[0].should be_selected
   end
 
-  it '#set' do
-    fruits_combo.options(:text => 'Apple')[0].should_not be_selected
-    fruits_combo.set('Apple')
-    fruits_combo.options(:text => 'Apple')[0].should be_selected
-  end
-
   it '#value' do
 
     #default empty state
@@ -68,32 +62,12 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     disabled_combo.should be_disabled
   end
 
-  it '#add' do
-    multi_fruits.select [0, 1]
-    multi_fruits.values.should eq(['Apple', 'Orange'])
-
-    multi_fruits.set ['Mango']
-    multi_fruits.values.should eq(['Apple', 'Orange', 'Mango'])
-
-    lambda { multi_fruits.select [1000] }.should raise_error
-  end
-
-  it '#remove' do
-    multi_fruits.set ['Apple', 'Orange', 'Mango']
-
-    multi_fruits.clear ['Orange']
-    multi_fruits.values.should eq(['Apple', 'Mango'])
-
-    multi_fruits.clear [0] # => 'Apple'
-    multi_fruits.values.should eq(['Mango'])
-
-    lambda { multi_fruits.clear [-100] }.should raise_error
-  end
-
   it '#values' do
     multi_fruits.values.should eq([]) # => empty state
 
-    multi_fruits.set ['Apple', 'Mango']
+    ['Apple', 'Mango'].each do |value|
+      multi_fruits.option(:text => value).select
+    end
     multi_fruits.values.should eq(['Apple', 'Mango'])
   end
 
@@ -108,9 +82,10 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
   end
 
   it 'fires change event when the value is set' do
-    fruits_combo.option(:text => 'Apple').should_not be_selected
-    fruits_combo.set('Apple')
-    fruits_combo.option(:text => 'Apple').should be_selected
+    apple_option = fruits_combo.option(:text => 'Apple')
+    apple_option.should_not be_selected
+    apple_option.select
+    apple_option.should be_selected
 
     RAutomation::WaitHelper.wait_until { fruit_label.exist? }
     fruit_label.value.should == 'Apple'
@@ -121,7 +96,7 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     fruits_combo.option(:text => 'Passion Fruit').should be_selected
     fruit_label.value.should == 'Passion Fruit'
 
-    fruits_combo.select 3
+    fruits_combo.options[3].select
     fruits_combo.option(:text => 'Orange').should be_selected
     fruit_label.value.should == 'Orange'
   end

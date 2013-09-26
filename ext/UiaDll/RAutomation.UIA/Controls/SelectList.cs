@@ -74,7 +74,20 @@ namespace RAutomation.UIA.Controls
             SelectionNamed(value).RemoveFromSelection();
         }
 
-        private static void Select(AutomationElement element)
+        private void Select(AutomationElement element)
+        {
+            if (SelectionPattern.CanSelectMultiple)
+                MultipleSelect(element);
+            else
+                SingleSelect(element);
+        }
+
+        private static void MultipleSelect(AutomationElement element)
+        {
+            element.AsSelectionItem().AddToSelection();
+        }
+
+        private static void SingleSelect(AutomationElement element)
         {
             var selectionItem = element.AsSelectionItem();
 
