@@ -51,7 +51,7 @@ module RAutomation
         end
 
         def select
-          UiaDll::table_add_to_selection search_information, row
+          UiaDll::table_select search_information, row
         end
 
         def selected?

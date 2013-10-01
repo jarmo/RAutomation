@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
-  let(:table) { RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView") }
+  let(:data_entry) { RAutomation::Window.new(:title => "DataEntryForm") }
+  let(:table) { data_entry.table(:id => "personListView") }
+  let(:toggle_multi_select) { data_entry.button(:value => 'Toggle Multi').click { true } }
 
   before :each do
     window = RAutomation::Window.new(:title => "MainFormWindow")
@@ -70,6 +72,19 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     it "can select multiple rows" do
       table.rows.each(&:select)
       table.rows.all?(&:selected?).should be_true
+    end
+
+    it "plays nice if the table does not support multiple selections" do
+      toggle_multi_select
+
+      first_row = table.rows.first
+      last_row = table.rows.last
+
+      first_row.select
+      last_row.select
+
+      first_row.should_not be_selected
+      last_row.should be_selected
     end
 
     context "locators" do
