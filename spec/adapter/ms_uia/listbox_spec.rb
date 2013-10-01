@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "MsUia::ListBox", :if => SpecHelper.adapter == :ms_uia do
+  let(:window) { RAutomation::Window.new(:title => "MainFormWindow") }
 
   it "#exists" do
     RAutomation::Window.new(:title => "MainFormWindow").list_box(:id => "FruitListBox").should exist
@@ -68,6 +69,17 @@ describe "MsUia::ListBox", :if => SpecHelper.adapter == :ms_uia do
     label = RAutomation::Window.new(:title => "MainFormWindow").label(:id => "fruitsLabel")
 
     ['Apple', 'Orange', 'Mango'].each_with_index do |value, index|
+      list_box.select index
+      label.value.should eq(value)
+    end
+  end
+
+  it 'fires events even when the item is not in the current view' do
+    window.menu(text: 'File').menu(text: 'Add Some Fruits').open
+    list_box = window.list_box(:id => "FruitListBox")
+    label = window.label(:id => "fruitsLabel")
+
+    list_box.strings.each_with_index do |value, index|
       list_box.select index
       label.value.should eq(value)
     end

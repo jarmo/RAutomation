@@ -72,6 +72,7 @@
             this.buttonDataGridView = new System.Windows.Forms.Button();
             this.automatableMonthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.addSomeFruitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -356,7 +357,8 @@
             // 
             this.faileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem,
-            this.roundaboutWayToolStripMenuItem});
+            this.roundaboutWayToolStripMenuItem,
+            this.addSomeFruitsToolStripMenuItem});
             this.faileToolStripMenuItem.Name = "faileToolStripMenuItem";
             this.faileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.faileToolStripMenuItem.Text = "&File";
@@ -435,6 +437,13 @@
             this.automatableMonthCalendar1.Name = "automatableMonthCalendar1";
             this.automatableMonthCalendar1.TabIndex = 19;
             // 
+            // addSomeFruitsToolStripMenuItem
+            // 
+            this.addSomeFruitsToolStripMenuItem.Name = "addSomeFruitsToolStripMenuItem";
+            this.addSomeFruitsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.addSomeFruitsToolStripMenuItem.Text = "Add Some Fruits";
+            this.addSomeFruitsToolStripMenuItem.Click += new System.EventHandler(this.addSomeFruitsToolStripMenuItem_Click);
+            // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -512,6 +521,7 @@
         private System.Windows.Forms.Button buttonDataGridView;
         private System.Windows.Forms.MonthCalendar automatableMonthCalendar1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripMenuItem addSomeFruitsToolStripMenuItem;
     }
 }
 
