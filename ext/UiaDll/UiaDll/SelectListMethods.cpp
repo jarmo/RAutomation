@@ -42,28 +42,10 @@ extern "C" {
 		}
 	}
 
-  __declspec ( dllexport ) void SelectList_AddIndex(const FindInformation& findInformation, const int whichItem, char* errorInfo, const int errorInfoLength) {
-    try {
-      auto selectList = gcnew SelectList(Locator::FindFor(findInformation));
-      selectList->Add(whichItem);
-    } catch(Exception^ e) {
-        StringHelper::Write(e, errorInfo, errorInfoLength);
-    }
-  }
-
   __declspec ( dllexport ) void SelectList_RemoveIndex(const FindInformation& findInformation, const int whichItem, char* errorInfo, const int errorInfoLength) {
     try {
       auto selectList = gcnew SelectList(Locator::FindFor(findInformation));
       selectList->Remove(whichItem);
-    } catch(Exception^ e) {
-        StringHelper::Write(e, errorInfo, errorInfoLength);
-    }
-  }
-
-  __declspec ( dllexport ) void SelectList_AddValue(const FindInformation& findInformation, const char* whichItem, char* errorInfo, const int errorInfoLength) {
-    try {
-      auto selectList = gcnew SelectList(Locator::FindFor(findInformation));
-      selectList->Add(gcnew String(whichItem));
     } catch(Exception^ e) {
         StringHelper::Write(e, errorInfo, errorInfoLength);
     }

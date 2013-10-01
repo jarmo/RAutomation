@@ -199,10 +199,6 @@ module RAutomation
                         [SearchCriteria.by_ref, :int], :bool
         attach_function :select_list_select_value, :SelectList_SelectValue,
                         [SearchCriteria.by_ref, :pointer], :int
-        attach_function :SelectList_AddIndex,
-                        [SearchCriteria.by_ref, :int, :pointer, :int], :void
-        attach_function :SelectList_AddValue,
-                        [SearchCriteria.by_ref, :string, :pointer, :int], :void
         attach_function :SelectList_RemoveIndex,
                         [SearchCriteria.by_ref, :int, :pointer, :int], :void
         attach_function :SelectList_RemoveValue,
@@ -218,15 +214,6 @@ module RAutomation
 
         def self.selections(search_information)
           strings_from(:SelectList_Selections, search_information)
-        end
-
-        def self.add_to_selection(search_information, which_item)
-          case which_item
-            when Fixnum
-              can_throw(:SelectList_AddIndex, search_information, which_item)
-            when String
-              can_throw(:SelectList_AddValue, search_information, which_item)
-          end
         end
 
         def self.remove_from_selection(search_information, which_item)
@@ -327,10 +314,6 @@ module RAutomation
                         [SearchCriteria.by_ref, :string, :pointer, :int], :void
         attach_function :table_row_is_selected, :Table_IsSelectedByIndex,
                         [SearchCriteria.by_ref, :int], :bool
-        attach_function :Table_AddRowByIndex,
-                        [SearchCriteria.by_ref, :int, :pointer, :int], :void
-        attach_function :Table_AddRowByValue,
-                        [SearchCriteria.by_ref, :string, :pointer, :int], :void
         attach_function :Table_RemoveRowByIndex,
                         [SearchCriteria.by_ref, :int, :pointer, :int], :void
         attach_function :Table_RemoveRowByValue,
@@ -359,15 +342,6 @@ module RAutomation
 
         def self.table_values(search_information)
           strings_from :Table_GetValues, search_information
-        end
-
-        def self.table_add_to_selection(search_information, which_row)
-          case which_row
-            when Fixnum
-              can_throw(:Table_AddRowByIndex, search_information, which_row)
-            when String
-              can_throw(:Table_AddRowByValue, search_information, which_row)
-          end
         end
 
         def self.table_remove_from_selection(search_information, which_row)
