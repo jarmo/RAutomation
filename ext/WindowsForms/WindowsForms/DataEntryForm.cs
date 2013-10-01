@@ -43,5 +43,10 @@ namespace WindowsForms
 
         }
 
+        private void toggleMultiSelect_Click(object sender, EventArgs e)
+        {
+            personListView.MultiSelect = !personListView.MultiSelect;
+        }
+
     }
 }
