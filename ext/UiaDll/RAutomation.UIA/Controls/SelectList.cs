@@ -85,19 +85,6 @@ namespace RAutomation.UIA.Controls
 
             try
             {
-                if ((bool)element.GetCurrentPropertyValue(AutomationElement.IsScrollItemPatternAvailableProperty))
-                {
-                    Point point;
-                    if (!element.TryGetClickablePoint(out point))
-                    {
-                        element.As<ScrollItemPattern>(ScrollItemPatternIdentifiers.Pattern).ScrollIntoView();
-                        while (!element.TryGetClickablePoint(out point))
-                        {
-                            Thread.Sleep(1);
-                        }
-                    }
-                }
-
                 Clicker.MouseClick(element);
             }
             catch { }
