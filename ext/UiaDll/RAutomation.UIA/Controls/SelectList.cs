@@ -54,16 +54,6 @@ namespace RAutomation.UIA.Controls
             get { return SelectionPattern.GetSelection().Select(x => x.Current.Name).ToArray(); }
         }
 
-        public void Add(int index)
-        {
-            SelectionItems.ElementAt(index).AsSelectionItem().AddToSelection();
-        }
-
-        public void Add(string value)
-        {
-            SelectionNamed(value).AddToSelection();
-        }
-
         public void Remove(int index)
         {
             SelectionItems.ElementAt(index).AsSelectionItem().RemoveFromSelection();
