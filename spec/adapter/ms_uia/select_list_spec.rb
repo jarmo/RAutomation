@@ -78,7 +78,7 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
   end
 
   it 'cannot select anything on a disabled select list' do
-    lambda { disabled_combo.option(:text => 'Apple').set }.should raise_error
+    expect { disabled_combo.option(:text => 'Apple').set }.to raise_error
   end
 
   it 'fires change event when the value is set' do

@@ -62,7 +62,7 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     end
 
     it "raises when errors occur" do
-      lambda { window.menu(:text => "File").menu(:text => "Does Not Exist").open}.should raise_error
+      expect { window.menu(:text => "File").menu(:text => "Does Not Exist").open}.to raise_error
     end
 
     it "indicates if the menu item does not exist" do

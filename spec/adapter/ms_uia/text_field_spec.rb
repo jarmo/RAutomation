@@ -17,9 +17,9 @@ describe "MsUia::TextField", :if => SpecHelper.adapter == :ms_uia do
   end
 
   it "cannot set a value to a disabled text field" do
-    lambda { main_form.text_field(:id => "textBoxDisabled").set "abc" }.should raise_error
+    expect { main_form.text_field(:id => "textBoxDisabled").set "abc" }.to raise_error
 
-    lambda { main_form.text_field(:id => "textBoxDisabled").clear }.should raise_error
+    expect { main_form.text_field(:id => "textBoxDisabled").clear }.to raise_error
   end
 
   it "considers a document control type a text field as well" do
