@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Windows;
 using System.Windows.Automation;
 using RAutomation.UIA.Extensions;
 using RAutomation.UIA.Properties;
@@ -54,16 +56,6 @@ namespace RAutomation.UIA.Controls
             get { return SelectionPattern.GetSelection().Select(x => x.Current.Name).ToArray(); }
         }
 
-        public void Add(int index)
-        {
-            SelectionItems.ElementAt(index).AsSelectionItem().AddToSelection();
-        }
-
-        public void Add(string value)
-        {
-            SelectionNamed(value).AddToSelection();
-        }
-
         public void Remove(int index)
         {
             SelectionItems.ElementAt(index).AsSelectionItem().RemoveFromSelection();
@@ -74,7 +66,20 @@ namespace RAutomation.UIA.Controls
             SelectionNamed(value).RemoveFromSelection();
         }
 
-        private static void Select(AutomationElement element)
+        private void Select(AutomationElement element)
+        {
+            if (SelectionPattern.CanSelectMultiple)
+                MultipleSelect(element);
+            else
+                SingleSelect(element);
+        }
+
+        private static void MultipleSelect(AutomationElement element)
+        {
+            element.AsSelectionItem().AddToSelection();
+        }
+
+        private static void SingleSelect(AutomationElement element)
         {
             var selectionItem = element.AsSelectionItem();
 

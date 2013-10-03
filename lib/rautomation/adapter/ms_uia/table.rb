@@ -50,6 +50,18 @@ module RAutomation
           @locators[:index] || 0
         end
 
+        def select
+          UiaDll::table_select search_information, row
+        end
+
+        def selected?
+          UiaDll::table_row_is_selected search_information, row
+        end
+
+        def clear
+          UiaDll::table_remove_from_selection search_information, row
+        end
+
         def value
           UiaDll::table_value_at search_information, @locators[:index]
         end
@@ -94,26 +106,6 @@ module RAutomation
           all_strings = [] << headers
           values.each_slice(headers.count) {|r| all_strings << r }
           all_strings
-        end
-
-        def select(which_item)
-          UiaDll::table_select search_information, which_item
-        end
-
-        def add_to_selection(*which_items)
-          which_items.each do |which_item|
-            UiaDll::table_add_to_selection search_information, which_item
-          end
-        end
-
-        def remove_from_selection(*which_items)
-          which_items.each do |which_item|
-            UiaDll::table_remove_from_selection search_information, which_item
-          end
-        end
-
-        def selected?(which_item)
-          UiaDll::table_row_is_selected search_information, which_item
         end
 
         def row_count

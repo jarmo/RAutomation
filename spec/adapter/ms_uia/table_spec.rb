@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
-  let(:table) { RAutomation::Window.new(:title => "DataEntryForm").table(:id => "personListView") }
+  let(:data_entry) { RAutomation::Window.new(:title => "DataEntryForm") }
+  let(:table) { data_entry.table(:id => "personListView") }
+  let(:toggle_multi_select) { data_entry.button(:value => 'Toggle Multi').click { true } }
 
   before :each do
     window = RAutomation::Window.new(:title => "MainFormWindow")
@@ -36,44 +38,6 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
     ]
   end
 
-  it "#select by index" do
-    table.select(0)
-    table.should_not be_selected(1)
-
-    table.select(1)
-    table.should be_selected(1)
-  end
-
-  it "#select by value" do
-    table.select "John Doe"
-    table.should_not be_selected(1)
-
-    table.select "Anna Doe"
-    table.should be_selected(1)
-  end
-
-  it "#add_to_selection" do
-    table.add_to_selection "John Doe"
-    table.should be_selected(0)
-
-    table.add_to_selection 1
-    table.should be_selected(1)
-
-    lambda { table.add_to_selection 1000 }.should raise_error
-  end
-
-  it "#remove_from_selection" do
-    table.add_to_selection 'John Doe', 1
-    table.should be_selected(0)
-    table.should be_selected(1)
-
-    table.remove_from_selection 0, 'Anna Doe'
-    table.should_not be_selected(0)
-    table.should_not be_selected(1)
-
-    lambda { table.remove_from_selection 'Should Not Exist' }.should raise_error
-  end
-
   it "#row_count" do
     table.row_count.should eq(2)
   end
@@ -89,6 +53,38 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
 
     it "values are also text" do
       table.rows.map(&:text).should eq ["John Doe", "Anna Doe"]
+    end
+
+    it "can be selected" do
+      row = table.row(:index => 1)
+      row.select
+      row.should be_selected
+    end
+
+    it "can be cleared" do
+      row = table.row(:index => 1)
+      row.select
+
+      row.clear
+      row.should_not be_selected
+    end
+
+    it "can select multiple rows" do
+      table.rows.each(&:select)
+      table.rows.all?(&:selected?).should be_true
+    end
+
+    it "plays nice if the table does not support multiple selections" do
+      toggle_multi_select
+
+      first_row = table.rows.first
+      last_row = table.rows.last
+
+      first_row.select
+      last_row.select
+
+      first_row.should_not be_selected
+      last_row.should be_selected
     end
 
     context "locators" do

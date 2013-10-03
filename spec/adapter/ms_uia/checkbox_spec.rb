@@ -46,9 +46,9 @@ describe "MsUia::Checkbox", :if => SpecHelper.adapter == :ms_uia do
   end
 
   it "cannot check a disabled checkbox" do
-    lambda {
+    expect {
       RAutomation::Window.new(:title => "MainFormWindow").checkbox(:id => "checkBoxDisabled").set
-    }.should raise_error
+    }.to raise_error
   end
 
 end

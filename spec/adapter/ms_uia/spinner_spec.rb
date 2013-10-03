@@ -29,7 +29,7 @@ describe MsUia::Spinner, :if => SpecHelper.adapter == :ms_uia  do
   end
 
   it 'likes for values to be within range' do
-    lambda { subject.set(1000.0) }.should raise_error
+    expect { subject.set(1000.0) }.to raise_error
   end
 
   it '#increment' do

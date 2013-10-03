@@ -23,22 +23,12 @@ namespace RAutomation.UIA.Controls
         public int SelectedIndex
         {
             get { return SelectionItems.IndexOf(x => x.Current.IsSelected); }
-            set { DataItems.ElementAt(value).AsSelectionItem().Select(); }
+            set { Select(value); }
         }
 
         public bool IsRowSelected(int dataItemIndex)
         {
             return DataItems.ElementAt(dataItemIndex).AsSelectionItem().Current.IsSelected;
-        }
-
-        public void Add(int dataItemIndex)
-        {
-            DataItems.ElementAt(dataItemIndex).AsSelectionItem().AddToSelection();
-        }
-
-        public void Add(string dataItemValue)
-        {
-            DataItems.FirstOrDefault(x => x.Current.Name == dataItemValue).AsSelectionItem().AddToSelection();
         }
 
         public void Remove(int dataItemIndex)
@@ -53,7 +43,7 @@ namespace RAutomation.UIA.Controls
 
         public string Value
         {
-            set { SelectionElements.First(x => x.Current.Name == value).AsSelectionItem().Select(); }
+            set { Select(value); }
         }
 
         public bool Exists(int row, int column)
@@ -79,6 +69,26 @@ namespace RAutomation.UIA.Controls
         public string[] Values
         {
             get { return TableOrListItems.Select(x => x.Current.Name).ToArray(); }
+        }
+
+        private void Select(int value)
+        {
+            var selectionItem = DataItems.ElementAt(value).AsSelectionItem();
+
+            if (SelectionPattern.CanSelectMultiple)
+                selectionItem.AddToSelection();
+            else
+                selectionItem.Select();
+        }
+
+        private SelectionPattern.SelectionPatternInformation SelectionPattern
+        {
+            get { return _element.As<SelectionPattern>(SelectionPatternIdentifiers.Pattern).Current; }
+        }
+
+        private void Select(string value)
+        {
+            SelectionElements.First(x => x.Current.Name == value).AsSelectionItem().Select();
         }
 
         private IEnumerable<SelectionItemPattern> SelectionItems

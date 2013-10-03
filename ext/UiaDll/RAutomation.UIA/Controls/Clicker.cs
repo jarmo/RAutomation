@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Forms;
 using RAutomation.UIA.Extensions;
@@ -49,9 +51,11 @@ namespace RAutomation.UIA.Controls
 
         public static void MouseClick(AutomationElement element)
         {
+            element.ScrollToIfPossible();
             element.SetFocus();
+
             var clickablePoint = element.GetClickablePoint();
-            Cursor.Position = new System.Drawing.Point((int) clickablePoint.X, (int) clickablePoint.Y);
+            Cursor.Position = new System.Drawing.Point((int)clickablePoint.X, (int)clickablePoint.Y);
             mouse_event(MOUSEEVENTLF_LEFTDOWN, 0, 0, 0, 0);
             mouse_event(MOUSEEVENTLF_LEFTUP, 0, 0, 0, 0);
         }

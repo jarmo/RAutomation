@@ -24,19 +24,11 @@ module RAutomation
             UiaDll::select_list_select_index @select_list.search_information, @index
           end
 
+          def clear
+            UiaDll::remove_from_selection @select_list.search_information, @index
+          end
+
           alias_method :set, :select
-        end
-
-        def set(value)
-          UiaDll::select_list_select_value(search_information, value)
-        end
-
-        def add(*items)
-          items.each {|item| UiaDll::add_to_selection(search_information, item) }
-        end
-
-        def remove(*items)
-          items.each {|item| UiaDll::remove_from_selection(search_information, item) }
         end
 
         def options(options = {})
@@ -68,10 +60,6 @@ module RAutomation
           end
 
           nil
-        end
-
-        def select(index)
-          UiaDll::select_list_select_index search_information, index
         end
 
         def exist?

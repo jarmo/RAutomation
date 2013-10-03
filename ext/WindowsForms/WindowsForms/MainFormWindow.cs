@@ -79,5 +79,31 @@ namespace WindowsForms
             var selectedFruits = (FruitListBox.SelectedItems.Cast<object>().Select(item => item.ToString()));
             fruitsLabel.Text = String.Join(",", selectedFruits);
         }
+
+        private void addSomeFruitsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            10.Times(AddAnotherFruit);
+        }
+
+        private void AddAnotherFruit(int fruitNumber)
+        {
+            FruitListBox.Items.Add("Fruit " + fruitNumber);
+        }
+    }
+
+    static class EnumerableExtensions
+    {
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> doIt)
+        {
+            foreach (var item in items)
+            {
+                doIt(item);
+            }
+        }
+
+        public static void Times(this int howMany, Action<int> doIt)
+        {
+            Enumerable.Range(0, howMany).ForEach(doIt);
+        }
     }
 }

@@ -2,8 +2,11 @@
 
 === MsUia adapter
 
-  * Added multi-select support for SelectList controls
-  * Added multi-select support for Table rows
+  * Added #select and #clear into SelectList::SelectListOption for multi-select support
+  * Removed SelectList#select and SelectList#set
+  * Added #select, #selected? and #clear to Table::Row for multi-select support
+  * Removed Table#select and Table#selected?
+  * Fixed an issue with selecting ListBox items that our outside of the viewable area
 
 == 0.12.0 / 2013-09-05
 

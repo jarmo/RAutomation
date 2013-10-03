@@ -34,6 +34,6 @@ describe "MsUia::RadioButton", :if => SpecHelper.adapter == :ms_uia do
   end
 
   it "cannot set a disabled radio button" do
-    lambda { RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").set }.should raise_error
+    expect { RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").set }.to raise_error
   end
 end
