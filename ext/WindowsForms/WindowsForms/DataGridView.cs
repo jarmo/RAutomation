@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using FizzWare.NBuilder;
+using UIA.Extensions;
 
 namespace WindowsForms
 {
@@ -10,6 +10,7 @@ namespace WindowsForms
         public DataGridView()
         {
             InitializeComponent();
+	        dataGridView1.AsTable();
         }
 
         public class Person
