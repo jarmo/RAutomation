@@ -33,3 +33,4 @@ ipch
 *.user
 *.opensdf
 _ReSharper*/
+packages/
