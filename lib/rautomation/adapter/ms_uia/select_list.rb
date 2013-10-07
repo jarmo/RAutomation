@@ -28,6 +28,13 @@ module RAutomation
             UiaDll::remove_from_selection @select_list.search_information, @index
           end
 
+          def self.locators_match?(locators, item)
+            locators.all? do |locator, value|
+              return item.text =~ value if value.is_a? Regexp
+              return item.send(locator) == value
+            end
+          end
+
           alias_method :set, :select
         end
 
@@ -36,26 +43,7 @@ module RAutomation
         end
 
         def options(locator = {})
-          items = []
-
-          select_options = UiaDll::select_options(search_information)
-          select_options.each_with_index do |item, item_no|
-            case
-              when locator[:text]
-                case locator[:text]
-                  when Regexp
-                    items.push(SelectListOption.new(self, item, item_no)) if locator[:text] =~ item
-                  else
-                    items.push(SelectListOption.new(self, item, item_no)) if locator[:text] == item
-                end
-              when locator[:index]
-                items.push(SelectListOption.new(self, item, item_no)) if item_no == locator[:index]
-              else
-                items.push(SelectListOption.new(self, item, item_no))
-            end
-          end
-
-          items
+          all_options.select { |item| SelectListOption.locators_match? locator, item }
         end
 
         def value
@@ -73,9 +61,14 @@ module RAutomation
         alias_method :exists?, :exist?
 
         private
-
         def item_count
           UiaDll::select_list_count(search_information)
+        end
+
+        def all_options
+          UiaDll::select_options(search_information).each_with_index.map do |item, index|
+            SelectListOption.new(self, item, index)
+          end
         end
 
       end

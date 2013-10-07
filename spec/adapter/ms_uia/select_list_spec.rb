@@ -72,9 +72,7 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
 
   it '#options' do
     fruits_combo.options.size.should == 5
-
-    expected_options = ['Apple', 'Caimito', 'Coconut', 'Orange', 'Passion Fruit']
-    fruits_combo.options.map {|option| option.text}.should == expected_options
+    fruits_combo.options.map(&:text).should eq(['Apple', 'Caimito', 'Coconut', 'Orange', 'Passion Fruit'])
 
     fruits_combo.options(text: 'Apple').map(&:text).should eq ['Apple']
     fruits_combo.options(text: /Ap{2}le/).map(&:text).should eq ['Apple']
