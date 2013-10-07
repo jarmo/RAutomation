@@ -29,13 +29,6 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     fruits_combo.should exist
   end
 
-  it '#options' do
-    fruits_combo.options.size.should == 5
-
-    expected_options = ['Apple', 'Caimito', 'Coconut', 'Orange', 'Passion Fruit']
-    fruits_combo.options.map {|option| option.text}.should == expected_options
-  end
-
   it '#selected? & #select' do
     fruits_combo.options(:text => 'Apple')[0].should_not be_selected
     fruits_combo.options(:text => 'Apple')[0].select.should be_true
@@ -75,6 +68,17 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     fruits_combo.option(:text => 'Apple').should_not be_selected
     fruits_combo.option(:index => 0).set
     fruits_combo.option(:text => 'Apple').should be_selected
+  end
+
+  it '#options' do
+    fruits_combo.options.size.should == 5
+
+    expected_options = ['Apple', 'Caimito', 'Coconut', 'Orange', 'Passion Fruit']
+    fruits_combo.options.map {|option| option.text}.should == expected_options
+
+    fruits_combo.options(text: 'Apple').map(&:text).should eq ['Apple']
+    fruits_combo.options(text: /Ap{2}le/).map(&:text).should eq ['Apple']
+    fruits_combo.options(index: 0).map(&:text).should eq ['Apple']
   end
 
   it 'cannot select anything on a disabled select list' do

@@ -11,8 +11,8 @@ module RAutomation
 
           def initialize(select_list, text, index)
             @select_list = select_list
-            @text        = text
-            @index       = index
+            @text = text
+            @index = index
           end
 
           def selected?
@@ -35,15 +35,23 @@ module RAutomation
           options(locator).first
         end
 
-        def options(options = {})
+        def options(locator = {})
           items = []
 
           select_options = UiaDll::select_options(search_information)
           select_options.each_with_index do |item, item_no|
-            if options[:text]
-              items.push(SelectListOption.new(self, item, item_no)) if options[:text] == item
-            else
-              items.push(SelectListOption.new(self, item, item_no))
+            case
+              when locator[:text]
+                case locator[:text]
+                  when Regexp
+                    items.push(SelectListOption.new(self, item, item_no)) if locator[:text] =~ item
+                  else
+                    items.push(SelectListOption.new(self, item, item_no)) if locator[:text] == item
+                end
+              when locator[:index]
+                items.push(SelectListOption.new(self, item, item_no)) if item_no == locator[:index]
+              else
+                items.push(SelectListOption.new(self, item, item_no))
             end
           end
 
