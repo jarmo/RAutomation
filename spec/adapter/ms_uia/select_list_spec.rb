@@ -15,7 +15,7 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     about.select_list(:id => 'multiFruitListBox')
   end
 
-  it '#fruits_combo' do
+  it '#select_list' do
     fruits_combo.should exist
 
     RAutomation::Window.wait_timeout = 0.1
