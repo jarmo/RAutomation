@@ -85,6 +85,11 @@ describe 'MsUia::Table', :if => SpecHelper.adapter == :ms_uia do
       table.rows.all?(&:selected?).should be_true
     end
 
+    it '#select' do
+      large_grid.select value: /^FirstName[1-9]$/
+      large_grid.rows.take(9).all?(&:selected?).should be_true
+    end
+
     it "plays nice if the table does not support multiple selections" do
       toggle_multi_select
 
