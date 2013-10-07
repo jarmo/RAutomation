@@ -62,6 +62,12 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     multi_fruits.values.should eq(['Orange', 'Mango'])
   end
 
+  it '#clear' do
+    multi_fruits.select # select all
+    multi_fruits.clear text: 'Orange'
+    multi_fruits.values.should eq(['Apple', 'Mango'])
+  end
+
   it '#values' do
     multi_fruits.values.should eq([]) # => empty state
 

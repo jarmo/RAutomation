@@ -46,8 +46,12 @@ module RAutomation
           all_options.select { |item| SelectListOption.locators_match? locator, item }
         end
 
-        def select(locator)
+        def select(locator = {})
           options(locator).each(&:select)
+        end
+
+        def clear(locator = {})
+          options(locator).each(&:clear)
         end
 
         def value
