@@ -31,6 +31,10 @@ module RAutomation
           alias_method :set, :select
         end
 
+        def option(locator)
+          options(locator).first
+        end
+
         def options(options = {})
           items = []
 
@@ -52,14 +56,6 @@ module RAutomation
 
         def values
           UiaDll::selections(search_information)
-        end
-
-        def option(options)
-          UiaDll::select_options(search_information).each_with_index do |item, item_no|
-            return SelectListOption.new(self, item, item_no) if options[:text] == item
-          end
-
-          nil
         end
 
         def exist?

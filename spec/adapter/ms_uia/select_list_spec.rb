@@ -73,7 +73,7 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
 
   it '#option' do
     fruits_combo.option(:text => 'Apple').should_not be_selected
-    fruits_combo.option(:text => 'Apple').set
+    fruits_combo.option(:index => 0).set
     fruits_combo.option(:text => 'Apple').should be_selected
   end
 
