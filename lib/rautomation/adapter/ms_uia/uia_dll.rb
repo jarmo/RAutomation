@@ -302,6 +302,8 @@ module RAutomation
                         [SearchCriteria.by_ref, :pointer], :int
         attach_function :Table_GetValues,
                         [SearchCriteria.by_ref, :pointer], :int
+        attach_function :Table_GetSelectedIndexes,
+                        [SearchCriteria.by_ref, :pointer], :int
         attach_function :table_row_count, :Table_RowCount,
                         [SearchCriteria.by_ref], :int
         attach_function :Table_CoordinateIsValid,
@@ -318,6 +320,10 @@ module RAutomation
                         [SearchCriteria.by_ref, :int, :pointer, :int], :void
         attach_function :Table_RemoveRowByValue,
                         [SearchCriteria.by_ref, :string, :pointer, :int], :void
+
+        def self.table_selected_indexes(search_information)
+          integers_from(:Table_GetSelectedIndexes, search_information)
+        end
 
         def self.table_select(search_information, which_item)
           case which_item
@@ -381,6 +387,13 @@ module RAutomation
         end
 
         private
+        def self.integers_from(method, search_information)
+          item_count = send method, search_information, nil
+          pointer = FFI::MemoryPointer.new :pointer, item_count
+          send method, search_information, pointer
+          pointer.read_array_of_int(item_count)
+        end
+
         def self.strings_from(method, hwnd)
           string_count = send method, hwnd, nil
           pointer = FFI::MemoryPointer.new :pointer, string_count

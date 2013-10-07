@@ -49,6 +49,19 @@ namespace RAutomation.UIA.Extensions
             return -1;
         }
 
+        public static int[] IndexesOf<T>(this IEnumerable<T> items, Func<T, bool> trueCondition)
+        {
+            var indexes = new List<int>();
+            var foundIndex = 0;
+            foreach (var item in items)
+            {
+                if (trueCondition(item)) indexes.Add(foundIndex);
+                ++foundIndex;
+            }
+
+            return indexes.ToArray();
+        }
+
         public static void ForEach<T>(this IEnumerable<T> items, Action<T> doIt)
         {
             foreach (var item in items)

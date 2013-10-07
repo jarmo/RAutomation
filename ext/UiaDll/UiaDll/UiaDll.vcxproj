@@ -80,6 +80,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayHelper.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="DynamicAssemblyResolver.h" />
     <ClInclude Include="MenuItemSelector.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="UiaDll.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayHelper.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="ControlMethods.cpp" />

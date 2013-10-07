@@ -107,6 +107,10 @@ module RAutomation
           rows(locators).each(&:clear)
         end
 
+        def selected_rows
+          UiaDll.table_selected_indexes(search_information).map {|index| Row.new(self, index: index) }
+        end
+
         def strings
           headers = UiaDll.table_headers(search_information)
           values = UiaDll.table_values(search_information)
