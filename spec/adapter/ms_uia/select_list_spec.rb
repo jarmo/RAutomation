@@ -29,30 +29,37 @@ describe 'MsUia::SelectList', :if => SpecHelper.adapter == :ms_uia do
     fruits_combo.should exist
   end
 
-  it '#selected? & #select' do
-    fruits_combo.options(:text => 'Apple')[0].should_not be_selected
-    fruits_combo.options(:text => 'Apple')[0].select.should be_true
-    fruits_combo.options(:text => 'Apple')[0].should be_selected
+  context 'SelectListOption' do
+    it '#selected? & #select' do
+      fruits_combo.options(:text => 'Apple')[0].should_not be_selected
+      fruits_combo.options(:text => 'Apple')[0].select.should be_true
+      fruits_combo.options(:text => 'Apple')[0].should be_selected
+    end
+
+    it '#value' do
+
+      #default empty state
+      fruits_combo.value.should == ''
+
+      fruits_combo.options(:text => 'Apple')[0].select
+      fruits_combo.value.should == 'Apple'
+
+      fruits_combo.options(:text => 'Caimito')[0].select
+      fruits_combo.value.should == 'Caimito'
+    end
+
+    it 'enabled/disabled' do
+      fruits_combo.should be_enabled
+      fruits_combo.should_not be_disabled
+
+      disabled_combo.should_not be_enabled
+      disabled_combo.should be_disabled
+    end
   end
 
-  it '#value' do
-
-    #default empty state
-    fruits_combo.value.should == ''
-
-    fruits_combo.options(:text => 'Apple')[0].select
-    fruits_combo.value.should == 'Apple'
-
-    fruits_combo.options(:text => 'Caimito')[0].select
-    fruits_combo.value.should == 'Caimito'
-  end
-
-  it 'enabled/disabled' do
-    fruits_combo.should be_enabled
-    fruits_combo.should_not be_disabled
-
-    disabled_combo.should_not be_enabled
-    disabled_combo.should be_disabled
+  it '#select' do
+    multi_fruits.select text: /ng/
+    multi_fruits.values.should eq(['Orange', 'Mango'])
   end
 
   it '#values' do
