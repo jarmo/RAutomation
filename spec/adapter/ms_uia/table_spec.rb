@@ -90,6 +90,17 @@ describe 'MsUia::Table', :if => SpecHelper.adapter == :ms_uia do
       large_grid.rows.take(9).all?(&:selected?).should be_true
     end
 
+    it '#clear' do
+      first_three = large_grid.rows.take(3)
+      next_six = large_grid.rows.take_while { |r| r.index.between?(3, 9) }
+      large_grid.select value: /^FirstName[1-9]$/
+
+      large_grid.clear value: /^FirstName[1-3]$/
+
+      first_three.all?(&:selected?).should be_false
+      next_six.all?(&:selected?).should be_true
+    end
+
     it "plays nice if the table does not support multiple selections" do
       toggle_multi_select
 

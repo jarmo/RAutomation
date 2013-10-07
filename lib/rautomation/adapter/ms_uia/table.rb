@@ -103,6 +103,10 @@ module RAutomation
           rows(locators).each(&:select)
         end
 
+        def clear(locators={})
+          rows(locators).each(&:clear)
+        end
+
         def strings
           headers = UiaDll.table_headers(search_information)
           values = UiaDll.table_values(search_information)
