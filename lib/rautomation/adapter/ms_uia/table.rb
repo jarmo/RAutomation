@@ -41,8 +41,9 @@ module RAutomation
           cells(locators).first
         end
 
-        def initialize(window, locators)
-          @search_information = window.search_information
+        def initialize(table, locators)
+          @table = table
+          @search_information = table.search_information
           @locators = extract(locators)
         end
 
@@ -67,7 +68,7 @@ module RAutomation
         end
 
         def exists?
-          UiaDll::table_coordinate_valid?(search_information, @locators[:index])
+          @locators[:index].between? 0, @table.row_count - 1
         end
 
         def self.locators_match?(locators, item)

@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
+describe 'MsUia::Table', :if => SpecHelper.adapter == :ms_uia do
+  let(:window) { RAutomation::Window.new(:title => "MainFormWindow") }
   let(:data_entry) { RAutomation::Window.new(:title => "DataEntryForm") }
   let(:table) { data_entry.table(:id => "personListView") }
   let(:toggle_multi_select) { data_entry.button(:value => 'Toggle Multi').click { true } }
 
   before :each do
-    window = RAutomation::Window.new(:title => "MainFormWindow")
     window.button(:value => "Data Entry Form").click { RAutomation::Window.new(:title => "DataEntryForm").exists? }
   end
 
@@ -43,8 +43,19 @@ describe "MsUia::Table", :if => SpecHelper.adapter == :ms_uia do
   end
 
   context "#rows" do
+    let(:data_grid_view) { window.button(value: 'Data Grid View').click {true}; RAutomation::Window.new(title: /DataGridView/) }
+    let(:large_grid) { data_entry.close; data_grid_view.table(id: 'dataGridView1') }
+
     it "has rows" do
       table.rows.size.should eq 2
+    end
+
+    it 'are quick to find' do
+      large_grid.row_count.should eq(51)
+
+      start = Time.now
+      large_grid.row(index: 50).should exist
+      (Time.now - start).should be < 1.5
     end
 
     it "have values" do
