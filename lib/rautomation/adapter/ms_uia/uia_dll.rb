@@ -337,7 +337,7 @@ module RAutomation
         end
 
         def self.table_single_select(search_information, which_item)
-          can_throw(:Table_SelectByIndex, search_information, which_item)
+          can_throw(:Table_SingleSelectByIndex, search_information, which_item)
         end
 
         def self.table_value_at(search_information, row, column=0)
