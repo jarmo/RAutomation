@@ -312,6 +312,8 @@ module RAutomation
                         [SearchCriteria.by_ref, :int, :int, :pointer, :int], :void
         attach_function :Table_SelectByIndex,
                         [SearchCriteria.by_ref, :int, :pointer, :int], :void
+        attach_function :Table_SingleSelectByIndex,
+                        [SearchCriteria.by_ref, :int, :pointer, :int], :void
         attach_function :Table_SelectByValue,
                         [SearchCriteria.by_ref, :string, :pointer, :int], :void
         attach_function :table_row_is_selected, :Table_IsSelectedByIndex,
@@ -332,6 +334,10 @@ module RAutomation
             when String
               can_throw(:Table_SelectByValue, search_information, which_item)
           end
+        end
+
+        def self.table_single_select(search_information, which_item)
+          can_throw(:Table_SelectByIndex, search_information, which_item)
         end
 
         def self.table_value_at(search_information, row, column=0)

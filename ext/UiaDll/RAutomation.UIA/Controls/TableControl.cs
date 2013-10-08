@@ -76,6 +76,11 @@ namespace RAutomation.UIA.Controls
             get { return TableOrListItems.Select(x => x.Current.Name).ToArray(); }
         }
 
+        public void SingleSelect(int value)
+        {
+            DataItems.ElementAt(value).AsSelectionItem().Select();
+        }
+
         private void Select(int value)
         {
             var selectionItem = DataItems.ElementAt(value).AsSelectionItem();
