@@ -3,6 +3,8 @@ require 'spec_helper'
 describe 'MsUia::Table', :if => SpecHelper.adapter == :ms_uia do
   let(:window) { RAutomation::Window.new(:title => "MainFormWindow") }
   let(:data_entry) { RAutomation::Window.new(:title => "DataEntryForm") }
+  let(:data_grid_view) { window.button(value: 'Data Grid View').click {true}; RAutomation::Window.new(title: /DataGridView/) }
+  let(:large_grid) { data_entry.close; data_grid_view.table(id: 'dataGridView1') }
   let(:table) { data_entry.table(:id => "personListView") }
   let(:toggle_multi_select) { data_entry.button(:value => 'Toggle Multi').click { true } }
 
@@ -64,9 +66,6 @@ describe 'MsUia::Table', :if => SpecHelper.adapter == :ms_uia do
   end
 
   context "#rows" do
-    let(:data_grid_view) { window.button(value: 'Data Grid View').click {true}; RAutomation::Window.new(title: /DataGridView/) }
-    let(:large_grid) { data_entry.close; data_grid_view.table(id: 'dataGridView1') }
-
     it "has rows" do
       table.rows.size.should eq 2
     end
