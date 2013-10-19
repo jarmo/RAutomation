@@ -1,3 +1,5 @@
+Kernel.warn "[DEPRECATED] - RAutomation Win32 adapter will be removed in some future version. Use MsUia adapter instead!"
+
 begin
   gem "ffi"
 rescue Gem::LoadError
