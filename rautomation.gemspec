@@ -27,7 +27,7 @@ RAutomation provides:
   s.require_paths = ["lib"]  
 
   s.add_runtime_dependency("ffi")
-  s.add_development_dependency("rspec", "~>2.3")
+  s.add_development_dependency("rspec", "~> 2.14")
   s.add_development_dependency("rake")
   s.add_development_dependency("yard")
 end
