@@ -1,6 +1,5 @@
 module RAutomation
   module Adapter
-    autoload :Autoit, File.dirname(__FILE__) + "/autoit.rb"
     autoload :MsUia, File.dirname(__FILE__) + "/ms_uia.rb"
     autoload :Win32, File.dirname(__FILE__) + "/win_32.rb"
 
