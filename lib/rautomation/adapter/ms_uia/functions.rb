@@ -176,12 +176,9 @@ module RAutomation
                 raise UnknownElementException, "#{locators[:point]} does not exist" if hwnd == 0
                 hwnd
               else
-                hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
+                find_hwnd(locators, window_hwnd) do |hwnd|
                   locators_match?(locators, control_properties(hwnd, locators))
                 end
-
-                raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
-                hwnd
             end
           end
 
