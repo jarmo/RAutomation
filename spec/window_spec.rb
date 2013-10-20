@@ -130,14 +130,20 @@ describe RAutomation::Window do
             to_not raise_exception
   end
 
-  it "#child", :if => [:win_32, :ms_uia].include?(SpecHelper.adapter) do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title])
-    window.should exist
+  context '#child', :if => [:win_32, :ms_uia].include?(SpecHelper.adapter) do
+    let(:window) { RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]) }
 
-    # buttons are windows too. so let's find the button for now
-    child = window.child(:title => /About/i)
-    child.should exist
-    child.title.should == "&About"
-    child.adapter.should == SpecHelper.adapter
+    it 'immediate children' do
+      # buttons are windows too. so let's find the button for now
+      child = window.child(:title => '&About')
+      child.should exist
+      child.title.should == "&About"
+      child.adapter.should == SpecHelper.adapter
+    end
+
+    it 'popups' do
+      window.button(:title => '&About').click { true }
+      window.child(:title => 'About').should exist
+    end
   end
 end

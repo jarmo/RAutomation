@@ -168,20 +168,13 @@ module RAutomation
           def control_hwnd(window_hwnd, locators)
             case
               when locators[:id]
-                hwnd = UiaDll.cached_hwnd(UiaDll::SearchCriteria.from_locator(window_hwnd, locators))
-                raise UnknownElementException, "#{locators[:id]} does not exist" if hwnd == 0
-                hwnd
+                UiaDll.cached_hwnd(UiaDll::SearchCriteria.from_locator(window_hwnd, locators))
               when locators[:point]
-                hwnd = UiaDll::handle_from_point(*locators[:point])
-                raise UnknownElementException, "#{locators[:point]} does not exist" if hwnd == 0
-                hwnd
+                UiaDll::handle_from_point(*locators[:point])
               else
-                hwnd = find_hwnd(locators, window_hwnd) do |hwnd|
+                find_hwnd(locators, window_hwnd) do |hwnd|
                   locators_match?(locators, control_properties(hwnd, locators))
                 end
-
-                raise UnknownElementException, "Element with #{locators.inspect} does not exist" if (hwnd == 0) or (hwnd == nil)
-                hwnd
             end
           end
 

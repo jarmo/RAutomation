@@ -94,7 +94,7 @@ module RAutomation
           def data=(value)
             case how
               when :hwnd
-                self[:data][:int_data] = value
+                self[:data][:int_data] = value || 0 # cannot accept nil
               when :id, :value
                 self[:data][:string_data] = value
               when :point

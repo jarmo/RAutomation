@@ -3,8 +3,6 @@ require "spec_helper"
 describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
   let(:window) {RAutomation::Window.new(:title => /MainFormWindow/i)}
 
-
-
   it "move and click" do
     #window = RAutomation::Window.new(:title => /MainFormWindow/i)
                             window.maximize
@@ -12,7 +10,6 @@ describe "MsUia::Window", :if => SpecHelper.adapter == :ms_uia do
     sleep 1
     window.click_mouse
     sleep 1
-
   end
 
   context "#send_keys" do
