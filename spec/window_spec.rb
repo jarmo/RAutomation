@@ -143,7 +143,7 @@ describe RAutomation::Window do
 
     it 'popups' do
       window.button(:title => '&About').click { true }
-      window.child(:title => 'About').should exist
+      window.child(:title => 'About').should be_visible
     end
   end
 end
