@@ -1,4 +1,8 @@
-== 0.14.0
+== 0.14.1 / 2014-02-05
+
+  * Set ffi 1.9.0 as a dependency for now because newer versions are broken. See more at issue #81.
+
+== 0.14.0 / 2014-02-05
 
 === MsUia adapter
 

@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    rautomation (0.14.0)
-      ffi
+    rautomation (0.14.1)
+      ffi (= 1.9.0)
 
 GEM
   remote: https://rubygems.org/
