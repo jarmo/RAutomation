@@ -1,3 +1,14 @@
+== 0.14.0
+
+=== MsUia adapter
+
+  * Add SelectList#select and SelectList#clear.
+  * Add Table#select and Table#clear.
+  * Add Table#selected_rows.
+  * Improve performance of table Row lookups.
+  * SelectList#options accepts :index and :text (Regexp or String).
+  * Window#child in ms_uia works for popup windows as well.
+
 == 0.13.0
 
 === MsUia adapter
