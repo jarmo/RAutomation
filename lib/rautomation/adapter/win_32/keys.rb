@@ -72,6 +72,7 @@ module RAutomation
           :dash          => 0xBD,
           :period        => 0xBE,
           :slash         => 0xBF,
+          :grave         => 0xC0,
           :backslash     => 0xDC
         }
 
@@ -85,7 +86,8 @@ module RAutomation
           "."  => KEYS[:period],
           ","  => KEYS[:comma],
           "["  => KEYS[:left_bracket],
-          "]"  => KEYS[:right_bracket]
+          "]"  => KEYS[:right_bracket],
+          '`'  => KEYS[:grave]
         }
 
         # Assumes US standard keyboard layout
@@ -109,7 +111,8 @@ module RAutomation
           "|"   => KEYS[:backslash],
           "?"   => KEYS[:slash],
           ">"   => KEYS[:period],
-          "<"   => KEYS[:comma]
+          "<"   => KEYS[:comma],
+          "~"   => KEYS[:grave]
         }
 
         def self.[](key)
