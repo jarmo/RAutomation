@@ -17,7 +17,7 @@ describe "Win32::Window", :if => SpecHelper.adapter == :win_32 do
     it "send arbitrary characters and control keys" do
       text_field = window.text_field(:index => 2)
       text_field.focus
-      arbitrary_str = "abc123ABChiHI!@#$%^&*()-_+=[{]}\\|;:'\",<.>/?"
+      arbitrary_str = "abc123ABChiHI!@#$%^&*()-_+=[{]}\\|;:'\",<.>/?`~"
       window.send_keys arbitrary_str
       text_field.value.should == arbitrary_str
 
