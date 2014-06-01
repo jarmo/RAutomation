@@ -3,7 +3,7 @@ module RAutomation
     module Win32
       class Keys
         KEYS = {
-          # keycodes from http://msdn.microsoft.com/en-us/library/ms927178.aspx
+          # keycodes from http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
           :null          => 0x00,
           :cancel        => 0x03,
           :help          => 0x2F,
@@ -38,8 +38,8 @@ module RAutomation
           :arrow_down    => 0x28,
           :insert        => 0x2D,
           :delete        => 0x2E,
-          :semicolon     => 0x3B,
-          :equals        => 0x3D,
+          :semicolon     => 0xBA,
+          :equals        => 0xBB,
           :numpad0       => 0x60,
           :numpad1       => 0x61,
           :numpad2       => 0x62,
@@ -68,11 +68,29 @@ module RAutomation
           :f10           => 0x79,
           :f11           => 0x7A,
           :f12           => 0x7B,
+          :comma         => 0xBC,
           :dash          => 0xBD,
-          :slash         => 0x6F,
+          :period        => 0xBE,
+          :slash         => 0xBF,
+          :grave         => 0xC0,
           :backslash     => 0xDC
-        }            
+        }
 
+        MAPPED_KEYS = {
+          "\\" => KEYS[:backslash],
+          "-"  => KEYS[:dash],
+          "/"  => KEYS[:slash],
+          "="  => KEYS[:equals],
+          ";"  => KEYS[:semicolon],
+          "'"  => KEYS[:single_quote],
+          "."  => KEYS[:period],
+          ","  => KEYS[:comma],
+          "["  => KEYS[:left_bracket],
+          "]"  => KEYS[:right_bracket],
+          '`'  => KEYS[:grave]
+        }
+
+        # Assumes US standard keyboard layout
         SPECIAL_KEYS = {
           "!"   => 0x31,
           "@"   => 0x32,
@@ -84,16 +102,17 @@ module RAutomation
           "*"   => 0x38,
           "("   => 0x39,
           ")"   => 0x30,
-          "_"   => 0x2D,
-          "+"   => 0x3D,
-          "{"   => 0x5B,
-          "}"   => 0x5D,
-          ":"   => 0x3B,
-          "\""  => 0x27,
-          "|"   => 0x5C,
-          "?"   => 0x2F,
-          ">"   => 0x2E,
-          "<"   => 0x2C
+          "_"   => KEYS[:dash],
+          "+"   => KEYS[:equals],
+          "{"   => KEYS[:left_bracket],
+          "}"   => KEYS[:right_bracket],
+          ":"   => KEYS[:semicolon],
+          "\""  => KEYS[:single_quote],
+          "|"   => KEYS[:backslash],
+          "?"   => KEYS[:slash],
+          ">"   => KEYS[:period],
+          "<"   => KEYS[:comma],
+          "~"   => KEYS[:grave]
         }
 
         def self.[](key)
@@ -115,7 +134,7 @@ module RAutomation
 
         def self.encode_str(keys)
           keys.to_s.split("").map do |key|
-            key =~ /[a-z]/ ? key.upcase.unpack("c")[0] : 
+            key =~ /[a-z]/ || MAPPED_KEYS[key] ? MAPPED_KEYS[key] || key.upcase.unpack("c")[0] : 
               key =~ /[A-Z]/ || SPECIAL_KEYS[key] ? [Keys[:shift], SPECIAL_KEYS[key] || key.unpack("c")[0], Keys[:null]] :
               key.unpack("c")[0]
           end
