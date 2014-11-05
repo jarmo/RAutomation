@@ -262,7 +262,11 @@ module RAutomation
 
           def element_properties(type, hwnd, locators)
             locators.inject({}) do |properties, locator|
-              properties[locator[0]] = self.send("#{type}_#{locator[0]}", hwnd) unless locator[0] == :index
+              if locator[0] == :hwnd
+                properties[locator[0]] = hwnd
+              elsif
+                properties[locator[0]] = self.send("#{type}_#{locator[0]}", hwnd)
+              end
               properties
             end
           end
