@@ -264,7 +264,7 @@ module RAutomation
             locators.inject({}) do |properties, locator|
               if locator[0] == :hwnd
                 properties[locator[0]] = hwnd
-              elsif
+              elsif locator[0] != :index
                 properties[locator[0]] = self.send("#{type}_#{locator[0]}", hwnd)
               end
               properties
