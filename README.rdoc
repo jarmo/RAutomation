@@ -79,7 +79,7 @@ about that matter - or even better, follow the instructions at "How to create a 
 
 == Supported Ruby Platforms
 
-Currently **only 32bit** Ruby is supported. 64bit versions do not work at all!
+Currently only 32bit Ruby is supported. 64bit versions do not work at all!
 
 == How to create a new adapter?
 
