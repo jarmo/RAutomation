@@ -25,9 +25,11 @@ module RAutomation
 
         def press
           send_input down_event
+          send_input down_event
         end
 
         def release
+          send_input up_event
           send_input up_event
         end
 
