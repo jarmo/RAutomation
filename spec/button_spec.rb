@@ -40,6 +40,8 @@ describe RAutomation::Button do
     button.should exist
     button.click
 
+    sleep(1)
+
     button.should_not exist
     window.should_not exist
   end
