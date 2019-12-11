@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/rautomation.png)](http://badge.fury.io/rb/rautomation)
 
 *   Web: http://www.github.com/jarmo/RAutomation
-*   Author: Jarmo Pertman ([mailto:jarmo](at)jarmopertman.com)
+*   Author: Jarmo Pertman [jarmo@jarmopertman.com](mailto:jarmo@jarmopertman.com)
 
 
 RAutomation is a small and easy to use library for helping out to automate
@@ -48,7 +48,7 @@ RAutomation provides:
     # use adapter's (in this case AutoIt's) internal methods not part of the public API directly
     window2.WinClose("[TITLE:Other Title]")
 
-Check out the documentation for other possible usages!
+Check out [the documentation](https://rubydoc.info/github/jarmo/RAutomation) for other possible usages!
 
 ## INSTALL
 
