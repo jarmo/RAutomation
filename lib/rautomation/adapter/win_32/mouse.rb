@@ -24,13 +24,11 @@ module RAutomation
         end
 
         def press
-          send_input down_event
-          send_input down_event
+          send_input down_event, down_event
         end
 
         def release
-          send_input up_event
-          send_input up_event
+          send_input up_event, up_event
         end
 
         private
