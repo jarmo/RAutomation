@@ -2,7 +2,7 @@
 --no-private
 --hide-void-return
 --title "RAutomation"
---files History.md,LICENSE
+--files CHANGES.md,LICENSE
 --default-return ""
 --markup-provider redcarpet
 --markup markdown
