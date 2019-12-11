@@ -72,27 +72,27 @@ module RAutomation
       @@wait_timeout = 60
 
       # Change the timeout to wait before {WaitHelper::TimeoutError} is raised.
-      # @param [Fixnum] timeout in seconds.
+      # @param [Integer] timeout in seconds.
       def wait_timeout=(timeout)
         @@wait_timeout = timeout
       end
 
       # Retrieve current timeout in seconds to wait before {WaitHelper::TimeoutError} is raised.
-      # @return [Fixnum] timeout in seconds
+      # @return [Integer] timeout in seconds
       def wait_timeout
         @@wait_timeout
       end
 
     end
 
-    # @return [Fixnum] handle of the window which is used internally for other methods.
+    # @return [Integer] handle of the window which is used internally for other methods.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def hwnd
       wait_until_present
       @window.hwnd
     end
 
-    # @return [Fixnum] process identifier (PID) of the window.
+    # @return [Integer] process identifier (PID) of the window.
     # @raise [UnknownWindowException] if the window doesn't exist.
     def pid
       wait_until_present

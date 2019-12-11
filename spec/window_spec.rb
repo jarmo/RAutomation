@@ -38,7 +38,7 @@ describe RAutomation::Window do
   end
 
   it "#hwnd" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).hwnd.should be_a(Fixnum)
+    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).hwnd.should be_a(Integer)
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").hwnd}.
             to raise_exception(RAutomation::UnknownWindowException)

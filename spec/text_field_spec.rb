@@ -49,7 +49,7 @@ describe RAutomation::TextField do
 
   it "#hwnd" do
     field  = main_form.text_field(:class => /Edit/i, :index => 1)
-    field.hwnd.should be_a(Fixnum)
+    field.hwnd.should be_a(Integer)
 
     RAutomation::Window.wait_timeout = 0.1
     expect { main_form.text_field(:class => "non-existing-window").hwnd }.
@@ -58,7 +58,7 @@ describe RAutomation::TextField do
 
   it "#hwnd locator" do
     field  = main_form.text_field(:class => /Edit/i, :index => 1)
-    field.hwnd.should be_a(Fixnum)
+    field.hwnd.should be_a(Integer)
     field2 = main_form.text_field(:hwnd => field.hwnd).should exist
   end
 end

@@ -22,8 +22,8 @@ module RAutomation
         # @param [Hash] locators for searching the text field.
         # @option locators [String, Regexp] :class Internal class name of the text field
         # @option locators [String, Regexp] :value Value (text) of the text field
-        # @option locators [String, Fixnum] :id Internal ID of the text field
-        # @option locators [String, Fixnum] :index 0-based index to specify n-th text field if all other criteria match
+        # @option locators [String, Integer] :id Internal ID of the text field
+        # @option locators [String, Integer] :index 0-based index to specify n-th text field if all other criteria match
         # @see RAutomation::Window#text_field
         def initialize(window, locators)
           @window = window

@@ -22,8 +22,8 @@ module RAutomation
         # @param [Hash] locators for searching the button.
         # @option locators [String, Regexp] :value Value (text) of the button
         # @option locators [String, Regexp] :class Internal class name of the button
-        # @option locators [String, Fixnum] :id Internal ID of the button
-        # @option locators [String, Fixnum] :index 0-based index to specify n-th button if all other criteria match
+        # @option locators [String, Integer] :id Internal ID of the button
+        # @option locators [String, Integer] :index 0-based index to specify n-th button if all other criteria match
         # @see RAutomation::Window#button
         def initialize(window, locators)
           @window = window

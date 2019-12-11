@@ -21,9 +21,9 @@ module RAutomation
         # @option locators [String, Regexp] :title Title of the window
         # @option locators [String, Regexp] :text Visible text of the window
         # @option locators [String, Regexp] :class Internal class name of the window
-        # @option locators [String, Fixnum] :hwnd Window handle in decimal format
-        # @option locators [String, Fixnum] :pid Window process ID (PID)
-        # @option locators [String, Fixnum] :index 0-based index to specify n-th window if all other criteria match
+        # @option locators [String, Integer] :hwnd Window handle in decimal format
+        # @option locators [String, Integer] :pid Window process ID (PID)
+        # @option locators [String, Integer] :index 0-based index to specify n-th window if all other criteria match
         #   all other criteria match
         # @see RAutomation::Window#initialize
         def initialize(container, locators)

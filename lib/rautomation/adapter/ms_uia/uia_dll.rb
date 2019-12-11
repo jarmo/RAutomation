@@ -218,7 +218,7 @@ module RAutomation
 
         def self.remove_from_selection(search_information, which_item)
           case which_item
-            when Fixnum
+            when Integer
               can_throw(:SelectList_RemoveIndex, search_information, which_item)
             when String
               can_throw(:SelectList_RemoveValue, search_information, which_item)
@@ -284,7 +284,7 @@ module RAutomation
 
         def self.select_tab(search_information, which)
           case which
-            when Fixnum
+            when Integer
               can_throw(:TabControl_SelectByIndex, search_information, which)
             when String
               can_throw(:TabControl_SelectByValue, search_information, which)
@@ -358,7 +358,7 @@ module RAutomation
 
         def self.table_remove_from_selection(search_information, which_row)
           case which_row
-            when Fixnum
+            when Integer
               can_throw(:Table_RemoveRowByIndex, search_information, which_row)
             when String
               can_throw(:Table_RemoveRowByValue, search_information, which_row)

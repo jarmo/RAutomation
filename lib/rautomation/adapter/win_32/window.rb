@@ -31,9 +31,9 @@ module RAutomation
         # @option locators [String, Regexp] :title Title of the window
         # @option locators [String, Regexp] :text Visible text of the window
         # @option locators [String, Regexp] :class Internal class name of the window
-        # @option locators [String, Fixnum] :hwnd Window handle in decimal format
-        # @option locators [String, Fixnum] :pid Window process ID (PID)
-        # @option locators [String, Fixnum] :index 0-based index to specify n-th window if all other criteria match
+        # @option locators [String, Integer] :hwnd Window handle in decimal format
+        # @option locators [String, Integer] :pid Window process ID (PID)
+        # @option locators [String, Integer] :index 0-based index to specify n-th window if all other criteria match
         #   all other criteria match
         # @see RAutomation::Window#initialize
         def initialize(container, locators)
@@ -122,10 +122,10 @@ module RAutomation
         # Moves/resizes the window. 
         # @note All coordinates are optional and if not specified current coordinates will be used
         # @param [Hash] coords for specifying the coordinates.
-        # @option coords [Fixnum] :left Window coordinate from the left side of screen
-        # @option coords [Fixnum] :top Window coordinate from the top of the screen
-        # @option coords [Fixnum] :width Width of window
-        # @option coords [Fixnum] :height Height of window
+        # @option coords [Integer] :left Window coordinate from the left side of screen
+        # @option coords [Integer] :top Window coordinate from the top of the screen
+        # @option coords [Integer] :width Width of window
+        # @option coords [Integer] :height Height of window
         def move(coords={})
           @container.wait_until_present
           rect = dimensions.merge(coords)
