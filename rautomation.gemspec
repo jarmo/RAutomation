@@ -30,5 +30,7 @@ RAutomation provides:
   s.add_development_dependency("rspec", "~> 2.14")
   s.add_development_dependency("rake")
   s.add_development_dependency("yard")
+  s.add_development_dependency("redcarpet")
+  s.add_development_dependency("github-markup")
 end
 

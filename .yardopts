@@ -4,3 +4,5 @@
 --title "RAutomation"
 --files History.md,LICENSE
 --default-return ""
+--markup-provider redcarpet
+--markup markdown
