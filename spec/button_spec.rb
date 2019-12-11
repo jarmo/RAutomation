@@ -32,7 +32,6 @@ describe RAutomation::Button do
       to raise_exception(RAutomation::UnknownButtonException)
   end
 
-  #This spec will randomly fail. Why?
   it "#click" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
 
@@ -41,7 +40,7 @@ describe RAutomation::Button do
     button.click
 
     button.should_not exist
-    window.should_not exist
+    RAutomation::WaitHelper.wait_until { !window.exists? }
   end
 
   it "#click with a block for defining successful click returning false raises a TimeoutError" do

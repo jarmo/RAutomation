@@ -34,3 +34,4 @@ ipch
 *.opensdf
 _ReSharper*/
 packages/
+.vs/

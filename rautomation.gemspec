@@ -26,7 +26,7 @@ RAutomation provides:
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]  
 
-  s.add_dependency("ffi", "~>1.9.0")
+  s.add_dependency("ffi", "~> 1.11.0")
   s.add_development_dependency("rspec", "~> 2.14")
   s.add_development_dependency("rake")
   s.add_development_dependency("yard")
