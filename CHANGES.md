@@ -1,3 +1,7 @@
+## 1.1.0 / 2021-12-03
+
+* Update ffi dependency to ~> 1.15.0. PR #132
+
 ## 1.0.0 / 2019-12-11
 
 * Update ffi dependency to ~> 1.11.0.
