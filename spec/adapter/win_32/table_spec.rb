@@ -8,7 +8,7 @@ describe "Win32::Table", :if => SpecHelper.adapter == :win_32 do
 
   it "#table" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table
-    table.should exist
+    expect(table).to exist
     
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existent-window").
@@ -18,10 +18,9 @@ describe "Win32::Table", :if => SpecHelper.adapter == :win_32 do
 
   it "#select" do
     table = RAutomation::Window.new(:title => "DataEntryForm").table
-
-    table.should_not be_selected(2)
+    expect(table.selected?(2)).to_not be true
     table.select(2)
-    table.should be_selected(2)
+    expect(table.selected?(2)).to be true
   end
 
 end

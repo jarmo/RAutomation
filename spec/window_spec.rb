@@ -2,50 +2,51 @@ require 'spec_helper'
 
 describe RAutomation::Window do
   it ".adapter" do
-    RAutomation::Window.new(:title => "random").adapter.should == (ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter)
+     expect(RAutomation::Window.new(:title => "random").adapter)
+             .to be == (ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter)
   end
 
   it "#new by full title" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]).should exist
+     expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]).exist?).to be true
   end
 
   it "#new by regexp title" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should exist
+     expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).exist?).to be true
   end
 
   it "#new by hwnd" do
     hwnd = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_full_title]).hwnd
     window = RAutomation::Window.new(:hwnd => hwnd)
-    window.should exist
-    window.title.should == SpecHelper::DATA[:window1_full_title]
+    expect(window.exist?).to be true
+    expect(window.title).to be == SpecHelper::DATA[:window1_full_title]
   end
 
   it "#exists?" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should exist
-    RAutomation::Window.new(:title => "non-existing-window").should_not exist
+    expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).exist?).to be true
+    expect(RAutomation::Window.new(:title => "non-existing-window").exist?).to_not be true
   end
 
   it "#visible?"do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should be_visible
+    expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).visible?).to be true
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").visible?}.
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#present?"do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).should be_present
-    RAutomation::Window.new(:title => "non-existing-window").should_not be_present
+    expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).present?).to be true
+    expect(RAutomation::Window.new(:title => "non-existing-window").present?).to_not be true
   end
 
   it "#hwnd" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).hwnd.should be_a(Integer)
+    expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).hwnd).to be_a(Integer)
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").hwnd}.
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "#title" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).title.should == SpecHelper::DATA[:window1_full_title]
+    expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).title).to be == SpecHelper::DATA[:window1_full_title]
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").title}.
             to raise_exception(RAutomation::UnknownWindowException)
@@ -64,14 +65,14 @@ describe RAutomation::Window do
   it "#activate & #active?" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
     window.activate
-    window.should be_active
+    expect(window.active?).to be true
     non_existing_window = RAutomation::Window.new(:title => "non-existing-window")
     non_existing_window.activate
-    non_existing_window.should_not be_active
+    expect(non_existing_window.active?).to_not be true
   end
 
   it "#text" do
-    RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).text.should include(SpecHelper::DATA[:window1_text])
+    expect(RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).text).to include(SpecHelper::DATA[:window1_text])
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").text}.
             to raise_exception(RAutomation::UnknownWindowException)
@@ -86,9 +87,9 @@ describe RAutomation::Window do
 
   it "#minimize & #minimized?" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    window.should_not be_minimized
+    expect(window.minimized?).to_not be true
     window.minimize
-    window.should be_minimized
+    expect(window.minimized?).to be true
 
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(:title => "non-existing-window").minimize}.
@@ -106,7 +107,7 @@ describe RAutomation::Window do
 
   it "#method_missing" do
     win = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    SpecHelper::DATA[:title_proc].call(win).should == SpecHelper::DATA[:window1_full_title]
+    expect(SpecHelper::DATA[:title_proc].call(win)).to be == SpecHelper::DATA[:window1_full_title]
   end
 
   it "#send_keys"do
@@ -122,9 +123,9 @@ describe RAutomation::Window do
 
   it "#close" do
     window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    window.should exist
+    expect(window.exist?).to be true
     window.close
-    window.should_not exist
+    expect(window.exist?).to_not be true
 
     expect {RAutomation::Window.new(:title => "non-existing-window").close}.
             to_not raise_exception
@@ -136,14 +137,14 @@ describe RAutomation::Window do
     it 'immediate children' do
       # buttons are windows too. so let's find the button for now
       child = window.child(:title => '&About')
-      child.should exist
-      child.title.should == "&About"
-      child.adapter.should == SpecHelper.adapter
+      expect(child.exist?).to be true
+      expect(child.title).to be == "&About"
+      expect(child.adapter).to be == SpecHelper.adapter
     end
 
     it 'popups' do
       window.button(:title => '&About').click { true }
-      window.child(:title => 'About').should be_visible
+      expect(window.child(:title => 'About').visible?).to be true
     end
   end
 end

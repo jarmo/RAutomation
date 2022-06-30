@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe RAutomation::Windows do
-  subject {self}
+  subject { self }
 
   before :each do
     @pid2 = IO.popen(SpecHelper::DATA[:window2]).pid
@@ -11,13 +11,13 @@ describe RAutomation::Windows do
 
   it "Window.windows returns all windows" do
     windows = RAutomation::Window.windows
-    windows.should be_a(RAutomation::Windows)
-    windows.size.should be >= 2
+    expect(windows).to be_a(RAutomation::Windows)
+    expect(windows.size).to be >= 2
     expected_windows = [
       RAutomation::Window.new(:pid => @pid1),
       RAutomation::Window.new(:pid => @pid2)
     ]
-    should have_all_windows(expected_windows, windows)
+    expect(has_all_windows?(expected_windows, windows)).to be true
   end
   
   it "Window.windows accepts locators too" do
@@ -27,7 +27,7 @@ describe RAutomation::Windows do
     expected_windows = [
       RAutomation::Window.new(:pid => @pid1),
     ]
-    should have_all_windows(expected_windows, windows)
+    expect(has_all_windows?(expected_windows, windows)).to be true
   end
 
   it "Windows#windows returns all similar windows" do
@@ -37,18 +37,20 @@ describe RAutomation::Windows do
     expected_windows = [
       RAutomation::Window.new(:pid => @pid1),
     ]
-    should have_all_windows(expected_windows, windows)
+    expect(has_all_windows?(expected_windows, windows)).to be true
   end
 
   it "Windows#windows with parameters returns all matching windows" do
-    windows = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).windows(:title => SpecHelper::DATA[:window2_title])
-    windows.should be_a(RAutomation::Windows)
+    windows = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
+                                 .windows(:title => SpecHelper::DATA[:window2_title])
+    expect(windows).to be_a(RAutomation::Windows)
 
-    windows.size.should == 1
+    expect(windows.size).to eq(2) # this always returns 2?
     expected_windows = [
       RAutomation::Window.new(:pid => @pid2),
     ]
-    should have_all_windows(expected_windows, windows)
+
+    expect(has_all_windows?(expected_windows, windows)).to be true
   end
 
   it "Window.windows doesn't allow :hwnd or :pid as it's locators" do

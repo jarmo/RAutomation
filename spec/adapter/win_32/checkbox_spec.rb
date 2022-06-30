@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe "Win32::Checkbox", :if => SpecHelper.adapter == :win_32 do
+  let(:window) { RAutomation::Window.new(:title => "MainFormWindow") }
   it "#checkbox" do
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should exist
+    expect(window.checkbox(:value => "checkBox")).to exist
 
     RAutomation::Window.wait_timeout = 0.1
     expect { RAutomation::Window.new(:title => "non-existing-window").checkbox(:value => "Something") }.
@@ -10,39 +11,36 @@ describe "Win32::Checkbox", :if => SpecHelper.adapter == :win_32 do
   end
 
   it "#set? & #set" do
-    checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
-    checkbox.should_not be_set
-
+    checkbox = window.checkbox(:value => "checkBox")
+    expect(checkbox.set?).to be false
     checkbox.set
-    checkbox.should be_set
+    expect(checkbox.set?).to be true
   end
 
   it "#value" do
-    checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
-    checkbox.value.should == "checkBox"
+    checkbox = window.checkbox(:value => "checkBox")
+    expect(checkbox.value).to be == "checkBox"
   end
 
   it "#clear" do
-    checkbox = RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox")
+    checkbox = window.checkbox(:value => "checkBox")
     checkbox.set
-    checkbox.should be_set
+    expect(checkbox.set?).to be true
 
     checkbox.clear
-    checkbox.should_not be_set
+    expect(checkbox.set?).to be false
   end
 
   it "enabled/disabled" do
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should be_enabled
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBox").should_not be_disabled
+    expect(window.checkbox(:value => "checkBox").enabled?).to be true
+    expect(window.checkbox(:value => "checkBox").enabled?).to_not be false
 
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBoxDisabled").should_not be_enabled
-    RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBoxDisabled").should be_disabled
+    expect(window.checkbox(:value => "checkBoxDisabled").enabled?).to_not be true
+    expect(window.checkbox(:value => "checkBoxDisabled").enabled?).to be false
   end
 
   it "cannot check a disabled checkbox" do
-    lambda {
-      RAutomation::Window.new(:title => "MainFormWindow").checkbox(:value => "checkBoxDisabled").set
-    }.should raise_error
+     expect { window.checkbox(:value => "checkBoxDisabled").set }.to raise_error(RuntimeError)
   end
 
 end

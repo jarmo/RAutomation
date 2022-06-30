@@ -5,7 +5,7 @@ describe RAutomation::TextField do
   let(:text_field) { main_form.text_field(:class => /Edit/i, :index => 2) }
 
   it "#text_field" do
-    main_form.text_field(:class => /Edit/i, :index => 1).should exist
+    expect(main_form.text_field(:class => /Edit/i, :index => 1).exist?).to be true
 
     RAutomation::Window.wait_timeout = 0.1
     expect { RAutomation::Window.new(:title => "non-existent-window").
@@ -14,7 +14,7 @@ describe RAutomation::TextField do
   end
 
   it "#set" do
-    text_field.set "hello!"
+    text_field.set"hello!"
 
     RAutomation::Window.wait_timeout = 0.1
     expect { main_form.text_field(:class => "non-existing-field").set "hello!" }.
@@ -23,9 +23,9 @@ describe RAutomation::TextField do
 
   it "#clear" do
     text_field.set "hello!"
-    text_field.value.should == "hello!"
+    expect(text_field.value).to be == "hello!"
     text_field.clear
-    text_field.value.should be_empty
+    expect(text_field.value.empty?).to be true
 
     RAutomation::Window.wait_timeout = 0.1
     expect { main_form.text_field(:class => "non-existent-field").clear }.
@@ -34,7 +34,7 @@ describe RAutomation::TextField do
 
   it "#value" do
     text_field.set "hello!"
-    text_field.value.should == "hello!"
+    expect(text_field.value).to be == "hello!"
 
     RAutomation::Window.wait_timeout = 0.1
     expect { main_form.text_field(:class => "non-existent-field").value }.
@@ -43,13 +43,13 @@ describe RAutomation::TextField do
 
   it "#exists?" do
     field  = main_form.text_field(:class => /Edit/i, :index => 1)
-    field.should exist
-    main_form.text_field(:class => "non-existent-field").should_not exist
+    expect(field.exist?).to be true
+    expect(main_form.text_field(:class => "non-existent-field").exist?).to_not be true
   end
 
   it "#hwnd" do
     field  = main_form.text_field(:class => /Edit/i, :index => 1)
-    field.hwnd.should be_a(Integer)
+    expect(field.hwnd).to be_a(Integer)
 
     RAutomation::Window.wait_timeout = 0.1
     expect { main_form.text_field(:class => "non-existing-window").hwnd }.
@@ -58,7 +58,7 @@ describe RAutomation::TextField do
 
   it "#hwnd locator" do
     field  = main_form.text_field(:class => /Edit/i, :index => 1)
-    field.hwnd.should be_a(Integer)
-    field2 = main_form.text_field(:hwnd => field.hwnd).should exist
+    expect(field.hwnd).to be_a(Integer)
+    expect(main_form.text_field(:hwnd => field.hwnd).exist?).to be true
   end
 end
