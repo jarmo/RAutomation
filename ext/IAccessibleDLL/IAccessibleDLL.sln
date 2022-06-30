@@ -1,20 +1,31 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1433
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IAccessibleDLL", "IAccessibleDLL\IAccessibleDLL.vcxproj", "{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Debug|Win32.Build.0 = Debug|Win32
+		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Debug|x64.ActiveCfg = Debug|x64
+		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Debug|x64.Build.0 = Debug|x64
 		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Release|Win32.ActiveCfg = Release|Win32
 		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Release|Win32.Build.0 = Release|Win32
+		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Release|x64.ActiveCfg = Release|x64
+		{CCE6C620-932C-4B59-A2DA-E11E279F4D9A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2FC391A-95D8-4338-B7D4-149E4AE6B5ED}
 	EndGlobalSection
 EndGlobal

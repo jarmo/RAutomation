@@ -1,15 +1,17 @@
 require 'rubygems'
 require 'bundler'
+require_relative 'ext/ext_helper'
 
-Bundler::GemHelper.install_tasks
 
 def ext_dependencies(name)
-  FileList["ext/#{name}/**/*"].reject { |file| file =~ /\b(Release|Debug)\b/ }
+  FileList["ext/#{name}/**/*"].reject { |file| file =~ /\b(Release|Debug|x86Release|x86Debug|x64Release|x64Debug)\b/ }
 end
 
 def ms_build(name)
   name = File.basename(name, File.extname(name))
-  sh "msbuild /property:Configuration=Release ext\\#{name}\\#{name}.sln"
+  cmd = "msbuild /p:Configuration=Release ext\\#{name}\\#{name}.sln"
+  cmd += " && #{cmd} /p:Platform=x64" unless name == 'WindowsForms'
+  sh(cmd)
 end
 
 namespace :build do
@@ -20,10 +22,14 @@ namespace :build do
   ]
 
   build_tasks.each do |build_task|
-    full_ext_path = "ext/#{build_task[:path]}/Release/#{build_task[:path]}.#{build_task[:ext]}"
+     full_ext_path = "ext/#{build_task[:path]}/Release/#{build_task[:path]}.#{build_task[:ext]}"
 
-    file full_ext_path => ext_dependencies(build_task[:path]) do |t|
-      ms_build t.name
+     %w[x86Release x64Release].each do |output_dir|
+      full_ext_path = full_ext_path.gsub(/(?<!x86|x64)Release/, output_dir) unless build_task[:name] == :windows_forms
+
+      file full_ext_path => ext_dependencies(build_task[:path]) do |t|
+        ms_build t.name
+      end
     end
 
     desc "Build #{build_task[:path]}"
@@ -68,3 +74,5 @@ task :default => "spec:all"
 task "release:source_control_push" => :spec
 
 task :install => :build
+
+Bundler::GemHelper.install_tasks

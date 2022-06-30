@@ -107,7 +107,7 @@ end
 
 
 RSpec.configure do |config|
-  config.before(:each) do
+  config.before(:each) do |example|
     RAutomation::Window.wait_timeout = 15
 
     unless example.metadata[:pure_unit]
