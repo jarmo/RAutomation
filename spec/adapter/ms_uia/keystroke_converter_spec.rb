@@ -1,20 +1,18 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'rautomation'
-require 'rspec'
+require 'spec_helper'
 
-describe "KeystrokeConverter", :if => SpecHelper.adapter == :ms_uia do
+describe "KeystrokeConverter", if: SpecHelper.adapter == :ms_uia do
 
   it "converts plain ASCII" do
     codes = RAutomation::Adapter::MsUia::KeystrokeConverter.convert("abc")
     converted_keys = convert_keys "abc"
-    codes.should == converted_keys
+    expect(codes).to be == converted_keys
   end
 
   it "uses caps lock for entering downcase keys" do
     codes = RAutomation::Adapter::MsUia::KeystrokeConverter.convert("aBc")
     converted_keys = convert_keys "abc"
     converted_keys = converted_keys.insert(1, RAutomation::Adapter::MsUia::Constants::VK_LSHIFT)
-    codes.should == converted_keys
+    expect(codes).to be == converted_keys
   end
 
   it "converts special keys" do
@@ -40,7 +38,7 @@ describe "KeystrokeConverter", :if => SpecHelper.adapter == :ms_uia do
         RAutomation::Adapter::MsUia::Constants::VK_END,
         RAutomation::Adapter::MsUia::Constants::VK_DELETE
     ].flatten
-    codes.should == expected_codes
+    expect(codes).to be == expected_codes
   end
 
   def convert_keys keys

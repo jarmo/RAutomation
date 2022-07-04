@@ -1,39 +1,39 @@
 require 'spec_helper'
 
-describe "MsUia::RadioButton", :if => SpecHelper.adapter == :ms_uia do
-
+describe "MsUia::RadioButton", if: SpecHelper.adapter == :ms_uia do
+  let(:window) { RAutomation::Window.new(title: "MainFormWindow") }
   it "#exist?" do
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should exist
+    expect(window.radio(value: "Option 1").exist?).to be true
 
     RAutomation::Window.wait_timeout = 0.1
-    expect {RAutomation::Window.new(:title => "non-existent-window").
-            radio(:value => "Option 1")}.
+    expect {RAutomation::Window.new(title: "non-existent-window").
+            radio(value: "Option 1")}.
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
   it "check for radio class" do
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:id => "textField").should_not exist
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:id => "radioButton2").should exist
+    expect(window.radio(id: "textField").exist?).to_not be true
+    expect(window.radio(id: "radioButton2").exist?).to be true
   end
 
 
   it "#set? & #set" do
-    radio = RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1")
-    radio.should_not be_set
+    radio = window.radio(value: "Option 1")
+    expect(radio.set?).to_not be true
 
     radio.set
-    radio.should be_set
+    expect(radio.set?).to be true
   end
 
   it "enabled/disabled" do
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should be_enabled
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option 1").should_not be_disabled
+    expect(window.radio(value: "Option 1").enabled?).to be true
+    expect(window.radio(value: "Option 1").disabled?).to_not be true
 
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").should_not be_enabled
-    RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").should be_disabled
+    expect(window.radio(value: "Option Disabled").enabled?).to_not be true
+    expect(window.radio(value: "Option Disabled").disabled?).to be true
   end
 
   it "cannot set a disabled radio button" do
-    expect { RAutomation::Window.new(:title => "MainFormWindow").radio(:value => "Option Disabled").set }.to raise_error
+    expect { window.radio(value: "Option Disabled").set }.to raise_error(RuntimeError)
   end
 end

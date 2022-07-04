@@ -1,41 +1,39 @@
 require 'spec_helper'
 
-describe "MsUia::Button", :if => SpecHelper.adapter == :ms_uia do
+describe "MsUia::Button", if: SpecHelper.adapter == :ms_uia do
+  let(:window) { RAutomation::Window.new(title: SpecHelper::DATA[:window1_title]) }
   it "find by id" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    window.button(:id => "aboutButton").should exist
+    expect(window.button(id: "aboutButton").exist?).to be true
   end
 
   it "check for button class" do
-    RAutomation::Window.new(:title => "MainFormWindow").button(:id => "textField").should_not exist
+    expect(window.button(id: "textField").exist?).to_not be true
   end
 
 
   it "enabled/disabled" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    window.button(:id => "enabledButton").should be_enabled
-    window.button(:id => "enabledButton").should_not be_disabled
+    expect(window.button(id: "enabledButton").enabled?).to be true
+    expect(window.button(id: "enabledButton").disabled?).to_not be be true
 
-    window.button(:id => "disabledButton").should be_disabled
-    window.button(:id => "disabledButton").should_not be_enabled
+    expect(window.button(id: "disabledButton").disabled?).to be true
+    expect(window.button(id: "disabledButton").enabled?).to_not be true
   end
 
   it "#focus" do
-    button = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title]).button(:id => "enabledButton")
-    button.should_not be_focused
+    button = window.button(id: "enabledButton")
+    expect(button.focused?).to_not be true
 
     button.focus
-    button.should be_focused
+    expect(button.focused?).to be true
   end
 
   it "cannot click disabled button" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    expect { window.button(:id => "disabledButton").click }.to raise_error
+    expect { window.button(id: "disabledButton").click }.to raise_error(RuntimeError)
   end
 
   it "cannot set focus to disabled button" do
-    window = RAutomation::Window.new(:title => SpecHelper::DATA[:window1_title])
-    expect { window.button(:id => "disabledButton").focus }.to raise_error
+    window = RAutomation::Window.new(title: SpecHelper::DATA[:window1_title])
+    expect { window.button(id: "disabledButton").focus }.to raise_error(RuntimeError)
   end
 
 end
