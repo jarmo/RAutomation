@@ -16,6 +16,18 @@ module RAutomation
           raise "unsupported platform for RAutomation: #{RUBY_PLATFORM}"
         end
       end
+
+      def move_adapter_dlls(externals)
+        puts "Using #{Platform.architecture} externals"
+
+        externals.each do |dest_path|
+          dll_path = dest_path.gsub('Release', "#{Platform.architecture}Release")
+          next if File.exists?(dest_path)
+          FileUtils.cp(dll_path, dest_path)
+        end
+
+        externals
+      end
     end
   end
 end

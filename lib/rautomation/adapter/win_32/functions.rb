@@ -81,6 +81,8 @@ module RAutomation
                         [:long], :bool
         attach_function :load_library, :LoadLibraryA,
                         [:string], :long
+        attach_function :load_library_64, :LoadLibraryA,
+                        [:string], :long_long
 
         # ole32
         attach_function :co_initialize, :CoInitialize,
@@ -93,8 +95,12 @@ module RAutomation
                         [:long, :long, :pointer, :long, :pointer], :void
         attach_function :select_table_row, :select_table_row,
                         [:long, :long, :long], :void
+        attach_function :select_table_row_64, :select_table_row,
+                        [:long_long, :long, :long], :void
         attach_function :get_table_row_state, :get_table_row_state,
                         [:long, :long, :long], :long
+        attach_function :get_table_row_state_64, :get_table_row_state,
+                        [:long_long, :long, :long], :long
 
         class << self
 

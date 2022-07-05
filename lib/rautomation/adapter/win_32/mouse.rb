@@ -50,7 +50,7 @@ module RAutomation
           mouse_input = Array.new(7, 0)
           mouse_input[0] = Constants::INPUT_MOUSE
           mouse_input[4] = flag
-          mouse_input.pack "L*"
+          Platform.is_x86? ? mouse_input.pack('L*') : mouse_input.pack('QLLLLQQ')
         end
 
       end

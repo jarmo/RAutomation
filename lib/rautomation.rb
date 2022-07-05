@@ -1,3 +1,4 @@
+require "rautomation/platform"
 require "rautomation/wait_helper"
 require "rautomation/adapter/helper"
 require "rautomation/button"
