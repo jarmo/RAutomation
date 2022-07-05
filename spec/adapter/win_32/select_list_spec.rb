@@ -12,7 +12,7 @@ describe "Win32::SelectList", if: SpecHelper.adapter == :win_32 do
   end
 
   it "#options" do
-    select_list = window.select_list(class: /combobox/i, indexv: 1)
+    select_list = window.select_list(class: /combobox/i, index: 1)
     expect(select_list.options.size).to eq(5)
 
     expected_options = ["Apple", "Caimito", "Coconut", "Orange", "Passion Fruit"]

@@ -22,8 +22,8 @@ describe RAutomation::Windows do
   
   it "Window.windows accepts locators too" do
     windows = RAutomation::Window.windows(:title => SpecHelper::DATA[:window1_title])
-    windows.should be_a(RAutomation::Windows)
-    windows.size.should == 1
+    expect(windows).to be_a(RAutomation::Windows)
+    expect(windows.size) == 1
     expected_windows = [
       RAutomation::Window.new(:pid => @pid1),
     ]
