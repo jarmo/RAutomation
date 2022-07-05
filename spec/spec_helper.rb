@@ -10,8 +10,8 @@ module SpecHelper
   end
 
   def navigate_to_simple_elements
-    main_window = RAutomation::Window.new(:title => "MainFormWindow")
-    main_window.button(:value => "Simple Elements").click { RAutomation::Window.new(:title => "SimpleElementsForm").present? }
+    main_window = RAutomation::Window.new(title: "MainFormWindow")
+    main_window.button(value: "Simple Elements").click { RAutomation::Window.new(title: "SimpleElementsForm").present? }
   end
 
   module_function :adapter, :navigate_to_simple_elements
@@ -26,81 +26,81 @@ module SpecHelper
   # 2) Browser window, which opens up a test.html where JavaScript prompt with a Button and a TextField objects will be shown.
   DATA = {
           # This adapter needs Windows OS with Internet Explorer installed into 'c:\program files\internet explorer'.
-          :autoit => {
+          autoit: {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
-                  :window1 => "ext\\WindowsForms\\Release\\WindowsForms.exe",
-                  :window2 => "notepad",
-                  :window2_title => /notepad/i,
+                  window1: "ext\\WindowsForms\\Release\\WindowsForms.exe",
+                  window2: "notepad",
+                  window2_title: /notepad/i,
                   # Window 1 title, has to be a Regexp.
-                  :window1_title => /FormWindow/i,
-                  :window1_full_title => 'MainFormWindow',
+                  window1_title: /FormWindow/i,
+                  window1_full_title: 'MainFormWindow',
                   # Window 1 should have this text on it.
-                  :window1_text => "This is a sample text",
+                  window1_text: "This is a sample text",
                   # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
                   # "A" key
-                  :window1_send_keys => "A",
-                  :proc_after_send_keys => lambda do
-                    about_box = RAutomation::Window.new(:title => /About/i)
+                  window1_send_keys: "A",
+                  proc_after_send_keys: lambda do
+                    about_box = RAutomation::Window.new(title: /About/i)
                     RAutomation::WaitHelper.wait_until {about_box.present?}
                   end,
                   # Window 1 should have a button with the following text.
-                  :window1_button_text => "&About",
+                  window1_button_text: "&About",
                   # Window 1 should have a text field with the specified class name.
-                  :window1_text_field_class => "Edit",
+                  window1_text_field_class: "Edit",
                   # Adapter internal method invocation for getting title of window2
-                  :title_proc => lambda {|win| win.WinGetTitle("[TITLE:MainFormWindow]")}
+                  title_proc: lambda {|win| win.WinGetTitle("[TITLE:MainFormWindow]")}
           },
-          :win_32 => {
+          win_32: {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
-                  :window1 => "ext\\WindowsForms\\Release\\WindowsForms.exe",
-                  :window2 => "notepad",
-                  :window2_title => /notepad/i,
+                  window1: "ext\\WindowsForms\\Release\\WindowsForms.exe",
+                  window2: "notepad",
+                  window2_title: /notepad/i,
                   # Window 1 title, has to be a Regexp.
-                  :window1_title => /FormWindow/i,
-                  :window1_full_title => 'MainFormWindow',
+                  window1_title: /FormWindow/i,
+                  window1_full_title: 'MainFormWindow',
                   # Window 1 should have this text on it.
-                  :window1_text => "This is a sample text",
+                  window1_text: "This is a sample text",
                   # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
                   # "A" key
-                  :window1_send_keys => "A",
-                  :proc_after_send_keys => lambda do
-                    about_box = RAutomation::Window.new(:title => /About/i)
+                  window1_send_keys: "A",
+                  proc_after_send_keys: lambda do
+                    about_box = RAutomation::Window.new(title: /About/i)
                     RAutomation::WaitHelper.wait_until {about_box.present?}
                   end,
                   # Window 1 should have a button with the following text.
-                  :window1_button_text => "&About",
+                  window1_button_text: "&About",
                   # Window 1 should have a text field with the specified class name.
-                  :window1_text_field_class => "Edit",
+                  window1_text_field_class: "Edit",
                   # Adapter internal method invocation for getting title of window2
-                  :title_proc => lambda {|win| win.window_title(win.hwnd)}
+                  title_proc: lambda {|win| win.window_title(win.hwnd)}
           },
           #Just copying :win_ffi data for now
-          :ms_uia => {
+          ms_uia: {
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
-                  :window1 => "ext\\WindowsForms\\Release\\WindowsForms.exe",
-                  :window2 => "notepad",
-                  :window2_title => /notepad/i,
+                  window1: "ext\\WindowsForms\\Release\\WindowsForms.exe",
+                  window2: "notepad",
+                  window2_title: /notepad/i,
                   # Window 1 title, has to be a Regexp.
-                  :window1_title => /FormWindow/i,
-                  :window1_full_title => 'MainFormWindow',
+                  window1_title: /FormWindow/i,
+                  window1_full_title: 'MainFormWindow',
                   # Window 1 should have this text on it.
-                  :window1_text => "This is a sample text",
+                  window1_text: "This is a sample text",
                   # When sending ENTER on Window 2, then the window OK button should be pressed and Window 2 should be closed.
                   # "A" key
-                  :window1_send_keys => "A",
-                  :proc_after_send_keys => lambda do
-                    about_box = RAutomation::Window.new(:title => /About/i)
+                  window1_send_keys: "A",
+                  proc_after_send_keys: lambda do
+                    about_box = RAutomation::Window.new(title: /About/i)
                     RAutomation::WaitHelper.wait_until {about_box.present?}
                   end,
                   # Window 1 should have a button with the following text.
-                  :window1_button_text => "&About",
+                  window1_button_text: "&About",
                   # Window 1 should have a text field with the specified class name.
-                  :window1_text_field_class => "Edit",
+                  window1_text_field_class: "Edit",
                   # Adapter internal method invocation for getting title of window2
-                  :title_proc => lambda {|win| win.window_title(win.hwnd)}
+                  title_proc: lambda {|win| win.window_title(win.hwnd)}
           }
   }[adapter]
 end
@@ -112,7 +112,7 @@ RSpec.configure do |config|
 
     unless example.metadata[:pure_unit]
       @pid1 = IO.popen(SpecHelper::DATA[:window1]).pid
-      RAutomation::WaitHelper.wait_until { RAutomation::Window.new(:pid => @pid1).present? }
+      RAutomation::WaitHelper.wait_until { RAutomation::Window.new(pid: @pid1).present? }
     end
   end
 

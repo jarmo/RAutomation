@@ -12,7 +12,7 @@ describe "Win32::Table", if: SpecHelper.adapter == :win_32 do
     
     RAutomation::Window.wait_timeout = 0.1
     expect {RAutomation::Window.new(title: "non-existent-window").
-            table(:class => /SysListView32/i)}.
+            table(class: /SysListView32/i)}.
             to raise_exception(RAutomation::UnknownWindowException)
   end
 
