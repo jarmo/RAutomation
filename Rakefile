@@ -26,7 +26,7 @@ namespace :build do
       full_ext_path = full_ext_path.gsub(/(?<!x86|x64)Release/, output_dir) unless build_task[:name] == :windows_forms
 
       file full_ext_path => ext_dependencies(build_task[:path]) do |t|
-        ms_build t.name
+        ms_build(t.name)
       end
     end
 
