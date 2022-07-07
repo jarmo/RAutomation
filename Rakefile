@@ -40,6 +40,10 @@ end
 
 task :build => "build:all"
 
+Rake::Task["build:all"].enhance do
+   %w[x86 x64].each { |platform| sh("gem build rautomation --platform #{platform}-mingw32") }
+end
+
 namespace :spec do
   adapters = %w[win_32 ms_uia]
 
@@ -72,5 +76,3 @@ task :default => "spec:all"
 task "release:source_control_push" => :spec
 
 task :install => :build
-
-Bundler::GemHelper.install_tasks

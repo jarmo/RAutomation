@@ -2,13 +2,14 @@ PATH
   remote: .
   specs:
     rautomation (1.1.0)
-      ffi (= 1.9.14)
+      ffi (~> 1.15.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.5.0)
-    ffi (1.9.14-x64-mingw32)
+    ffi (1.15.5-x64-mingw32)
+    ffi (1.15.5-x86-mingw32)
     github-markup (3.0.5)
     rake (10.5.0)
     redcarpet (3.5.1)
@@ -31,6 +32,7 @@ GEM
 
 PLATFORMS
   x64-mingw32
+  x86-mingw32
 
 DEPENDENCIES
   github-markup (~> 3.0)
@@ -41,4 +43,4 @@ DEPENDENCIES
   yard (~> 0.9)
 
 BUNDLED WITH
-   2.1.4
+   2.3.8
