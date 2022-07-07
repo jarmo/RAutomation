@@ -1,7 +1,5 @@
 require 'rubygems'
 require 'bundler'
-require_relative 'ext/ext_helper'
-
 
 def ext_dependencies(name)
   FileList["ext/#{name}/**/*"].reject { |file| file =~ /\b(Release|Debug|x86Release|x86Debug|x64Release|x64Debug)\b/ }
@@ -22,9 +20,9 @@ namespace :build do
   ]
 
   build_tasks.each do |build_task|
-     full_ext_path = "ext/#{build_task[:path]}/Release/#{build_task[:path]}.#{build_task[:ext]}"
+    full_ext_path = "ext/#{build_task[:path]}/Release/#{build_task[:path]}.#{build_task[:ext]}"
 
-     %w[x86Release x64Release].each do |output_dir|
+    %w[x86Release x64Release].each do |output_dir|
       full_ext_path = full_ext_path.gsub(/(?<!x86|x64)Release/, output_dir) unless build_task[:name] == :windows_forms
 
       file full_ext_path => ext_dependencies(build_task[:path]) do |t|
@@ -52,7 +50,7 @@ namespace :spec do
       puts "Running specs for adapter: #{adapter}"
       task = Rake::Task["spec"]
       task.reenable
-      task.invoke      
+      task.invoke
     end
   end
 

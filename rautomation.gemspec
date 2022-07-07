@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../ext/ext_helper', __FILE__)
+require File.expand_path('../lib/rautomation/adapter/helper', __FILE__)
 
 Gem::Specification.new do |s|
   s.name = %q{rautomation}
@@ -25,7 +25,7 @@ RAutomation provides:
   ]
 
   # move .dll files and get array containing paths, append WindowsForms.exe
-  externals = ExternalBinaries::move_files(dll_locations) << "ext/WindowsForms/Release/WindowsForms.exe"
+  externals = RAutomation::Adapter::Helper.move_adapter_dlls(dll_locations) << "ext/WindowsForms/Release/WindowsForms.exe"
 
   s.files         = `git ls-files`.split("\n") + externals
   s.test_files    = `git ls-files -- spec/*`.split("\n")

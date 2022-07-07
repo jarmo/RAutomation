@@ -5,6 +5,7 @@ module RAutomation
     autoload :Win32, File.dirname(__FILE__) + "/win_32.rb"
 
     module Helper
+      require File.expand_path('../../platform', __FILE__)
       extend self
 
       # @private
@@ -18,11 +19,10 @@ module RAutomation
       end
 
       def move_adapter_dlls(externals)
-        puts "Using #{Platform.architecture} externals"
-
         externals.each do |dest_path|
           dll_path = dest_path.gsub('Release', "#{Platform.architecture}Release")
           next if File.exists?(dest_path)
+          puts "Moving #{File.basename(dll_path)} to #{dest_path}"
           FileUtils.cp(dll_path, dest_path)
         end
 
