@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 
 def ext_dependencies(name)
-  FileList["ext/#{name}/**/*"].reject { |file| file =~ /\b(Release|Debug|x86Release|x86Debug|x64Release|x64Debug)\b/ }
+  FileList["ext/#{name}/**/*"].reject { |file| file =~ /(Release|Debug)/ }
 end
 
 def ms_build(name)
