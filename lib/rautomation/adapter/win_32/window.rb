@@ -11,12 +11,7 @@ module RAutomation
         class << self
           def oleacc_module_handle
             @oleacc_module_handle ||= begin
-              oleacc =
-                if Platform.is_x86?
-                  Functions.load_library("oleacc.dll")
-                else
-                  Functions.load_library_64("oleacc.dll")
-                end
+              oleacc = Functions.load_library("oleacc.dll")
               Functions.co_initialize nil
               oleacc
             end

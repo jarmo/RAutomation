@@ -19,8 +19,8 @@ module RAutomation
         end
       end
 
-      def move_adapter_dlls(externals, platform)
-        architecture = Platform.architecture(platform)
+      def move_adapter_dlls(externals)
+        architecture = Platform.architecture
         puts "Moving #{architecture} dll's into 'Release' folder.."
 
         externals.each do |dest_path|

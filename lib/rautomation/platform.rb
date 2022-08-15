@@ -1,18 +1,15 @@
 module Platform
    extend self
 
-   def architecture(arg)
-      case arg.include?('x86')
-      when true
+   def architecture
+      if is_x86?
          'x86'
-      when false
-         'x64'
       else
-         raise ArgumentError, "Unable to resolve architecture based on arg : #{arg}"
+         'x64'
       end
    end
 
    def is_x86?
-     ['foo'].pack('p').size == 4
+      RUBY_PLATFORM.include?('32')
    end
 end

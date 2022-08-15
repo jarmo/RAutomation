@@ -79,9 +79,9 @@ module RAutomation
                         [:long, :uint], :bool
         attach_function :close_handle, :CloseHandle,
                         [:long], :bool
-        attach_function :load_library, :LoadLibraryA,
+        attach_function :_load_library_x86, :LoadLibraryA,
                         [:string], :long
-        attach_function :load_library_64, :LoadLibraryA,
+        attach_function :_load_library_x64, :LoadLibraryA,
                         [:string], :uint64
 
         # ole32
@@ -93,13 +93,13 @@ module RAutomation
                         [:long], :long
         attach_function :get_table_row_strings, :get_table_row_strings,
                         [:long, :long, :pointer, :long, :pointer], :void
-        attach_function :select_table_row, :select_table_row,
+        attach_function :_select_table_row_x86, :select_table_row,
                         [:long, :long, :long], :void
-        attach_function :select_table_row_64, :select_table_row,
+        attach_function :_select_table_row_x64, :select_table_row,
                         [:uint64, :long, :long], :void
-        attach_function :get_table_row_state, :get_table_row_state,
+        attach_function :_get_table_row_state_x86, :get_table_row_state,
                         [:long, :long, :long], :long
-        attach_function :get_table_row_state_64, :get_table_row_state,
+        attach_function :_get_table_row_state_x64, :get_table_row_state,
                         [:uint64, :long, :long], :long
 
         class << self
@@ -245,6 +245,18 @@ module RAutomation
             string_buffer = FFI::MemoryPointer.new :char, text_len
             send_message(control_hwnd, Constants::CB_GETLBTEXT, item_no, string_buffer)
             string_buffer.read_string
+          end
+
+          def load_library(dll)
+            send("_load_library_#{Platform.architecture}", dll)
+          end
+
+          def get_table_row_state(oleacc_module_handle, control_hwnd, row)
+            send("_get_table_row_state_#{Platform.architecture}", oleacc_module_handle, control_hwnd, row)
+          end
+
+          def select_table_row(oleacc_module_handle, control_hwnd, row)
+            send("_select_table_row_#{Platform.architecture}", oleacc_module_handle, control_hwnd, row)
           end
 
           private

@@ -26,7 +26,7 @@ RAutomation provides:
   ]
 
   # move .dll files and get array containing paths, append WindowsForms.exe
-  externals = RAutomation::Adapter::Helper.move_adapter_dlls(dll_locations, s.platform.to_s) << "ext/WindowsForms/Release/WindowsForms.exe"
+  externals = RAutomation::Adapter::Helper.move_adapter_dlls(dll_locations) << "ext/WindowsForms/Release/WindowsForms.exe"
 
   s.files         = `git ls-files`.split("\n") + externals
   s.test_files    = `git ls-files -- spec/*`.split("\n")
