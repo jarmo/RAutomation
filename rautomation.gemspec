@@ -26,8 +26,9 @@ RAutomation provides:
           "ext/WindowsForms/Release/WindowsForms.exe"
   ]
 
-  missing_ext = RAutomation::Adapter::Helper.find_missing_externals(ext_locations)
-  missing_ext.each { |ext| RAutomation::Adapter::Helper.build_solution(ext, s.platform) } unless missing_ext.empty?
+  RAutomation::Adapter::Helper.find_missing_externals(ext_locations).each do |ext|
+    RAutomation::Adapter::Helper.build_solution(ext, s.platform)
+  end
 
   # move .dll files and get array containing paths
   externals = RAutomation::Adapter::Helper.move_adapter_dlls(ext_locations[0, 3])
