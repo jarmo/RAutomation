@@ -19,16 +19,20 @@ RAutomation provides:
   s.license = "MIT"
   s.platform = Gem::Platform.local if s.platform == 'ruby'
 
-  dll_locations = [
+  ext_locations = [
           "ext/IAccessibleDLL/Release/IAccessibleDLL.dll",
           "ext/UiaDll/Release/UiaDll.dll",
-          "ext/UiaDll/Release/RAutomation.UIA.dll"
+          "ext/UiaDll/Release/RAutomation.UIA.dll",
+          "ext/WindowsForms/Release/WindowsForms.exe"
   ]
 
-  # move .dll files and get array containing paths, append WindowsForms.exe
-  externals = RAutomation::Adapter::Helper.move_adapter_dlls(dll_locations) << "ext/WindowsForms/Release/WindowsForms.exe"
+  missing_ext = RAutomation::Adapter::Helper.find_missing_externals(ext_locations)
+  missing_ext.each { |ext| RAutomation::Adapter::Helper.build_solution(ext, s.platform) } unless missing_ext.empty?
 
-  s.files         = `git ls-files`.split("\n") + externals
+  # move .dll files and get array containing paths
+  externals = RAutomation::Adapter::Helper.move_adapter_dlls(ext_locations[0, 3])
+
+  s.files         = `git ls-files`.split("\n") + externals << ext_locations[-1]
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]
 

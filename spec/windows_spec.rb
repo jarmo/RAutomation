@@ -45,7 +45,7 @@ describe RAutomation::Windows do
                                  .windows(title: SpecHelper::DATA[:window2_title])
     expect(windows).to be_a(RAutomation::Windows)
 
-    expect(windows.size).to eq(2) # this always returns 2?
+    expect(windows.size).to eq(2) # this always returns 1?
     expected_windows = [
       RAutomation::Window.new(pid: @pid2),
     ]
