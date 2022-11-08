@@ -27,16 +27,27 @@ module RAutomation
         end
       end
 
-      def build_solution(ext, platform)
+      def build_solution(ext)
+        return if ext =~ /RAutomation.UIA.dll/ # skip this since its built in UiaDll.sln
+
         name = File.basename(ext, File.extname(ext))
+        restore_packages(name) if name == 'WindowsForms'
+        msbuild_solution(name)
+      end
+
+      def msbuild_solution(name)
         cmd = "msbuild /p:Configuration=Release ext\\#{name}\\#{name}.sln"
-        cmd += " && #{cmd} /p:Platform=x64" if platform =~ /x64/ && name != 'WindowsForms'
+        cmd += " && #{cmd} /p:Platform=x64" unless name == 'WindowsForms'
         system(cmd) or raise StandardError, "An error occurred when trying to build solution #{name}. " +
                                             "Make sure msbuild binary is in your PATH and the project is configured correctly"
       end
 
-      def move_adapter_dlls(externals)
-        architecture = Platform.architecture
+      def restore_packages(name)
+        system("ext\\#{name}\\.nuget\\NuGet.exe restore ext\\#{name}\\#{name}.sln") or raise StandardError, "Unable to restore NuGet packages"
+      end
+
+      def move_adapter_dlls(externals, architecture)
+        raise ArgumentError, "Invalid platform #{architecture}" unless %w[x86 x64].any? { |arch| arch == architecture }
         puts "Moving #{architecture} dll's into 'Release' folder.."
 
         externals.each do |dest_path|

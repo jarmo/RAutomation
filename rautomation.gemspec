@@ -27,11 +27,12 @@ RAutomation provides:
   ]
 
   RAutomation::Adapter::Helper.find_missing_externals(ext_locations).each do |ext|
-    RAutomation::Adapter::Helper.build_solution(ext, s.platform)
+    RAutomation::Adapter::Helper.build_solution(ext)
   end
 
   # move .dll files and get array containing paths
-  externals = RAutomation::Adapter::Helper.move_adapter_dlls(ext_locations[0, 3])
+  # send first three externals and first three characters from platform eg 'x86' from 'x86-mingw32'
+  externals = RAutomation::Adapter::Helper.move_adapter_dlls(ext_locations[0, 3], s.platform.to_s[0, 3])
 
   s.files         = `git ls-files`.split("\n") + externals << ext_locations[-1]
   s.test_files    = `git ls-files -- spec/*`.split("\n")
