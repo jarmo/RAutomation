@@ -31,7 +31,8 @@ module RAutomation
         name = File.basename(ext, File.extname(ext))
         cmd = "msbuild /p:Configuration=Release ext\\#{name}\\#{name}.sln"
         cmd += " && #{cmd} /p:Platform=x64" if platform =~ /x64/ && name != 'WindowsForms'
-        system(cmd)
+        system(cmd) or raise StandardError, "An error occurred when trying to build solution #{name}. " +
+                                            "Make sure msbuild binary is in your PATH and the project is configured correctly"
       end
 
       def move_adapter_dlls(externals)
