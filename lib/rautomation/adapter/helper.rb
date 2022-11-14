@@ -31,7 +31,6 @@ module RAutomation
         return if ext =~ /RAutomation.UIA.dll/ # skip this since its built in UiaDll.sln
 
         name = File.basename(ext, File.extname(ext))
-        restore_packages(name) if name == 'WindowsForms'
         msbuild_solution(name)
       end
 
@@ -40,10 +39,6 @@ module RAutomation
         cmd += " && #{cmd} /p:Platform=x64" unless name == 'WindowsForms'
         system(cmd) or raise StandardError, "An error occurred when trying to build solution #{name}. " +
                                             "Make sure msbuild binary is in your PATH and the project is configured correctly"
-      end
-
-      def restore_packages(name)
-        system("ext\\#{name}\\.nuget\\NuGet.exe restore ext\\#{name}\\#{name}.sln") or raise StandardError, "Unable to restore NuGet packages"
       end
 
       def move_adapter_dlls(externals, architecture)
