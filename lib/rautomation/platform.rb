@@ -10,6 +10,6 @@ module Platform
    end
 
    def is_x86?
-      RUBY_PLATFORM.include?('32')
+      %w[x86 i386].any? { |p| RUBY_PLATFORM =~ /#{p}/i }
    end
 end
