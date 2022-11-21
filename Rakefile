@@ -64,7 +64,7 @@ end
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
-task :spec => :build
+task :spec => "spec:all"
 
 RSpec::Core::RakeTask.new(:rcov) { |spec| spec.rcov = true }
 
