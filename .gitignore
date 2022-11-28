@@ -17,7 +17,6 @@ tmtags
 /coverage
 /rdoc
 /pkg
-*.gem
 /ext/IAccessibleDLL/x64Release/
 /ext/IAccessibleDLL/x86Release/
 /ext/UiaDll/x64Release/
