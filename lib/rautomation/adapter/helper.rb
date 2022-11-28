@@ -19,6 +19,14 @@ module RAutomation
         end
       end
 
+      def valid_adapter?(adapter)
+        if Platform.is_x86?
+          [:win_32, :ms_uia].include?(adapter)
+        else
+          adapter == :win_32
+        end
+      end
+
       def find_missing_externals(externals)
         externals.select do |ext|
           path = "#{Dir.pwd}/#{File.dirname(ext)}"
