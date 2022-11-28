@@ -48,7 +48,7 @@ describe 'MsUia::Table', if: SpecHelper.adapter == :ms_uia do
     large_grid.select(value: /^FirstName[1-9]$/)
     first_nine = large_grid.rows.take(9)
     expect(first_nine.count).to eq(9)
-    first_nine.should be_all(&:selected?)
+    expect(first_nine.all?(&:selected?)).to be true
   end
 
   it '#clear' do

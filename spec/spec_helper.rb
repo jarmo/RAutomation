@@ -6,7 +6,13 @@ require 'timeout'
 module SpecHelper
   # @private
   def adapter
-    ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter
+     adapter = ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter
+
+     if adapter != :win32 && !Platform.is_x86?
+        :unsupported_platform
+     else
+        adapter
+     end
   end
 
   def navigate_to_simple_elements
