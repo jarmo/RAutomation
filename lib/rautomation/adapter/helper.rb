@@ -31,7 +31,7 @@ module RAutomation
         externals.select do |ext|
           path = "#{Dir.pwd}/#{File.dirname(ext)}"
           file = File.basename(ext)
-          !Dir.exists?(path) && !File.exists?("#{path}/#{file}")
+          !Dir.exists?(path) && !File.exist?("#{path}/#{file}")
         end
       end
 
