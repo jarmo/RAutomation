@@ -66,8 +66,8 @@ module RAutomation
     # @param [Hash] locators locators for the window.
     def initialize(locators)
       @adapter = locators.delete(:adapter) || ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || default_adapter
-      unless Adapter::Helper.valid_adapter?(@adapter)
-        raise UnsupportedAdapterException, "RAutomation :ms_uia adapter is only supported on a 32bit Ruby - please use either :win32 adapter or 32bit Ruby."
+      unless Adapter::Helper.supported_for_current_platform?(@adapter)
+        raise UnsupportedAdapterException, "RAutomation #{@adapter} adapter is only supported on a 32bit Ruby - please use either :win32 adapter or 32bit Ruby."
       end
 
       @window = Adapter.const_get(normalize(@adapter)).const_get(:Window).new(self, locators)
