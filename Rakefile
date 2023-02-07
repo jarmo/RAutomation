@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'bundler'
 
+Bundler::GemHelper.install_tasks
+
 def ext_dependencies(name)
   FileList["ext/#{name}/**/*"].reject { |file| file =~ /(Release|Debug)/ }
 end
@@ -39,10 +41,6 @@ namespace :build do
 end
 
 task :build => "build:all"
-
-Rake::Task["build:all"].enhance do
-   %w[x86 x64].each { |platform| sh("gem build rautomation --platform #{platform}-mingw32") }
-end
 
 namespace :spec do
   adapters = %w[win_32 ms_uia]
