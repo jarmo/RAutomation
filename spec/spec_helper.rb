@@ -8,10 +8,10 @@ module SpecHelper
   def adapter
      adapter = ENV["RAUTOMATION_ADAPTER"] && ENV["RAUTOMATION_ADAPTER"].to_sym || RAutomation::Adapter::Helper.default_adapter
 
-     if adapter != :win32 && !Platform.is_x86?
-        :unsupported_platform
-     else
+     if RAutomation::Adapter::Helper.supported_for_current_platform?(adapter)
         adapter
+     else
+        :unsupported_platform
      end
   end
 
