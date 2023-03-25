@@ -18,7 +18,7 @@ RAutomation provides:
   s.homepage = %q{http://github.com/jarmo/RAutomation}
   s.summary = %q{Automate windows and their controls through user-friendly API with Ruby}
   s.license = "MIT"
-  s.platform = Gem::Platform.local if s.platform == 'ruby'
+  s.platform = Gem::Platform::CURRENT
 
   ext_locations = [
           "ext/IAccessibleDLL/Release/IAccessibleDLL.dll",
