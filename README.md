@@ -86,7 +86,8 @@ better, follow the instructions at "How to create a new adapter?"
 
 ## Supported Ruby Platforms
 
-Currently only 32bit Ruby is supported. 64bit versions **do not work** at all!
+64bit Ruby platform is **only supported for Win32 adapter**.
+Other adapters can be used only on a 32bit Ruby!
 
 ## How to create a new adapter?
 

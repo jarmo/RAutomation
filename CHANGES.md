@@ -1,3 +1,7 @@
+## 2.0.0 / 2023-03-25
+
+* Add support for 64bit Ruby for the Win32 adapter. PR #136
+
 ## 1.1.0 / 2021-12-03
 
 * Update ffi dependency to ~> 1.15.0. PR #132

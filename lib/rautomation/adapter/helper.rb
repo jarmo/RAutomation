@@ -53,7 +53,7 @@ module RAutomation
           next if dest_path =~ /WindowsForms/
           dll_path = dest_path.gsub('Release', "#{architecture}Release")
           dest_dir = File.dirname(dest_path)
-          FileUtils.mkdir_p(dest_dir) unless Dir.exists?(dest_dir)
+          FileUtils.mkdir_p(dest_dir) unless Dir.exist?(dest_dir)
           FileUtils.cp(dll_path, dest_path)
         end
 

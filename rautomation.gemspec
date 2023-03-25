@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path('../lib/rautomation/adapter/helper', __FILE__)
+require File.expand_path('../lib/rautomation/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name = %q{rautomation}
-  s.version = File.read("VERSION").strip
+  s.version = RAutomation::VERSION
   s.authors = [%q{Jarmo Pertman}]
   s.email = %q{jarmo.p@gmail.com}
   s.description = %q{RAutomation is a small and easy to use library for helping out to automate windows and their controls
@@ -17,7 +18,7 @@ RAutomation provides:
   s.homepage = %q{http://github.com/jarmo/RAutomation}
   s.summary = %q{Automate windows and their controls through user-friendly API with Ruby}
   s.license = "MIT"
-  s.platform = Gem::Platform.local if s.platform == 'ruby'
+  s.platform = Gem::Platform::CURRENT
 
   ext_locations = [
           "ext/IAccessibleDLL/Release/IAccessibleDLL.dll",

@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+require 'rspec/core/rake_task'
 
 Bundler::GemHelper.install_tasks
 
@@ -43,16 +44,14 @@ end
 task :build => "build:all"
 
 namespace :spec do
-  adapters = %w[win_32 ms_uia]
+  adapters = %w[win_32]
+  adapters << "ms_uia" if Platform.is_x86?
 
   adapters.each do |adapter|
     desc "Run RSpec code examples against #{adapter} adapter"
-    task adapter do
+    RSpec::Core::RakeTask.new(adapter) do |_task|
       ENV["RAUTOMATION_ADAPTER"] = adapter
       puts "Running specs for adapter: #{adapter}"
-      task = Rake::Task["spec"]
-      task.reenable
-      task.invoke
     end
   end
 
@@ -60,8 +59,6 @@ namespace :spec do
   task :all => adapters.map {|a| "spec:#{a}"}
 end
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
 task :spec => "spec:all"
 
 RSpec::Core::RakeTask.new(:rcov) { |spec| spec.rcov = true }
