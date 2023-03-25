@@ -1,3 +1,7 @@
+## 2.0.1 / 2023-03-25
+
+* Gem platform attribute value change.
+
 ## 2.0.0 / 2023-03-25
 
 * Add support for 64bit Ruby for the Win32 adapter. PR #136
