@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path('../lib/rautomation/adapter/helper', __FILE__)
+require File.expand_path('../lib/rautomation/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name = %q{rautomation}
-  s.version = File.read("VERSION").strip
+  s.version = RAutomation::VERSION
   s.authors = [%q{Jarmo Pertman}]
   s.email = %q{jarmo.p@gmail.com}
   s.description = %q{RAutomation is a small and easy to use library for helping out to automate windows and their controls
