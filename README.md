@@ -116,6 +116,7 @@ In case of any problems, feel free to contact me.
 *   Levi Wilson - https://github.com/leviwilson
 *   Eric Kessler - https://github.com/enkessler
 *   Stephan Schwab - https://github.com/snscaimito
+*   Benjamin Sandland - https://github.com/bensandland
 
 
 ## Libraries Using RAutomation
