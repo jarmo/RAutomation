@@ -61,8 +61,8 @@ module SpecHelper
                   # Path to some binary, which opens up a window, what can be
                   # minimized, maximized, activated, closed and etc.
                   window1: "ext\\WindowsForms\\Release\\WindowsForms.exe",
-                  window2: "notepad",
-                  window2_title: /notepad/i,
+                  window2: "regedit",
+                  window2_title: /registry editor/i,
                   # Window 1 title, has to be a Regexp.
                   window1_title: /FormWindow/i,
                   window1_full_title: 'MainFormWindow',

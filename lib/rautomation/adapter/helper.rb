@@ -9,6 +9,12 @@ module RAutomation
       require File.expand_path('../../platform', __FILE__)
       extend self
 
+      ADAPTER_DIRS = [
+        "ext/IAccessibleDLL/Release/IAccessibleDLL.dll",
+        "ext/UiaDll/Release/UiaDll.dll",
+        "ext/UiaDll/Release/RAutomation.UIA.dll"
+      ]
+
       # @private
       # Retrieves default {Adapter} for the current platform.
       def default_adapter
@@ -23,15 +29,17 @@ module RAutomation
         Platform.is_x86? || adapter == :win_32
       end
 
-      def find_missing_externals(externals)
-        externals.select do |ext|
+      def find_missing_externals
+        ADAPTER_DIRS.select do |ext|
           path = "#{Dir.pwd}/#{File.dirname(ext)}"
           file = File.basename(ext)
-          !Dir.exist?(path) && !File.exist?("#{path}/#{file}")
+          full_path = "#{path}/#{file}"
+          !Dir.exist?(path) || !File.exist?(full_path)
         end
       end
 
       def build_solution(ext)
+        return if File.exist?(ext)
         return if ext =~ /RAutomation.UIA.dll/ # skip this since its built in UiaDll.sln
 
         name = File.basename(ext, File.extname(ext))
@@ -45,19 +53,17 @@ module RAutomation
                                             "Make sure msbuild binary is in your PATH and the project is configured correctly"
       end
 
-      def move_adapter_dlls(externals, architecture)
+      def move_adapter_dlls(ruby_platform)
+        architecture = ruby_platform.split("-").first
         raise ArgumentError, "Invalid platform #{architecture}" unless %w[x86 x64].any? { |arch| arch == architecture }
         puts "Moving #{architecture} dll's into 'Release' folder.."
 
-        externals.each do |dest_path|
-          next if dest_path =~ /WindowsForms/
+        ADAPTER_DIRS.each do |dest_path|
           dll_path = dest_path.gsub('Release', "#{architecture}Release")
           dest_dir = File.dirname(dest_path)
           FileUtils.mkdir_p(dest_dir) unless Dir.exist?(dest_dir)
           FileUtils.cp(dll_path, dest_path)
         end
-
-        externals
       end
     end
   end
